@@ -1,0 +1,70 @@
+[
+    {
+        "SpritePath": null,
+        "Level": 1,
+        "Stats": {
+            "StatList": [
+                {
+                    "Stat": 150.0,
+                    "CurrentStat": 0
+                },
+                {
+                    "Stat": 200.0,
+                    "CurrentStat": 1
+                },
+                {
+                    "Stat": 100.0,
+                    "CurrentStat": 2
+                },
+                {
+                    "Stat": 50.0,
+                    "CurrentStat": 3
+                },
+                {
+                    "Stat": 50.0,
+                    "CurrentStat": 4
+                }
+            ]
+        },
+        "Battler": null,
+        "CreatureName": "Musungo",
+        "Slots": null,
+        "Tag": 0,
+        "Job": 5,
+        "State": 0
+    },
+    {
+        "SpritePath": null,
+        "Level": 1,
+        "Stats": {
+            "StatList": [
+                {
+                    "Stat": 200.0,
+                    "CurrentStat": 0
+                },
+                {
+                    "Stat": 150.0,
+                    "CurrentStat": 1
+                },
+                {
+                    "Stat": 200.0,
+                    "CurrentStat": 2
+                },
+                {
+                    "Stat": 50.0,
+                    "CurrentStat": 3
+                },
+                {
+                    "Stat": 100.0,
+                    "CurrentStat": 4
+                }
+            ]
+        },
+        "Battler": null,
+        "CreatureName": "Doku",
+        "Slots": null,
+        "Tag": 0,
+        "Job": 1,
+        "State": 0
+    }
+]

@@ -1,0 +1,64 @@
+[
+    {
+        "QuestName": "Test potion",
+        "Description": null,
+        "RequiredFlag": {
+            "Flag": "Test 1",
+            "ID": 0
+        },
+        "FlagToSet": {
+            "Flag": "Test 1",
+            "ID": 0
+        },
+        "Type": 0,
+        "ItemCountNeeded": 0,
+        "QuestID": 0,
+        "ActiveObjective": 0,
+        "QuestGiverID": null,
+        "QuestCompleterID": null,
+        "Reward": null,
+        "Objectives": [
+            {
+                "Name": "Objective: 0",
+                "Description": "Collect Potion From Tosh",
+                "RequiredFlag": {
+                    "Flag": "Test 1",
+                    "ID": 0
+                },
+                "FlagToSet": null,
+                "ObjectiveID": 0,
+                "RequiredItems": [
+                    {
+                        "RequiredAmount": 1,
+                        "ItemID": 0,
+                        "Item": {
+                            "ItemName": "Potion",
+                            "ItemID": 0,
+                            "Cost": 0,
+                            "Effect": {
+                                "Buff": 50,
+                                "Type": 0,
+                                "Effect": 0
+                            },
+                            "name": "",
+                            "hideFlags": 0
+                        }
+                    }
+                ],
+                "State": 0,
+                "Type": 1,
+                "name": "",
+                "hideFlags": 0
+            }
+        ],
+        "Events": [
+            {
+                "Trees": null,
+                "Type": 0,
+                "EventName": " ",
+                "name": "",
+                "hideFlags": 0
+            }
+        ]
+    }
+]

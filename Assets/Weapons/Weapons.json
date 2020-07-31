@@ -1,0 +1,30 @@
+{
+    "0": {
+        "Buffer": {
+            "HpBuf": 10.0,
+            "MagBuf": 0.0,
+            "StrBuf": 15.0,
+            "SpdBuf": 0.0,
+            "SpclBuf": 0.0
+        },
+        "WeaponID": 0,
+        "Skills": [
+            {
+                "SkillType": 1,
+                "Attribute": 1,
+                "AffectedStat": 0,
+                "TargetAmount": 1,
+                "Buffer": null,
+                "Effect": 50.0,
+                "SkillID": 1,
+                "SkillName": "Blue Flames Disentigrate",
+                "name": "",
+                "hideFlags": 0
+            }
+        ],
+        "WeaponName": "Longsword",
+        "Description": "A Longsword wielded by Musungo. How could a child wield this?",
+        "Job": 5,
+        "Appendage": 0
+    }
+}

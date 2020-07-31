@@ -1,0 +1,38 @@
+{
+    "0": {
+        "ItemName": "Potion",
+        "ItemID": 0,
+        "Cost": 0,
+        "Effect": {
+            "Buff": 50,
+            "Type": 0,
+            "Effect": 0
+        },
+        "name": "",
+        "hideFlags": 0
+    },
+    "1": {
+        "ItemName": "High Potion",
+        "ItemID": 1,
+        "Cost": 0,
+        "Effect": {
+            "Buff": 100,
+            "Type": 0,
+            "Effect": 0
+        },
+        "name": "",
+        "hideFlags": 0
+    },
+    "2": {
+        "ItemName": "Fire Bottle",
+        "ItemID": 2,
+        "Cost": 0,
+        "Effect": {
+            "Buff": 100,
+            "Type": 1,
+            "Effect": 0
+        },
+        "name": "",
+        "hideFlags": 0
+    }
+}

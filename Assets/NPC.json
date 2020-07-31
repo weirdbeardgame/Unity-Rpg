@@ -1,0 +1,51 @@
+[
+    {
+        "MapID": 0,
+        "NpcID": 0,
+        "QuestID": 0,
+        "HasQuest": true,
+        "X": 10.0,
+        "Y": 0.0,
+        "NpcName": "Doku",
+        "SpritePath": "Sprites/Characters/Doku/South",
+        "Move": null,
+        "Dialogue": null,
+        "Directions": [
+            1,
+            1,
+            4,
+            4,
+            4,
+            0
+        ],
+        "Flag": 0,
+        "NPC": null
+    },
+    {
+        "MapID": 0,
+        "NpcID": 1,
+        "QuestID": 0,
+        "HasQuest": false,
+        "X": -10.0,
+        "Y": 0.0,
+        "NpcName": "Tosh",
+        "SpritePath": "Sprites/Characters/Tosh/South",
+        "Move": null,
+        "Dialogue": null,
+        "Directions": [
+            2,
+            4,
+            4,
+            4,
+            4,
+            3,
+            3,
+            4,
+            3,
+            0,
+            1
+        ],
+        "Flag": 0,
+        "NPC": null
+    }
+]

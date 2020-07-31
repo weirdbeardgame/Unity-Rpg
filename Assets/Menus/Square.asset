@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b075db2664e61b5d68105d6a4ee97e7e, type: 3}
+  m_Name: Square
+  m_EditorClassIdentifier: 
+  NormalSprite: {fileID: 21300000, guid: a5aef9279903a87c397da5b2d6596f3b, type: 3}
+  WidgetState:
+    m_HighlightedSprite: {fileID: 21300000, guid: 7c2f7292439c433a384ff5a84b5b9d26,
+      type: 3}
+    m_PressedSprite: {fileID: 21300028, guid: 0e60d052300496443a81372233651c75, type: 3}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}

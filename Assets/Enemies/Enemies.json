@@ -1,0 +1,146 @@
+[
+    {
+        "Stats": {
+            "StatList": [
+                {
+                    "Stat": 100.0,
+                    "CurrentStat": 0
+                },
+                {
+                    "Stat": 50.0,
+                    "CurrentStat": 1
+                },
+                {
+                    "Stat": 100.0,
+                    "CurrentStat": 2
+                },
+                {
+                    "Stat": 50.0,
+                    "CurrentStat": 3
+                },
+                {
+                    "Stat": 75.0,
+                    "CurrentStat": 4
+                }
+            ]
+        },
+        "Battler": null,
+        "CreatureName": "Base Dragon",
+        "EnemyName": null,
+        "Type": null,
+        "ID": 0,
+        "Level": 1,
+        "Slots": null,
+        "Tag": 0,
+        "Job": 1,
+        "State": 0
+    },
+    {
+        "Stats": {
+            "StatList": [
+                {
+                    "Stat": 150.0,
+                    "CurrentStat": 0
+                },
+                {
+                    "Stat": 100.0,
+                    "CurrentStat": 1
+                },
+                {
+                    "Stat": 150.0,
+                    "CurrentStat": 2
+                },
+                {
+                    "Stat": 100.0,
+                    "CurrentStat": 3
+                },
+                {
+                    "Stat": 90.0,
+                    "CurrentStat": 4
+                }
+            ]
+        },
+        "Battler": null,
+        "CreatureName": "Red Dragon",
+        "EnemyName": null,
+        "Type": null,
+        "ID": 1,
+        "Level": 1,
+        "Slots": null,
+        "Tag": 0,
+        "Job": 1,
+        "State": 0
+    },
+    {
+        "Stats": {
+            "StatList": [
+                {
+                    "Stat": 0.0,
+                    "CurrentStat": 0
+                },
+                {
+                    "Stat": 0.0,
+                    "CurrentStat": 1
+                },
+                {
+                    "Stat": 0.0,
+                    "CurrentStat": 2
+                },
+                {
+                    "Stat": 0.0,
+                    "CurrentStat": 3
+                },
+                {
+                    "Stat": 0.0,
+                    "CurrentStat": 4
+                }
+            ]
+        },
+        "Battler": null,
+        "CreatureName": "Red Dragon",
+        "EnemyName": null,
+        "Type": null,
+        "ID": 0,
+        "Level": 0,
+        "Slots": null,
+        "Tag": 0,
+        "Job": 0,
+        "State": 0
+    },
+    {
+        "Stats": {
+            "StatList": [
+                {
+                    "Stat": 100.0,
+                    "CurrentStat": 0
+                },
+                {
+                    "Stat": 50.0,
+                    "CurrentStat": 1
+                },
+                {
+                    "Stat": 50.0,
+                    "CurrentStat": 2
+                },
+                {
+                    "Stat": 0.0,
+                    "CurrentStat": 3
+                },
+                {
+                    "Stat": 40.0,
+                    "CurrentStat": 4
+                }
+            ]
+        },
+        "Battler": null,
+        "CreatureName": "Base Wolf",
+        "EnemyName": null,
+        "Type": null,
+        "ID": 2,
+        "Level": 1,
+        "Slots": null,
+        "Tag": 0,
+        "Job": 1,
+        "State": 0
+    }
+]
