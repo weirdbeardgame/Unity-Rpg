@@ -181,7 +181,6 @@ public class DialogueEditor : EditorWindow
         NodeToCreate.CreateNode("", position, 320, 200, Style, RightPoint, LeftPoint, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode, ref NodeID, Message, Type);
 
         DialogueTree.Insert(Message);
-
         DialogueDisplay.Insert(NodeToCreate);
         NodeID += 1;
     }
@@ -223,10 +222,13 @@ public class DialogueEditor : EditorWindow
 
             DialogueTree = new BinarySearchTree<DialogueMessage>();
             Trees = new List<BinarySearchTree<DialogueMessage>>();
+
             DialogueDisplay = new BinarySearchTree<DialogueNode>();
             TreeNodes = new List<BinarySearchTree<DialogueNode>>();
+
             Connections = new List<Connection>();
             ReadJson();
+
             Init = true;
         }
 
@@ -462,11 +464,10 @@ public class DialogueEditor : EditorWindow
             Trees = new List<BinarySearchTree<DialogueMessage>>();
         }
 
-        if (DialogueTree != null)
+        if (DialogueTree != null && !Trees.Contains(DialogueTree)) // This solves the ghost copy issue
         {
             Trees.Add(DialogueTree);
         }
-
 
         // Creating a new tree. Save previous in a list my dude
         DialogueTree = new BinarySearchTree<DialogueMessage>();
@@ -510,3 +511,5 @@ public class DialogueEditor : EditorWindow
 
     }
 }
+
+// 503-576-9270

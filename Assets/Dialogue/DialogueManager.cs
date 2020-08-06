@@ -33,6 +33,7 @@ public class DialogueManager : MonoBehaviour
 
     public TextMeshProUGUI rendering;
     public TextMeshProUGUI Name;
+    public GameObject Speaker;
 
     public Canvas canvas;
     List<BinarySearchTree<DialogueMessage>> DialougeData;

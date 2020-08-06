@@ -16,6 +16,8 @@ public class DialogueNode : IComparable<DialogueNode>
 
     int FlagToSet = 0;
     int RequiredFlag = 0;
+    int FlagChoice1 = 0;
+    int FlagChoice2 = 0;
     int SetSpeaker = 0;
 
     string JsonData;
@@ -164,23 +166,26 @@ public class DialogueNode : IComparable<DialogueNode>
             case NodeType.FLAG:
                 EditorGUILayout.LabelField("Flag: ");
                 RequiredFlag = EditorGUILayout.Popup(RequiredFlag, Flag);
+
                 break;
 
             case NodeType.DIALOUGE:
                 EditorGUILayout.LabelField("Speaker ID: ");
                 SetSpeaker = EditorGUILayout.Popup(SetSpeaker, SpeakerName.ToArray());
                 DNode.SpeakerID = SpeakerSelection[SetSpeaker];
-                DNode.Name = GUILayout.TextField(DNode.Name);
                 DNode.Line = GUILayout.TextArea(DNode.Line, GUILayout.Height(EditorGUIUtility.singleLineHeight * 5));
                 break;
 
             case NodeType.CHOICE:
                 // List Options and flags they set
-
-                DNode.Choices = new string[2];
+                DNode.Choices = new ChoiceData[2];
                 EditorGUILayout.LabelField("Options");
-                DNode.Choices[0] = EditorGUILayout.TextField(DNode.Choices[0]);
-                DNode.Choices[1] = EditorGUILayout.TextField(DNode.Choices[1]);
+                FlagChoice1 = EditorGUILayout.Popup(FlagChoice1, Flag);
+                FlagChoice2 = EditorGUILayout.Popup(FlagChoice2, Flag);
+                DNode.Choices[0].SetFlag = FlagData[FlagChoice1];
+                DNode.Choices[1].SetFlag = FlagData[FlagChoice2];
+                DNode.Choices[0].ChoiceName = EditorGUILayout.TextField(DNode.Choices[0].ChoiceName);
+                DNode.Choices[1].ChoiceName = EditorGUILayout.TextField(DNode.Choices[1].ChoiceName);
 
                 break;
 

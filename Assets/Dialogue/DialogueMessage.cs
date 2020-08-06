@@ -5,6 +5,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum NodeType { DIALOUGE, FLAG, CHOICE, EVENT }
+public enum NodeDirection { LEFT, RIGHT }
+
+public struct ChoiceData
+{
+    public Flags SetFlag;
+    public string ChoiceName; // Yes, No. No way kid. Absolutely sir.
+    public NodeDirection Dir;
+};
+
 
 [System.Serializable]
 public class DialogueMessage : IComparable<DialogueMessage>
@@ -18,14 +27,12 @@ public class DialogueMessage : IComparable<DialogueMessage>
     private string _ToReturn;
     private string _Line;
 
-    public string[] Choices;
+    public ChoiceData[] Choices;
 
     private Flags _NodeFlag;
     private Flags _FlagToSet;
 
     private NodeType _NodeT;
-
-    private bool _Choice;
 
     public int NpcId;
     public int Quest;
@@ -121,19 +128,6 @@ public class DialogueMessage : IComparable<DialogueMessage>
             _NodeT = value;
         }
 
-    }
-
-    public bool Choice
-    {
-        get
-        {
-            return _Choice;
-        }
-
-        set
-        {
-            _Choice = value;
-        }
     }
 
     public int CompareTo(DialogueMessage obj)
