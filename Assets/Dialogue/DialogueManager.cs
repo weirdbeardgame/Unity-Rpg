@@ -94,7 +94,6 @@ public class DialogueManager : MonoBehaviour
 
         else if (Node != null)
         {
-            Name.text = Node.Name;
             CurrentLine = Node.Line;
             StartCoroutine(AnimateText());
         }
@@ -124,7 +123,6 @@ public class DialogueManager : MonoBehaviour
             NextLine(ScratchPad.Tree.Data);
         }
 
-        Name.text = ScratchPad.Tree.Data.Name;
         rendering.enabled = true;
         canvas.enabled = true;
         Name.enabled = true;

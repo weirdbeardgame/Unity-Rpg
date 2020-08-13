@@ -1,14 +1,112 @@
 ﻿using System;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
+
+public class TreeSerialize<T> : JsonConverter
+{
+
+    private readonly Type[] _types;
+
+    List<T> Temp;
+
+    List<List<T>> TempTrees;
+
+    public TreeSerialize(params Type[] types)
+    {
+        _types = types;
+    }
+
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+
+        TNode<T> Tree = value as TNode<T>;
+
+        TNode<T> ScratchPad = Tree;
+
+        List<TNode<T>> TreeList = new List<TNode<T>>();
+
+        writer.WriteStartArray();
+
+        serializer.Serialize(writer, Tree.Data);
+
+        if (ScratchPad.Parent != null)
+        {
+            TreeList.Add(ScratchPad.Parent);
+            //serializer.Serialize(writer, ScratchPad.Parent);
+        }
+
+        if (ScratchPad.Left != null)
+        {
+            TreeList.Add(ScratchPad.Left);
+            ScratchPad = ScratchPad.Left;
+            //serializer.Serialize(writer, ScratchPad.Left);
+            //WriteJson(writer, ScratchPad.Left, serializer);
+
+        }
+
+        if (ScratchPad.Right != null)
+        {
+            TreeList.Add(ScratchPad.Right);
+            ScratchPad = ScratchPad.Right;
+            //serializer.Serialize(writer, ScratchPad.Right);
+            //WriteJson(writer, ScratchPad.Right, serializer);
+        }
+
+
+        JsonConvert.SerializeObject(TreeList);
+
+    }
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        if (reader.TokenType == JsonToken.Null)
+        {
+            return null;
+        }
+
+        if (reader.TokenType == JsonToken.StartArray)
+        {
+
+            JToken token = JToken.Load(reader);
+
+            TempTrees = token.ToObject<List<List<T>>>();
+
+            //Temp = new List<T>();
+
+            //Temp.Add((T)existingValue);
+
+            /*if (!TempTrees.Contains(Temp))
+            {
+                TempTrees.Add(Temp);
+            }*/
+
+        }
+        return TempTrees;
+
+    }
+
+    public override bool CanRead
+    {
+        get { return false; }
+    }
+
+    public override bool CanConvert(Type objectType)
+    {
+        return _types.Any(t => t == objectType);
+    }
+}
 
 [System.Serializable]
 public class BinarySearchTree<T> where T : IComparable<T>
 {
     int NumElements;
     public TNode<T> Tree;
+
+    List<T> Temp;
 
     bool PlaceFound;
 
@@ -111,16 +209,42 @@ public class BinarySearchTree<T> where T : IComparable<T>
     }
 
 
+    public List<T> GetData()
+    {
+        Temp = new List<T>();
+
+        TNode<T> ScratchPad = Tree;
+
+        if (ScratchPad != null)
+        {
+            Save(ScratchPad);
+        }
+        return Temp;
+    }
+
     public TNode<T> Save(TNode<T> Node)
     {
-    
-        while(Node.Right != null)
+
+        if (!Temp.Contains(Node.Data))
         {
+            Temp.Add(Node.Data);
+        }
+
+        if (Node.Right != null)
+        {
+            if (!Temp.Contains(Node.Right.Data))
+            {
+                Temp.Add(Node.Right.Data);
+            }
             return Save(Node.Right);
         }
 
-        while(Node.Left != null)
+        if (Node.Left != null)
         {
+            if (!Temp.Contains(Node.Left.Data))
+            {
+                Temp.Add(Node.Left.Data);
+            }
             return Save(Node.Left);
         }
 
@@ -210,7 +334,7 @@ public class BinarySearchTree<T> where T : IComparable<T>
 
     public virtual TNode<T> BuildTreeUtil(List<TNode<T>> Nodes, int start, int end)
     {
-        // base case  
+        // base case
         if (start > end)
         {
             return null;
@@ -220,7 +344,7 @@ public class BinarySearchTree<T> where T : IComparable<T>
         int mid = (start + end) / 2;
         TNode<T> node = Nodes[mid];
 
-        /* Using index in DataInorder traversal, construct  
+        /* Using index in DataInorder traversal, construct
            left and right subtress */
         node.Left = BuildTreeUtil(Nodes, start, mid - 1);
         node.Right = BuildTreeUtil(Nodes, mid + 1, end);
@@ -228,14 +352,14 @@ public class BinarySearchTree<T> where T : IComparable<T>
         return node;
     }
 
-    // This functions converts an unbalanced BST to a balanced BST  
+    // This functions converts an unbalanced BST to a balanced BST
     public virtual TNode<T> BalanceTree(TNode<T> root)
     {
-        // Store nodes of given BST in sorted order  
+        // Store nodes of given BST in sorted order
         List<TNode<T>> nodes = new List<TNode<T>>();
         GrabTree(nodes, root);
 
-        // Constucts BST from nodes[]  
+        // Constucts BST from nodes[]
         int n = nodes.Count;
         return BuildTreeUtil(nodes, 0, n - 1);
     }

@@ -24,6 +24,8 @@ public class DialogueEditor : EditorWindow
     List<Flags> FlagData;
     List<string> FlagString;
 
+    public List<List<DialogueMessage>> Temp;
+
     DialogueMessage Message;
 
     int NodeID = 0;
@@ -42,7 +44,8 @@ public class DialogueEditor : EditorWindow
 
     string FilePath = "Assets/Dialogue/Dialogue.json";
     string FlagPath = "Assets/Flags.json";
-    string JsonData;
+    [JsonConverter(typeof(TreeSerialize<DialogueMessage>))]
+    public string JsonData;
 
     [MenuItem("Window/Dialogue")]
     private static void OpenWindow()
@@ -55,24 +58,8 @@ public class DialogueEditor : EditorWindow
     public void OpenWindowEditor(BinarySearchTree<DialogueMessage> Tree, int Quest)
     {
         ReadJson();
-        NodeToCreate = new DialogueNode();
-        Tree.Tree.Data = new DialogueMessage();
-        NodeToCreate.CreateNode("", new Vector2(NodeToCreate.PosX, NodeToCreate.PosY), 250, 150, Style, RightPoint, LeftPoint,
-        OnClickInPoint, OnClickOutPoint, OnClickRemoveNode, ref NodeID, Tree.Tree.Data, NodeType.DIALOUGE);
-
-        AddNode(NodeToCreate, Tree.Tree.Data.NodeT);
-
-        Tree.Tree.Data.Quest = Quest;
-
-        Trees.Add(Tree); // New Tree
-
-        int index = ItemList.Count;
-
-        ItemList.Add("Tree " + index.ToString() + ": ");
-
         DialogueEditor window = GetWindow<DialogueEditor>();
         window.titleContent = new GUIContent("Node Based Editor");
-
         Init = true;
     }
 
@@ -106,43 +93,55 @@ public class DialogueEditor : EditorWindow
         List<BinarySearchTree<DialogueMessage>> ScratchPadTrees = new List<BinarySearchTree<DialogueMessage>>();
         ItemList = new List<string>();
 
-        int index = 0;
+        Temp = new List<List<DialogueMessage>>();
 
+        if (!File.Exists(FilePath))
+        {
+            DialogueTree = new BinarySearchTree<DialogueMessage>();
+            Trees.Add(DialogueTree);
+            ItemList.Add("Tree " + TreeID.ToString() + ": ");
+        }
 
         if (File.Exists(FilePath))
         {
             JsonData = File.ReadAllText(FilePath);
 
-            ScratchPadTrees = JsonConvert.DeserializeObject<List<BinarySearchTree<DialogueMessage>>>(JsonData);
-        }
+            Temp = JsonConvert.DeserializeObject<List<List<DialogueMessage>>>(JsonData, new TreeSerialize<List<List<DialogueMessage>>>());
 
-        for (int i = 0; i < ScratchPadTrees.Count; i++)
-        {
-            DialogueTree = new BinarySearchTree<DialogueMessage>();
-
-            foreach (var Node in ScratchPadTrees[i])
+            for (int i = 0; i < Temp.Count; i++)
             {
+                DialogueTree = new BinarySearchTree<DialogueMessage>();
 
-                if (Node != null)
+                for (int j = 0; j < Temp[i].Count; j++)
                 {
-
-                    NodeToCreate = new DialogueNode();
-                    NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
-                    AddNode(NodeToCreate, Node.NodeT);
+                    DialogueTree.Insert(Temp[i][j]);
                 }
 
-                else
-                {
-                    break;
-                }
+                Trees.Add(DialogueTree); // Saving the currently constructed tree
+                ItemList.Add("Tree " + TreeID.ToString() + ": ");
             }
 
-            Trees.Add(DialogueTree); // Saving the currently constructed tree
-            ItemList.Add("Tree " + index.ToString() + ": ");
+            for (int i = 0; i < Trees.Count; i++)
+            {
+                foreach (var Node in Trees[i])
+                {
+                    if (Node != null)
+                    {
 
-            index++;
+                        NodeToCreate = new DialogueNode();
+                        NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
+                        AddNode(NodeToCreate, Node.NodeT);
+                    }
+
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                TreeID++;
+            }
         }
-
         if (File.Exists(FlagPath))
         {
             JsonData = File.ReadAllText(FlagPath);
@@ -251,7 +250,6 @@ public class DialogueEditor : EditorWindow
 
     void DrawNodes()
     {
-
         if (TreeNodes.Count > 0)
         {
             BinarySearchTree<DialogueNode> ScratchPad = TreeNodes[SelectedTree];
@@ -464,15 +462,11 @@ public class DialogueEditor : EditorWindow
             Trees = new List<BinarySearchTree<DialogueMessage>>();
         }
 
-        if (DialogueTree != null && !Trees.Contains(DialogueTree)) // This solves the ghost copy issue
-        {
-            Trees.Add(DialogueTree);
-        }
-
         // Creating a new tree. Save previous in a list my dude
-        DialogueTree = new BinarySearchTree<DialogueMessage>();
-
-        Trees.Add(DialogueTree);
+        BinarySearchTree<DialogueMessage> Temp = new BinarySearchTree<DialogueMessage>();
+        Trees.Add(Temp);
+        ItemList.Add("Tree " + TreeID.ToString() + ": ");
+        TreeID += 1;
     }
 
 
@@ -499,11 +493,17 @@ public class DialogueEditor : EditorWindow
             Trees.Add(DialogueTree);
         }
 
-        Data = JsonConvert.SerializeObject(Trees,
-                                           new JsonSerializerSettings()
-                                           {
-                                               ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                                           });
+        List<List<DialogueMessage>> TempSave = new List<List<DialogueMessage>>();
+
+        List<DialogueMessage> TempData;
+        for (int i = 0; i < Trees.Count; i++)
+        {
+            TempData = new List<DialogueMessage>();
+            TempData = Trees[i].GetData();
+            TempSave.Add(TempData);
+        }
+
+        Data = JsonConvert.SerializeObject(TempSave, Formatting.Indented);
 
         File.WriteAllText(FilePath, Data);
 
@@ -511,5 +511,3 @@ public class DialogueEditor : EditorWindow
 
     }
 }
-
-// 503-576-9270

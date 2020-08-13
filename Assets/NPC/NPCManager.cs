@@ -11,18 +11,22 @@ public class NPCManager : MonoBehaviour, IReceiver
 {
     List<NPCData> _Data;
     NPCData _Initalizer;
-    string filePath = "Assets/NPC.json";
+    string FilePath = "Assets/NPC.json";
     string NPCData;
 
-    int MapID;
+    string SpeakerPath = "Assets/Speakers.json";
+    string SpeakerData;
+
     Vector2 position;
     bool Collided;
+
+    public int NpcID;
+
+    public List<Speaker> Speakers;
 
     CollisionMessage _Collided;
 
     Queue<object> Inbox; // The Receiver
-
-    Sprite NPCSprite;
 
     DialogueManager manager;
 
@@ -50,58 +54,21 @@ public class NPCManager : MonoBehaviour, IReceiver
     // This is runtime style NPC's
     void Initalize()
     {
-        if (File.Exists(filePath))
+        if (File.Exists(FilePath))
         {
             _Data = new List<NPCData>();
             _Initalizer = new NPCData();
             Inbox = new Queue<object>();
-            NPCData = File.ReadAllText(filePath);
+            NPCData = File.ReadAllText(FilePath);
             _Data = JsonConvert.DeserializeObject<List<NPCData>>(NPCData, settings);
         }
 
-        CreateNPCS();
-    }
-
-    public void CreateNPCS()
-    {
-        MapID = SceneManager.GetActiveScene().buildIndex;
-
-        for (int i = 0; i < _Data.Count; i++)
+        if (File.Exists(SpeakerPath))
         {
-            if (_Data[i].MapID == MapID)
-            {
-                _Data[i].NPC = new GameObject(_Data[i].NpcName);
+            Speakers = new List<Speaker>();
+            SpeakerData = File.ReadAllText(SpeakerPath);
 
-                NPCSprite = Resources.Load<Sprite>(_Data[i].SpritePath);
-
-                _Data[i].NPC.AddComponent<SpriteRenderer>();
-                //_Data[i].NPC.AddComponent<Light2D>();
-                _Data[i].NPC.GetComponent<SpriteRenderer>().sprite = NPCSprite;
-                _Data[i].NPC.GetComponent<SpriteRenderer>().sortingOrder = 1;
-                //_Data[i].NPC.GetComponent<Light2D>().lightType = Light2D.LightType.Point;
-
-
-                position.x = _Data[i].X;
-                position.y = _Data[i].Y;
-
-                _Data[i].NPC.AddComponent<RectTransform>();
-                _Data[i].NPC.GetComponent<RectTransform>().localPosition = position;
-
-                _Data[i].NPC.AddComponent<Rigidbody2D>();
-                _Data[i].NPC.GetComponent<Rigidbody2D>().gravityScale = 0;
-
-                _Data[i].NPC.AddComponent<BoxCollider2D>();
-                _Data[i].NPC.GetComponent<BoxCollider2D>().isTrigger = true;
-
-                _Data[i].NPC.AddComponent<Collision>();
-                _Data[i].NPC.GetComponent<Collision>().Initalize(_Data[i].NpcID);
-
-                _Data[i].NPC.AddComponent<NPCMovement>();
-                _Data[i].NPC.GetComponent<NPCMovement>().Initalize(_Data[i].Directions);
-
-                _Data[i].NPC.AddComponent<Interact>();
-                _Data[i].NPC.GetComponent<Interact>().Message = _Data[i].NpcID;
-            }
+            Speakers = JsonConvert.DeserializeObject<List<Speaker>>(SpeakerData, settings);
         }
     }
 
@@ -120,8 +87,6 @@ public class NPCManager : MonoBehaviour, IReceiver
 
     void Talk()
     {
-        // What I'd need to do first is detect if there was a collission with an NPC's collider.
-
         for (int i = 0; i < _Data.Count; i++)
         {
             if (_Collided.CollidedID == _Data[i].NpcID)

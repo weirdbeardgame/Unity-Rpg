@@ -23,31 +23,21 @@ public class DialogueMessage : IComparable<DialogueMessage>
     private int _Index;
     private Speaker _SpeakerID;
 
-    private string _Name;
     private string _ToReturn;
     private string _Line;
 
     public ChoiceData[] Choices;
 
     private Flags _NodeFlag;
-    private Flags _FlagToSet;
 
     private NodeType _NodeT;
 
     public int NpcId;
     public int Quest;
 
-    public string Name
+    public DialogueMessage()
     {
-        get
-        {
-            return _Name;
-        }
 
-        set
-        {
-            _Name = value;
-        }
     }
 
     public string Line
@@ -100,20 +90,6 @@ public class DialogueMessage : IComparable<DialogueMessage>
             _NodeFlag = value;
         }
     }
-
-    public Flags FlagToSet
-    {
-        get
-        {
-            return _FlagToSet;
-        }
-
-        set
-        {
-            _FlagToSet = value;
-        }
-    }
-
 
     public NodeType NodeT
     {

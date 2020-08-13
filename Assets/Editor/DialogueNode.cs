@@ -15,7 +15,6 @@ public class DialogueNode : IComparable<DialogueNode>
     public int TreeID;
 
     int FlagToSet = 0;
-    int RequiredFlag = 0;
     int FlagChoice1 = 0;
     int FlagChoice2 = 0;
     int SetSpeaker = 0;
@@ -151,22 +150,17 @@ public class DialogueNode : IComparable<DialogueNode>
 
     public void Draw(string[] Flag, List<Flags> FlagData)
     {
-        LeftPoint.Draw();
-        RightPoint.Draw();
-
         GUI.Box(Node, _NodeTitle, _NodeStyle);
 
         GUILayout.BeginArea(new Rect(Node.x, Node.y, 250, 450));
         GUILayout.BeginVertical();
 
-
         switch (DNode.NodeT)
         {
-
             case NodeType.FLAG:
                 EditorGUILayout.LabelField("Flag: ");
-                RequiredFlag = EditorGUILayout.Popup(RequiredFlag, Flag);
-
+                FlagToSet = EditorGUILayout.Popup(FlagToSet, Flag);
+                DNode.Flag = FlagData[FlagToSet];
                 break;
 
             case NodeType.DIALOUGE:
@@ -186,9 +180,7 @@ public class DialogueNode : IComparable<DialogueNode>
                 DNode.Choices[1].SetFlag = FlagData[FlagChoice2];
                 DNode.Choices[0].ChoiceName = EditorGUILayout.TextField(DNode.Choices[0].ChoiceName);
                 DNode.Choices[1].ChoiceName = EditorGUILayout.TextField(DNode.Choices[1].ChoiceName);
-
                 break;
-
         }
 
         GUILayout.EndVertical();
