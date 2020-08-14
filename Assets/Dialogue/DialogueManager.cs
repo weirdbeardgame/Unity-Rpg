@@ -19,8 +19,8 @@ enum DialogueType { CONVERSATION, QUESTION, EVENT };
 
 public class DialogueManager : MonoBehaviour
 {
-    string filePath;
-    string jsonParsed;
+    string FilePath;
+    string JsonParsed;
     string CurrentLine;
 
     int Index;
@@ -35,9 +35,13 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI Name;
     public GameObject Speaker;
 
+
     public Canvas canvas;
     List<BinarySearchTree<DialogueMessage>> DialougeData;
     BinarySearchTree<DialogueMessage> ScratchPad;
+    BinarySearchTree<DialogueMessage> DialogueTree;
+
+    List<List<DialogueMessage>> Temp;
 
     NPCManager NPC;
 
@@ -52,7 +56,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         canvas.enabled = false;
-        filePath = "Assets/Dialogue/Dialogue.json";
+        FilePath = "Assets/Dialogue/Dialogue.json";
         stateMessage = ScriptableObject.CreateInstance<gameStateMessage>() as gameStateMessage;
         DialougeData = new List<BinarySearchTree<DialogueMessage>>();
         _Machine = FindObjectOfType<StateMachine>();
@@ -60,10 +64,30 @@ public class DialogueManager : MonoBehaviour
         Quests = FindObjectOfType<QuestManager>();
         Book = FindObjectOfType<questBook>();
 
-        if (File.Exists(filePath))
+        if (File.Exists(FilePath))
         {
-            jsonParsed = File.ReadAllText(filePath);
-            DialougeData = JsonConvert.DeserializeObject<List<BinarySearchTree<DialogueMessage>>>(jsonParsed);
+
+            Temp = new List<List<DialogueMessage>>();
+            DialogueTree = new BinarySearchTree<DialogueMessage>();
+            DialougeData.Add(DialogueTree);
+
+            JsonParsed = File.ReadAllText(FilePath);
+
+            Temp = JsonConvert.DeserializeObject<List<List<DialogueMessage>>>(JsonParsed, new TreeSerialize<List<List<DialogueMessage>>>());
+
+            for (int i = 0; i < Temp.Count; i++)
+            {
+                DialogueTree = new BinarySearchTree<DialogueMessage>();
+
+                List<DialogueMessage> LoopThrough = Temp[i];
+
+                for (int j = 0; j < LoopThrough.Count; j++)
+                {
+                    DialogueTree.Insert(LoopThrough[j]); // An attempt to construct the tree itself.
+                }
+
+                DialougeData.Add(DialogueTree); // Saving the currently constructed tree
+            }
         }
     }
 

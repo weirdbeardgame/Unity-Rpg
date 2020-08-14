@@ -78,16 +78,6 @@
       "NpcId": 0,
       "Quest": 0,
       "Line": null,
-      "ID": 10,
-      "SpeakerID": null,
-      "Flag": null,
-      "NodeT": 0
-    },
-    {
-      "Choices": null,
-      "NpcId": 0,
-      "Quest": 0,
-      "Line": null,
       "ID": 12,
       "SpeakerID": null,
       "Flag": {
@@ -109,7 +99,11 @@
         "name": "",
         "hideFlags": 0
       },
-      "Flag": null,
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
       "NodeT": 0
     }
   ]

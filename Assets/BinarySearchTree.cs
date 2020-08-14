@@ -466,9 +466,26 @@ public class BinarySearchTree<T> where T : IComparable<T>
         return _Node;
     }
 
-    void Clear() // Clears the entire tree.
+
+    void DeleteBinaryTree(TNode<T> deletor)
     {
 
+        if (deletor == null)
+        {
+            return;
+        }
+
+        DeleteBinaryTree(deletor.Left);
+        DeleteBinaryTree(deletor.Right);
+
+        deletor = null;
+    }
+
+    public void Clear() // Clears the entire tree.
+    {
+        DeleteBinaryTree(Tree);
+        NumElements = 0;
+        Tree = null;
     }
 
     ~BinarySearchTree()

@@ -16,7 +16,6 @@ public class DialogueEditor : EditorWindow
     BinarySearchTree<DialogueNode> DialogueDisplay;
 
     List<BinarySearchTree<DialogueMessage>> Trees;
-    List<BinarySearchTree<DialogueNode>> TreeNodes;
     List<string> ItemList;
     DialogueNode NodeToCreate;
 
@@ -33,6 +32,7 @@ public class DialogueEditor : EditorWindow
     bool Init = false;
 
     int SelectedTree;
+    int SelectedPrevious;
 
     GUIStyle Style;
     GUIStyle RightPoint;
@@ -104,37 +104,36 @@ public class DialogueEditor : EditorWindow
                 ItemList.Add("Tree " + TreeID.ToString() + ": "); // And making it selectable
             }
 
-            for (int i = 0; i < Trees.Count; i++)
+
+            foreach (var Node in Trees[SelectedTree])
             {
-                foreach (var Node in Trees[i])
+                if (Node != null)
                 {
-                    if (Node != null)
-                    {
 
-                        NodeToCreate = new DialogueNode();
-                        NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
-                        AddNode(NodeToCreate, Node.NodeT);
-                    }
-
-                    else
-                    {
-                        break;
-                    }
+                    NodeToCreate = new DialogueNode();
+                    NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
+                    AddNode(NodeToCreate, Node.NodeT);
                 }
 
-                TreeID++;
+                else
+                {
+                    break;
+                }
             }
-        }
-        if (File.Exists(FlagPath))
-        {
-            JsonData = File.ReadAllText(FlagPath);
-            FlagData = JsonConvert.DeserializeObject<List<Flags>>(JsonData);
 
-            FlagString = new List<string>();
+            TreeID++;
 
-            for (int i = 0; i < FlagData.Count; i++)
+            if (File.Exists(FlagPath))
             {
-                FlagString.Add(FlagData[i].Flag);
+                JsonData = File.ReadAllText(FlagPath);
+                FlagData = JsonConvert.DeserializeObject<List<Flags>>(JsonData);
+
+                FlagString = new List<string>();
+
+                for (int i = 0; i < FlagData.Count; i++)
+                {
+                    FlagString.Add(FlagData[i].Flag);
+                }
             }
         }
     }
@@ -162,7 +161,6 @@ public class DialogueEditor : EditorWindow
         Message.ID = NodeID;
         NodeToCreate.CreateNode("", position, 320, 200, Style, RightPoint, LeftPoint, OnClickRemoveNode, ref NodeID, Message, Type);
 
-        DialogueTree.Insert(Message);
         DialogueDisplay.Insert(NodeToCreate);
         NodeID += 1;
     }
@@ -205,7 +203,6 @@ public class DialogueEditor : EditorWindow
             Trees = new List<BinarySearchTree<DialogueMessage>>();
 
             DialogueDisplay = new BinarySearchTree<DialogueNode>();
-            TreeNodes = new List<BinarySearchTree<DialogueNode>>();
 
             ReadJson();
 
@@ -219,7 +216,7 @@ public class DialogueEditor : EditorWindow
             ProcessEvents(Event.current);
             ProcessNodeEvents(Event.current);
 
-            SelectedTree = EditorGUILayout.Popup(SelectedTree, ItemList.ToArray());
+            ChangeTree();
 
             DrawGrid(20, 0.2f, Color.gray);
             DrawGrid(100, 0.4f, Color.gray);
@@ -228,25 +225,43 @@ public class DialogueEditor : EditorWindow
 
     void DrawNodes()
     {
-        if (TreeNodes.Count > 0)
-        {
-            BinarySearchTree<DialogueNode> ScratchPad = TreeNodes[SelectedTree];
+        BinarySearchTree<DialogueNode> ScratchPad = DialogueDisplay;
 
-            foreach (var DrawNode in ScratchPad)
-            {
-                DrawNode.Draw(FlagString.ToArray(), FlagData);
-            }
+        foreach (var DrawNode in ScratchPad)
+        {
+            DrawNode.Draw(FlagString.ToArray(), FlagData);
         }
 
-        else
-        {
-            BinarySearchTree<DialogueNode> ScratchPad = DialogueDisplay;
+    }
 
-            foreach (var DrawNode in ScratchPad)
+    void ChangeTree()
+    {
+        SelectedPrevious = SelectedTree;
+        SelectedTree = EditorGUILayout.Popup(SelectedTree, ItemList.ToArray());
+
+        if (SelectedTree != SelectedPrevious)
+        {
+            DialogueDisplay.Clear();
+
+            foreach (var Node in Trees[SelectedTree])
             {
-                DrawNode.Draw(FlagString.ToArray(), FlagData);
+                if (Node != null)
+                {
+                    NodeToCreate = new DialogueNode();
+                    NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
+                    AddNode(NodeToCreate, Node.NodeT);
+                }
+
+                else
+                {
+                    break;
+                }
             }
+
+            SelectedPrevious = SelectedTree;
+
         }
+
     }
 
     public void ProcessEvents(Event e)
@@ -290,74 +305,23 @@ public class DialogueEditor : EditorWindow
 
     private void ProcessNodeEvents(Event e)
     {
-        if (TreeNodes != null && TreeNodes.Count > 0)
+
+        BinarySearchTree<DialogueNode> ScratchPad = DialogueDisplay;
+
+        if (ScratchPad != null)
         {
-            BinarySearchTree<DialogueNode> ScratchPad = TreeNodes[SelectedTree];
-
-            if (ScratchPad != null)
+            foreach (var EventNode in ScratchPad)
             {
-                foreach (var EventNode in ScratchPad)
-                {
-                    bool guiChanged = EventNode.ProcessNodeEvents(e);
+                bool guiChanged = EventNode.ProcessNodeEvents(e);
 
-                    if (guiChanged)
-                    {
-                        GUI.changed = true;
-                    }
+                if (guiChanged)
+                {
+                    GUI.changed = true;
                 }
             }
         }
-
-        if (DialogueDisplay != null)
-        {
-            BinarySearchTree<DialogueNode> ScratchPad = DialogueDisplay;
-            if (ScratchPad != null)
-            {
-                foreach (var EventNode in ScratchPad)
-                {
-                    bool guiChanged = EventNode.ProcessNodeEvents(e);
-
-                    if (guiChanged)
-                    {
-                        GUI.changed = true;
-                    }
-                }
-            }
-        }
-
     }
-    private void DrawConnectionLine(Event e)
-    {
-        if (RightPoint != null && LeftPoint == null)
-        {
-            Handles.DrawBezier(
-                SelectedInPoint.Rect.center,
-                e.mousePosition,
-                SelectedInPoint.Rect.center + Vector2.left * 50f,
-                e.mousePosition - Vector2.left * 50f,
-                Color.white,
-                null,
-                2f
-            );
 
-            GUI.changed = true;
-        }
-
-        if (SelectedOutPoint != null && SelectedInPoint == null) // On click with line
-        {
-            Handles.DrawBezier(
-                SelectedOutPoint.Rect.center,
-                e.mousePosition,
-                SelectedOutPoint.Rect.center - Vector2.left * 50f,
-                e.mousePosition + Vector2.left * 50f,
-                Color.white,
-                null,
-                2f
-            );
-
-            GUI.changed = true;
-        }
-    }
 
     public void openContextMenu(Vector2 position)
     {
@@ -386,17 +350,11 @@ public class DialogueEditor : EditorWindow
         TreeID += 1;
     }
 
-
     public void SaveTree()
     {
         if (!Trees.Contains(DialogueTree))
         {
             Trees.Add(DialogueTree);
-        }
-
-        if (!TreeNodes.Contains(DialogueDisplay))
-        {
-            TreeNodes.Add(DialogueDisplay);
         }
 
     }
