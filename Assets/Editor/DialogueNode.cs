@@ -48,15 +48,12 @@ public class DialogueNode : IComparable<DialogueNode>
     private bool IsDragged;
 
     public DialogueMessage DNode;
-    public ConnectionPoints LeftPoint;
-    public ConnectionPoints RightPoint;
 
     [System.NonSerialized]
     public Action<DialogueNode> OnRemoveNode;
 
     public void CreateNode(string NodeTitle, Vector2 Position, float SizeW, float SizeH, GUIStyle NodeStyle,
-    GUIStyle inPointStyle, GUIStyle outPointStyle, Action<ConnectionPoints> OnClickInPoint,
-    Action<ConnectionPoints> OnClickOutPoint, Action<DialogueNode> RemoveNode, ref int ID, NodeType Type)
+    GUIStyle inPointStyle, GUIStyle outPointStyle, Action<DialogueNode> RemoveNode, ref int ID, NodeType Type)
     {
         _NodeStyle = NodeStyle;
         _NodeTitle = NodeTitle;
@@ -80,9 +77,6 @@ public class DialogueNode : IComparable<DialogueNode>
             }
         }
 
-        LeftPoint = new ConnectionPoints(this, Link.LEFT, inPointStyle, OnClickInPoint);
-        RightPoint = new ConnectionPoints(this, Link.RIGHT, outPointStyle, OnClickOutPoint);
-
         OnRemoveNode = RemoveNode;
 
         Node = new Rect(Position.x, Position.y, SizeW, SizeH);
@@ -92,8 +86,7 @@ public class DialogueNode : IComparable<DialogueNode>
 
 
     public void CreateNode(string NodeTitle, Vector2 Position, float SizeW, float SizeH, GUIStyle NodeStyle,
-        GUIStyle inPointStyle, GUIStyle outPointStyle, Action<ConnectionPoints> OnClickInPoint,
-        Action<ConnectionPoints> OnClickOutPoint, Action<DialogueNode> RemoveNode, ref int ID, DialogueMessage MNode, NodeType Type)
+        GUIStyle inPointStyle, GUIStyle outPointStyle, Action<DialogueNode> RemoveNode, ref int ID, DialogueMessage MNode, NodeType Type)
     {
         _NodeStyle = NodeStyle;
         _NodeTitle = NodeTitle;
@@ -125,9 +118,6 @@ public class DialogueNode : IComparable<DialogueNode>
 
         PosX = Position.x;
         PosY = Position.y;
-
-        LeftPoint = new ConnectionPoints(this, Link.LEFT, inPointStyle, OnClickInPoint);
-        RightPoint = new ConnectionPoints(this, Link.RIGHT, outPointStyle, OnClickOutPoint);
 
         OnRemoveNode = RemoveNode;
 

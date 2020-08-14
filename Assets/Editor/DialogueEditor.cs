@@ -14,7 +14,6 @@ public class DialogueEditor : EditorWindow
 
     BinarySearchTree<DialogueMessage> DialogueTree;
     BinarySearchTree<DialogueNode> DialogueDisplay;
-    List<Connection> Connections;
 
     List<BinarySearchTree<DialogueMessage>> Trees;
     List<BinarySearchTree<DialogueNode>> TreeNodes;
@@ -66,25 +65,6 @@ public class DialogueEditor : EditorWindow
 
     private void OnClickRemoveNode(DialogueNode node)
     {
-        if (Connections != null)
-        {
-            List<Connection> connectionsToRemove = new List<Connection>();
-
-            for (int i = 0; i < Connections.Count; i++)
-            {
-                if (Connections[i].InPoint == node.LeftPoint || Connections[i].OutPoint == node.RightPoint)
-                {
-                    connectionsToRemove.Add(Connections[i]);
-                }
-            }
-
-            for (int i = 0; i < connectionsToRemove.Count; i++)
-            {
-                Connections.Remove(connectionsToRemove[i]);
-            }
-
-            connectionsToRemove = null;
-        }
         DialogueDisplay.Remove(node, DialogueDisplay.Tree);
     }
 
@@ -112,13 +92,16 @@ public class DialogueEditor : EditorWindow
             {
                 DialogueTree = new BinarySearchTree<DialogueMessage>();
 
-                for (int j = 0; j < Temp[i].Count; j++)
+                List<DialogueMessage> LoopThrough = Temp[i];
+
+                for (int j = 0; j < LoopThrough.Count; j++)
                 {
-                    DialogueTree.Insert(Temp[i][j]);
+                    DialogueTree.Insert(LoopThrough[j]); // An attempt to construct the tree itself.
                 }
 
+                TreeID = i;
                 Trees.Add(DialogueTree); // Saving the currently constructed tree
-                ItemList.Add("Tree " + TreeID.ToString() + ": ");
+                ItemList.Add("Tree " + TreeID.ToString() + ": "); // And making it selectable
             }
 
             for (int i = 0; i < Trees.Count; i++)
@@ -129,7 +112,7 @@ public class DialogueEditor : EditorWindow
                     {
 
                         NodeToCreate = new DialogueNode();
-                        NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
+                        NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
                         AddNode(NodeToCreate, Node.NodeT);
                     }
 
@@ -177,7 +160,7 @@ public class DialogueEditor : EditorWindow
 
         Message = new DialogueMessage();
         Message.ID = NodeID;
-        NodeToCreate.CreateNode("", position, 320, 200, Style, RightPoint, LeftPoint, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode, ref NodeID, Message, Type);
+        NodeToCreate.CreateNode("", position, 320, 200, Style, RightPoint, LeftPoint, OnClickRemoveNode, ref NodeID, Message, Type);
 
         DialogueTree.Insert(Message);
         DialogueDisplay.Insert(NodeToCreate);
@@ -206,9 +189,8 @@ public class DialogueEditor : EditorWindow
         Node.DNode.Flag = new Flags();
         Message = new DialogueMessage();
         Message.ID = NodeID;
-        Node.CreateNode("", new Vector2(Node.PosX, Node.PosY), 250, 150, Style, LeftPoint, RightPoint, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode, ref NodeID, Node.DNode, Type);
+        Node.CreateNode("", new Vector2(Node.PosX, Node.PosY), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node.DNode, Type);
 
-        DialogueTree.Insert(Message);
         DialogueDisplay.Insert(Node);
         NodeID += 1;
     }
@@ -225,7 +207,6 @@ public class DialogueEditor : EditorWindow
             DialogueDisplay = new BinarySearchTree<DialogueNode>();
             TreeNodes = new List<BinarySearchTree<DialogueNode>>();
 
-            Connections = new List<Connection>();
             ReadJson();
 
             Init = true;
@@ -237,9 +218,6 @@ public class DialogueEditor : EditorWindow
 
             ProcessEvents(Event.current);
             ProcessNodeEvents(Event.current);
-
-            DrawConnections();
-            DrawConnectionLine(Event.current);
 
             SelectedTree = EditorGUILayout.Popup(SelectedTree, ItemList.ToArray());
 
@@ -282,67 +260,6 @@ public class DialogueEditor : EditorWindow
                     openContextMenu(e.mousePosition);
                 }
                 break;
-        }
-    }
-
-    private void OnClickInPoint(ConnectionPoints InPoint)
-    {
-        SelectedInPoint = InPoint;
-
-        if (SelectedOutPoint != null)
-        {
-            if (SelectedOutPoint.Rect != SelectedInPoint.Rect)
-            {
-                CreateConnection();
-                ClearConnectionSelection();
-            }
-            else
-            {
-                ClearConnectionSelection();
-            }
-        }
-    }
-
-    private void OnClickOutPoint(ConnectionPoints OutPoint)
-    {
-        SelectedOutPoint = OutPoint;
-        if (SelectedInPoint != null)
-        {
-            CreateConnection();
-            ClearConnectionSelection();
-
-        }
-    }
-
-    private void OnClickRemoveConnection(Connection Connection)
-    {
-        Connections.Remove(Connection);
-    }
-
-    private void CreateConnection()
-    {
-        if (Connections == null)
-        {
-            Connections = new List<Connection>();
-        }
-
-        Connections.Add(new Connection(SelectedInPoint, SelectedOutPoint, OnClickRemoveConnection));
-    }
-
-    private void ClearConnectionSelection()
-    {
-        SelectedInPoint = null;
-        SelectedOutPoint = null;
-    }
-
-    void DrawConnections()
-    {
-        if (Connections != null)
-        {
-            for (int i = 0; i < Connections.Count; i++)
-            {
-                Connections[i].Draw();
-            }
         }
     }
 
