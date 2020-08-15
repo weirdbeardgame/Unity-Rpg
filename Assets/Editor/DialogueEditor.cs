@@ -161,6 +161,7 @@ public class DialogueEditor : EditorWindow
         Message.ID = NodeID;
         NodeToCreate.CreateNode("", position, 320, 200, Style, RightPoint, LeftPoint, OnClickRemoveNode, ref NodeID, Message, Type);
 
+        DialogueTree.Insert(Message);
         DialogueDisplay.Insert(NodeToCreate);
         NodeID += 1;
     }

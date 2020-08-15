@@ -107,5 +107,21 @@
       "NodeT": 0
     }
   ],
-  []
+  [
+    {
+      "Choices": null,
+      "NpcId": 0,
+      "Quest": 0,
+      "Line": "Huh? Oh sure, here you go kid.",
+      "ID": 18,
+      "SpeakerID": {
+        "SpeakerID": 4,
+        "SpeakerName": "Tosh",
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": null,
+      "NodeT": 0
+    }
+  ]
 ]
