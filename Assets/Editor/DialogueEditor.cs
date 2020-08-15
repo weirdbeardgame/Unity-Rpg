@@ -63,9 +63,9 @@ public class DialogueEditor : EditorWindow
     }
 
 
-    private void OnClickRemoveNode(DialogueNode node)
+    private void OnClickRemoveNode(DialogueMessage node)
     {
-        DialogueDisplay.Remove(node, DialogueDisplay.Tree);
+        DialogueTree.Remove(node, DialogueTree.Tree);
     }
 
     public void ReadJson()
@@ -249,7 +249,7 @@ public class DialogueEditor : EditorWindow
                 if (Node != null)
                 {
                     NodeToCreate = new DialogueNode();
-                    NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
+                    //.NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
                     AddNode(NodeToCreate, Node.NodeT);
                 }
 
