@@ -6,6 +6,8 @@ using UnityEngine;
 
 public enum NodeType { DIALOUGE, FLAG, CHOICE, EVENT }
 public enum NodeDirection { LEFT, RIGHT }
+public enum FlagReqSet { REQUIRED, SET }
+
 
 public struct ChoiceData
 {
@@ -31,6 +33,8 @@ public class DialogueMessage : IComparable<DialogueMessage>
     private Flags _NodeFlag;
 
     private NodeType _NodeT;
+
+    private FlagReqSet _FlagType;
 
     public int NpcId;
     public int Quest;
@@ -104,6 +108,19 @@ public class DialogueMessage : IComparable<DialogueMessage>
             _NodeT = value;
         }
 
+    }
+
+    public FlagReqSet FlagType
+    {
+        get
+        {
+            return _FlagType;
+        }
+
+        set
+        {
+            _FlagType = value;
+        }
     }
 
     public int CompareTo(DialogueMessage obj)

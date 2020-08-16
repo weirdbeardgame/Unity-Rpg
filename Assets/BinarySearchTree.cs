@@ -152,7 +152,6 @@ public class BinarySearchTree<T> where T : IComparable<T>
                 if (ScratchPad.Left == null)
                 {
                     PlaceFound = true;
-                    Temp.NodeID += 1;
                     ScratchPad.Left = Temp;
                     Temp.Parent = ScratchPad;
                     NumElements += 1;
@@ -171,7 +170,6 @@ public class BinarySearchTree<T> where T : IComparable<T>
                 if (ScratchPad.Right == null)
                 {
                     PlaceFound = true;
-                    Temp.NodeID += 1;
                     ScratchPad.Right = Temp;
                     Temp.Parent = ScratchPad;
                     NumElements += 1;
@@ -183,6 +181,11 @@ public class BinarySearchTree<T> where T : IComparable<T>
                     ScratchPad = ScratchPad.Right;
                 }
             }
+
+            /*else
+            {
+                break;
+            }*/
         }
     }
 

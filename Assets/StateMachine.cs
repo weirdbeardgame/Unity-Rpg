@@ -55,7 +55,6 @@ public class Flags
 
     }
 
-
     public bool Activate()
     {
         return _IsActive = true;

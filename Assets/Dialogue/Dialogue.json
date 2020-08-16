@@ -12,7 +12,8 @@
         "ID": 0,
         "SubFlag": false
       },
-      "NodeT": 1
+      "NodeT": 1,
+      "FlagType": 0
     },
     {
       "Choices": null,
@@ -31,7 +32,8 @@
         "ID": 0,
         "SubFlag": false
       },
-      "NodeT": 0
+      "NodeT": 0,
+      "FlagType": 0
     },
     {
       "Choices": null,
@@ -50,7 +52,8 @@
         "ID": 0,
         "SubFlag": false
       },
-      "NodeT": 0
+      "NodeT": 0,
+      "FlagType": 0
     },
     {
       "Choices": null,
@@ -69,7 +72,8 @@
         "ID": 0,
         "SubFlag": false
       },
-      "NodeT": 0
+      "NodeT": 0,
+      "FlagType": 0
     }
   ],
   [
@@ -85,7 +89,8 @@
         "ID": 0,
         "SubFlag": false
       },
-      "NodeT": 1
+      "NodeT": 1,
+      "FlagType": 0
     },
     {
       "Choices": null,
@@ -104,7 +109,8 @@
         "ID": 0,
         "SubFlag": false
       },
-      "NodeT": 0
+      "NodeT": 0,
+      "FlagType": 0
     },
     {
       "Choices": null,
@@ -119,7 +125,8 @@
         "hideFlags": 0
       },
       "Flag": null,
-      "NodeT": 0
+      "NodeT": 0,
+      "FlagType": 0
     }
   ]
 ]

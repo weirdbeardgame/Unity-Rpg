@@ -66,6 +66,24 @@ public class DialogueEditor : EditorWindow
     private void OnClickRemoveNode(DialogueMessage node)
     {
         DialogueTree.Remove(node, DialogueTree.Tree);
+        DialogueDisplay.Clear();
+        foreach (var Node in Trees[SelectedTree])
+        {
+            if (Node != null)
+            {
+                NodeToCreate = new DialogueNode();
+                NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
+                AddNode(NodeToCreate, Node.NodeT);
+            }
+
+            else
+            {
+                break;
+            }
+        }
+
+        SelectedPrevious = SelectedTree;
+
     }
 
     public void ReadJson()
@@ -186,8 +204,6 @@ public class DialogueEditor : EditorWindow
 
         Size = new Vector2(400, 150);
         Node.DNode.Flag = new Flags();
-        Message = new DialogueMessage();
-        Message.ID = NodeID;
         Node.CreateNode("", new Vector2(Node.PosX, Node.PosY), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node.DNode, Type);
 
         DialogueDisplay.Insert(Node);
@@ -243,13 +259,14 @@ public class DialogueEditor : EditorWindow
         if (SelectedTree != SelectedPrevious)
         {
             DialogueDisplay.Clear();
+            DialogueTree = Trees[SelectedTree];
 
-            foreach (var Node in Trees[SelectedTree])
+            foreach (var Node in DialogueTree)
             {
                 if (Node != null)
                 {
                     NodeToCreate = new DialogueNode();
-                    //.NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
+                    NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
                     AddNode(NodeToCreate, Node.NodeT);
                 }
 
@@ -322,7 +339,6 @@ public class DialogueEditor : EditorWindow
             }
         }
     }
-
 
     public void openContextMenu(Vector2 position)
     {

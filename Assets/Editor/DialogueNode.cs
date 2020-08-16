@@ -15,6 +15,7 @@ public class DialogueNode : IComparable<DialogueNode>
     public int TreeID;
 
     int FlagToSet = 0;
+    int FlagType = 0;
     int FlagChoice1 = 0;
     int FlagChoice2 = 0;
     int SetSpeaker = 0;
@@ -98,21 +99,33 @@ public class DialogueNode : IComparable<DialogueNode>
 
         DNode.NodeT = Type;
 
-        if (Type == NodeType.DIALOUGE)
+        switch (Type)
         {
-
-            if (File.Exists(FilePath))
-            {
-                JsonData = File.ReadAllText(FilePath);
-                SpeakerSelection = JsonConvert.DeserializeObject<List<Speaker>>(JsonData);
-
-                SpeakerName = new List<string>();
-
-                for (int i = 0; i < SpeakerSelection.Count; i++)
+            case NodeType.DIALOUGE:
+                if (File.Exists(FilePath))
                 {
-                    SpeakerName.Add(SpeakerSelection[i].SpeakerName);
+                    JsonData = File.ReadAllText(FilePath);
+                    SpeakerSelection = JsonConvert.DeserializeObject<List<Speaker>>(JsonData);
+
+                    SpeakerName = new List<string>();
+
+                    for (int i = 0; i < SpeakerSelection.Count; i++)
+                    {
+                        SpeakerName.Add(SpeakerSelection[i].SpeakerName);
+                    }
                 }
-            }
+                break;
+
+            case NodeType.FLAG:
+                DNode.Flag = new Flags();
+                FlagToSet = 0;
+                break;
+
+            case NodeType.CHOICE:
+                DNode.Choices = new ChoiceData[2];
+                FlagChoice1 = 0;
+                FlagChoice2 = 0;
+                break;
 
         }
 
@@ -150,6 +163,8 @@ public class DialogueNode : IComparable<DialogueNode>
             case NodeType.FLAG:
                 EditorGUILayout.LabelField("Flag: ");
                 FlagToSet = EditorGUILayout.Popup(FlagToSet, Flag);
+                EditorGUILayout.LabelField("Is Required?");
+                DNode.FlagType = (FlagReqSet)EditorGUILayout.EnumPopup(DNode.FlagType);
                 DNode.Flag = FlagData[FlagToSet];
                 break;
 
@@ -162,7 +177,6 @@ public class DialogueNode : IComparable<DialogueNode>
 
             case NodeType.CHOICE:
                 // List Options and flags they set
-                DNode.Choices = new ChoiceData[2];
                 EditorGUILayout.LabelField("Options");
                 FlagChoice1 = EditorGUILayout.Popup(FlagChoice1, Flag);
                 FlagChoice2 = EditorGUILayout.Popup(FlagChoice2, Flag);
