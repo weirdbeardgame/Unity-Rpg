@@ -44,6 +44,11 @@ public class DialogueMessage : IComparable<DialogueMessage>
 
     }
 
+    public DialogueMessage(ref int mID)
+    {
+        _ID = mID;
+    }
+
     public string Line
     {
         get

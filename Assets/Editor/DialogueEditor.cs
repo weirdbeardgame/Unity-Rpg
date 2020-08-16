@@ -93,6 +93,20 @@ public class DialogueEditor : EditorWindow
 
         Temp = new List<List<DialogueMessage>>();
 
+
+        if (File.Exists(FlagPath))
+        {
+            JsonData = File.ReadAllText(FlagPath);
+            FlagData = JsonConvert.DeserializeObject<List<Flags>>(JsonData);
+
+            FlagString = new List<string>();
+
+            for (int i = 0; i < FlagData.Count; i++)
+            {
+                FlagString.Add(FlagData[i].Flag);
+            }
+        }
+
         if (!File.Exists(FilePath))
         {
             DialogueTree = new BinarySearchTree<DialogueMessage>();
@@ -106,52 +120,50 @@ public class DialogueEditor : EditorWindow
 
             Temp = JsonConvert.DeserializeObject<List<List<DialogueMessage>>>(JsonData, new TreeSerialize<List<List<DialogueMessage>>>());
 
-            for (int i = 0; i < Temp.Count; i++)
+            if (Temp == null || Temp.Count <= 0)
             {
                 DialogueTree = new BinarySearchTree<DialogueMessage>();
-
-                List<DialogueMessage> LoopThrough = Temp[i];
-
-                for (int j = 0; j < LoopThrough.Count; j++)
-                {
-                    DialogueTree.Insert(LoopThrough[j]); // An attempt to construct the tree itself.
-                }
-
-                TreeID = i;
-                Trees.Add(DialogueTree); // Saving the currently constructed tree
-                ItemList.Add("Tree " + TreeID.ToString() + ": "); // And making it selectable
+                DialogueDisplay = new BinarySearchTree<DialogueNode>();
+                Trees.Add(DialogueTree);
+                ItemList.Add("Tree " + TreeID.ToString() + ": ");
             }
 
-
-            foreach (var Node in Trees[SelectedTree])
+            else
             {
-                if (Node != null)
+                for (int i = 0; i < Temp.Count; i++)
                 {
+                    DialogueTree = new BinarySearchTree<DialogueMessage>();
 
-                    NodeToCreate = new DialogueNode();
-                    NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
-                    AddNode(NodeToCreate, Node.NodeT);
+                    List<DialogueMessage> LoopThrough = Temp[i];
+
+                    for (int j = 0; j < LoopThrough.Count; j++)
+                    {
+                        DialogueTree.Insert(LoopThrough[j]); // An attempt to construct the tree itself.
+                    }
+
+                    TreeID = i;
+                    Trees.Add(DialogueTree); // Saving the currently constructed tree
+                    ItemList.Add("Tree " + TreeID.ToString() + ": "); // And making it selectable
                 }
 
-                else
+
+                foreach (var Node in Trees[SelectedTree])
                 {
-                    break;
+                    if (Node != null)
+                    {
+
+                        NodeToCreate = new DialogueNode();
+                        NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
+                        AddNode(NodeToCreate, Node.NodeT);
+                    }
+
+                    else
+                    {
+                        break;
+                    }
                 }
-            }
 
-            TreeID++;
-
-            if (File.Exists(FlagPath))
-            {
-                JsonData = File.ReadAllText(FlagPath);
-                FlagData = JsonConvert.DeserializeObject<List<Flags>>(JsonData);
-
-                FlagString = new List<string>();
-
-                for (int i = 0; i < FlagData.Count; i++)
-                {
-                    FlagString.Add(FlagData[i].Flag);
-                }
+                TreeID++;
             }
         }
     }
@@ -175,8 +187,7 @@ public class DialogueEditor : EditorWindow
         LeftPoint.active.background = EditorGUIUtility.Load("builtin skins/darkskin/images/btn right on.png") as Texture2D;
         LeftPoint.border = new RectOffset(4, 4, 12, 12);
 
-        Message = new DialogueMessage();
-        Message.ID = NodeID;
+        Message = new DialogueMessage(ref NodeID);
         NodeToCreate.CreateNode("", position, 320, 200, Style, RightPoint, LeftPoint, OnClickRemoveNode, ref NodeID, Message, Type);
 
         DialogueTree.Insert(Message);
@@ -242,13 +253,16 @@ public class DialogueEditor : EditorWindow
 
     void DrawNodes()
     {
-        BinarySearchTree<DialogueNode> ScratchPad = DialogueDisplay;
 
-        foreach (var DrawNode in ScratchPad)
+        if (DialogueDisplay.Size > 0)
         {
-            DrawNode.Draw(FlagString.ToArray(), FlagData);
-        }
+            BinarySearchTree<DialogueNode> ScratchPad = DialogueDisplay;
 
+            foreach (var DrawNode in ScratchPad)
+            {
+                DrawNode.Draw(FlagString.ToArray(), FlagData);
+            }
+        }
     }
 
     void ChangeTree()

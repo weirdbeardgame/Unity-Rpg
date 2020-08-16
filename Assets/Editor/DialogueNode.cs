@@ -135,7 +135,6 @@ public class DialogueNode : IComparable<DialogueNode>
         OnRemoveNode = RemoveNode;
 
         Node = new Rect(Position.x, Position.y, SizeW, SizeH);
-        ID += 1;
         return;
     }
 

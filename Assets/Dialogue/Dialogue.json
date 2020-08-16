@@ -20,6 +20,26 @@
       "NpcId": 0,
       "Quest": 0,
       "Line": "Hey Kid. I need you to get a potion from Tosh for me.",
+      "ID": 1,
+      "SpeakerID": {
+        "SpeakerID": 1,
+        "SpeakerName": "Doku",
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    },
+    {
+      "Choices": null,
+      "NpcId": 0,
+      "Quest": 0,
+      "Line": "Waa! Why I gotta get you a potion!? Can't you get it yourself!?",
       "ID": 2,
       "SpeakerID": {
         "SpeakerID": 0,
@@ -39,11 +59,11 @@
       "Choices": null,
       "NpcId": 0,
       "Quest": 0,
-      "Line": "Waa! Why I gotta get you a potion!? Can't you get it yourself!?",
-      "ID": 4,
+      "Line": "I'm Actually afraid of wolves...",
+      "ID": 3,
       "SpeakerID": {
-        "SpeakerID": 0,
-        "SpeakerName": "Musungo",
+        "SpeakerID": 1,
+        "SpeakerName": "Doku",
         "name": "",
         "hideFlags": 0
       },
@@ -59,21 +79,16 @@
       "Choices": null,
       "NpcId": 0,
       "Quest": 0,
-      "Line": "I'm Actually afraid of wolves...",
-      "ID": 6,
-      "SpeakerID": {
-        "SpeakerID": 0,
-        "SpeakerName": "Musungo",
-        "name": "",
-        "hideFlags": 0
-      },
+      "Line": null,
+      "ID": 8,
+      "SpeakerID": null,
       "Flag": {
-        "Flag": null,
-        "ID": 0,
+        "Flag": "Test 2",
+        "ID": 1,
         "SubFlag": false
       },
-      "NodeT": 0,
-      "FlagType": 0
+      "NodeT": 1,
+      "FlagType": 1
     }
   ],
   [
@@ -82,11 +97,11 @@
       "NpcId": 0,
       "Quest": 0,
       "Line": null,
-      "ID": 12,
+      "ID": 9,
       "SpeakerID": null,
       "Flag": {
-        "Flag": "Test 1",
-        "ID": 0,
+        "Flag": "Test 2",
+        "ID": 1,
         "SubFlag": false
       },
       "NodeT": 1,
@@ -96,19 +111,15 @@
       "Choices": null,
       "NpcId": 0,
       "Quest": 0,
-      "Line": "Umm, Mister Tosh sir? Lord Doku asked me to get a, a potion from you.",
-      "ID": 14,
+      "Line": "Umm, Mister Tosh sir? Lord Doku A, asked me to get a potion from y, you.",
+      "ID": 10,
       "SpeakerID": {
         "SpeakerID": 0,
         "SpeakerName": "Musungo",
         "name": "",
         "hideFlags": 0
       },
-      "Flag": {
-        "Flag": null,
-        "ID": 0,
-        "SubFlag": false
-      },
+      "Flag": null,
       "NodeT": 0,
       "FlagType": 0
     },
@@ -117,7 +128,7 @@
       "NpcId": 0,
       "Quest": 0,
       "Line": "Huh? Oh sure, here you go kid.",
-      "ID": 18,
+      "ID": 11,
       "SpeakerID": {
         "SpeakerID": 4,
         "SpeakerName": "Tosh",
@@ -127,6 +138,21 @@
       "Flag": null,
       "NodeT": 0,
       "FlagType": 0
+    },
+    {
+      "Choices": null,
+      "NpcId": 0,
+      "Quest": 0,
+      "Line": null,
+      "ID": 12,
+      "SpeakerID": null,
+      "Flag": {
+        "Flag": "Test 3",
+        "ID": 2,
+        "SubFlag": false
+      },
+      "NodeT": 1,
+      "FlagType": 1
     }
   ]
 ]
