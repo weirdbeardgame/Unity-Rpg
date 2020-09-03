@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.UI;
 
-
-public class Speaker : ScriptableObject
+[CreateAssetMenu(menuName = "New Speaker")]
+public class SpeakerData : ScriptableObject
 {
-
     public int SpeakerID;
     public string SpeakerName;
-    Sprite SpeakerImage;
+    public GameObject Prefab;
 }

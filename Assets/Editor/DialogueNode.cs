@@ -25,12 +25,12 @@ public class DialogueNode : IComparable<DialogueNode>
     [System.NonSerialized]
     public Rect Node;
 
-    string FilePath = "Assets/Speakers.json";
+    string FilePath = "Assets/NPC.json";
 
-    List<Speaker> SpeakerSelection;
+    List<NPCData> SpeakerSelection;
     List<String> SpeakerName;
 
-    Speaker SelectedSpeaker;
+    NPCData SelectedSpeaker;
 
     NodeType NType;
 
@@ -70,15 +70,17 @@ public class DialogueNode : IComparable<DialogueNode>
         {
             SpeakerName = new List<string>();
             string temp = File.ReadAllText(FilePath);
-            SpeakerSelection = JsonConvert.DeserializeObject<List<Speaker>>(temp);
+            SpeakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(temp);
 
             for (int i = 0; i < SpeakerSelection.Count; i++)
             {
-                SpeakerName.Add(SpeakerSelection[i].SpeakerName);
+                SpeakerName.Add(SpeakerSelection[i].NpcName);
             }
         }
 
         OnRemoveNode = RemoveNode;
+
+        SetSpeaker = DNode.SpeakerID.NpcID;
 
         Node = new Rect(Position.x, Position.y, SizeW, SizeH);
         ID += 1;
@@ -105,13 +107,13 @@ public class DialogueNode : IComparable<DialogueNode>
                 if (File.Exists(FilePath))
                 {
                     JsonData = File.ReadAllText(FilePath);
-                    SpeakerSelection = JsonConvert.DeserializeObject<List<Speaker>>(JsonData);
+                    SpeakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(JsonData);
 
                     SpeakerName = new List<string>();
 
                     for (int i = 0; i < SpeakerSelection.Count; i++)
                     {
-                        SpeakerName.Add(SpeakerSelection[i].SpeakerName);
+                        SpeakerName.Add(SpeakerSelection[i].NpcName);
                     }
                 }
                 break;

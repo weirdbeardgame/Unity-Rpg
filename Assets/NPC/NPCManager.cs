@@ -14,15 +14,10 @@ public class NPCManager : MonoBehaviour, IReceiver
     string FilePath = "Assets/NPC.json";
     string NPCData;
 
-    string SpeakerPath = "Assets/Speakers.json";
-    string SpeakerData;
-
     Vector2 position;
     bool Collided;
 
-    public int NpcID;
-
-    public List<Speaker> Speakers;
+    int NpcID;
 
     CollisionMessage _Collided;
 
@@ -62,14 +57,6 @@ public class NPCManager : MonoBehaviour, IReceiver
             NPCData = File.ReadAllText(FilePath);
             _Data = JsonConvert.DeserializeObject<List<NPCData>>(NPCData, settings);
         }
-
-        if (File.Exists(SpeakerPath))
-        {
-            Speakers = new List<Speaker>();
-            SpeakerData = File.ReadAllText(SpeakerPath);
-
-            Speakers = JsonConvert.DeserializeObject<List<Speaker>>(SpeakerData, settings);
-        }
     }
 
     /*void checkQuest()
@@ -84,21 +71,6 @@ public class NPCManager : MonoBehaviour, IReceiver
            }
        }
    }*/
-
-    void Talk()
-    {
-        for (int i = 0; i < _Data.Count; i++)
-        {
-            if (_Collided.CollidedID == _Data[i].NpcID)
-            {
-                if (_Data[i].Flag == QuestFlag.HAS_QUEST)
-                {
-
-                }
-            }
-
-        }
-    }
 
     public void Subscribe()
     {

@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ public class DialogueMessage : IComparable<DialogueMessage>
 
     private int _ID;
     private int _Index;
-    private Speaker _SpeakerID;
+    private NPCData _SpeakerID;
 
     private string _ToReturn;
     private string _Line;
@@ -74,7 +74,7 @@ public class DialogueMessage : IComparable<DialogueMessage>
         }
     }
 
-    public Speaker SpeakerID
+    public NPCData SpeakerID
     {
         get
         {

@@ -69,7 +69,7 @@
      <Compile Include="Assets\Dialogue\DialogueManager.cs" />
      <Compile Include="Assets\Dialogue\DialogueMessage.cs" />
      <Compile Include="Assets\Dialogue\Interact.cs" />
-     <Compile Include="Assets\Dialogue\Speaker.cs" />
+     <Compile Include="Assets\Dialogue\Speakers\SpeakerData.cs" />
      <Compile Include="Assets\Enemies\Baddies.cs" />
      <Compile Include="Assets\Enemies\Enemies.cs" />
      <Compile Include="Assets\Items\AddItem.cs" />
@@ -366,6 +366,9 @@
  </Reference>
  <Reference Include="UnityEditor">
  <HintPath>/home/musungo/Editors/2019.3.0f6/Editor/Data/Managed/UnityEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>/home/musungo/Coding/RPG/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>/home/musungo/Editors/2019.3.0f6/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

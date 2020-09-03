@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1982843823109176439}
   - component: {fileID: 1982843823109176432}
   - component: {fileID: 1982843823109176436}
+  - component: {fileID: 498698087606107046}
   - component: {fileID: 1982843823109176437}
-  - component: {fileID: 1982843823109176438}
   - component: {fileID: 2953488271752856888}
   m_Layer: 0
   m_Name: NPC
@@ -133,6 +133,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &498698087606107046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982843823109176434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83cfadfeb804ba4d5894035e0a1dcf32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 0
+  Speaker: {fileID: 0}
 --- !u!114 &1982843823109176437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,20 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6effd05b7a2bff544b597a552eab1c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1982843823109176438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982843823109176434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42bbf7eca8675d0c982b83bac7dc58db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NpcID: 0
-  Speakers: []
 --- !u!114 &2953488271752856888
 MonoBehaviour:
   m_ObjectHideFlags: 0

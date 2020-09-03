@@ -22,10 +22,10 @@
       "Line": "Hey Kid. I need you to get a potion from Tosh for me.",
       "ID": 1,
       "SpeakerID": {
-        "SpeakerID": 1,
-        "SpeakerName": "Doku",
-        "name": "",
-        "hideFlags": 0
+        "NpcID": 0,
+        "QuestID": 0,
+        "HasQuest": true,
+        "NpcName": "Doku"
       },
       "Flag": {
         "Flag": null,
@@ -42,10 +42,10 @@
       "Line": "Waa! Why I gotta get you a potion!? Can't you get it yourself!?",
       "ID": 2,
       "SpeakerID": {
-        "SpeakerID": 0,
-        "SpeakerName": "Musungo",
-        "name": "",
-        "hideFlags": 0
+        "NpcID": 2,
+        "QuestID": 0,
+        "HasQuest": false,
+        "NpcName": "Musungo"
       },
       "Flag": {
         "Flag": null,
@@ -62,10 +62,10 @@
       "Line": "I'm Actually afraid of wolves...",
       "ID": 3,
       "SpeakerID": {
-        "SpeakerID": 1,
-        "SpeakerName": "Doku",
-        "name": "",
-        "hideFlags": 0
+        "NpcID": 0,
+        "QuestID": 0,
+        "HasQuest": true,
+        "NpcName": "Doku"
       },
       "Flag": {
         "Flag": null,
@@ -80,11 +80,11 @@
       "NpcId": 0,
       "Quest": 0,
       "Line": null,
-      "ID": 8,
+      "ID": 4,
       "SpeakerID": null,
       "Flag": {
-        "Flag": "Test 2",
-        "ID": 1,
+        "Flag": "Test 1",
+        "ID": 0,
         "SubFlag": false
       },
       "NodeT": 1,
@@ -97,7 +97,7 @@
       "NpcId": 0,
       "Quest": 0,
       "Line": null,
-      "ID": 9,
+      "ID": 5,
       "SpeakerID": null,
       "Flag": {
         "Flag": "Test 2",
@@ -112,12 +112,12 @@
       "NpcId": 0,
       "Quest": 0,
       "Line": "Umm, Mister Tosh sir? Lord Doku A, asked me to get a potion from y, you.",
-      "ID": 10,
+      "ID": 6,
       "SpeakerID": {
-        "SpeakerID": 0,
-        "SpeakerName": "Musungo",
-        "name": "",
-        "hideFlags": 0
+        "NpcID": 2,
+        "QuestID": 0,
+        "HasQuest": false,
+        "NpcName": "Musungo"
       },
       "Flag": null,
       "NodeT": 0,
@@ -128,12 +128,12 @@
       "NpcId": 0,
       "Quest": 0,
       "Line": "Huh? Oh sure, here you go kid.",
-      "ID": 11,
+      "ID": 7,
       "SpeakerID": {
-        "SpeakerID": 4,
-        "SpeakerName": "Tosh",
-        "name": "",
-        "hideFlags": 0
+        "NpcID": 1,
+        "QuestID": 0,
+        "HasQuest": false,
+        "NpcName": "Tosh"
       },
       "Flag": null,
       "NodeT": 0,
@@ -144,7 +144,7 @@
       "NpcId": 0,
       "Quest": 0,
       "Line": null,
-      "ID": 12,
+      "ID": 8,
       "SpeakerID": null,
       "Flag": {
         "Flag": "Test 3",

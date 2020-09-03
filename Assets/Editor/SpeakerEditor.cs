@@ -9,7 +9,7 @@ using System;
 public class SpeakerEditor : EditorWindow
 {
 
-    List<Speaker> Speakers;
+    List<SpeakerData> Speakers;
     string FilePath = "Assets/Speakers.json";
     string JsonData;
 
@@ -17,7 +17,7 @@ public class SpeakerEditor : EditorWindow
     Rect ButtonList;
     Rect TopProperties;
 
-    Speaker Create;
+    SpeakerData Create;
 
     bool Initalized = false;
 
@@ -35,7 +35,7 @@ public class SpeakerEditor : EditorWindow
         if (File.Exists(FilePath))
         {
             JsonData = File.ReadAllText(FilePath);
-            Speakers = JsonConvert.DeserializeObject<List<Speaker>>(JsonData);
+            Speakers = JsonConvert.DeserializeObject<List<SpeakerData>>(JsonData);
         }
 
         else if (!File.Exists(FilePath))
@@ -52,7 +52,7 @@ public class SpeakerEditor : EditorWindow
 
         if (!Initalized)
         {
-            Speakers = new List<Speaker>();
+            Speakers = new List<SpeakerData>();
 
             ButtonList = new Rect(0, 0, 150, position.height);
             TopProperties = new Rect(500, 0, 1000, 150);
@@ -71,9 +71,9 @@ public class SpeakerEditor : EditorWindow
         {
             if (Speakers == null)
             {
-                Speakers = new List<Speaker>();
+                Speakers = new List<SpeakerData>();
             }
-            Create = new Speaker();
+            Create = new SpeakerData();
 
 
 

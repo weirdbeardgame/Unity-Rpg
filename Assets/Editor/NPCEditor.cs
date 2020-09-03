@@ -106,7 +106,6 @@ public class NPCEditor : EditorWindow
         if (GUILayout.Button("New NPC"))
         {
             Temp = new NPCData();
-            Temp.MapID = SceneManager.GetActiveScene().buildIndex;
             Temp.NpcName = NpcName;
             Editable.Add(Temp);
         }
@@ -115,67 +114,22 @@ public class NPCEditor : EditorWindow
         {
 
             //EditorGUILayout.Popup(j, CurrentScene.ToString());
-            MapID = SceneManager.GetActiveScene().buildIndex;
 
-            if (Editable[i].MapID == MapID)
+            fold[i] = EditorGUILayout.Foldout(fold[i], Editable[i].NpcName);
+
+            if (fold[i])
             {
 
-                fold[i] = EditorGUILayout.Foldout(fold[i], Editable[i].NpcName);
+                EditorGUILayout.LabelField("ID");
+                Editable[i].NpcID = EditorGUILayout.IntField(Editable[i].NpcID);
+                EditorGUILayout.LabelField("Name");
+                Editable[i].NpcName = GUILayout.TextField(Editable[i].NpcName);
 
-                if (fold[i])
+                Editable[i].HasQuest = EditorGUILayout.Toggle("Has Quest ", Editable[i].HasQuest);
+
+                if (Editable[i].HasQuest)
                 {
-
-                    EditorGUILayout.LabelField("Map ID");
-                    Editable[i].MapID = EditorGUILayout.IntField(Editable[i].MapID);
-                    EditorGUILayout.LabelField("ID");
-                    Editable[i].NpcID = EditorGUILayout.IntField(Editable[i].NpcID);
-                    EditorGUILayout.LabelField("Name");
-                    Editable[i].NpcName = GUILayout.TextField(Editable[i].NpcName);
-                    EditorGUILayout.LabelField("Sprite Path");
-                    GUILayout.TextField(Editable[i].SpritePath);
-
-                    EditorGUILayout.LabelField("World Position");
-                    EditorGUILayout.LabelField("X: ");
-                    Editable[i].X = EditorGUILayout.FloatField(Editable[i].X);
-                    EditorGUILayout.LabelField("Y: ");
-                    Editable[i].Y = EditorGUILayout.FloatField(Editable[i].Y);
-
-                    Editable[i].HasQuest = EditorGUILayout.Toggle("Has Quest ", Editable[i].HasQuest);
-
-                    if (Editable[i].HasQuest)
-                    {
-                        Editable[i].QuestID = EditorGUILayout.Popup(Editable[i].QuestID, QuestNames.ToArray());
-                    }
-
-                    /*if (GUILayout.Button("Add Dialogue"))
-                    {
-                        // Big HMM on this one
-                    }*/
-
-                    if (GUILayout.Button("Select Sprite"))
-                    {
-                        Editable[i].SpritePath = EditorUtility.OpenFilePanel("Select Sprite: ", "Assets", "png");
-                    }
-
-                    if (GUILayout.Button("UP"))
-                    {
-                        Directions.Add(MoveDirections.UP);
-                    }
-
-                    if (GUILayout.Button("Down"))
-                    {
-                        Directions.Add(MoveDirections.DOWN);
-                    }
-
-                    if (GUILayout.Button("Left"))
-                    {
-                        Directions.Add(MoveDirections.LEFT);
-                    }
-
-                    if (GUILayout.Button("Right"))
-                    {
-                        Directions.Add(MoveDirections.RIGHT);
-                    }
+                    Editable[i].QuestID = EditorGUILayout.Popup(Editable[i].QuestID, QuestNames.ToArray());
                 }
             }
         }
@@ -188,9 +142,7 @@ public class NPCEditor : EditorWindow
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
                 serializer.Serialize(writer, Editable);
-                serializer.Serialize(writer, Directions);
             }
-
         }
     }
 }

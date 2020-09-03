@@ -28,6 +28,8 @@ public class DialogueManager : MonoBehaviour
     int NpcId;
     int QuestDialogue; // For Quest events IE. Tutorials
 
+    int TreeID = 0;
+
     gameStateMessage stateMessage;
     bool Talking = false;
 
@@ -68,25 +70,29 @@ public class DialogueManager : MonoBehaviour
         {
 
             Temp = new List<List<DialogueMessage>>();
-            DialogueTree = new BinarySearchTree<DialogueMessage>();
-            DialougeData.Add(DialogueTree);
 
             JsonParsed = File.ReadAllText(FilePath);
 
-            Temp = JsonConvert.DeserializeObject<List<List<DialogueMessage>>>(JsonParsed, new TreeSerialize<List<List<DialogueMessage>>>());
-
-            for (int i = 0; i < Temp.Count; i++)
+            if (File.Exists(FilePath))
             {
-                DialogueTree = new BinarySearchTree<DialogueMessage>();
+                JsonParsed = File.ReadAllText(FilePath);
 
-                List<DialogueMessage> LoopThrough = Temp[i];
+                Temp = JsonConvert.DeserializeObject<List<List<DialogueMessage>>>(JsonParsed, new TreeSerialize<List<List<DialogueMessage>>>());
 
-                for (int j = 0; j < LoopThrough.Count; j++)
+                for (int i = 0; i < Temp.Count; i++)
                 {
-                    DialogueTree.Insert(LoopThrough[j]); // An attempt to construct the tree itself.
-                }
+                    DialogueTree = new BinarySearchTree<DialogueMessage>();
 
-                DialougeData.Add(DialogueTree); // Saving the currently constructed tree
+                    List<DialogueMessage> LoopThrough = Temp[i];
+
+                    for (int j = 0; j < LoopThrough.Count; j++)
+                    {
+                        DialogueTree.Insert(LoopThrough[j]); // An attempt to construct the tree itself.
+                    }
+
+                    TreeID = i;
+                    DialougeData.Add(DialogueTree); // Saving the currently constructed tree
+                }
             }
         }
     }
