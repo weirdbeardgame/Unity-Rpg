@@ -45,8 +45,6 @@ public class DialogueManager : MonoBehaviour
 
     List<List<DialogueMessage>> Temp;
 
-    NPCManager NPC;
-
     QuestFlag _QuestFlag;
 
     private StateMachine _Machine;
@@ -62,7 +60,6 @@ public class DialogueManager : MonoBehaviour
         stateMessage = ScriptableObject.CreateInstance<gameStateMessage>() as gameStateMessage;
         DialougeData = new List<BinarySearchTree<DialogueMessage>>();
         _Machine = FindObjectOfType<StateMachine>();
-        NPC = FindObjectOfType<NPCManager>();
         Quests = FindObjectOfType<QuestManager>();
         Book = FindObjectOfType<questBook>();
 
@@ -160,21 +157,21 @@ public class DialogueManager : MonoBehaviour
         NextLine(ScratchPad.Tree.Data);
     }
 
-    public void Talk(int ID) // Flags?
+    public void Talk(NPCData Npc) // Flags?
     {
         for (int i = 0; i < DialougeData.Count; i++)
         {
-            if (NPC.NPC[ID].HasQuest)
+            if (Npc.HasQuest)
             {
-                OpenDialogueBox(NPC.NPC[ID].QuestID);
-                Book.Give(Quests.Get(NPC.NPC[ID].QuestID));
-                Debug.Log("Quest " + NPC.NPC[ID].QuestID.ToString() + " Given");
-                NPC.NPC[ID].HasQuest = false;
+                OpenDialogueBox(Npc.QuestID);
+                Book.Give(Quests.Get(Npc.QuestID));
+                Debug.Log("Quest " + Npc.QuestID.ToString() + " Given");
+                Npc.HasQuest = false;
             }
 
             if (DialougeData[i].Tree.Data.NodeT == NodeType.FLAG)
             {
-                if (DialougeData[i].Tree.Data.NpcId == ID && DialougeData[i].Tree.Data.Flag.Flag == _Machine.CurrrentFlag.Flag)
+                if (DialougeData[i].Tree.Data.SpeakerID == Npc && DialougeData[i].Tree.Data.Flag.Flag == _Machine.CurrrentFlag.Flag)
                 {
                     Debug.Log("Incolent fool. Submit!");
 

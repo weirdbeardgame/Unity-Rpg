@@ -98,10 +98,10 @@ public class NPCManager : MonoBehaviour, IReceiver
             _Collided = (CollisionMessage)Inbox.Dequeue();
         }
 
-        if (Input.GetButtonDown("Submit") && _Collided != null)
+        /*if (Input.GetButtonDown("Submit") && _Collided != null)
         {
             Talk();
-        }
+        }*/
 
         /*if ((_Data[0].Flag & QuestFlag.HAS_QUEST) > 0)
           {
