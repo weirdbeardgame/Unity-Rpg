@@ -133,7 +133,7 @@ public class DialogueManager : MonoBehaviour
         Name.text = null;
         canvas.enabled = false;
         Talking = false;
-        stateMessage.construct(States.MAIN);
+        stateMessage.construct(States.MAIN, _Machine.CurrrentFlag);
     }
 
     public void OpenDialogueBox(int Location)
@@ -156,7 +156,7 @@ public class DialogueManager : MonoBehaviour
         Talking = true;
         NextLine(ScratchPad.Tree.Data);
     }
-
+    
     public void Talk(NPCData Npc) // Flags?
     {
         for (int i = 0; i < DialougeData.Count; i++)
@@ -171,11 +171,36 @@ public class DialogueManager : MonoBehaviour
 
             if (DialougeData[i].Tree.Data.NodeT == NodeType.FLAG)
             {
-                if (DialougeData[i].Tree.Data.SpeakerID == Npc && DialougeData[i].Tree.Data.Flag.Flag == _Machine.CurrrentFlag.Flag)
+                switch (DialougeData[i].Tree.Data.FlagType)
                 {
-                    Debug.Log("Incolent fool. Submit!");
 
-                    OpenDialogueBox(i);
+                    case FlagReqSet.REQUIRED:
+                        if (DialougeData[i].Tree.Data.Flag == _Machine.CurrrentFlag)
+                        {
+                            switch (DialougeData[i].Tree.Data.NodeT)
+                            {
+                                case NodeType.DIALOUGE:
+                                    if (DialougeData[i].Tree.Data.SpeakerID == Npc)                            
+                                    {                               
+                                        Debug.Log("Incolent fool. Submit!");                                
+                                        OpenDialogueBox(i);
+                                    }
+                                    break;
+                                
+                                case NodeType.CHOICE:
+                                    // Open associated Dialouge then draw button choices. Traverse tree from there
+                                    break;
+
+                                case NodeType.EVENT:
+                                    //Play animation, Control basic events like Give Item etc.
+                                    break;
+                            }
+                        }
+                        break;
+
+                    case FlagReqSet.SET:
+                        stateMessage.construct(_Machine.State, DialougeData[i].Tree.Data.Flag);
+                        break;
                 }
             }
         }

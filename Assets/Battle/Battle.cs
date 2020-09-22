@@ -119,7 +119,7 @@ public class Battle : MonoBehaviour, IReceiver
             Destroy(BattleObject);
             gameStateMessage Message = ScriptableObject.CreateInstance<gameStateMessage>();
             Unsubscribe();
-            Message.construct(States.MAIN);
+            Message.construct(States.MAIN, null);
             Messenger.Init();
             Destroy(Players);
             BadParty.Clear();

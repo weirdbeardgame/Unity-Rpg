@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1982843823109176436}
   - component: {fileID: 498698087606107046}
   - component: {fileID: 1982843823109176437}
-  - component: {fileID: 2953488271752856888}
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
@@ -145,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83cfadfeb804ba4d5894035e0a1dcf32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
+  NpcId: 0
   Speaker: {fileID: 0}
 --- !u!114 &1982843823109176437
 MonoBehaviour:
@@ -159,16 +158,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6effd05b7a2bff544b597a552eab1c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2953488271752856888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982843823109176434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2516b232328fdcad292edd4f3fa0975d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Message: 0
+  waypoints: []
+  speed: 3

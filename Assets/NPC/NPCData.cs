@@ -17,8 +17,7 @@ public class NPCData
 {
     public int NpcID;
     public int QuestID;
-
     public bool HasQuest;
-
     public string NpcName;
+    public string SpritePath;
 }

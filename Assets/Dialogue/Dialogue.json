@@ -25,7 +25,8 @@
         "NpcID": 0,
         "QuestID": 0,
         "HasQuest": true,
-        "NpcName": "Doku"
+        "NpcName": "Doku",
+        "SpritePath": "C:/Users/final/source/repos/Unity-Rpg/Assets/Resources/Sprites/Characters/Doku/South.png"
       },
       "Flag": {
         "Flag": null,
@@ -45,7 +46,8 @@
         "NpcID": 2,
         "QuestID": 0,
         "HasQuest": false,
-        "NpcName": "Musungo"
+        "NpcName": "Musungo",
+        "SpritePath": null
       },
       "Flag": {
         "Flag": null,
@@ -65,7 +67,8 @@
         "NpcID": 0,
         "QuestID": 0,
         "HasQuest": true,
-        "NpcName": "Doku"
+        "NpcName": "Doku",
+        "SpritePath": "C:/Users/final/source/repos/Unity-Rpg/Assets/Resources/Sprites/Characters/Doku/South.png"
       },
       "Flag": {
         "Flag": null,
@@ -83,8 +86,8 @@
       "ID": 4,
       "SpeakerID": null,
       "Flag": {
-        "Flag": "Test 1",
-        "ID": 0,
+        "Flag": "Test 2",
+        "ID": 1,
         "SubFlag": false
       },
       "NodeT": 1,
@@ -111,15 +114,20 @@
       "Choices": null,
       "NpcId": 0,
       "Quest": 0,
-      "Line": "Umm, Mister Tosh sir? Lord Doku A, asked me to get a potion from y, you.",
+      "Line": "Huh. Oh heya kid!",
       "ID": 6,
       "SpeakerID": {
-        "NpcID": 2,
+        "NpcID": 1,
         "QuestID": 0,
         "HasQuest": false,
-        "NpcName": "Musungo"
+        "NpcName": "Tosh",
+        "SpritePath": "C:/Users/final/source/repos/Unity-Rpg/Assets/Resources/Sprites/Characters/Tosh/South.png"
       },
-      "Flag": null,
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
       "NodeT": 0,
       "FlagType": 0
     },
@@ -127,15 +135,20 @@
       "Choices": null,
       "NpcId": 0,
       "Quest": 0,
-      "Line": "Huh? Oh sure, here you go kid.",
+      "Line": "Umm, Mister Tosh sir? Lord Doku A, asked me to get a potion from y, you.",
       "ID": 7,
       "SpeakerID": {
-        "NpcID": 1,
+        "NpcID": 2,
         "QuestID": 0,
         "HasQuest": false,
-        "NpcName": "Tosh"
+        "NpcName": "Musungo",
+        "SpritePath": null
       },
-      "Flag": null,
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
       "NodeT": 0,
       "FlagType": 0
     },
@@ -153,6 +166,23 @@
       },
       "NodeT": 1,
       "FlagType": 1
+    },
+    {
+      "Choices": null,
+      "NpcId": 0,
+      "Quest": 0,
+      "Line": "Oh sure! Here you go.",
+      "ID": 9,
+      "SpeakerID": {
+        "NpcID": 1,
+        "QuestID": 0,
+        "HasQuest": false,
+        "NpcName": "Tosh",
+        "SpritePath": "C:/Users/final/source/repos/Unity-Rpg/Assets/Resources/Sprites/Characters/Tosh/South.png"
+      },
+      "Flag": null,
+      "NodeT": 0,
+      "FlagType": 0
     }
   ]
 ]

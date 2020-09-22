@@ -6,13 +6,12 @@ public class gameStateMessage : ScriptableObject
 {
 
     Messaging Messenger;
-    private string _Flag;
+    private Flags _Flag;
     private States _CurrentState;
 
-    public void construct(States GameState, string SetFlag = " ")
+    public void construct(States GameState, Flags SetFlag)
     {
         Messenger = FindObjectOfType<Messaging>();
-
         _CurrentState = GameState;
         _Flag = SetFlag;
 
@@ -24,7 +23,7 @@ public class gameStateMessage : ScriptableObject
         return _CurrentState;
     }
 
-    public string GetFlag()
+    public Flags GetFlag()
     {
         return _Flag;
     }

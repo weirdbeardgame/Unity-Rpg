@@ -142,8 +142,12 @@ class StateMachine : MonoBehaviour, IReceiver
         if (Inbox.Count > 0)
         {
             Message = (gameStateMessage)Inbox.Dequeue();
-            _State = Message.GetState();
-            _CurerntFlag.Flag = Message.GetFlag();
+            if (Message.GetState() != null)
+            {
+                _State = Message.GetState();
+            }
+                
+            _CurerntFlag = Message.GetFlag();
             _CurerntFlag.Activate();
         }
     }

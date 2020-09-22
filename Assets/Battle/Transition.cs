@@ -89,7 +89,7 @@ public class Transition : MonoBehaviour
 
 
                 batttleStartMessage = ScriptableObject.CreateInstance<gameStateMessage>();
-                batttleStartMessage.construct(States.BATTLE);
+                batttleStartMessage.construct(States.BATTLE, states.CurrrentFlag);
 
                 message.Init();
 

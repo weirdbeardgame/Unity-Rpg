@@ -240,14 +240,14 @@ namespace menu
                 switch (state.State)
                 {
                     case States.MAIN:
-                        StateMessage.construct(States.PAUSE);
+                        StateMessage.construct(States.PAUSE, state.CurrrentFlag);
                         Panel.GetComponent<Image>().enabled = true;
                         OpenMenu(0);
                         _WidgetIndex = 0;
                         break;
 
                     case States.PAUSE:
-                        StateMessage.construct(States.MAIN);
+                        StateMessage.construct(States.MAIN, state.CurrrentFlag);
                         Close();
                         break;
                 }

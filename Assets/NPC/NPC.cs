@@ -4,24 +4,55 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    public int ID;
+    public int NpcId;
     public SpeakerData Speaker;
-    NPCData NPCData;
+    public NPCData NpcData;
+    NPCManager NpcM;
 
-    void ApplySprite()
+    DialogueManager Dialogue;
+
+    private void Start()
     {
-        // When editing NPC's. Auto show the selected NPC ingame world
+        Dialogue = FindObjectOfType<DialogueManager>();
+        NpcM = FindObjectOfType<NPCManager>();
     }
 
+    bool Collided;
+
+    void ApplyNPC()
+    {
+        // When editing NPC's. Auto show the selected NPC ingame world
+        NpcData = NpcM.NPC[NpcId];
+        //GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(NpcData.SpritePath);
+    }
 
     void Talk()
     {
+        Dialogue.Talk(NpcData);
+    }
 
-        // Issues to solve with this.
-        // A. Pass the gameobject for speaker data
-        // B. Proper flags detection
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Collided = true;
+        }
+
+        else
+        {
+            Collided = false;
+        }
 
     }
 
 
+    private void Update()
+    {
+        ApplyNPC();
+
+        if (Input.GetButtonDown("Submit") && Collided )
+        {
+            Talk();
+        }
+    }
 }

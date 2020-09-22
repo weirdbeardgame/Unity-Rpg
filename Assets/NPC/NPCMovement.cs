@@ -7,110 +7,34 @@ using Newtonsoft.Json.Linq;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
-public enum MoveDirections { UP, DOWN, LEFT, RIGHT, STOP, RESET }
-
 public class NPCMovement : MonoBehaviour
 {
-    Vector3 direction;
+    public List<Vector3> waypoints; // A List of tagged waypoints
 
-    float movementSpeed;
+    //Vector3 currentWaypoint;
+    int currentWaypoint = 0;
 
-    int moveToX;
-    int moveToY;
-
-    // The valid movespace
-    int boxX;
-    int boxY;
-
-    float CurrentTime;
-
-    int MovementIndex = 0;
-
-    [JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
-    List<MoveDirections> Directions;
+    public float speed = 3f;
 
     private void Start()
     {
-        Directions = new List<MoveDirections>();
+
+        //currentWaypoint = waypoints[0];
     }
-
-
-    public void Initalize(List<MoveDirections> Dir)
-    {
-        Directions = new List<MoveDirections>();
-        Directions = Dir;
-        Move();
-
-    }
-
-    public int GetCount()
-    {
-        return Directions.Count;
-    }
-
-    // What I need is to concatanate the same command over and over again. 
-    // So If there's multiple UP they should be put into one slot with a 
-    // Multiplier that dictates the amount of times that command occurs? 
-
-    //You Dumb Bitch you forgot DeltaTime!
-
-    public void Move()
-    {
-        for (int i = 0; i < Directions.Count; i += 1)
-        {
-            switch (Directions[i])
-            {
-                case MoveDirections.DOWN:
-                    movementSpeed = 2;
-                    direction.y = -1;
-                    GetComponent<RectTransform>().position += direction * movementSpeed;
-                    break;
-                case MoveDirections.UP:
-                    movementSpeed = 2;
-                    direction.y = 1;
-                    GetComponent<RectTransform>().position += direction * movementSpeed;
-                    break;
-                case MoveDirections.LEFT:
-                    movementSpeed = 2;
-                    direction.x = -1;
-                    GetComponent<RectTransform>().position += direction * movementSpeed;
-                    break;
-                case MoveDirections.RIGHT:
-                    movementSpeed = 2;
-                    direction.x = 1;
-                    GetComponent<RectTransform>().position += direction * movementSpeed;
-                    break;
-                case MoveDirections.STOP:
-                    direction = Vector2.zero;
-                    movementSpeed = 0;
-                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    break;
-            }
-
-            if (i == Directions.Count)
-            {
-                i = 0;
-                Move();
-            }
-
-        }
-    }
-
-    public List<MoveDirections> SetDirections(MoveDirections Move)
-    {
-        if (Directions != null)
-        {
-            Directions.Add(Move);
-            return Directions;
-        }
-
-        return null;
-    }
-
 
     void Update()
     {
-        Move();
+        if (waypoints.Count > 0)
+        {
+            if ((transform.position - waypoints[currentWaypoint]).sqrMagnitude < 0.01f)
+            {
+                currentWaypoint++;
+                currentWaypoint %= waypoints.Count; // Is supposed to check if in bounds?
+            }
+       
+            Vector3 moveDirection = (waypoints[currentWaypoint] - transform.position).normalized;
+            transform.position += moveDirection * speed * Time.deltaTime; 
+        }
     }
 }
 

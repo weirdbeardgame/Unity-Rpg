@@ -23,7 +23,6 @@ public class NPCEditor : EditorWindow
 
     NPCData EditNPC;
     List<NPCData> Editable;
-    List<MoveDirections> Directions;
     List<QuestData> Quests;
 
     List<string> QuestNames;
@@ -90,7 +89,6 @@ public class NPCEditor : EditorWindow
         if (initalized == false)
         {
             CurrentScene = new List<int>();
-            Directions = new List<MoveDirections>();
 
             for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
             {
@@ -124,6 +122,12 @@ public class NPCEditor : EditorWindow
                 Editable[i].NpcID = EditorGUILayout.IntField(Editable[i].NpcID);
                 EditorGUILayout.LabelField("Name");
                 Editable[i].NpcName = GUILayout.TextField(Editable[i].NpcName);
+                if (GUILayout.Button("Select Sprite"))
+                {
+                    Editable[i].SpritePath = EditorUtility.OpenFilePanel("Select Sprite: ", "Assets", "png");
+                }
+                EditorGUILayout.LabelField("Sprite Path");
+                GUILayout.TextField(Editable[i].SpritePath);
 
                 Editable[i].HasQuest = EditorGUILayout.Toggle("Has Quest ", Editable[i].HasQuest);
 

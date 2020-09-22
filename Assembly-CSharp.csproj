@@ -86,7 +86,6 @@
     <Compile Include="Assets\Collision.cs" />
     <Compile Include="Assets\Dialogue\DialogueManager.cs" />
     <Compile Include="Assets\Dialogue\DialogueMessage.cs" />
-    <Compile Include="Assets\Dialogue\Interact.cs" />
     <Compile Include="Assets\Dialogue\Speakers\SpeakerData.cs" />
     <Compile Include="Assets\Enemies\Baddies.cs" />
     <Compile Include="Assets\Enemies\Enemies.cs" />
@@ -117,6 +116,7 @@
     <Compile Include="Assets\NPC\NPCData.cs" />
     <Compile Include="Assets\NPC\NPCManager.cs" />
     <Compile Include="Assets\NPC\NPCMovement.cs" />
+    <Compile Include="Assets\NPC\Waypoint.cs" />
     <Compile Include="Assets\Player\Party.cs" />
     <Compile Include="Assets\Player\Player.cs" />
     <Compile Include="Assets\Player\PlayerCamera.cs" />
