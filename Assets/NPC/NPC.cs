@@ -28,7 +28,9 @@ public class NPC : MonoBehaviour
 
     void Talk()
     {
-        Dialogue.Talk(NpcData);
+        Dialogue.OpenDialogueBox(NpcData);
+        Collided = false;
+        return;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,14 +44,12 @@ public class NPC : MonoBehaviour
         {
             Collided = false;
         }
-
     }
 
 
     private void Update()
     {
         ApplyNPC();
-
         if (Input.GetButtonDown("Submit") && Collided )
         {
             Talk();

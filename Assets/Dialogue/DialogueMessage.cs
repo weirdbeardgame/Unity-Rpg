@@ -36,7 +36,6 @@ public class DialogueMessage : IComparable<DialogueMessage>
 
     private FlagReqSet _FlagType;
 
-    public int NpcId;
     public int Quest;
 
     public DialogueMessage()

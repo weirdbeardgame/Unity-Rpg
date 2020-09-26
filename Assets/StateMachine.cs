@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum States { MAIN, BATTLE, CUTSCENE, PAUSE };
 
-
 public class Flags
 {
     private int _ID;

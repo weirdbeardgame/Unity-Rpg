@@ -2,7 +2,6 @@
   [
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": null,
       "ID": 0,
@@ -17,7 +16,6 @@
     },
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": "Hey Kid. I need you to get a potion from Tosh for me.",
       "ID": 1,
@@ -38,7 +36,6 @@
     },
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": "Waa! Why I gotta get you a potion!? Can't you get it yourself!?",
       "ID": 2,
@@ -59,7 +56,6 @@
     },
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": "I'm Actually afraid of wolves...",
       "ID": 3,
@@ -80,7 +76,6 @@
     },
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": null,
       "ID": 4,
@@ -97,7 +92,6 @@
   [
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": null,
       "ID": 5,
@@ -112,7 +106,6 @@
     },
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": "Huh. Oh heya kid!",
       "ID": 6,
@@ -133,7 +126,6 @@
     },
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": "Umm, Mister Tosh sir? Lord Doku A, asked me to get a potion from y, you.",
       "ID": 7,
@@ -154,7 +146,6 @@
     },
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": null,
       "ID": 8,
@@ -169,7 +160,6 @@
     },
     {
       "Choices": null,
-      "NpcId": 0,
       "Quest": 0,
       "Line": "Oh sure! Here you go.",
       "ID": 9,
@@ -180,7 +170,11 @@
         "NpcName": "Tosh",
         "SpritePath": "C:/Users/final/source/repos/Unity-Rpg/Assets/Resources/Sprites/Characters/Tosh/South.png"
       },
-      "Flag": null,
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
       "NodeT": 0,
       "FlagType": 0
     }

@@ -114,7 +114,7 @@ public class DialogueNode : IComparable<DialogueNode>
                     for (int i = 0; i < SpeakerSelection.Count; i++)
                     {
                         SpeakerName.Add(SpeakerSelection[i].NpcName);
-                    }
+                    }    
                 }
                 break;
 
@@ -163,6 +163,7 @@ public class DialogueNode : IComparable<DialogueNode>
         {
             case NodeType.FLAG:
                 EditorGUILayout.LabelField("Flag: ");
+                FlagToSet = DNode.Flag.ID;
                 FlagToSet = EditorGUILayout.Popup(FlagToSet, Flag);
                 EditorGUILayout.LabelField("Is Required?");
                 DNode.FlagType = (FlagReqSet)EditorGUILayout.EnumPopup(DNode.FlagType);
@@ -171,6 +172,7 @@ public class DialogueNode : IComparable<DialogueNode>
 
             case NodeType.DIALOUGE:
                 EditorGUILayout.LabelField("Speaker ID: ");
+                SetSpeaker = DNode.SpeakerID.NpcID;
                 SetSpeaker = EditorGUILayout.Popup(SetSpeaker, SpeakerName.ToArray());
                 DNode.SpeakerID = SpeakerSelection[SetSpeaker];
                 DNode.Line = GUILayout.TextArea(DNode.Line, GUILayout.Height(EditorGUIUtility.singleLineHeight * 5));

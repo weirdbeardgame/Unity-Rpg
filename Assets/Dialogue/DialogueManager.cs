@@ -108,7 +108,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void NextLine(DialogueMessage Node)
+    public void NextNode(TNode<DialogueMessage> Node)
     {
         StopAllCoroutines();
         CurrentLine = null;
@@ -118,11 +118,50 @@ public class DialogueManager : MonoBehaviour
         {
             Close();
         }
-
-        else if (Node != null)
+        else
         {
-            CurrentLine = Node.Line;
-            StartCoroutine(AnimateText());
+
+            switch (Node.Data.NodeT)
+            {
+
+                case NodeType.FLAG:
+                    switch (Node.Data.FlagType)
+                    {
+                        case FlagReqSet.REQUIRED:
+                            if (Node.Data.Flag == _Machine.CurrrentFlag)
+                            {
+                                //Debug.Log("Correct FLAG");
+                                NextNode(Node.Right); // Assume all normal Dialouge will be to the right.
+                            }
+
+                            if (Node.Data.Flag != _Machine.CurrrentFlag)
+                            {
+                                //Debug.Log("Wrong FLAG);
+                                return; // Nothing
+                            }
+                            break;
+                        case FlagReqSet.SET:
+                           stateMessage.construct(_Machine.State, Node.Data.Flag);
+                            break;
+                    }
+
+
+                    break;
+
+                case NodeType.DIALOUGE:
+                    CurrentLine = Node.Data.Line;
+                    StartCoroutine(AnimateText());
+                    break;
+
+                case NodeType.CHOICE:
+                    // Open associated Dialouge then draw button choices. Traverse tree from there
+                    break;
+
+                case NodeType.EVENT:
+                    //Play animation, Control basic events like Give Item etc.
+                    break;
+
+            }
         }
     }
 
@@ -144,65 +183,29 @@ public class DialogueManager : MonoBehaviour
 
         ScratchPad.Tree = DialougeData[Index].Tree;
 
-        if (ScratchPad.Tree.Data.NodeT == NodeType.FLAG)
-        {
-            ScratchPad.Tree = ScratchPad.Tree.Right;
-            NextLine(ScratchPad.Tree.Data);
-        }
-
         rendering.enabled = true;
         canvas.enabled = true;
         Name.enabled = true;
         Talking = true;
-        NextLine(ScratchPad.Tree.Data);
+        NextNode(ScratchPad.Tree);
     }
-    
-    public void Talk(NPCData Npc) // Flags?
+    public void OpenDialogueBox(NPCData Speaker)
     {
-        for (int i = 0; i < DialougeData.Count; i++)
+        ScratchPad = new BinarySearchTree<DialogueMessage>();
+
+        while(DialougeData[Index].Tree.Data.Flag.ID != _Machine.CurrrentFlag.ID)
         {
-            if (Npc.HasQuest)
-            {
-                OpenDialogueBox(Npc.QuestID);
-                Book.Give(Quests.Get(Npc.QuestID));
-                Debug.Log("Quest " + Npc.QuestID.ToString() + " Given");
-                Npc.HasQuest = false;
-            }
+            Index++;
+        }
 
-            if (DialougeData[i].Tree.Data.NodeT == NodeType.FLAG)
-            {
-                switch (DialougeData[i].Tree.Data.FlagType)
-                {
-
-                    case FlagReqSet.REQUIRED:
-                        if (DialougeData[i].Tree.Data.Flag == _Machine.CurrrentFlag)
-                        {
-                            switch (DialougeData[i].Tree.Data.NodeT)
-                            {
-                                case NodeType.DIALOUGE:
-                                    if (DialougeData[i].Tree.Data.SpeakerID == Npc)                            
-                                    {                               
-                                        Debug.Log("Incolent fool. Submit!");                                
-                                        OpenDialogueBox(i);
-                                    }
-                                    break;
-                                
-                                case NodeType.CHOICE:
-                                    // Open associated Dialouge then draw button choices. Traverse tree from there
-                                    break;
-
-                                case NodeType.EVENT:
-                                    //Play animation, Control basic events like Give Item etc.
-                                    break;
-                            }
-                        }
-                        break;
-
-                    case FlagReqSet.SET:
-                        stateMessage.construct(_Machine.State, DialougeData[i].Tree.Data.Flag);
-                        break;
-                }
-            }
+        if (DialougeData[Index].Tree.Data.Flag.ID == _Machine.CurrrentFlag.ID)
+        {  
+            rendering.enabled = true;        
+            canvas.enabled = true;        
+            Name.enabled = true;        
+            Talking = true;
+            ScratchPad.Tree = DialougeData[Index].Tree;
+            NextNode(ScratchPad.Tree);
         }
     }
 
@@ -217,7 +220,7 @@ public class DialogueManager : MonoBehaviour
                 rendering.text = null;
                 ScratchPad.Tree = ScratchPad.Tree.Right;
 
-                Debug.Log("Incolent fool. Submit!");
+                //Debug.Log("Incolent fool. Submit!");
 
                 if (ScratchPad.Tree == null)
                 {
@@ -225,7 +228,7 @@ public class DialogueManager : MonoBehaviour
                 }
                 else
                 {
-                    NextLine(ScratchPad.Tree.Data);
+                    NextNode(ScratchPad.Tree);
                 }
             }
         }
