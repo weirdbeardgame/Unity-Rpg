@@ -48,4 +48,6 @@ namespace questing
             Active.construct(ID, QuestState.NOT_ACTIVE);
             _ActiveQuest = null;
         }
+
+    }
 }

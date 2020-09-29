@@ -253,7 +253,7 @@ public class QuestEditor : EditorWindow
                                 RequiredFlag = EditorGUILayout.Popup(RequiredFlag, FlagString.ToArray());
                                 EditorGUILayout.LabelField("Flag Set By Quest: ");
                                 FlagToSet = EditorGUILayout.Popup(FlagToSet, FlagString.ToArray());
-                                QuestToCreate.Flag = FlagData[RequiredFlag];
+                                QuestToCreate.Objectives[ObjectiveIndex].Flag = FlagData[RequiredFlag];
 
 
 
