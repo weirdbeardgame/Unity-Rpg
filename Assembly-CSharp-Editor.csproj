@@ -86,6 +86,9 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/final/source/repos/Unity-Rpg/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.PixelPerfect.Editor">
+      <HintPath>C:/Users/final/source/repos/Unity-Rpg/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>C:/Users/final/source/repos/Unity-Rpg/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
@@ -109,6 +112,9 @@
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>C:/Users/final/source/repos/Unity-Rpg/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.PixelPerfect">
+      <HintPath>C:/Users/final/source/repos/Unity-Rpg/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/final/source/repos/Unity-Rpg/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
@@ -676,6 +682,14 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{522881C6-D876-850B-DE0B-04174FF6EBCF}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.2D.PixelPerfect.Samples.Editor.csproj">
+      <Project>{E1FC689E-C1D0-D3BD-19FB-ECE7EC78B207}</Project>
+      <Name>Unity.2D.PixelPerfect.Samples.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.2D.PixelPerfect.Samples.csproj">
+      <Project>{6EBDAFD3-7859-B438-FEFD-A2EAEB3614BF}</Project>
+      <Name>Unity.2D.PixelPerfect.Samples</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

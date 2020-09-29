@@ -18,13 +18,13 @@ public class QuestEditor : EditorWindow
 
     List<string> QuestNames;
     List<string> ObjectiveNames;
-    List<string> EventNames;
+    List<int> EventNames;
     List<string> TreeNames;
-
-
-    List<Flags> FlagData;
     List<string> FlagString;
 
+    List<Flags> FlagData;
+    Flags Flag;
+        
     bool Initalized;
 
     int MaxObjectives = 0;
@@ -63,7 +63,7 @@ public class QuestEditor : EditorWindow
         if (File.Exists(FilePath))
         {
             Quests = new List<QuestData>();
-            EventNames = new List<string>();
+            EventNames = new List<int>();
             ObjectiveNames = new List<string>();
 
             Data = File.ReadAllText(FilePath);
@@ -153,19 +153,10 @@ public class QuestEditor : EditorWindow
         if (GUILayout.Button("New Quest"))
         {
 
-            if (Quests == null)
-            {
-                EventNames = new List<string>();
-                ObjectiveNames = new List<string>();
-                QuestNames = new List<string>();
-                Quests = new List<QuestData>();
-            }
-
             QuestToCreate = new QuestData();
             QuestToCreate.Objectives = new List<QuestObjective>();
             QuestToCreate.Events = new List<QuestEvent>();
             ObjectiveNames = new List<string>();
-            EventNames = new List<string>();
         }
 
         if (Quests != null && Quests.Count > 0)
@@ -191,12 +182,12 @@ public class QuestEditor : EditorWindow
                     QuestToCreate.QuestName = EditorGUILayout.TextField(QuestToCreate.QuestName);
                     EditorGUILayout.LabelField("Quest Type");
                     QuestToCreate.Type = (QuestType)EditorGUILayout.EnumPopup(QuestToCreate.Type);
-                    EditorGUILayout.LabelField("Required Flag To Start Quest: ");
+                    EditorGUILayout.LabelField("Is Flag required or set ");
                     RequiredFlag = EditorGUILayout.Popup(RequiredFlag, FlagString.ToArray());
-                    QuestToCreate.RequiredFlag = FlagData[RequiredFlag];
                     EditorGUILayout.LabelField("Flag Set By Quest: ");
                     FlagToSet = EditorGUILayout.Popup(FlagToSet, FlagString.ToArray());
-                    QuestToCreate.FlagToSet = FlagData[FlagToSet];
+                    QuestToCreate.Flag = FlagData[RequiredFlag];
+
                     break;
                 case 1:
 
@@ -258,12 +249,11 @@ public class QuestEditor : EditorWindow
                                 }
 
                                 EditorGUILayout.LabelField("Required Flag To Start Objective: ");
-                                ObjectiveRequiredFlag = EditorGUILayout.Popup(ObjectiveRequiredFlag, FlagString.ToArray());
-                                QuestToCreate.Objectives[ObjectiveIndex].RequiredFlag = FlagData[ObjectiveRequiredFlag];
-
-                                EditorGUILayout.LabelField("Flag Set By Objective: ");
-                                ObjectiveFlagToSet = EditorGUILayout.Popup(ObjectiveFlagToSet, FlagString.ToArray());
-                                QuestToCreate.FlagToSet = FlagData[ObjectiveFlagToSet];
+                                EditorGUILayout.LabelField("Is Flag required or set ");
+                                RequiredFlag = EditorGUILayout.Popup(RequiredFlag, FlagString.ToArray());
+                                EditorGUILayout.LabelField("Flag Set By Quest: ");
+                                FlagToSet = EditorGUILayout.Popup(FlagToSet, FlagString.ToArray());
+                                QuestToCreate.Flag = FlagData[RequiredFlag];
 
 
 
@@ -314,7 +304,6 @@ public class QuestEditor : EditorWindow
                             QuestToCreate.Events = new List<QuestEvent>();
                         }
 
-                        Temp.EventName = Name;
                         Temp.Type = TempType;
 
                         QuestToCreate.Events.Add(Temp);

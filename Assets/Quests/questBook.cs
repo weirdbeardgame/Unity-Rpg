@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace questing
 {
-    public class questBook : MonoBehaviour, questInterface
+    public class questBook : MonoBehaviour
     {
         public List<QuestData> Quests;
 
@@ -16,8 +16,6 @@ namespace questing
             {
                 return _ActiveQuest;
             }
-
-
         }
 
         // Start is called before the first frame update
@@ -50,26 +48,4 @@ namespace questing
             Active.construct(ID, QuestState.NOT_ACTIVE);
             _ActiveQuest = null;
         }
-
-        public void Progress(int ID)
-        {
-            DeActivate(ID);
-        }
-
-        public QuestData GetQuestData(int ID)
-        {
-            return Quests[ID];
-        }
-
-
-        public string Description(int ID)
-        {
-            return Quests[ID].Description;
-        }
-
-        public void Complete(int ID)
-        {
-            //Quests[ID].Complete();
-        }
-    }
 }

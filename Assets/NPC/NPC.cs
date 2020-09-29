@@ -15,6 +15,8 @@ public class NPC : MonoBehaviour
     {
         Dialogue = FindObjectOfType<DialogueManager>();
         NpcM = FindObjectOfType<NPCManager>();
+        NpcData = NpcM.NPC[NpcId];
+        NpcData.Speaker = Speaker;
     }
 
     bool Collided;

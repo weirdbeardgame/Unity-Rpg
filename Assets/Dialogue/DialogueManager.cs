@@ -189,7 +189,7 @@ public class DialogueManager : MonoBehaviour
         Talking = true;
         NextNode(ScratchPad.Tree);
     }
-    public void OpenDialogueBox(NPCData Speaker)
+    public void OpenDialogueBox(NPCData Speak)
     {
         ScratchPad = new BinarySearchTree<DialogueMessage>();
 
@@ -204,8 +204,11 @@ public class DialogueManager : MonoBehaviour
             canvas.enabled = true;        
             Name.enabled = true;        
             Talking = true;
+            Speaker = GameObject.Instantiate(Speak.Speaker.Prefab);
+            Speaker.transform.position = transform.position;
+            Name.text = Speak.Speaker.SpeakerName;
             ScratchPad.Tree = DialougeData[Index].Tree;
-            NextNode(ScratchPad.Tree);
+            NextNode(ScratchPad.Tree.Right);
         }
     }
 

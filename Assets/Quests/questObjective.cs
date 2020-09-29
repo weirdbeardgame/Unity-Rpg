@@ -20,8 +20,7 @@ namespace questing
         public string Name;
         public string Description;
 
-        public Flags RequiredFlag;
-        public Flags FlagToSet;
+        public Flags Flag;
 
         private QuestObjectiveType _Type;
         private QuestObjectiveState _State;
@@ -91,21 +90,6 @@ namespace questing
         {
             messaging.Unsubscribe(MessageType.INVENTORY, this);
         }
-
-
-        void Activate(Flags RequiredFlag)
-        {
-
-            if (this.RequiredFlag == RequiredFlag)
-            {
-                _State = QuestObjectiveState.ACTIVE;
-
-                // Further checks for NPC's events if there's a Dialogue over a Follow event before the start of the objective.
-
-            }
-
-        }
-
         Flags Complete()
         {
             if (_State == QuestObjectiveState.ACTIVE)
@@ -117,7 +101,7 @@ namespace questing
                         {
                             Debug.Log("Quest Completed");
                             _State = QuestObjectiveState.COMPLETED;
-                            return FlagToSet;
+                            return Flag;
                         }
                         break;
 
@@ -125,7 +109,7 @@ namespace questing
                         if (AmountToKill == MaxAmount)
                         {
                             _State = QuestObjectiveState.COMPLETED;
-                            return FlagToSet;
+                            return Flag;
                         }
                         break;
                 }

@@ -20,4 +20,6 @@ public class NPCData
     public bool HasQuest;
     public string NpcName;
     public string SpritePath;
+
+    public SpeakerData Speaker;
 }

@@ -5,15 +5,16 @@ using UnityEngine;
 
 public enum Events { DIALOGUE, CUTSCENE, FOLLOW };
 
-public class QuestEvent : ScriptableObject, IReceiver
+public class QuestEvent : ScriptableObject
 {
 
     public List<BinarySearchTree<DialogueMessage>> Trees; // Each Event can hold an instance of Tree. 
-    NPCMovement ScriptedMovement; // Perhaps an instance of movement even
 
-    private string _EventName;
-
+    private Flags Flag;
     private Events _Type;
+
+    private FlagReqSet IsRequired;
+
 
     public Events Type
     {
@@ -28,38 +29,54 @@ public class QuestEvent : ScriptableObject, IReceiver
         }
     }
 
-public string EventName
-{
-    get
+    public FlagReqSet SetOrRequired
     {
-        return _EventName;
+
+        get
+        {
+            return IsRequired;
+        }
+
+        set
+        {
+            IsRequired = value;
+        }
+    
     }
 
-    set
+    public Flags CurrentFlag
     {
-        _EventName = value;
-    }
-}
+        get
+        {
+            return Flag;
+        }
 
-    public void Initalize()
-    {
-
-    }
-
-    public void Subscribe()
-    {
-
+        set
+        {
+            Flag = value;
+        }
     }
 
 
-    public void Receive(object Message)
+
+    public void Execute()
     {
+        switch (_Type)
+        {
+            case Events.DIALOGUE:
 
-    }
+                break;
 
-    public void Unsubscribe()
-    {
 
+            case Events.FOLLOW:
+
+                break;
+
+
+            case Events.CUTSCENE:
+
+                break;
+        }
     }
 
 }
