@@ -94,15 +94,9 @@
     <Compile Include="Assets\Items\Item.cs" />
     <Compile Include="Assets\Items\ItemData.cs" />
     <Compile Include="Assets\Items\Selection.cs" />
-    <Compile Include="Assets\Menus\ItemMenu.cs" />
     <Compile Include="Assets\Menus\MenuManager.cs" />
-    <Compile Include="Assets\Menus\Pause.cs" />
-    <Compile Include="Assets\Menus\PauseSquare.cs" />
-    <Compile Include="Assets\Menus\Quit.cs" />
-    <Compile Include="Assets\Menus\Status Menu.cs" />
+    <Compile Include="Assets\Menus\Screen.cs" />
     <Compile Include="Assets\Menus\Widget.cs" />
-    <Compile Include="Assets\Menus\WidgetData.cs" />
-    <Compile Include="Assets\Menus\drag.cs" />
     <Compile Include="Assets\Menus\menuInterface.cs" />
     <Compile Include="Assets\Messages\CollisionMessage.cs" />
     <Compile Include="Assets\Messages\Messaging.cs" />
@@ -122,9 +116,12 @@
     <Compile Include="Assets\Player\PlayerCamera.cs" />
     <Compile Include="Assets\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Player\Stats.cs" />
+    <Compile Include="Assets\Quests\DialogueEvent.cs" />
+    <Compile Include="Assets\Quests\EvInterface.cs" />
     <Compile Include="Assets\Quests\QuestEvent.cs" />
     <Compile Include="Assets\Quests\QuestManager.cs" />
     <Compile Include="Assets\Quests\TextMessage.cs" />
+    <Compile Include="Assets\Quests\Waypoints\waypointJump.cs" />
     <Compile Include="Assets\Quests\questBook.cs" />
     <Compile Include="Assets\Quests\questData.cs" />
     <Compile Include="Assets\Quests\questGiver.cs" />
@@ -193,7 +190,6 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\Menus\lcd.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\LPC_forest\credits.txt" />
     <None Include="Assets\Fonts\pixellocale-v-1-0\license.txt" />

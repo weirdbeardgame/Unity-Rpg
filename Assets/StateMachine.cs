@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum States { MAIN, BATTLE, CUTSCENE, PAUSE };
+public enum FlagReqSet { REQUIRED, SET }
 
 public class Flags
 {
@@ -72,7 +73,6 @@ public class Flags
 
 class StateMachine : MonoBehaviour, IReceiver
 {
-
     private States _State;
     Queue<object> Inbox;
     Messaging Messenger;

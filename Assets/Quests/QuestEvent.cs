@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public enum Events { DIALOGUE, CUTSCENE, FOLLOW };
-
 public class QuestEvent : ScriptableObject
 {
 
-    public List<BinarySearchTree<DialogueMessage>> Trees; // Each Event can hold an instance of Tree. 
+    //public List<BinarySearchTree<DialogueMessage>> Trees; // Each Event can hold an instance of Tree. 
 
     private Flags Flag;
     private Events _Type;
-
     private FlagReqSet IsRequired;
+    private int itemID = 0;
 
 
     public Events Type
@@ -57,6 +54,18 @@ public class QuestEvent : ScriptableObject
         }
     }
 
+    public int Item
+    { 
+        get
+        {
+            return itemID;
+        }
+
+        set
+        {
+            itemID = value;
+        }
+    }
 
 
     public void Execute()
@@ -64,16 +73,21 @@ public class QuestEvent : ScriptableObject
         switch (_Type)
         {
             case Events.DIALOGUE:
-
+                // Let's assume there's going to be an execute per Event. Execute meaning open Dialogue based on flag and quest.
+                // Dialogues for Quests can have different speakers like Musungo. 
                 break;
 
 
             case Events.FOLLOW:
-
+                // Set Waypoints
                 break;
 
 
             case Events.CUTSCENE:
+                // Using WayPoints, and everything else.
+                break;
+
+            case Events.ADDITEM:
 
                 break;
         }

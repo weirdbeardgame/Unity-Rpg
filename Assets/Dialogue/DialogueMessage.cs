@@ -6,7 +6,6 @@ using UnityEngine;
 
 public enum NodeType { DIALOUGE, FLAG, CHOICE, EVENT }
 public enum NodeDirection { LEFT, RIGHT }
-public enum FlagReqSet { REQUIRED, SET }
 
 
 public struct ChoiceData

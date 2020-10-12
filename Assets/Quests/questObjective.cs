@@ -6,116 +6,45 @@ namespace questing
 {
     public enum QuestObjectiveType { KILL, COLLECT }
 
-    public enum QuestObjectiveState { ACTIVE, NON_ACTIVE, COMPLETED }
-
-    public class ItemToCollect
-    {
-        public int RequiredAmount;
-        public int ItemID;
-        public ItemData Item;
-    }
-
-    public class QuestObjective : ScriptableObject, IReceiver
+    public class QuestObjective
     {
         public string Name;
         public string Description;
 
-        public Flags Flag;
+        private List<Flags> Flags; // Required, Set
+        private FlagReqSet IsRequired;
+        private QuestObjectiveType ObjectiveType;
 
-        private QuestObjectiveType _Type;
-        private QuestObjectiveState _State;
+        public int ObjectiveID;
 
-        Messaging messaging;
-
-        public int ObjectiveID = 0;
-
-        [System.NonSerialized]
-        public int AmountCollected = 0;
-        [System.NonSerialized]
-        public int AmountToKill = 0;
-
-        public List<ItemToCollect> RequiredItems;
+        public List<ItemData> RequiredItems;
 
         int MaxAmount = 0;
-
-        Creature toKill;
-        Enemies killData;
-
-        public QuestObjectiveState State
-        {
-            get
-            {
-                return _State;
-            }
-
-            set
-            {
-                _State = value;
-            }
-        }
 
         public QuestObjectiveType Type
         {
             get
             {
-                return _Type;
+                return ObjectiveType;
             }
 
             set
             {
-                _Type = value;
+                ObjectiveType = value;
             }
         }
 
-
-        public void Receive(object message)
+        public List<Flags> FlagData
         {
-            if (message is InventoryMessage)
+            get
             {
-                InventoryMessage temp = (InventoryMessage)message;
-                if (temp.getItem() == RequiredItems[temp.GetID()].Item)
-                {
-                    AmountCollected++;
-                }
-                Complete();
+                return Flags;
             }
-        }
 
-        public void Subscribe()
-        {
-            messaging.Subscribe(MessageType.INVENTORY, this);
-        }
-
-        public void Unsubscribe()
-        {
-            messaging.Unsubscribe(MessageType.INVENTORY, this);
-        }
-        Flags Complete()
-        {
-            if (_State == QuestObjectiveState.ACTIVE)
+            set
             {
-                switch (_Type)
-                {
-                    case QuestObjectiveType.COLLECT:
-                        if (RequiredItems[0].RequiredAmount == MaxAmount)
-                        {
-                            Debug.Log("Quest Completed");
-                            _State = QuestObjectiveState.COMPLETED;
-                            return Flag;
-                        }
-                        break;
-
-                    case QuestObjectiveType.KILL:
-                        if (AmountToKill == MaxAmount)
-                        {
-                            _State = QuestObjectiveState.COMPLETED;
-                            return Flag;
-                        }
-                        break;
-                }
+                Flags = value;
             }
-
-            return null;
         }
     }
 }

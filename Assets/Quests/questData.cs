@@ -6,29 +6,26 @@ using UnityEngine;
 // This holds objectives and events whilest tracking the overall state and progress of said quest.
 namespace questing
 {
-    public enum QuestType { COLLECT, KILL, RESCUE }; // The represents the whole of the overaching quest, not the objectives themselves nessacarily. 
     public enum QuestState { IS_ACTIVE, NOT_ACTIVE, COMPLETED };
-    public class QuestData
+    public struct QuestData
     {
+        public int QuestID;
+
         public string QuestName;
         public string Description;
 
-        public Flags Flag;
-
+        public List<Flags> Flag; // Multiple flags set and requiured?
         public FlagReqSet FlagRequirement;
 
-        public QuestType Type;
+        QuestObjective ActiveObjective;
 
         public QuestState QuestState;
-
-        public int QuestID;
-
-        public int ActiveObjective;
 
         // Rewards
         public List<Item> Reward;
         public List<QuestObjective> Objectives;
-        public List<QuestEvent> Events;
+        //public List<QuestEvent> Events; Not sure if this is where events belong. Events are compolex interaction between the engine and the player. Perhaps a touch too complex to be held here
+        // If not here then the mystery is where
     }
 }
 

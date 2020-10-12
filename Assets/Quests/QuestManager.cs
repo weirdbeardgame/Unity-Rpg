@@ -83,7 +83,7 @@ public class QuestManager : MonoBehaviour, IReceiver
     public void Progress() // progresses through the list of objectives
     {
 
-        if (Book.ActiveQuest != null)
+        /*if (Book.ActiveQuest != null)
         {
             switch (Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].Type)
             {
@@ -109,7 +109,7 @@ public class QuestManager : MonoBehaviour, IReceiver
                     }
                     break;
             }
-        }
+        }*/
     }
 
     public void Complete()
@@ -123,7 +123,7 @@ public class QuestManager : MonoBehaviour, IReceiver
     void Update()
     {
 
-        if (inbox.Count > 0)
+        /*if (inbox.Count > 0)
         {
             if (inbox.Peek() is InventoryMessage && Book.ActiveQuest != null && Book.ActiveQuest.Type == QuestType.COLLECT)
             {
@@ -147,6 +147,7 @@ public class QuestManager : MonoBehaviour, IReceiver
 
         Progress(); // Whether this belongs here or in the book's half is TBD
 
-    }
+    }*/
 
+    }
 }

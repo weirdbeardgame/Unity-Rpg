@@ -23,8 +23,6 @@ public class Widget : MonoBehaviour
 
     string _Title;
 
-    public WidgetData Skin;
-
     public int ToUse = 0;
 
     protected MenuManager _Manager;
