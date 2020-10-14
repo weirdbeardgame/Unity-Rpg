@@ -76,10 +76,7 @@ public class NPCEditor : EditorWindow
         {
             for (int i = 0; i < Quests.Count; i++)
             {
-                if (Quests[i] != null)
-                {
-                    QuestNames.Add(Quests[i].QuestName);
-                }
+                QuestNames.Add(Quests[i].QuestName);
             }
         }
     }

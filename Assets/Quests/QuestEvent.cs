@@ -10,8 +10,9 @@ public class QuestEvent : ScriptableObject
     private Flags Flag;
     private Events _Type;
     private FlagReqSet IsRequired;
-    private int itemID = 0;
-
+    private Item Itm;
+    private int itemID;
+    private InventoryMessage inv;
 
     public Events Type
     {
@@ -88,7 +89,8 @@ public class QuestEvent : ScriptableObject
                 break;
 
             case Events.ADDITEM:
-
+                Itm = FindObjectOfType<Item>();
+                inv.construct(Itm.GetItem(itemID), itemState.RECIEVED);
                 break;
         }
     }

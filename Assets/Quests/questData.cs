@@ -7,7 +7,7 @@ using UnityEngine;
 namespace questing
 {
     public enum QuestState { IS_ACTIVE, NOT_ACTIVE, COMPLETED };
-    public struct QuestData
+    public class QuestData
     {
         public int QuestID;
 
@@ -25,7 +25,7 @@ namespace questing
         public List<Item> Reward;
         public List<QuestObjective> Objectives;
         //public List<QuestEvent> Events; Not sure if this is where events belong. Events are compolex interaction between the engine and the player. Perhaps a touch too complex to be held here
-        // If not here then the mystery is where
+        // If not here then the mystery is where. A trigger perhaps?
     }
 }
 
