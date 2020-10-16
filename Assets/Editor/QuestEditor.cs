@@ -15,6 +15,7 @@ public class QuestEditor : EditorWindow
     string FlagPath = "Assets/Flags.json";
     string DialoguePath = "Assets/Dialogue/Dialogue.json";
 
+    List<Flags> FlagList;
     List<QuestData> Quests;
     public Dictionary<int, ItemData> ItemsToCollect;
     List<string> TempItemNames;
@@ -42,8 +43,6 @@ public class QuestEditor : EditorWindow
     {        
         if (File.Exists(ItemFilePath))
         {
-            JsonData = null;
-
             ItemsToCollect = new Dictionary<int, ItemData>();
             TempItemNames = new List<string>();
             JsonData = File.ReadAllText(ItemFilePath);
@@ -52,6 +51,13 @@ public class QuestEditor : EditorWindow
             {
                 TempItemNames.Add(ItemsToCollect[i].ItemName);
             }
+        }
+        if (File.Exists(FlagPath))
+        {
+            JsonData = null;
+            FlagList = new List<Flags>();
+            File.ReadAllText(FlagPath);
+            FlagList = JsonConvert.DeserializeObject<List<Flags>>(JsonData);
         }
         if (File.Exists(FilePath))
         {
@@ -75,7 +81,13 @@ public class QuestEditor : EditorWindow
 
         IsInit = true;
     }
-
+    /**********************************************************************************  
+    * TO DO:
+    * Need to figure out why it's saving the item a hundred billion times. 
+    * Need to figure out how I want events stored. If it'll be a trigger ala RpgMaker
+    * Or if the QuestData will store them and there's a constant check of flags.
+    * Need to add display of objectives and other objective types. 
+    ***********************************************************************************/
     private void OnGUI()
     {
         if (!IsInit)

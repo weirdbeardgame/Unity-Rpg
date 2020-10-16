@@ -583,6 +583,47 @@ PrefabInstance:
       propertyPath: NpcId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 822628094297334554, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: eventToCall
+      value: 
+      objectReference: {fileID: 11400000, guid: b333abe0bcf5eee4c96ed08a810bfdce,
+        type: 2}
+    - target: {fileID: 1982843823109176432, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982843823109176432, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982843823109176432, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982843823109176432, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982843823109176432, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982843823109176432, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982843823109176432, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1982843823109176433, guid: c48bac9b891426b61ad61c139aca6bd1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20851,6 +20892,11 @@ PrefabInstance:
         type: 3}
       propertyPath: NpcId
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 822628094297334554, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: eventToCall
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1982843823109176432, guid: c48bac9b891426b61ad61c139aca6bd1,
         type: 3}

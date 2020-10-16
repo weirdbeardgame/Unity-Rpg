@@ -2,97 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestEvent : ScriptableObject
+public class QuestEvent : MonoBehaviour
 {
+    public QuestEventData eventToCall;
 
-    //public List<BinarySearchTree<DialogueMessage>> Trees; // Each Event can hold an instance of Tree. 
+    StateMachine state;
 
-    private Flags Flag;
-    private Events _Type;
-    private FlagReqSet IsRequired;
-    private Item Itm;
-    private int itemID;
-    private InventoryMessage inv;
-
-    public Events Type
+    private void Start()
     {
-        get
-        {
-            return _Type;
-        }
-
-        set
-        {
-            _Type = value;
-        }
+        state = FindObjectOfType<StateMachine>();
     }
 
-    public FlagReqSet SetOrRequired
+    private void Update()
     {
-
-        get
+        if (state.CurrrentFlag == eventToCall.RequiredFlag) //check if current flag is required flag then execute
         {
-            return IsRequired;
-        }
-
-        set
-        {
-            IsRequired = value;
-        }
-    
-    }
-
-    public Flags CurrentFlag
-    {
-        get
-        {
-            return Flag;
-        }
-
-        set
-        {
-            Flag = value;
+            eventToCall.Execute(); 
         }
     }
-
-    public int Item
-    { 
-        get
-        {
-            return itemID;
-        }
-
-        set
-        {
-            itemID = value;
-        }
-    }
-
-
-    public void Execute()
-    {
-        switch (_Type)
-        {
-            case Events.DIALOGUE:
-                // Let's assume there's going to be an execute per Event. Execute meaning open Dialogue based on flag and quest.
-                // Dialogues for Quests can have different speakers like Musungo. 
-                break;
-
-
-            case Events.FOLLOW:
-                // Set Waypoints
-                break;
-
-
-            case Events.CUTSCENE:
-                // Using WayPoints, and everything else.
-                break;
-
-            case Events.ADDITEM:
-                Itm = FindObjectOfType<Item>();
-                inv.construct(Itm.GetItem(itemID), itemState.RECIEVED);
-                break;
-        }
-    }
-
 }

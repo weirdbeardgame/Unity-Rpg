@@ -108,6 +108,7 @@
     <Compile Include="Assets\Messages\senderInterface.cs" />
     <Compile Include="Assets\NPC\NPC.cs" />
     <Compile Include="Assets\NPC\NPCData.cs" />
+    <Compile Include="Assets\NPC\NPCEditor.cs" />
     <Compile Include="Assets\NPC\NPCManager.cs" />
     <Compile Include="Assets\NPC\NPCMovement.cs" />
     <Compile Include="Assets\NPC\Waypoint.cs" />
@@ -116,9 +117,8 @@
     <Compile Include="Assets\Player\PlayerCamera.cs" />
     <Compile Include="Assets\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Player\Stats.cs" />
-    <Compile Include="Assets\Quests\DialogueEvent.cs" />
-    <Compile Include="Assets\Quests\EvInterface.cs" />
     <Compile Include="Assets\Quests\QuestEvent.cs" />
+    <Compile Include="Assets\Quests\QuestEventData.cs" />
     <Compile Include="Assets\Quests\QuestManager.cs" />
     <Compile Include="Assets\Quests\TextMessage.cs" />
     <Compile Include="Assets\Quests\Waypoints\waypointJump.cs" />
