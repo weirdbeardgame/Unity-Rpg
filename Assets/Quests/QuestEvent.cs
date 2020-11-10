@@ -15,9 +15,9 @@ public class QuestEvent : MonoBehaviour
 
     private void Update()
     {
-        if (state.CurrrentFlag == eventToCall.RequiredFlag) //check if current flag is required flag then execute
+        /*if (state.CurrrentFlag == eventToCall.RequiredFlag) //check if current flag is required flag then execute
         {
             eventToCall.Execute(); 
-        }
+        }*/
     }
 }

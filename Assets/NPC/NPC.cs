@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    public int NpcId;
-    public SpeakerData Speaker;
-    public NPCData NpcData;
     NPCManager NpcM;
-
+    NPCData NpcData;
+    public int NpcID;
+    StateMachine states;    
     DialogueManager Dialogue;
+    public GameObject SpeakerProfile;
 
     private void Start()
     {
         Dialogue = FindObjectOfType<DialogueManager>();
         NpcM = FindObjectOfType<NPCManager>();
-        NpcData = NpcM.NPC[NpcId];
-        NpcData.Speaker = Speaker;
+        states = FindObjectOfType<StateMachine>();
     }
 
     bool Collided;
@@ -24,8 +23,8 @@ public class NPC : MonoBehaviour
     void ApplyNPC()
     {
         // When editing NPC's. Auto show the selected NPC ingame world
-        NpcData = NpcM.NPC[NpcId];
-        //GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(NpcData.SpritePath);
+        NpcData = NpcM.NPC[NpcID];
+        //GetComponent<SpriteRenderer>().sprite = Sprite.Create(NpcData.Texture, new Rect(0.0f, 0.0f, NpcData.Texture.width, NpcData.Texture.height), Vector2.one);
     }
 
     void Talk()
@@ -48,13 +47,24 @@ public class NPC : MonoBehaviour
         }
     }
 
+    void pollEvents()
+    {
+        for (int i = 0; i < NpcData.EventData.Count; i++)
+        {
+            if (NpcData.EventData[i].RequiredFlag == states.CurrrentFlag)
+            {
+                NpcData.EventData[i].Execute();
+            }
+        }
+    }
 
     private void Update()
     {
         ApplyNPC();
+
         if (Input.GetButtonDown("Submit") && Collided )
         {
-            Talk();
+            pollEvents();
         }
     }
 }

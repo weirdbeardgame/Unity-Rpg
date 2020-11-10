@@ -54,9 +54,8 @@ public class QuestEditor : EditorWindow
         }
         if (File.Exists(FlagPath))
         {
-            JsonData = null;
             FlagList = new List<Flags>();
-            File.ReadAllText(FlagPath);
+            JsonData = File.ReadAllText(FlagPath);
             FlagList = JsonConvert.DeserializeObject<List<Flags>>(JsonData);
         }
         if (File.Exists(FilePath))

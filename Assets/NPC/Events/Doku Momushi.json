@@ -1,0 +1,894 @@
+{
+  "$type": "System.Collections.Generic.List`1[[QuestEventData, Assembly-CSharp]], mscorlib",
+  "$values": [
+    {
+      "$type": "QuestEventData, Assembly-CSharp",
+      "EventName": "Ask to get Potion",
+      "RequiredFlag": {
+        "$type": "Flags, Assembly-CSharp",
+        "Flag": "Test 1",
+        "ID": 0,
+        "SubFlag": false
+      },
+      "FlagToSet": {
+        "$type": "Flags, Assembly-CSharp",
+        "Flag": "Test 2",
+        "ID": 1,
+        "SubFlag": false
+      },
+      "Quests": null,
+      "Type": 0,
+      "Item": null,
+      "binarySearchTrees": {
+        "$type": "System.Collections.Generic.List`1[[BinarySearchTree`1[[DialogueMessage, Assembly-CSharp]], Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$type": "BinarySearchTree`1[[DialogueMessage, Assembly-CSharp]], Assembly-CSharp",
+            "Tree": {
+              "$type": "TNode`1[[DialogueMessage, Assembly-CSharp]], Assembly-CSharp",
+              "Data": {
+                "$type": "DialogueMessage, Assembly-CSharp",
+                "Choices": null,
+                "Quest": 0,
+                "Line": " Hey kid. I need you to get a potion for me.",
+                "ID": 0,
+                "SpeakerID": {
+                  "$type": "NPCData, Assembly-CSharp",
+                  "NpcID": 2,
+                  "NpcName": "Doku Momushi",
+                  "NpcEventPath": "Assets/NPC/Events/Doku Momushi.json",
+                  "name": "",
+                  "hideFlags": 0
+                },
+                "Flag": null,
+                "NodeT": 0,
+                "FlagType": 0
+              },
+              "Parent": null,
+              "Left": null,
+              "Right": {
+                "$type": "TNode`1[[DialogueMessage, Assembly-CSharp]], Assembly-CSharp",
+                "Data": {
+                  "$type": "DialogueMessage, Assembly-CSharp",
+                  "Choices": null,
+                  "Quest": 0,
+                  "Line": " Waa! Why I gotta get u a potion!? Cant you get it yourself!?",
+                  "ID": 1,
+                  "SpeakerID": {
+                    "$type": "NPCData, Assembly-CSharp",
+                    "NpcID": 3,
+                    "NpcName": "Musungo Aborashi",
+                    "NpcEventPath": "Assets/NPC/Events/Musungo Aborashi.json",
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  "Flag": null,
+                  "NodeT": 0,
+                  "FlagType": 0
+                },
+                "Left": null,
+                "Right": {
+                  "$type": "TNode`1[[DialogueMessage, Assembly-CSharp]], Assembly-CSharp",
+                  "Data": {
+                    "$type": "DialogueMessage, Assembly-CSharp",
+                    "Choices": null,
+                    "Quest": 0,
+                    "Line": "I'm actually afraid of wolves.",
+                    "ID": 2,
+                    "SpeakerID": {
+                      "$type": "NPCData, Assembly-CSharp",
+                      "NpcID": 2,
+                      "NpcName": "Doku Momushi",
+                      "NpcEventPath": "Assets/NPC/Events/Doku Momushi.json",
+                      "name": "",
+                      "hideFlags": 0
+                    },
+                    "Flag": null,
+                    "NodeT": 0,
+                    "FlagType": 0
+                  },
+                  "Left": null,
+                  "Right": null,
+                  "IsRoot": false,
+                  "NodeID": 0
+                },
+                "IsRoot": false,
+                "NodeID": 0
+              },
+              "IsRoot": true,
+              "NodeID": 0
+            },
+            "Size": 3
+          }
+        ]
+      },
+      "TreeToEdit": {
+        "$type": "BinarySearchTree`1[[DialogueMessage, Assembly-CSharp]], Assembly-CSharp",
+        "Tree": {
+          "$type": "TNode`1[[DialogueMessage, Assembly-CSharp]], Assembly-CSharp",
+          "Data": {
+            "$type": "DialogueMessage, Assembly-CSharp",
+            "Choices": null,
+            "Quest": 0,
+            "Line": " Hey kid. I need you to get a potion for me.",
+            "ID": 0,
+            "SpeakerID": {
+              "$type": "NPCData, Assembly-CSharp",
+              "NpcID": 2,
+              "NpcName": "Doku Momushi",
+              "NpcEventPath": "Assets/NPC/Events/Doku Momushi.json",
+              "name": "",
+              "hideFlags": 0
+            },
+            "Flag": null,
+            "NodeT": 0,
+            "FlagType": 0
+          },
+          "Parent": null,
+          "Left": null,
+          "Right": {
+            "$type": "TNode`1[[DialogueMessage, Assembly-CSharp]], Assembly-CSharp",
+            "Data": {
+              "$type": "DialogueMessage, Assembly-CSharp",
+              "Choices": null,
+              "Quest": 0,
+              "Line": " Waa! Why I gotta get u a potion!? Cant you get it yourself!?",
+              "ID": 1,
+              "SpeakerID": {
+                "$type": "NPCData, Assembly-CSharp",
+                "NpcID": 3,
+                "NpcName": "Musungo Aborashi",
+                "NpcEventPath": "Assets/NPC/Events/Musungo Aborashi.json",
+                "name": "",
+                "hideFlags": 0
+              },
+              "Flag": null,
+              "NodeT": 0,
+              "FlagType": 0
+            },
+            "Left": null,
+            "Right": {
+              "$type": "TNode`1[[DialogueMessage, Assembly-CSharp]], Assembly-CSharp",
+              "Data": {
+                "$type": "DialogueMessage, Assembly-CSharp",
+                "Choices": null,
+                "Quest": 0,
+                "Line": "I'm actually afraid of wolves.",
+                "ID": 2,
+                "SpeakerID": {
+                  "$type": "NPCData, Assembly-CSharp",
+                  "NpcID": 2,
+                  "NpcName": "Doku Momushi",
+                  "NpcEventPath": "Assets/NPC/Events/Doku Momushi.json",
+                  "name": "",
+                  "hideFlags": 0
+                },
+                "Flag": null,
+                "NodeT": 0,
+                "FlagType": 0
+              },
+              "Left": null,
+              "Right": null,
+              "IsRoot": false,
+              "NodeID": 0
+            },
+            "IsRoot": false,
+            "NodeID": 0
+          },
+          "IsRoot": true,
+          "NodeID": 0
+        },
+        "Size": 3
+      },
+      "name": "",
+      "hideFlags": 0
+    },
+    {
+      "$type": "QuestEventData, Assembly-CSharp",
+      "EventName": "Give Potion quest",
+      "RequiredFlag": {
+        "$type": "Flags, Assembly-CSharp",
+        "Flag": "Test 2",
+        "ID": 1,
+        "SubFlag": false
+      },
+      "FlagToSet": {
+        "$type": "Flags, Assembly-CSharp",
+        "Flag": "Test 2",
+        "ID": 1,
+        "SubFlag": false
+      },
+      "Quests": {
+        "$type": "questing.QuestData, Assembly-CSharp",
+        "QuestID": 0,
+        "QuestName": "Colelct Potion",
+        "Description": "Collect a Potion from Tosh",
+        "Flag": null,
+        "FlagRequirement": 0,
+        "QuestState": 0,
+        "Reward": null,
+        "Objectives": {
+          "$type": "System.Collections.Generic.List`1[[questing.QuestObjective, Assembly-CSharp]], mscorlib",
+          "$values": [
+            {
+              "$type": "questing.QuestObjective, Assembly-CSharp",
+              "Name": "Talk to Tosh",
+              "Description": "Speak with Tosh to obtain a potion",
+              "ObjectiveID": 0,
+              "RequiredItems": {
+                "$type": "System.Collections.Generic.List`1[[ItemData, Assembly-CSharp]], mscorlib",
+                "$values": [
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  }
+                ]
+              },
+              "Type": 1,
+              "FlagData": null
+            },
+            {
+              "$type": "questing.QuestObjective, Assembly-CSharp",
+              "Name": "Speak with Tosh",
+              "Description": "Talk to Tosh and get the potion from him",
+              "ObjectiveID": 0,
+              "RequiredItems": {
+                "$type": "System.Collections.Generic.List`1[[ItemData, Assembly-CSharp]], mscorlib",
+                "$values": [
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  },
+                  {
+                    "$type": "ItemData, Assembly-CSharp",
+                    "ItemName": "Potion",
+                    "ItemID": 0,
+                    "Cost": 0,
+                    "Effect": {
+                      "$type": "ItemBuffer, Assembly-CSharp",
+                      "Buff": 50,
+                      "Type": 0,
+                      "Effect": 0
+                    },
+                    "name": "",
+                    "hideFlags": 0
+                  }
+                ]
+              },
+              "Type": 1,
+              "FlagData": null
+            }
+          ]
+        }
+      },
+      "Type": 3,
+      "Item": null,
+      "binarySearchTrees": null,
+      "TreeToEdit": null,
+      "name": "",
+      "hideFlags": 0
+    }
+  ]
+}

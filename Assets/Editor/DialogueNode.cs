@@ -25,12 +25,10 @@ public class DialogueNode : IComparable<DialogueNode>
     [System.NonSerialized]
     public Rect Node;
 
-    string FilePath = "Assets/NPC.json";
+    string FilePath = "Assets/NPC/NPC.json";
 
     List<NPCData> SpeakerSelection;
     List<String> SpeakerName;
-
-    NPCData SelectedSpeaker;
 
     NodeType NType;
 
@@ -68,9 +66,11 @@ public class DialogueNode : IComparable<DialogueNode>
 
         if (File.Exists(FilePath))
         {
+            JsonData = File.ReadAllText(FilePath);
+            SpeakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(JsonData);
+
             SpeakerName = new List<string>();
-            string temp = File.ReadAllText(FilePath);
-            SpeakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(temp);
+            DNode.SpeakerID = new NPCData();
 
             for (int i = 0; i < SpeakerSelection.Count; i++)
             {
@@ -99,23 +99,24 @@ public class DialogueNode : IComparable<DialogueNode>
         DNode = new DialogueMessage();
         DNode = MNode;
 
-        DNode.NodeT = Type;
+        DNode.NodeT = Type;        
+        if (File.Exists(FilePath))        
+        {        
+            JsonData = File.ReadAllText(FilePath);                    
+            SpeakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(JsonData);
+         
+            SpeakerName = new List<string>();                   
+            DNode.SpeakerID = new NPCData();
+        
+            for (int i = 0; i < SpeakerSelection.Count; i++)
+            {                        
+                SpeakerName.Add(SpeakerSelection[i].NpcName);                  
+            }         
+        }
 
         switch (Type)
         {
             case NodeType.DIALOUGE:
-                if (File.Exists(FilePath))
-                {
-                    JsonData = File.ReadAllText(FilePath);
-                    SpeakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(JsonData);
-
-                    SpeakerName = new List<string>();
-
-                    for (int i = 0; i < SpeakerSelection.Count; i++)
-                    {
-                        SpeakerName.Add(SpeakerSelection[i].NpcName);
-                    }    
-                }
                 break;
 
             case NodeType.FLAG:
@@ -128,7 +129,6 @@ public class DialogueNode : IComparable<DialogueNode>
                 FlagChoice1 = 0;
                 FlagChoice2 = 0;
                 break;
-
         }
 
         PosX = Position.x;
@@ -172,7 +172,6 @@ public class DialogueNode : IComparable<DialogueNode>
 
             case NodeType.DIALOUGE:
                 EditorGUILayout.LabelField("Speaker ID: ");
-                SetSpeaker = DNode.SpeakerID.NpcID;
                 SetSpeaker = EditorGUILayout.Popup(SetSpeaker, SpeakerName.ToArray());
                 DNode.SpeakerID = SpeakerSelection[SetSpeaker];
                 DNode.Line = GUILayout.TextArea(DNode.Line, GUILayout.Height(EditorGUIUtility.singleLineHeight * 5));

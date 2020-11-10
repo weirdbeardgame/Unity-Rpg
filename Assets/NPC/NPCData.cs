@@ -15,45 +15,36 @@ public enum QuestFlag { HAS_QUEST, QUEST_ACTIVE };
 
 public class NPCData : ScriptableObject
 {
+
     public int NpcID;
-    public int QuestID;
-    public bool HasQuest;
     public string NpcName;
-    public string SpritePath;
+    public string NpcEventPath;
+
+    [System.NonSerialized]
     List<Waypoint> Waypoints;
-    List<QuestEventData> EventData;
-    public QuestEventData Event;
+
+    [System.NonSerialized]
+    public List<QuestEventData> EventData; // Quest Event Data is here
+
+    [System.NonSerialized]
     public SpeakerData Speaker;
+    [System.NonSerialized]
     public Waypoint Waypoint;
+    
     public NPCData()
     {
         NpcID = 0;
-        QuestID = 0;
-        SpritePath = " ";
         NpcName = " ";
-        HasQuest = false;
         Waypoints = null;
         EventData = null;
         Waypoint = null;
         Speaker = null;
-        Event = null;
     }
 
-    public void AddEvent()
+    public NPCData Deserialize()
     {
-        if (EventData == null)
-        {
-            EventData = new List<QuestEventData>();
-        }
+        NPCData ToConstruct = new NPCData();
 
-        if (!EventData.Contains(Event))
-        {
-            EventData.Add(Event);
-        }
-
-        else
-        {
-            Debug.LogError("Event Exsts!!");
-        }
+        return ToConstruct;
     }
 }

@@ -30,6 +30,7 @@ public class DialogueEditor : EditorWindow
     int TreeID = 0;
 
     bool Init = false;
+    bool IsEvent = false;
 
     int SelectedTree;
     int SelectedPrevious;
@@ -53,15 +54,87 @@ public class DialogueEditor : EditorWindow
         window.titleContent = new GUIContent("Node Based Editor");
     }
 
-
-    public void OpenWindowEditor(BinarySearchTree<DialogueMessage> Tree, int Quest)
+    public void OpenWindowEditor(BinarySearchTree<DialogueMessage> Tree, List<BinarySearchTree<DialogueMessage>> TreeList)
     {
-        ReadJson();
+        if (File.Exists(FlagPath))
+        {
+            JsonData = File.ReadAllText(FlagPath);
+            FlagData = JsonConvert.DeserializeObject<List<Flags>>(JsonData);
+
+            FlagString = new List<string>();
+
+            for (int i = 0; i < FlagData.Count; i++)
+            {
+                FlagString.Add(FlagData[i].Flag);
+            }
+        }
+
+        DialogueDisplay = new BinarySearchTree<DialogueNode>();
+        Trees = TreeList;
+        DialogueTree = Tree;
         DialogueEditor window = GetWindow<DialogueEditor>();
         window.titleContent = new GUIContent("Node Based Editor");
         Init = true;
+        IsEvent = true;
     }
 
+    public void OpenWindowEditorList(List<BinarySearchTree<DialogueMessage>> TreeList)
+    {
+        if (File.Exists(FlagPath))
+        {
+            JsonData = File.ReadAllText(FlagPath);
+            FlagData = JsonConvert.DeserializeObject<List<Flags>>(JsonData);
+
+            FlagString = new List<string>();
+
+            for (int i = 0; i < FlagData.Count; i++)
+            {
+                FlagString.Add(FlagData[i].Flag);
+            }
+        }
+
+        ItemList = new List<string>();
+        DialogueDisplay = new BinarySearchTree<DialogueNode>();
+        Trees = TreeList;
+        DialogueTree = Trees[0];
+
+        foreach (var tree in Trees)
+        {
+            ItemList.Add("Tree " + TreeID.ToString() + ": ");
+            TreeID += 1;
+        }
+
+        foreach(var node in Trees[SelectedTree])
+        {
+            DialogueTree = new BinarySearchTree<DialogueMessage>();
+       
+            DialogueTree.Insert(node); // An attempt to construct the tree itself.
+            Trees.Add(DialogueTree); // Saving the currently constructed tree
+            ItemList.Add("Tree " + TreeID.ToString() + ": "); // And making it selectable
+            TreeID += 1;
+        }
+
+        foreach (var Node in Trees[SelectedTree])
+        {
+            if (Node != null)
+            {
+
+                NodeToCreate = new DialogueNode();
+                NodeToCreate.CreateNode("", new Vector2(0, 0), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node, Node.NodeT);
+                AddNode(NodeToCreate, Node.NodeT);
+            }
+
+            else
+            {
+                break;
+            }
+
+
+            DialogueEditor window = GetWindow<DialogueEditor>();
+            window.titleContent = new GUIContent("Node Based Editor");
+            Init = true;
+        }
+    }
 
     private void OnClickRemoveNode(DialogueMessage node)
     {
@@ -172,6 +245,16 @@ public class DialogueEditor : EditorWindow
     {
         NodeToCreate = new DialogueNode();
 
+        if (DialogueTree == null)
+        {
+            DialogueTree = new BinarySearchTree<DialogueMessage>();
+        }
+
+        if (DialogueDisplay == null)
+        {
+            DialogueDisplay = new BinarySearchTree<DialogueNode>();
+        }
+
         Style = new GUIStyle();
         Style.normal.background = EditorGUIUtility.Load("builtin skins/darkskin/images/node1.png") as Texture2D;
         Style.clipping = TextClipping.Clip;
@@ -188,6 +271,7 @@ public class DialogueEditor : EditorWindow
         LeftPoint.border = new RectOffset(4, 4, 12, 12);
 
         Message = new DialogueMessage(ref NodeID);
+        Message.Line = " ";
         NodeToCreate.CreateNode("", position, 320, 200, Style, RightPoint, LeftPoint, OnClickRemoveNode, ref NodeID, Message, Type);
 
         DialogueTree.Insert(Message);
@@ -268,8 +352,10 @@ public class DialogueEditor : EditorWindow
     void ChangeTree()
     {
         SelectedPrevious = SelectedTree;
-        SelectedTree = EditorGUILayout.Popup(SelectedTree, ItemList.ToArray());
-
+        if (ItemList != null && ItemList.Count > 0)
+        {
+            SelectedTree = EditorGUILayout.Popup(SelectedTree, ItemList.ToArray());
+        }
         if (SelectedTree != SelectedPrevious)
         {
             DialogueDisplay.Clear();
@@ -394,26 +480,34 @@ public class DialogueEditor : EditorWindow
     {
         string Data = " ";
 
-        if (!Trees.Contains(DialogueTree))
+        if (IsEvent)
         {
-            Trees.Add(DialogueTree);
+            return;
         }
 
-        List<List<DialogueMessage>> TempSave = new List<List<DialogueMessage>>();
-
-        List<DialogueMessage> TempData;
-        for (int i = 0; i < Trees.Count; i++)
+        else
         {
-            TempData = new List<DialogueMessage>();
-            TempData = Trees[i].GetData();
-            TempSave.Add(TempData);
+
+            if (!Trees.Contains(DialogueTree))
+            {
+                Trees.Add(DialogueTree);
+            }
+
+            List<List<DialogueMessage>> TempSave = new List<List<DialogueMessage>>();
+
+            List<DialogueMessage> TempData;
+            for (int i = 0; i < Trees.Count; i++)
+            {
+                TempData = new List<DialogueMessage>();
+                TempData = Trees[i].GetData();
+                TempSave.Add(TempData);
+            }
+
+            Data = JsonConvert.SerializeObject(TempSave, Formatting.Indented);
+
+            File.WriteAllText(FilePath, Data);
+
+            // I need to save link directions as well as each specific node in here
         }
-
-        Data = JsonConvert.SerializeObject(TempSave, Formatting.Indented);
-
-        File.WriteAllText(FilePath, Data);
-
-        // I need to save link directions as well as each specific node in here
-
     }
 }

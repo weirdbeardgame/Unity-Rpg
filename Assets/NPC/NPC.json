@@ -1,0 +1,29 @@
+{
+  "$type": "System.Collections.Generic.List`1[[NPCData, Assembly-CSharp]], mscorlib",
+  "$values": [
+    {
+      "$type": "NPCData, Assembly-CSharp",
+      "NpcID": 1,
+      "NpcName": "Tosh Nagoshi",
+      "NpcEventPath": "Assets/NPC/Events/Tosh Nagoshi.json",
+      "name": "",
+      "hideFlags": 0
+    },
+    {
+      "$type": "NPCData, Assembly-CSharp",
+      "NpcID": 2,
+      "NpcName": "Doku Momushi",
+      "NpcEventPath": "Assets/NPC/Events/Doku Momushi.json",
+      "name": "",
+      "hideFlags": 0
+    },
+    {
+      "$type": "NPCData, Assembly-CSharp",
+      "NpcID": 3,
+      "NpcName": "Musungo Aborashi",
+      "NpcEventPath": "Assets/NPC/Events/Musungo Aborashi.json",
+      "name": "",
+      "hideFlags": 0
+    }
+  ]
+}

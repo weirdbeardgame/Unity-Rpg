@@ -12,6 +12,11 @@ public class PScreen : MonoBehaviour
 
     Shader ScreenShader;
 
+    List<Widget> Widgets;
+    List<ScreenData> Screens;
+
+    ScreenData CurrentScreen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +27,7 @@ public class PScreen : MonoBehaviour
     public void Open()
     {
         // Play animation of screen opening.
+        ChangeScreen(0).Widgets = Widgets;
         ScreenSpace.SetActive(true);
     }
 
@@ -31,9 +37,10 @@ public class PScreen : MonoBehaviour
         ScreenSpace.SetActive(false);
     }
 
-    public void ChangeScreen()
+    public ScreenData ChangeScreen(int ScreenID)
     {
         // Load Other Screens
+        return Screens[ScreenID];
     }
 
 

@@ -10,8 +10,8 @@ using UnityEngine.SceneManagement;
 public class NPCManager : MonoBehaviour, IReceiver
 {
     List<NPCData> _Data;
-    NPCData _Initalizer;
-    string FilePath = "Assets/NPC.json";
+    public NPCData Initalizer;
+    string FilePath = "Assets/NPC/NPC.json";
     string NPCData;
 
     Vector2 position;
@@ -52,7 +52,7 @@ public class NPCManager : MonoBehaviour, IReceiver
         if (File.Exists(FilePath))
         {
             _Data = new List<NPCData>();
-            _Initalizer = new NPCData();
+            Initalizer = new NPCData();
             Inbox = new Queue<object>();
             NPCData = File.ReadAllText(FilePath);
             _Data = JsonConvert.DeserializeObject<List<NPCData>>(NPCData, settings);

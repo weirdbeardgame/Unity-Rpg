@@ -70,11 +70,11 @@
     <Compile Include="Assets\Editor\EnemyEditor.cs" />
     <Compile Include="Assets\Editor\FlagEditor.cs" />
     <Compile Include="Assets\Editor\ItemEditor.cs" />
+    <Compile Include="Assets\Editor\NPCEditor.cs" />
     <Compile Include="Assets\Editor\QuestEditor.cs" />
     <Compile Include="Assets\Editor\SkillEditor.cs" />
     <Compile Include="Assets\Editor\SpeakerEditor.cs" />
     <Compile Include="Assets\Editor\WeaponEditor.cs" />
-    <Compile Include="Assets\Editor\menuEditor.cs" />
     <Compile Include="Assets\Editor\playerEditorWindow.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/final/source/repos/Unity-Rpg/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
