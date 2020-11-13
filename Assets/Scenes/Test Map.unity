@@ -215,37 +215,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff573a061a2a43448da7ce64ff94abb, type: 3}
---- !u!114 &310884525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bf9ffc3630df2f46abead43465683d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NpcID: 1
-  NpcName: Tosh
-  sprite: 
-  EventData:
-  - {fileID: 355916434}
---- !u!114 &355916434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6281d9c7effff37469e9cf8f9bc14064, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 1
-  Item: {fileID: 544119217}
 --- !u!4 &413872672 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7457896790683177186, guid: a320b7bbb3ca87709bacea1581e1a2a3,
@@ -356,22 +325,22 @@ PrefabInstance:
     - target: {fileID: 3712252193248977654, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -431
+      value: -459.9
       objectReference: {fileID: 0}
     - target: {fileID: 3712252193248977654, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 186
+      value: 162
       objectReference: {fileID: 0}
     - target: {fileID: 3712252193248977654, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 64.1
+      value: -223.66
       objectReference: {fileID: 0}
     - target: {fileID: 3712252193248977654, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -134.9
+      value: -32.4
       objectReference: {fileID: 0}
     - target: {fileID: 3712252194399001769, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
@@ -590,24 +559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &526943072 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3712252193248977655, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
-    type: 3}
-  m_PrefabInstance: {fileID: 526943068}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &544119217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92ce873eba452b4eabf9e5e12902b9f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &617319088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -631,6 +582,12 @@ PrefabInstance:
       propertyPath: NpcID
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 498698087606107046, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: SpeakerProfile
+      value: 
+      objectReference: {fileID: 7149917242164883704, guid: 669c6308d29dbc76287ee31e3ba87836,
+        type: 3}
     - target: {fileID: 822628094297334554, guid: c48bac9b891426b61ad61c139aca6bd1,
         type: 3}
       propertyPath: eventToCall
@@ -20716,6 +20673,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1286388317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf9ffc3630df2f46abead43465683d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcID: 2
+  NpcName: Doku Momushi
+  NpcEventPath: Assets/NPC/Events/Doku Momushi.json
 --- !u!1 &1582546532
 GameObject:
   m_ObjectHideFlags: 0
@@ -20751,7 +20723,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rendering: {fileID: 526943070}
   Name: {fileID: 526943071}
-  Speaker: {fileID: 526943072}
   canvas: {fileID: 526943069}
 --- !u!114 &1582546534
 MonoBehaviour:
@@ -20815,7 +20786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bbf7eca8675d0c982b83bac7dc58db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Initalizer: {fileID: 310884525}
+  Initalizer: {fileID: 1286388317}
 --- !u!1 &2073792195
 GameObject:
   m_ObjectHideFlags: 0
@@ -20941,6 +20912,17 @@ PrefabInstance:
         type: 3}
       propertyPath: NpcId
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498698087606107046, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: SpeakerProfile
+      value: 
+      objectReference: {fileID: 7149917242164883704, guid: 46f451548eaf0db9f918cd3e36985c01,
+        type: 3}
+    - target: {fileID: 498698087606107046, guid: c48bac9b891426b61ad61c139aca6bd1,
+        type: 3}
+      propertyPath: NpcID
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 822628094297334554, guid: c48bac9b891426b61ad61c139aca6bd1,
         type: 3}
@@ -21071,7 +21053,7 @@ PrefabInstance:
     - target: {fileID: 1982843823109176437, guid: c48bac9b891426b61ad61c139aca6bd1,
         type: 3}
       propertyPath: waypoints.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1982843823109176437, guid: c48bac9b891426b61ad61c139aca6bd1,
         type: 3}

@@ -23,13 +23,13 @@ public class NPC : MonoBehaviour
     void ApplyNPC()
     {
         // When editing NPC's. Auto show the selected NPC ingame world
-        NpcData = NpcM.NPC[NpcID];
-        //GetComponent<SpriteRenderer>().sprite = Sprite.Create(NpcData.Texture, new Rect(0.0f, 0.0f, NpcData.Texture.width, NpcData.Texture.height), Vector2.one);
+        NpcData = NpcM.NPC[NpcID - 1];
+        NpcData.CurrentSpeaker = SpeakerProfile;
     }
 
     void Talk()
     {
-        Dialogue.OpenDialogueBox(NpcData);
+        //Dialogue.OpenDialogueBox(NpcData);
         Collided = false;
         return;
     }
@@ -47,13 +47,34 @@ public class NPC : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Collided = false;
+        }
+    }
+
     void pollEvents()
     {
+        states = FindObjectOfType<StateMachine>();
+        Debug.Log("Current FLAG : " + states.CurrrentFlag.Flag);
+        Debug.Log("Current FLAG ID : " + states.CurrrentFlag.ID);
+
+        QuestEventData ToExecute;
+
         for (int i = 0; i < NpcData.EventData.Count; i++)
         {
-            if (NpcData.EventData[i].RequiredFlag == states.CurrrentFlag)
+            Debug.Log("FLAG : " + NpcData.EventData[i].RequiredFlag.Flag);
+            Debug.Log("FLAG ID : " + NpcData.EventData[i].RequiredFlag.ID);
+
+            if (NpcData.EventData[i].RequiredFlag.ID == states.CurrrentFlag.ID)
             {
-                NpcData.EventData[i].Execute();
+                ToExecute = NpcData.EventData[i];
+                Debug.Log("Event Executed");
+                ToExecute.Execute(SpeakerProfile);
+                NpcData.EventData.RemoveAt(i);
+                return;
             }
         }
     }

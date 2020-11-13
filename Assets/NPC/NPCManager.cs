@@ -57,6 +57,15 @@ public class NPCManager : MonoBehaviour, IReceiver
             NPCData = File.ReadAllText(FilePath);
             _Data = JsonConvert.DeserializeObject<List<NPCData>>(NPCData, settings);
         }
+        foreach(var npc in _Data)
+        {
+            if (File.Exists(npc.NpcEventPath))
+            {
+                npc.EventData = new List<QuestEventData>();
+                NPCData = File.ReadAllText(npc.NpcEventPath);
+                npc.EventData = JsonConvert.DeserializeObject<List<QuestEventData>>(NPCData);
+            }
+        }
     }
 
     /*void checkQuest()

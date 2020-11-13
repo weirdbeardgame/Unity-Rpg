@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public enum States { MAIN, BATTLE, CUTSCENE, PAUSE };
@@ -76,7 +78,12 @@ class StateMachine : MonoBehaviour, IReceiver
     private States _State;
     Queue<object> Inbox;
     Messaging Messenger;
+    List<Flags> FlagData;
     gameStateMessage Message;
+
+    string FlagJson;
+    string FlagPath = "Assets/Flags.json";
+
 
     private Flags _CurerntFlag;
 
@@ -107,16 +114,24 @@ class StateMachine : MonoBehaviour, IReceiver
 
     }
 
+    void ReadJson()
+    {
+        FlagData = new List<Flags>();
+        if (File.Exists(FlagPath))
+        {
+            FlagJson = File.ReadAllText(FlagPath);
+            FlagData = JsonConvert.DeserializeObject<List<Flags>>(FlagJson);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
-    {
-        Messenger = FindObjectOfType<Messaging>();
-        Subscribe();
-        CurrrentFlag = new Flags();
-        CurrrentFlag.Flag = "Test 1";
-        CurrrentFlag.Activate();
+    {    
+        Messenger = FindObjectOfType<Messaging>(); 
         Inbox = new Queue<object>();
+        ReadJson();
+        Subscribe();
+        CurrrentFlag = FlagData[0];
         DontDestroyOnLoad(this);
     }
 

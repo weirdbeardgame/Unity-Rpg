@@ -35,7 +35,9 @@ public class DialogueManager : MonoBehaviour
 
     public TextMeshProUGUI rendering;
     public TextMeshProUGUI Name;
-    public GameObject Speaker;
+
+    GameObject SpeakerProfile;
+    GameObject Speaker;
 
 
     public Canvas canvas;
@@ -120,10 +122,8 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-
             switch (Node.Data.NodeT)
             {
-
                 case NodeType.FLAG:
                     switch (Node.Data.FlagType)
                     {
@@ -144,12 +144,13 @@ public class DialogueManager : MonoBehaviour
                            stateMessage.construct(_Machine.State, Node.Data.Flag);
                             break;
                     }
-
-
                     break;
 
                 case NodeType.DIALOUGE:
                     CurrentLine = Node.Data.Line;
+                    // Get next Speaker
+                    GetNextSpeaker(Node);
+
                     StartCoroutine(AnimateText());
                     break;
 
@@ -163,6 +164,23 @@ public class DialogueManager : MonoBehaviour
 
             }
         }
+    }
+
+    void GetNextSpeaker(TNode<DialogueMessage> N)
+    {
+        Name.text = N.Data.SpeakerID.NpcName;
+
+        /*if (Speaker != null)
+        {
+            Destroy(Speaker);
+        }*/
+
+
+        SpeakerProfile = GameObject.Find("Speaker");
+        Speaker = Instantiate(N.Data.SpeakerID.CurrentSpeaker);
+        Speaker.transform.SetParent(SpeakerProfile.transform);
+        Speaker.transform.localPosition = SpeakerProfile.transform.localPosition;
+        Speaker.GetComponent<SpriteRenderer>().sortingOrder = 3;
     }
 
     public void Close()
@@ -189,27 +207,16 @@ public class DialogueManager : MonoBehaviour
         Talking = true;
         NextNode(ScratchPad.Tree);
     }
-    public void OpenDialogueBox(NPCData Speak)
+    public void OpenDialogueBox(BinarySearchTree<DialogueMessage> Tree, GameObject SpeakerProfile)
     {
-        ScratchPad = new BinarySearchTree<DialogueMessage>();
-
-        while(DialougeData[Index].Tree.Data.Flag.ID != _Machine.CurrrentFlag.ID)
-        {
-            Index++;
-        }
-
-        if (DialougeData[Index].Tree.Data.Flag.ID == _Machine.CurrrentFlag.ID)
-        {  
-            rendering.enabled = true;        
-            canvas.enabled = true;        
-            Name.enabled = true;        
-            Talking = true;
-            Speaker = GameObject.Instantiate(Speak.Speaker.Prefab);
-            Speaker.transform.position = transform.position;
-            Name.text = Speak.Speaker.SpeakerName;
-            ScratchPad.Tree = DialougeData[Index].Tree;
-            NextNode(ScratchPad.Tree.Right);
-        }
+            
+        rendering.enabled = true;            
+        canvas.enabled = true;        
+        Name.enabled = true;                    
+        Talking = true;
+        ScratchPad = Tree;     
+        NextNode(ScratchPad.Tree.Right);
+        return;
     }
 
     // Update is called once per frame
@@ -221,6 +228,12 @@ public class DialogueManager : MonoBehaviour
             {
                 CurrentLine = null;
                 rendering.text = null;
+
+                if (ScratchPad.Tree.Right == null)
+                {
+                    Close();
+                }
+
                 ScratchPad.Tree = ScratchPad.Tree.Right;
 
                 //Debug.Log("Incolent fool. Submit!");

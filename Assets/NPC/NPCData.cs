@@ -20,6 +20,8 @@ public class NPCData : ScriptableObject
     public string NpcName;
     public string NpcEventPath;
 
+    public GameObject CurrentSpeaker;
+
     [System.NonSerialized]
     List<Waypoint> Waypoints;
 
