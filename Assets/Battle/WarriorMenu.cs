@@ -36,17 +36,17 @@ public class WarriorMenu : MonoBehaviour, BattleMIface
 
         // Below is the widgets for Warrior
         Instantiate(Widget);
-        Widget.GetComponent<Widget>().Initalize(0, "Attack");
+        //Widget.GetComponent<Widget>().Initalize(0, "Attack");
         Widget.GetComponentInChildren<TextMeshPro>().text = "Attack";
         Menu.AddWidget(Widget);
 
         Instantiate(Widget);
-        Widget.GetComponent<Widget>().Initalize(1, "Item");
+        //Widget.GetComponent<Widget>().Initalize(1, "Item");
         Widget.GetComponentInChildren<TextMeshPro>().text = "Item";
         Menu.AddWidget(Widget);
 
         Instantiate(Widget);
-        Widget.GetComponent<Widget>().Initalize(2, "Skills");
+        //Widget.GetComponent<Widget>().Initalize(2, "Skills");
         Widget.GetComponentInChildren<TextMeshPro>().text = "Skills";
         Menu.AddWidget(Widget);
 

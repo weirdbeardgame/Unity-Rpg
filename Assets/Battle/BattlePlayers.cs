@@ -39,8 +39,6 @@ public class BattlePlayers : MonoBehaviour
 
     public Dictionary<int, CharacterInfo> Initialize(GameObject Battle, GameObject BattleO, List<Baddies> Bad, int i)
     {
-
-
         Instance = this;
 
         if (!isInitalized)

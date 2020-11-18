@@ -54,16 +54,16 @@ public class commandMenus : MonoBehaviour, IReceiver
     // Start is called before the first frame update
     void Start()
     {
-        /*PlayerStatus = GameObject.Find("menu");
+        PlayerStatus = GameObject.Find("menu");
         Commands = GameObject.Find("Command Screen");
         Commands.GetComponent<Image>().enabled = false;
 
-        Widgets = new List<Widget>();
+       // Widgets = new List<Widget>();
         message = FindObjectOfType<Messaging>();
         Subscribe();
         InputData = new Queue<Inputs>();
         Menus = new SortedDictionary<JobSystem, BattleMIface>();
-        SubMenus = new SortedDictionary<int, BattleMIface>();*/
+        SubMenus = new SortedDictionary<int, BattleMIface>();
     }
 
     void IncreaseIndex()
@@ -171,7 +171,7 @@ public class commandMenus : MonoBehaviour, IReceiver
 
                 case Inputs.A:
                     Debug.Log("A press");
-                    Widgets[WidgetIndex].GetComponent<Widget>().Execute();
+                    //Widgets[WidgetIndex].GetComponent<Widget>().Execute();
                     CurrentInput = Inputs.NULL;
                     InputData.Clear();
                     Targeting = true;
@@ -248,9 +248,7 @@ public class commandMenus : MonoBehaviour, IReceiver
         }
 
         PlayerStatSlot1.GetComponent<TextMeshProUGUI>().SetText(Battlers[0].CreatureName + ':' + " Health: " + Battlers[0].Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
-
         PlayerStatSlot2.GetComponent<TextMeshProUGUI>().SetText(Battlers[1].CreatureName + ':' + " Health: " + Battlers[1].Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
-
         //PlayerStatSlot3.GetComponent<TextMeshProUGUI>().SetText(Battlers[2].CreatureName + ':' + " Health: " + Battlers[2].Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
     }
 
@@ -329,11 +327,8 @@ public class commandMenus : MonoBehaviour, IReceiver
                     break;
             }
         }
-
         yield return Index;
-
     }
-
 
     public void Close()
     {
@@ -352,9 +347,7 @@ public class commandMenus : MonoBehaviour, IReceiver
         Destroy(Panel);
 
         IsOpened = false;
-
         Debug.Log("Menu Closed");
-
     }
 
     // Update is called once per frame

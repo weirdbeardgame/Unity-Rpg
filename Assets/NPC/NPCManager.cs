@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class NPCManager : MonoBehaviour, IReceiver
 {
-    List<NPCData> _Data;
+    public List<NPCData> ToInit;
     public NPCData Initalizer;
     string FilePath = "Assets/NPC/NPC.json";
     string NPCData;
@@ -27,14 +27,8 @@ public class NPCManager : MonoBehaviour, IReceiver
 
     Messaging _Messenger;
 
-    public List<NPCData> NPC
-    {
-        get
-        {
-            return _Data;
-        }
-    }
-
+    public Dictionary<int, NPCData> ConstructedNPC;
+  
     void Start()
     {
         Initalize();
@@ -51,35 +45,35 @@ public class NPCManager : MonoBehaviour, IReceiver
     {
         if (File.Exists(FilePath))
         {
-            _Data = new List<NPCData>();
+            ToInit = new List<NPCData>();
             Initalizer = new NPCData();
             Inbox = new Queue<object>();
             NPCData = File.ReadAllText(FilePath);
-            _Data = JsonConvert.DeserializeObject<List<NPCData>>(NPCData, settings);
+            ToInit = JsonConvert.DeserializeObject<List<NPCData>>(NPCData, settings);
         }
-        foreach(var npc in _Data)
+        foreach(var npc in ToInit)
         {
             if (File.Exists(npc.NpcEventPath))
             {
-                npc.EventData = new List<QuestEventData>();
+                npc.EventData = new List<NPCEventData>();
                 NPCData = File.ReadAllText(npc.NpcEventPath);
-                npc.EventData = JsonConvert.DeserializeObject<List<QuestEventData>>(NPCData);
+                npc.EventData = JsonConvert.DeserializeObject<List<NPCEventData>>(NPCData);
             }
         }
     }
 
-    /*void checkQuest()
-   {
-       questMessage message = (questMessage)inbox.Dequeue();
+    public void Construct(NPCData D)
+    {
+        if (ConstructedNPC == null)
+        {
+            ConstructedNPC = new Dictionary<int, NPCData>();
+        }
 
-       if (message.getstate() == QuestState.IS_ACTIVE)
-       {
-           if (QID == message.getID())
-           {
-               // Does NPC have event or quest?
-           }
-       }
-   }*/
+        if (!ConstructedNPC.ContainsKey(D.NpcID))
+        {
+            ConstructedNPC.Add(D.NpcID, D);
+        }
+    }
 
     public void Subscribe()
     {
@@ -98,24 +92,4 @@ public class NPCManager : MonoBehaviour, IReceiver
         _Messenger.Unsubscribe(MessageType.QUEST, this);
     }
 
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (Inbox.Count > 0 && Inbox.Peek() is CollisionMessage)
-        {
-            _Collided = (CollisionMessage)Inbox.Dequeue();
-        }
-
-        /*if (Input.GetButtonDown("Submit") && _Collided != null)
-        {
-            Talk();
-        }*/
-
-        /*if ((_Data[0].Flag & QuestFlag.HAS_QUEST) > 0)
-          {
-              //checkQuest(); // This is Ref's prefered style ie. Constant polling of player's quest state
-              // This will get more complex later to cover what part of the quest we're in and if they have an event for that part etc.
-          }*/
-    }
 }

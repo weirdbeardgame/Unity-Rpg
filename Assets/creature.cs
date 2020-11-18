@@ -31,7 +31,6 @@ public class Creature : senderInterface
 
     public weaponSlots[] Slots
     {
-
         get
         {
             return _Slots;
@@ -41,7 +40,6 @@ public class Creature : senderInterface
         {
             _Slots = value;
         }
-
     }
 
 

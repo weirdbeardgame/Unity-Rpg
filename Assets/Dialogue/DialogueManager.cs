@@ -54,6 +54,8 @@ public class DialogueManager : MonoBehaviour
     QuestManager Quests;
     questBook Book;
 
+    NPCManager manager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +66,7 @@ public class DialogueManager : MonoBehaviour
         _Machine = FindObjectOfType<StateMachine>();
         Quests = FindObjectOfType<QuestManager>();
         Book = FindObjectOfType<questBook>();
+        manager = FindObjectOfType<NPCManager>();
 
         if (File.Exists(FilePath))
         {
@@ -170,17 +173,20 @@ public class DialogueManager : MonoBehaviour
     {
         Name.text = N.Data.SpeakerID.NpcName;
 
-        /*if (Speaker != null)
+        if (Speaker != null)
         {
             Destroy(Speaker);
-        }*/
+        }
 
+        GameObject Canvas = GameObject.Find("Dialogue");
 
         SpeakerProfile = GameObject.Find("Speaker");
-        Speaker = Instantiate(N.Data.SpeakerID.CurrentSpeaker);
-        Speaker.transform.SetParent(SpeakerProfile.transform);
+        
+        Speaker = Instantiate(manager.ConstructedNPC[N.Data.SpeakerID.NpcID].CurrentSpeaker);
+        Speaker.transform.SetParent(Canvas.transform);
         Speaker.transform.localPosition = SpeakerProfile.transform.localPosition;
-        Speaker.GetComponent<SpriteRenderer>().sortingOrder = 3;
+        Speaker.transform.localScale = new Vector2(200, 200);
+        Speaker.GetComponent<SpriteRenderer>().sortingOrder = 3; 
     }
 
     public void Close()
@@ -190,6 +196,7 @@ public class DialogueManager : MonoBehaviour
         Name.text = null;
         canvas.enabled = false;
         Talking = false;
+        Destroy(Speaker);
         stateMessage.construct(States.MAIN, _Machine.CurrrentFlag);
     }
 
@@ -207,15 +214,14 @@ public class DialogueManager : MonoBehaviour
         Talking = true;
         NextNode(ScratchPad.Tree);
     }
-    public void OpenDialogueBox(BinarySearchTree<DialogueMessage> Tree, GameObject SpeakerProfile)
-    {
-            
+    public void OpenDialogueBox(BinarySearchTree<DialogueMessage> Tree)
+    {         
         rendering.enabled = true;            
         canvas.enabled = true;        
         Name.enabled = true;                    
         Talking = true;
         ScratchPad = Tree;     
-        NextNode(ScratchPad.Tree.Right);
+        NextNode(ScratchPad.Tree);
         return;
     }
 

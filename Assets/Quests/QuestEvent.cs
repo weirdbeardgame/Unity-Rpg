@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestEvent : MonoBehaviour
 {
-    public QuestEventData eventToCall;
+    
 
     StateMachine state;
 

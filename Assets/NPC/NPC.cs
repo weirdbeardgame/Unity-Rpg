@@ -10,6 +10,7 @@ public class NPC : MonoBehaviour
     StateMachine states;    
     DialogueManager Dialogue;
     public GameObject SpeakerProfile;
+    bool Collided;
 
     private void Start()
     {
@@ -18,20 +19,11 @@ public class NPC : MonoBehaviour
         states = FindObjectOfType<StateMachine>();
     }
 
-    bool Collided;
-
     void ApplyNPC()
     {
-        // When editing NPC's. Auto show the selected NPC ingame world
-        NpcData = NpcM.NPC[NpcID - 1];
+        NpcData = NpcM.ToInit[NpcID - 1];
         NpcData.CurrentSpeaker = SpeakerProfile;
-    }
-
-    void Talk()
-    {
-        //Dialogue.OpenDialogueBox(NpcData);
-        Collided = false;
-        return;
+        NpcData.Construct(SpeakerProfile);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -61,7 +53,7 @@ public class NPC : MonoBehaviour
         Debug.Log("Current FLAG : " + states.CurrrentFlag.Flag);
         Debug.Log("Current FLAG ID : " + states.CurrrentFlag.ID);
 
-        QuestEventData ToExecute;
+        NPCEventData ToExecute;
 
         for (int i = 0; i < NpcData.EventData.Count; i++)
         {

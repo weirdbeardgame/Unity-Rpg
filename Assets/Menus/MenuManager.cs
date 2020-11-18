@@ -226,7 +226,7 @@ namespace menu
                             break;
 
                         case Inputs.A:
-                            _Widgets[_WidgetIndex].GetComponent<Widget>().Execute();
+                            //_Widgets[_WidgetIndex].GetComponent<Widget>().Execute();
                             CurrentInput = Inputs.NULL;
                             break;
                     }

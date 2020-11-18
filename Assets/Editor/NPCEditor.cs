@@ -10,10 +10,10 @@ using questing;
 public class NPCEditor : Editor
 {
     NPCManager Data;
-    QuestEventData Event;
+    NPCEventData Event;
     DialogueEditor DEditor;
 
-    bool IsInit;    
+    bool IsInit;
     int selected;
     int FlagSelected;
     int EventSelector;
@@ -57,7 +57,6 @@ public class NPCEditor : Editor
                 if (Editable[i] != null)
                 {
                     NpcNames.Add(Editable[i].NpcName);
-
                 }
             }
         }
@@ -67,7 +66,7 @@ public class NPCEditor : Editor
             {
                 JsonData = null;
                 JsonData = File.ReadAllText(Editable[i].NpcEventPath);
-                Editable[i].EventData = JsonConvert.DeserializeObject<List<QuestEventData>>(JsonData);
+                Editable[i].EventData = JsonConvert.DeserializeObject<List<NPCEventData>>(JsonData);
 
                 if (Editable[i].EventData != null)
                 {
@@ -178,10 +177,10 @@ public class NPCEditor : Editor
             {
                 if (Data.Initalizer.EventData == null)
                 {
-                    Data.Initalizer.EventData = new List<QuestEventData>();
+                    Data.Initalizer.EventData = new List<NPCEventData>();
                     EventNames = new List<string>();
                 }
-                Event = new QuestEventData();
+                Event = new NPCEventData();
                 Event.RequiredFlag = new Flags();
                 Event.EventName = "New Event";
                 Data.Initalizer.EventData.Add(Event);
@@ -209,14 +208,14 @@ public class NPCEditor : Editor
                 EditorGUILayout.LabelField("Event Name");
                 Event.EventName = EditorGUILayout.TextField(Event.EventName);
                 EditorGUILayout.LabelField("Event Type");
-                Event.Type = (QuestEventType)EditorGUILayout.EnumPopup(Event.Type);
+                Event.Type = (NPCEventType)EditorGUILayout.EnumPopup(Event.Type);
                 EditorGUILayout.LabelField("Flag To Set");
                 FlagSelectedSet = EditorGUILayout.Popup(FlagSelectedSet, FlagString.ToArray());
                 Event.FlagToSet = FlagList[FlagSelectedSet];
 
                 switch (Event.Type)
                 {
-                    case QuestEventType.DIALOUGE:
+                    case NPCEventType.DIALOUGE:
                         if (GUILayout.Button("Open Dialogue Editor"))
                         {                            
                             // Open Dialogue Editor, ensuring it has the flag and Quest ID corresonded.
@@ -240,7 +239,7 @@ public class NPCEditor : Editor
                             }
                         }
                         break;
-                    case QuestEventType.ADDITEM:
+                    case NPCEventType.ADDITEM:
                         // What Item to Add
                         if (ItemsToCollect == null)
                         {
@@ -251,11 +250,11 @@ public class NPCEditor : Editor
                         Event.Item = new ItemData();
                         Event.Item = ItemsToCollect[ItemID];
                         break;
-                    case QuestEventType.FOLLOW:
+                    case NPCEventType.FOLLOW:
                         // Take control of player and redirect to Waypoint
                         break;
 
-                    case QuestEventType.ADDQUEST:
+                    case NPCEventType.ADDQUEST:
                         // Give that bitch quest no matter what.
                         EditorGUILayout.Popup(questSelected, QuestNames.ToArray());
                         Event.Quests = Quests[questSelected];

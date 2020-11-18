@@ -47,6 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
+    <UnityProjectGeneratorVersion>4.8.2.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.3.0f6</UnityVersion>
@@ -98,6 +99,7 @@
     <Compile Include="Assets\Menus\PScreen.cs" />
     <Compile Include="Assets\Menus\ScreenData.cs" />
     <Compile Include="Assets\Menus\Widget.cs" />
+    <Compile Include="Assets\Menus\WidgetData.cs" />
     <Compile Include="Assets\Menus\menuInterface.cs" />
     <Compile Include="Assets\Messages\CollisionMessage.cs" />
     <Compile Include="Assets\Messages\Messaging.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Assets\Messages\senderInterface.cs" />
     <Compile Include="Assets\NPC\NPC.cs" />
     <Compile Include="Assets\NPC\NPCData.cs" />
+    <Compile Include="Assets\NPC\NPCEventData.cs" />
     <Compile Include="Assets\NPC\NPCManager.cs" />
     <Compile Include="Assets\NPC\NPCMovement.cs" />
     <Compile Include="Assets\NPC\Waypoint.cs" />

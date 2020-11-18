@@ -7,7 +7,6 @@ using UnityEngine;
 public class Player : Creature
 {
     public string SpritePath;
-    //public GameObject sprite;
     public int Level;
 
     public void Kill()
@@ -30,13 +29,9 @@ public class Player : Creature
         WeaponToRemove.Dequip(Slots[(int)Slot]);
     }
 
-
     void ApplyWeaponBuffs()
     {
 
-
     }
-
-
 
 }

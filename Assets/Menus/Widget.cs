@@ -7,70 +7,13 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-
-[ExecuteInEditMode()]
 public class Widget : MonoBehaviour
-{  // Start is called before the first frame update
+{  
+    // Start is called before the first frame update
 
-    int sizeX;
-    int sizeY;
-
-    int MenuToOpen;
-
-    //public Action Executeable;
-
-    bool isHeld;
-
-    string _Title;
-
-    public int ToUse = 0;
-
-    protected MenuManager _Manager;
-
-    public string Title
+    void Execute()
     {
-        get
-        {
-            return _Title;
-        }
-
-        set
-        {
-            Title = value;
-        }
-    }
-
-    public virtual void OnUI()
-    {
-
-    }
-
-    public virtual void Awake()
-    {
-        OnUI();
-    }
-
-    public virtual void Initalize(int Var1, string Name)
-    {
-
-    }
-
-    public virtual void Execute()
-    {
-        //Executeable();
-    }
-
-    public virtual void Update()
-    {
-        if (Application.isEditor)
-        {
-            OnUI();
-        }
-    }
-
-    ~Widget()
-    {
-
+        // Call the function to execute? Or send out an event... Something like that.
     }
 
 }

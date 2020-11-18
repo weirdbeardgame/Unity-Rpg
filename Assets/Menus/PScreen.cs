@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class PScreen : MonoBehaviour
 {
-    GameObject ScreenSpace;
-
     int Width, Height;
 
     Shader ScreenShader;
+
+    GameObject Screen;
 
     List<Widget> Widgets;
     List<ScreenData> Screens;
@@ -19,22 +19,23 @@ public class PScreen : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        ScreenSpace.AddComponent<RectTransform>();
-        ScreenSpace.AddComponent<Image>();
-
+    {        
+        Screen = GameObject.Find("Menu");
+        Screen.AddComponent<RectTransform>();
+        Screen.AddComponent<Image>();
     }
     public void Open()
     {
         // Play animation of screen opening.
         ChangeScreen(0).Widgets = Widgets;
-        ScreenSpace.SetActive(true);
+        Screen.SetActive(true);
     }
 
     public void Close()
     {
         // Play animation of Screen closing
-        ScreenSpace.SetActive(false);
+        Screen.SetActive(false);
+
     }
 
     public ScreenData ChangeScreen(int ScreenID)

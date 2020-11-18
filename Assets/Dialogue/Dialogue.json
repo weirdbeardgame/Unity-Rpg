@@ -1,0 +1,272 @@
+[
+  [
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " Um, Mister Tosh sir?",
+      "ID": 0,
+      "SpeakerID": {
+        "NpcID": 3,
+        "NpcName": "Musungo Aborashi",
+        "NpcEventPath": "Assets/NPC/Events/Musungo Aborashi.json",
+        "NpcSpeakerProfilePrefab": null,
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    },
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " Hm? Oh, Heya kid. What can I do for you?",
+      "ID": 1,
+      "SpeakerID": {
+        "NpcID": 1,
+        "NpcName": "Tosh Nagoshi",
+        "NpcEventPath": "Assets/NPC/Events/Tosh Nagoshi.json",
+        "NpcSpeakerProfilePrefab": "",
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    },
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " I, Lord Doku asked me to get a potion from you.",
+      "ID": 2,
+      "SpeakerID": {
+        "NpcID": 3,
+        "NpcName": "Musungo Aborashi",
+        "NpcEventPath": "Assets/NPC/Events/Musungo Aborashi.json",
+        "NpcSpeakerProfilePrefab": null,
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    },
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " A potion? Oh yeah! Here you go. It's so funny he's afraid of wolves.",
+      "ID": 3,
+      "SpeakerID": {
+        "NpcID": 1,
+        "NpcName": "Tosh Nagoshi",
+        "NpcEventPath": "Assets/NPC/Events/Tosh Nagoshi.json",
+        "NpcSpeakerProfilePrefab": "",
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    }
+  ],
+  [
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " Um, Mister Tosh sir?",
+      "ID": 0,
+      "SpeakerID": {
+        "NpcID": 1,
+        "NpcName": "Tosh Nagoshi",
+        "NpcEventPath": "Assets/NPC/Events/Tosh Nagoshi.json",
+        "NpcSpeakerProfilePrefab": null,
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    }
+  ],
+  [
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " Hm? Oh, Heya kid. What can I do for you?",
+      "ID": 1,
+      "SpeakerID": {
+        "NpcID": 1,
+        "NpcName": "Tosh Nagoshi",
+        "NpcEventPath": "Assets/NPC/Events/Tosh Nagoshi.json",
+        "NpcSpeakerProfilePrefab": null,
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    }
+  ],
+  [
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " I, Lord Doku asked me to get a potion from you.",
+      "ID": 2,
+      "SpeakerID": {
+        "NpcID": 1,
+        "NpcName": "Tosh Nagoshi",
+        "NpcEventPath": "Assets/NPC/Events/Tosh Nagoshi.json",
+        "NpcSpeakerProfilePrefab": null,
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    }
+  ],
+  [
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " A potion? Oh yeah! Here you go. It's so funny he's afraid of wolves.",
+      "ID": 3,
+      "SpeakerID": {
+        "NpcID": 1,
+        "NpcName": "Tosh Nagoshi",
+        "NpcEventPath": "Assets/NPC/Events/Tosh Nagoshi.json",
+        "NpcSpeakerProfilePrefab": null,
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    }
+  ],
+  [
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " Um, Mister Tosh sir?",
+      "ID": 0,
+      "SpeakerID": {
+        "NpcID": 3,
+        "NpcName": "Musungo Aborashi",
+        "NpcEventPath": "Assets/NPC/Events/Musungo Aborashi.json",
+        "NpcSpeakerProfilePrefab": null,
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    }
+  ],
+  [
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " Hm? Oh, Heya kid. What can I do for you?",
+      "ID": 1,
+      "SpeakerID": {
+        "NpcID": 1,
+        "NpcName": "Tosh Nagoshi",
+        "NpcEventPath": "Assets/NPC/Events/Tosh Nagoshi.json",
+        "NpcSpeakerProfilePrefab": "",
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    }
+  ],
+  [
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " I, Lord Doku asked me to get a potion from you.",
+      "ID": 2,
+      "SpeakerID": {
+        "NpcID": 3,
+        "NpcName": "Musungo Aborashi",
+        "NpcEventPath": "Assets/NPC/Events/Musungo Aborashi.json",
+        "NpcSpeakerProfilePrefab": null,
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    }
+  ],
+  [
+    {
+      "Choices": null,
+      "Quest": 0,
+      "Line": " A potion? Oh yeah! Here you go. It's so funny he's afraid of wolves.",
+      "ID": 3,
+      "SpeakerID": {
+        "NpcID": 1,
+        "NpcName": "Tosh Nagoshi",
+        "NpcEventPath": "Assets/NPC/Events/Tosh Nagoshi.json",
+        "NpcSpeakerProfilePrefab": "",
+        "name": "",
+        "hideFlags": 0
+      },
+      "Flag": {
+        "Flag": null,
+        "ID": 0,
+        "SubFlag": false
+      },
+      "NodeT": 0,
+      "FlagType": 0
+    }
+  ]
+]

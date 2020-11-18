@@ -19,14 +19,18 @@ public class NPCData : ScriptableObject
     public int NpcID;
     public string NpcName;
     public string NpcEventPath;
+    public string NpcSpeakerProfilePrefab;
 
+    NPCManager manager;
+
+    [System.NonSerialized]
     public GameObject CurrentSpeaker;
 
     [System.NonSerialized]
     List<Waypoint> Waypoints;
 
     [System.NonSerialized]
-    public List<QuestEventData> EventData; // Quest Event Data is here
+    public List<NPCEventData> EventData; // Quest Event Data is here
 
     [System.NonSerialized]
     public SpeakerData Speaker;
@@ -35,12 +39,18 @@ public class NPCData : ScriptableObject
     
     public NPCData()
     {
-        NpcID = 0;
         NpcName = " ";
         Waypoints = null;
         EventData = null;
         Waypoint = null;
         Speaker = null;
+    }
+
+    public void Construct(GameObject speak)
+    {
+        manager = FindObjectOfType<NPCManager>();
+        CurrentSpeaker = speak;
+        manager.Construct(this);
     }
 
     public NPCData Deserialize()
