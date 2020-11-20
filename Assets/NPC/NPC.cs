@@ -28,7 +28,7 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             Collided = true;
         }
@@ -41,7 +41,7 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             Collided = false;
         }
@@ -49,7 +49,6 @@ public class NPC : MonoBehaviour
 
     void pollEvents()
     {
-        states = FindObjectOfType<StateMachine>();
         Debug.Log("Current FLAG : " + states.CurrrentFlag.Flag);
         Debug.Log("Current FLAG ID : " + states.CurrrentFlag.ID);
 

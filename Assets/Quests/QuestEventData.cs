@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum QuestEventType {DIALOGUE }
+enum QuestEventType {DIALOGUE, CUTSCENE } // Should cutscenes be a seperate system?
 
 public class QuestEventData : ScriptableObject
 {
