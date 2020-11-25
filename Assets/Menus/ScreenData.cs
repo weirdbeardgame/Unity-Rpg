@@ -2,9 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScreenData : ScriptableObject
+public class ScreenData : MonoBehaviour
 {
-    int ScreenID;
+    protected int ScreenID;
     public List <Widget> Widgets;
-    string ScreenName;
+    protected string ScreenName;
+
+    public virtual void Init()
+    {
+        ScreenID = -1;
+        Widgets = null;
+        ScreenName = "Boo!";
+    }
+
+    public void AddWidget(Widget widget)
+    {
+        if (Widgets == null)
+        {
+            Widgets = new List<Widget>();
+        }
+
+        Widgets.Add(widget);
+    }
 }

@@ -8,12 +8,31 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 public class Widget : MonoBehaviour
-{  
-    // Start is called before the first frame update
+{
+    public string ButtonText;
+    public Sprite icon;
+    
+    public GameObject Text;
 
-    void Execute()
+    public void Instantiate()
     {
-        // Call the function to execute? Or send out an event... Something like that.
+        GetComponent<SpriteRenderer>().sprite = icon;        
+        //Text.GetComponent<TMP_Text>().text = ButtonText;
     }
+
+    public void SetParent(GameObject Parent)
+    {
+        if (Parent)
+        {           
+            transform.SetParent(Parent.transform);
+        }
+    }
+
+    // Start is called before the first frame update
+    public virtual void Execute() // Override for each individual Widget type. This could be just widgetBase we're describing here
+    {
+
+    }
+
 
 }

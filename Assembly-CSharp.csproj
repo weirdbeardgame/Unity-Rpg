@@ -98,8 +98,10 @@
     <Compile Include="Assets\Menus\MenuManager.cs" />
     <Compile Include="Assets\Menus\PScreen.cs" />
     <Compile Include="Assets\Menus\ScreenData.cs" />
+    <Compile Include="Assets\Menus\Screens\Pause\PauseScreen.cs" />
+    <Compile Include="Assets\Menus\Screens\Pause\Widgets\ItemWidget.cs" />
+    <Compile Include="Assets\Menus\Screens\Pause\Widgets\WeaponWidget.cs" />
     <Compile Include="Assets\Menus\Widget.cs" />
-    <Compile Include="Assets\Menus\WidgetData.cs" />
     <Compile Include="Assets\Menus\menuInterface.cs" />
     <Compile Include="Assets\Messages\CollisionMessage.cs" />
     <Compile Include="Assets\Messages\Messaging.cs" />
@@ -187,6 +189,7 @@
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Resources\MenuIcons\Spritesheet\uipack_rpg_sheet.xml" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
