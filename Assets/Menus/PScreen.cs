@@ -4,18 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PScreen : MonoBehaviour
+public class PScreen : ScriptableObject
 {
-    int Width, Height;
-
-    Shader ScreenShader;
-
     GameObject Screen;
-
-    public List<ScreenData> Screens;
-
-    ScreenData CurrentScreen;
-
+    Shader ScreenShader;
+    GameObject CurrentScreen;
+    public List<GameObject> Screens;
+   
     bool isOpened;
 
     // Start is called before the first frame update
@@ -26,30 +21,21 @@ public class PScreen : MonoBehaviour
         Screen.AddComponent<Image>();
         Screen.SetActive(false);
     }
-    public void Open(ScreenData CScreen)
+    public void Open(GameObject CScreen)
     {
         if (CScreen)
         {
-            CurrentScreen = CScreen;       
+            CurrentScreen = CScreen;
+            CurrentScreen = Instantiate(CurrentScreen);
+            CurrentScreen.transform.SetParent(Screen.transform);
+            CurrentScreen.transform.localPosition = new Vector2(0, 0);
         }
-
-        // Play animation of screen opening.
-        for (int i = 0; i < CurrentScreen.Widgets.Count; i++)
-        {
-            CurrentScreen.Widgets[i].Instantiate(); // Something like that to Start
-        }
-
         Screen.SetActive(true);
     }
 
     public void Close()
     {
-        // Play animation of Screen closing
-        for (int i = 0; i < CurrentScreen.Widgets.Count; i++)
-        {
-            Destroy(CurrentScreen.Widgets[i]);
-        }
-     
+        Destroy(CurrentScreen);    
         Screen.SetActive(false);
     }
 
@@ -65,10 +51,12 @@ public class PScreen : MonoBehaviour
         if (Input.GetButtonDown("Cancel") && !isOpened)
         {
             Open(Screens[0]);
+            isOpened = true;
         }
         else if(isOpened && Input.GetButtonDown("Cancel"))
         {
             Close();
+            isOpened = false;
         }
     }
 }

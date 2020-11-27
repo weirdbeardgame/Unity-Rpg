@@ -5,10 +5,10 @@ using UnityEngine;
 using menu;
 
 
-public class questMenu : MonoBehaviour, IMenu
+public class questMenu : ScreenData
 {
     int context = 3;
-    MenuManager Manager;
+    PScreen Manager;
     questBook book;
     GameObject slot;
 
@@ -30,30 +30,23 @@ public class questMenu : MonoBehaviour, IMenu
 
         questState = FindObjectOfType<Messaging>();
 
-        Manager = FindObjectOfType<MenuManager>();
-
-
-        AddMenu();
+        Manager = FindObjectOfType<PScreen>();
     }
 
     public void Open()
     {
-
-        Manager.CreatePanel(secondCanvas, secondPanel);
 
         if (book.Quests.Count > 0)
         {
             for (int i = 0; i < book.Quests.Count; i++)
             {
                 Instantiate(slot);
-                Manager.newWidget(slot);
             }
         }
 
         else
         {
             Instantiate(slot);
-            Manager.newWidget(slot);
         }
     }
 
@@ -70,12 +63,6 @@ public class questMenu : MonoBehaviour, IMenu
     public Material GetShader()
     {
         return shader;
-    }
-
-
-    public void AddMenu()
-    {
-        Manager.AddMenu(context, this);
     }
 
     void Enable()
@@ -97,10 +84,5 @@ public class questMenu : MonoBehaviour, IMenu
 
     public void ViewQuest()
     {
-        index = Manager.WidgetIndex;
-
-
-
-        Manager.CreatePanel(secondCanvas, secondPanel);
     }
 }

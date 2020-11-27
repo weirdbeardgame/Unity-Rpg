@@ -98,9 +98,11 @@
     <Compile Include="Assets\Menus\MenuManager.cs" />
     <Compile Include="Assets\Menus\PScreen.cs" />
     <Compile Include="Assets\Menus\ScreenData.cs" />
+    <Compile Include="Assets\Menus\Screens\Item\Widgets\InvetoryWidget.cs" />
     <Compile Include="Assets\Menus\Screens\Pause\PauseScreen.cs" />
     <Compile Include="Assets\Menus\Screens\Pause\Widgets\ItemWidget.cs" />
     <Compile Include="Assets\Menus\Screens\Pause\Widgets\WeaponWidget.cs" />
+    <Compile Include="Assets\Menus\Screens\Weapon\Widget\WeaponWidgetData.cs" />
     <Compile Include="Assets\Menus\Widget.cs" />
     <Compile Include="Assets\Menus\menuInterface.cs" />
     <Compile Include="Assets\Messages\CollisionMessage.cs" />

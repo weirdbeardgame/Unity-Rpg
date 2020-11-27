@@ -25,7 +25,6 @@ namespace menu
             {
                 Instantiate(slot);
                 //slot.CreateRectangle(apply, selection.PartyMembers[i].CreatureName);
-                Manager.newWidget(slot);
             }
         }
 
@@ -68,7 +67,6 @@ namespace menu
             currentMessage.construct(current, itemState.USED);
 
             current.Use(selection.PartyMembers[i]);
-            Manager.CloseSubMenu();
         }
     }
 }
