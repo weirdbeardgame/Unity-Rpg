@@ -1,38 +1,41 @@
 {
-    "0": {
-        "ItemName": "Potion",
-        "ItemID": 0,
-        "Cost": 0,
-        "Effect": {
-            "Buff": 50,
-            "Type": 0,
-            "Effect": 0
-        },
-        "name": "",
-        "hideFlags": 0
+  "0": {
+    "ItemName": "Potion",
+    "ItemDescription": "A weak healing item. Heals 50 HP once per use.",
+    "ItemID": 0,
+    "Cost": 0,
+    "Effect": {
+      "Buff": 50,
+      "Type": 0,
+      "Effect": 0
     },
-    "1": {
-        "ItemName": "High Potion",
-        "ItemID": 1,
-        "Cost": 0,
-        "Effect": {
-            "Buff": 100,
-            "Type": 0,
-            "Effect": 0
-        },
-        "name": "",
-        "hideFlags": 0
+    "name": "",
+    "hideFlags": 0
+  },
+  "1": {
+    "ItemName": "High Potion",
+    "ItemDescription": "A stronger healing item. Heals 100 HP once per use.",
+    "ItemID": 1,
+    "Cost": 0,
+    "Effect": {
+      "Buff": 100,
+      "Type": 0,
+      "Effect": 0
     },
-    "2": {
-        "ItemName": "Fire Bottle",
-        "ItemID": 2,
-        "Cost": 0,
-        "Effect": {
-            "Buff": 100,
-            "Type": 1,
-            "Effect": 0
-        },
-        "name": "",
-        "hideFlags": 0
-    }
+    "name": "",
+    "hideFlags": 0
+  },
+  "2": {
+    "ItemName": "Fire Bottle",
+    "ItemDescription": "A bottle with a weak magical fire within. Deals 100 HP of damage",
+    "ItemID": 2,
+    "Cost": 0,
+    "Effect": {
+      "Buff": 100,
+      "Type": 1,
+      "Effect": 0
+    },
+    "name": "",
+    "hideFlags": 0
+  }
 }

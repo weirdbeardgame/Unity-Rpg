@@ -118,6 +118,8 @@ public class ItemEditor : EditorWindow
             Items[SelectedIndex].ItemID = EditorGUILayout.IntField(Items[SelectedIndex].ItemID);
             EditorGUILayout.LabelField("Item Name");
             Items[SelectedIndex].ItemName = EditorGUILayout.TextField(Items[SelectedIndex].ItemName);
+            EditorGUILayout.LabelField("Description");
+            Items[SelectedIndex].ItemDescription = EditorGUILayout.TextArea(Items[SelectedIndex].ItemDescription);
             EditorGUILayout.LabelField("Buffer Type");
             Items[SelectedIndex].Effect.Type = (ItemType)EditorGUILayout.EnumPopup(Items[SelectedIndex].Effect.Type);
             EditorGUILayout.LabelField("Effect Type");

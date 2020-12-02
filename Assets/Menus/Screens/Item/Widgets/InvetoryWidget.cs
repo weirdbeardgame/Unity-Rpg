@@ -5,7 +5,7 @@ using TMPro;
 
 public class InvetoryWidget : Widget
 {
-    ItemData item;
+    public ItemData item;
     Inventory inventory;
 
     public void SetItem(ItemData data)

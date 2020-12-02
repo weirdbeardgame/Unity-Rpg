@@ -7,25 +7,16 @@ public enum AreaOfEffect { HEALTH, STRENGTH, MAGIC, SPEED }
 
 public class ItemBuffer
 {
-
     public int Buff;
     public ItemType Type;
     public AreaOfEffect Effect;
-
-    public ItemBuffer()
-    {
-
-    }
-
-    ~ItemBuffer()
-    {
-
-    }
 }
 
 public class ItemData : ScriptableObject
 {
-    private string _ItemName;
+    private string IName;
+    private string IDescrip;
+    
     private int _ItemID;
     private int _Cost;
 
@@ -45,12 +36,25 @@ public class ItemData : ScriptableObject
     {
         get
         {
-            return _ItemName;
+            return IName;
         }
 
         set
         {
-            _ItemName = value;
+            IName = value;
+        }
+    }
+
+    public string ItemDescription
+    {  
+        get
+        {
+            return IDescrip;
+        }
+    
+        set
+        {
+            IDescrip = value;
         }
     }
 
@@ -86,7 +90,6 @@ public class ItemData : ScriptableObject
         }
     }
 
-
     public ItemBuffer Effect
     {
         get
@@ -99,7 +102,6 @@ public class ItemData : ScriptableObject
             _Effect = value;
         }
     }
-
 
     public void Use(Creature Creature)
     {
@@ -126,7 +128,6 @@ public class ItemData : ScriptableObject
                     case AreaOfEffect.STRENGTH:
                         Creature.Stats.StatList[(int)StatType.STRENGTH].Stat += _Effect.Buff;
                         break;
-
                 }
                 break;
 
