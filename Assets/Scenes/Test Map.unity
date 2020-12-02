@@ -215,6 +215,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ff573a061a2a43448da7ce64ff94abb, type: 3}
+--- !u!114 &202053039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf9ffc3630df2f46abead43465683d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcID: 1
+  NpcName: Tosh Nagoshi
+  NpcEventPath: Assets/NPC/Events/Tosh Nagoshi.json
+  NpcSpeakerProfilePrefab: 
 --- !u!4 &413872672 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7457896790683177186, guid: a320b7bbb3ca87709bacea1581e1a2a3,
@@ -305,12 +321,12 @@ PrefabInstance:
     - target: {fileID: 3712252193155701534, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -426
+      value: -172
       objectReference: {fileID: 0}
     - target: {fileID: 3712252193155701534, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 403
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3712252193155701534, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
@@ -325,12 +341,12 @@ PrefabInstance:
     - target: {fileID: 3712252193248977654, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -793
+      value: -458
       objectReference: {fileID: 0}
     - target: {fileID: 3712252193248977654, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 244
+      value: 154
       objectReference: {fileID: 0}
     - target: {fileID: 3712252193248977654, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
@@ -375,22 +391,22 @@ PrefabInstance:
     - target: {fileID: 3712252194399001770, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -197.4
+      value: -101.93
       objectReference: {fileID: 0}
     - target: {fileID: 3712252194399001770, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 130.3
+      value: -0.000061035
       objectReference: {fileID: 0}
     - target: {fileID: 3712252194399001770, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2304.5
+      value: 1741.1
       objectReference: {fileID: 0}
     - target: {fileID: 3712252194399001770, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 489.1
+      value: 283.13
       objectReference: {fileID: 0}
     - target: {fileID: 3712252194399001770, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
@@ -400,12 +416,12 @@ PrefabInstance:
     - target: {fileID: 3712252194506395336, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -193.20999
+      value: -195.59998
       objectReference: {fileID: 0}
     - target: {fileID: 3712252194506395336, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 113.79999
+      value: 117
       objectReference: {fileID: 0}
     - target: {fileID: 3712252194506395336, guid: 7df6ffa13bf15af0e83beb3dc46e831a,
         type: 3}
@@ -20723,28 +20739,31 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1090739862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6733545879267404110, guid: ef89ad6aae1e023449398dac9324cd4f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6733545880268123738}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1090739863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090739862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!224 &1152010005 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6733545879267404111, guid: ef89ad6aae1e023449398dac9324cd4f,
     type: 3}
   m_PrefabInstance: {fileID: 6733545880268123738}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1226534624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bf9ffc3630df2f46abead43465683d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NpcID: 1
-  NpcName: Tosh Nagoshi
-  NpcEventPath: Assets/NPC/Events/Tosh Nagoshi.json
-  NpcSpeakerProfilePrefab: 
 --- !u!1 &1409645993
 GameObject:
   m_ObjectHideFlags: 0
@@ -20841,7 +20860,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -33, y: 12}
+  m_AnchoredPosition: {x: -33, y: 7}
   m_SizeDelta: {x: 1625, y: 913.99994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1554119180 stripped
@@ -20865,6 +20884,18 @@ MonoBehaviour:
   NpcID: 3
   SpeakerProfile: {fileID: 7149917242164883704, guid: cd7654f1a9108b8c3ba07df965ea2a0c,
     type: 3}
+--- !u!114 &1554119182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554119180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99bdefa15fe80ff7cbc31697956eaf67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1582546532
 GameObject:
   m_ObjectHideFlags: 0
@@ -20880,6 +20911,7 @@ GameObject:
   - component: {fileID: 1582546537}
   - component: {fileID: 1582546538}
   - component: {fileID: 1582546539}
+  - component: {fileID: 1582546540}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -20965,7 +20997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToInit: []
-  Initalizer: {fileID: 1226534624}
+  Initalizer: {fileID: 202053039}
 --- !u!114 &1582546539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20979,8 +21011,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Screens:
-  - {fileID: 8875412877820979512, guid: 0a0a3b829871fed47b188a45598e6caa, type: 3}
+  - {fileID: 6733545879267404110, guid: 0a0a3b829871fed47b188a45598e6caa, type: 3}
+  - {fileID: 6733545879267404110, guid: 47c87303053f8ff40ada0b5894da3a65, type: 3}
+  InstantiateArrow: {fileID: 5568023757274739715, guid: 2b6f505548a70c24b93f3c337a9eb62b,
+    type: 3}
   WidgetIndex: 0
+--- !u!114 &1582546540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582546532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 894ec55fa1cf54e17b496d3052917d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1621230463 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3712252194520582041, guid: 7df6ffa13bf15af0e83beb3dc46e831a,

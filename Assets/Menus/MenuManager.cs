@@ -7,11 +7,13 @@ using UnityEngine.UI;
 namespace menu
 {
 
-    public class MenuManager : MonoBehaviour, IReceiver
+    public class MenuManager : MonoBehaviour, IReceiver // This is to handle functionality. To handle Inputs  
     {
         Messaging message;
 
         PScreen Screen;
+        ScreenData CScreen;
+        List<Widget> CurrentWidgets;
         public List<GameObject> Screens;
 
         Queue<Inputs> InputData;
@@ -34,10 +36,8 @@ namespace menu
         private bool IsOpened;
 
         // The Arrow itself
+        public GameObject InstantiateArrow;
         GameObject Arrow;
-
-        // The current screen that the player interacts with.
-        GameObject Panel;
 
         public int WidgetIndex;
 
@@ -46,22 +46,10 @@ namespace menu
         {               
             state = FindObjectOfType<StateMachine>();
             message = FindObjectOfType<Messaging>();
-            Screen = FindObjectOfType<PScreen>();
+            Screen = new PScreen();
             InputData = new Queue<Inputs>();
 
             Subscribe();
-        }
-
-
-        public void initialize()
-        {
-            InputData = new Queue<Inputs>();
-
-            message = FindObjectOfType<Messaging>();
-
-            Pcam = FindObjectOfType<PlayerCamera>();
-            state = FindObjectOfType<StateMachine>();
-
         }
 
         void IncreaseIndex()
@@ -69,7 +57,7 @@ namespace menu
             if (_WidgetIndex != _MaxWidgets)
             {
                 _WidgetIndex += 1;
-                //Arrow.transform.SetParent(_Widgets[_WidgetIndex].transform);
+                Arrow.transform.SetParent(CurrentWidgets[_WidgetIndex].transform);
             }
             return;
         }
@@ -80,7 +68,7 @@ namespace menu
             if (_WidgetIndex > 0)
             {
                 _WidgetIndex -= 1;
-                //Arrow.transform.SetParent(_Widgets[_WidgetIndex].transform);
+                Arrow.transform.SetParent(CurrentWidgets[_WidgetIndex].transform);
                 return;
             }
         }
@@ -101,27 +89,27 @@ namespace menu
                     switch (CurrentInput)
                     {
                         case Inputs.UP:
-                            DecreaseIndex();
-                            Debug.Log("Current Index: " + _WidgetIndex);
-                            CurrentInput = Inputs.NULL;
+                            // For future Grid Movement
                             break;
 
                         case Inputs.DOWN:
+                            // For future Grid Movement
+                            break;
+
+                        case Inputs.RIGHT:
                             IncreaseIndex();
                             Debug.Log("Current Index: " + _WidgetIndex);
                             CurrentInput = Inputs.NULL;
                             break;
 
-                        case Inputs.RIGHT:
-                            // For future grid movement
-                            break;
-
                         case Inputs.LEFT:
-                            // For future grid movement
+                            DecreaseIndex();
+                            Debug.Log("Current Index: " + _WidgetIndex);
+                            CurrentInput = Inputs.NULL;
                             break;
 
                         case Inputs.A:
-                            //_Widgets[_WidgetIndex].GetComponent<Widget>().Execute();
+                            CurrentWidgets[_WidgetIndex].GetComponent<Widget>().Execute();
                             CurrentInput = Inputs.NULL;
                             break;
                     }
@@ -136,9 +124,7 @@ namespace menu
                 {
                     case States.MAIN:
                         StateMessage.construct(States.PAUSE, state.CurrrentFlag);
-                        Screen.Open(Screens[0]);
-                        Panel.GetComponent<Image>().enabled = true;
-
+                        Open(0);     
                         _WidgetIndex = 0;
                         break;
 
@@ -148,7 +134,6 @@ namespace menu
                         break;
                 }
             }
-
             yield return _WidgetIndex;
         }
 
@@ -178,6 +163,23 @@ namespace menu
             {
                 StartCoroutine(DetectInput());
             }
+        }
+
+        public void Open(int index)
+        {
+            Destroy(Arrow);
+            CurrentWidgets = null;
+            CurrentWidgets = new List<Widget>();
+
+            Screen.Open(Screens[index]);
+            CScreen = Screens[index].GetComponent<ScreenData>();
+
+            CurrentWidgets = Screen.CurrentScreen.GetComponent<ScreenData>().Widgets;
+            _MaxWidgets = CurrentWidgets.Count;
+
+            Arrow = Instantiate(InstantiateArrow);
+
+            IsOpened = true;
         }
 
         public void Close()

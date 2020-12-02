@@ -16,6 +16,7 @@ public class NPCEventData : ScriptableObject
     public QuestData Quests;
     public NPCEventType Type;
     public ItemData Item;
+    public Inventory Inv;
 
     questBook QuestBook;
     StateMachine CurrentState; 
@@ -31,8 +32,8 @@ public class NPCEventData : ScriptableObject
         switch (Type)
         {
             case NPCEventType.ADDITEM:
-                message = new InventoryMessage();
-                message.construct(Item, itemState.RECIEVED);
+                Inv = FindObjectOfType<Inventory>();
+                Inv.Add(Item);
                 Debug.Log("Item Given");
                 break;
 

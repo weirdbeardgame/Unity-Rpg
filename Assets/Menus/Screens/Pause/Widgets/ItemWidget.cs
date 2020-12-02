@@ -6,11 +6,11 @@ using menu;
 public class ItemWidget : Widget
 {
     int MenuID = 1; // Menu 1 will always be Item
-    PScreen Screen;
+    MenuManager Manager;
 
     public override void Execute()
     {
-        Screen = FindObjectOfType<PScreen>();
-        Screen.ChangeScreen(MenuID);
+        Manager = FindObjectOfType<MenuManager>();
+        Manager.Open(MenuID);
     }
 }

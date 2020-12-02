@@ -98,10 +98,12 @@
     <Compile Include="Assets\Menus\MenuManager.cs" />
     <Compile Include="Assets\Menus\PScreen.cs" />
     <Compile Include="Assets\Menus\ScreenData.cs" />
+    <Compile Include="Assets\Menus\Screens\Item\InvetoryMenu.cs" />
     <Compile Include="Assets\Menus\Screens\Item\Widgets\InvetoryWidget.cs" />
     <Compile Include="Assets\Menus\Screens\Pause\PauseScreen.cs" />
     <Compile Include="Assets\Menus\Screens\Pause\Widgets\ItemWidget.cs" />
     <Compile Include="Assets\Menus\Screens\Pause\Widgets\WeaponWidget.cs" />
+    <Compile Include="Assets\Menus\Screens\Weapon\WeaponMenu.cs" />
     <Compile Include="Assets\Menus\Screens\Weapon\Widget\WeaponWidgetData.cs" />
     <Compile Include="Assets\Menus\Widget.cs" />
     <Compile Include="Assets\Menus\menuInterface.cs" />
@@ -178,7 +180,6 @@
     <Compile Include="Assets\TitleScreen.cs" />
     <Compile Include="Assets\Weapons\Weapon.cs" />
     <Compile Include="Assets\Weapons\WeaponData.cs" />
-    <Compile Include="Assets\Weapons\WeaponMenu.cs" />
     <Compile Include="Assets\Weapons\weaponGiver.cs" />
     <Compile Include="Assets\Weapons\weaponSlots.cs" />
     <Compile Include="Assets\creature.cs" />

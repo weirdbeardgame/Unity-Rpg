@@ -10,14 +10,12 @@ using System.Collections.Generic;
 public class Widget : MonoBehaviour
 {
     public string ButtonText;
-    public Sprite icon;
+    public GameObject Icon;
     
     public GameObject Text;
 
     public void Instantiate()
     {
-        GetComponent<SpriteRenderer>().sprite = icon;        
-        //Text.GetComponent<TMP_Text>().text = ButtonText;
     }
 
     public void SetParent(GameObject Parent)

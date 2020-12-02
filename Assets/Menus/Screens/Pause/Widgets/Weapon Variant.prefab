@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonText: Weapon
-  icon: {fileID: 21300000, guid: f51dc84d5dbfe434cb9c15606c3b18f3, type: 3}
+  Icon: {fileID: 0}
   Text: {fileID: 0}
 --- !u!1 &8569480723611958747
 GameObject:
@@ -199,6 +199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7333953372412846579, guid: 912c99a76e66e7a40a4655fb05cb1739,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8696273729896878214, guid: 912c99a76e66e7a40a4655fb05cb1739,
         type: 3}

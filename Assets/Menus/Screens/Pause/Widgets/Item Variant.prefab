@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonText: Item
-  icon: {fileID: 21300000, guid: 4d2b3a3942c94724fb9e307526e7528a, type: 3}
+  Icon: {fileID: 0}
   Text: {fileID: 0}
 --- !u!1001 &5124999619371788806
 PrefabInstance:
@@ -199,6 +199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7333953372412846579, guid: 912c99a76e66e7a40a4655fb05cb1739,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8696273729896878214, guid: 912c99a76e66e7a40a4655fb05cb1739,
         type: 3}

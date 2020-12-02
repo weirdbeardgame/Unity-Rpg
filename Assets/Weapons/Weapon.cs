@@ -30,7 +30,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public WeaponData GetWeaponData(int Weapon)
+    public WeaponData GetWeaponData(int Weapon) // Original intentions. Loop through Inventory with this to find weaponData
     {
         return Weapons[Weapon];
     }

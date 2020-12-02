@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class WeaponWidgetData : Widget
 {
-    WeaponData weapon;
+    WeaponData Weapon;
 
-    public void Init(WeaponData data)
+    public WeaponWidgetData()
     {
-        weapon = data;
+        Weapon = null;
+    }
+
+    public WeaponWidgetData(WeaponData Data)
+    {
+        Weapon = Data;
     }
 
     public override void Execute()

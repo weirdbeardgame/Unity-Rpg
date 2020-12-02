@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using menu;
 
 public class WeaponWidget : Widget
 {
     int MenuID = 2;
-    PScreen Screen;
+    MenuManager Manager;
 
     public override void Execute()
     {
-        Screen.ChangeScreen(MenuID);
+        Manager = FindObjectOfType<MenuManager>();
+        Manager.Open(MenuID);
     }
 }
