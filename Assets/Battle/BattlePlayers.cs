@@ -16,8 +16,6 @@ public class CharacterInfo
 public class BattlePlayers : MonoBehaviour
 {
     Party Players;
-    public static BattlePlayers Instance; // That way BattleParty and all other structures become static
-
     public CharacterInfo[] AllCharacters;
 
     public Dictionary<int, CharacterInfo> BattleParty;
@@ -39,8 +37,6 @@ public class BattlePlayers : MonoBehaviour
 
     public Dictionary<int, CharacterInfo> Initialize(GameObject Battle, GameObject BattleO, List<Baddies> Bad, int i)
     {
-        Instance = this;
-
         if (!isInitalized)
         {
             Players = FindObjectOfType<Party>();
@@ -54,7 +50,7 @@ public class BattlePlayers : MonoBehaviour
             isInitalized = true;
 
             Menu = FindObjectOfType<commandMenus>();
-        }
+        
 
         if (Players != null)
         {
@@ -66,7 +62,7 @@ public class BattlePlayers : MonoBehaviour
 
             DontDestroyOnLoad(BattleParty[i].Prefab);
         }
-
+}
 
         return BattleParty;
 
@@ -77,7 +73,7 @@ public class BattlePlayers : MonoBehaviour
 
     public GameObject CreateCharacterById(int ID)
     {
-        return (GameObject)Instantiate(Instance.BattleParty[ID].Prefab);
+        return (GameObject)Instantiate(BattleParty[ID].Prefab);
     }
 
     public void OpenWindow(int i)
@@ -114,7 +110,7 @@ public class BattlePlayers : MonoBehaviour
 
                 if (!Menu.IsOpened && BadParty != null)
                 {
-                    Menu.Open(BattleParty[i].Player, BadParty);
+                    //Menu.Open(BattleParty[i].Player, BadParty);
                 }
                 else
                 {

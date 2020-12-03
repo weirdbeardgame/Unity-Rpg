@@ -30,7 +30,7 @@ public class InvetoryMenu : ScreenData
     public override void Draw()
     {
         // Handle Subscreen Logic in here. Always 0 will be details and character select. 1 might be use or go back like a list of buttons
-        Sub.GetComponentInChildren<TextMeshProUGUI>().text = Widgets[0].GetComponent<InvetoryWidget>().item.ItemDescription; // This assumes SubScreen 0 
+        Sub.GetComponentInChildren<TextMeshProUGUI>().text = Widgets[0].GetComponent<InvetoryWidget>().item.ItemDescription; // This assumes SubScreen 0 for now.
 
     }
     private void Update()

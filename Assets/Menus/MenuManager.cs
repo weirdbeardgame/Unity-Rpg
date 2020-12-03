@@ -163,6 +163,10 @@ namespace menu
             {
                 StartCoroutine(DetectInput());
             }
+            if (Screen)
+            {
+                Screen.Draw(); // Run all screen and subscreen logic
+            }
         }
 
         public void Open(int index)

@@ -82,11 +82,11 @@ public class Transition : MonoBehaviour
                 //Menus.Initlaize();
 
                 BattleObject.AddComponent<BattleItemMenu>();
-                //BattleObject.AddComponent<BattleSlots>();
+                BattleObject.AddComponent<BattleSlots>();
 
                 message = FindObjectOfType<Messaging>(); // Grab Messaging from states
                 BattleObject.AddComponent<Enemies>();
-
+                BattleObject.AddComponent<BattlePlayers>();
 
                 batttleStartMessage = ScriptableObject.CreateInstance<gameStateMessage>();
                 batttleStartMessage.construct(States.BATTLE, states.CurrrentFlag);

@@ -42,7 +42,10 @@ public class PScreen : ScriptableObject
     {
         // This is more like an update function? OR is this what spawns the screen from the get go.
         // Should I use shaders on the screen to make it look more lcd like?
-        CurrentScreen.GetComponent<ScreenData>().Draw();
+        if (CurrentScreen)
+        {
+            CurrentScreen.GetComponent<ScreenData>().Draw();
+        }
     }
 
     public void Close()
