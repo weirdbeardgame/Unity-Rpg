@@ -134,6 +134,7 @@ public class Battle : MonoBehaviour, IReceiver
         for (int i = 0; i < Players.BattleParty.Count; i++)
         {
             Players.Battle(i);
+            BattleObject.GetComponent<commandMenus>().DrawStats(Players.AllCharacters);
         }
 
         EndBattle();

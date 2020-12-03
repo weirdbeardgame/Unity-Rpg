@@ -16,7 +16,7 @@ public class CharacterInfo
 public class BattlePlayers : MonoBehaviour
 {
     Party Players;
-    public CharacterInfo[] AllCharacters;
+    public List<CharacterInfo> AllCharacters;
 
     public Dictionary<int, CharacterInfo> BattleParty;
 

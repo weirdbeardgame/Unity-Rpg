@@ -8,6 +8,9 @@ public class InvetoryMenu : ScreenData
     Inventory Inv;
     public GameObject ItemWidget;
     GameObject Sub;
+    GameObject Rect;
+
+
 
     ItemData SelectedItem;
 
@@ -16,7 +19,7 @@ public class InvetoryMenu : ScreenData
     public override void Init()
     {
         Inv = FindObjectOfType<Inventory>();
-        Sub = GameObject.Find("Rectangle");
+        Rect = GameObject.Find("Rectangle");
         for (int i = 0; i < Inv.ItemList.Count; i++)
         {
             ItemWidget = Instantiate(ItemWidget);
@@ -25,6 +28,8 @@ public class InvetoryMenu : ScreenData
         }
 
         Sub = Instantiate(SubScreens[0]);
+        Sub.transform.SetParent(Rect.transform);
+        Sub.transform.localPosition = new Vector3(0, 0, 0);
     }
 
     public override void Draw()
