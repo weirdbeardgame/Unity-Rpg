@@ -22,31 +22,27 @@ public class PauseApp : AppData
         switch(In)
         {
             case Inputs.A:
-
+                Widgets[WidgetIndex].Execute();
                 break;
 
             case Inputs.B:
-
+                // Step back
                 break;
 
             case Inputs.UP:
-
+                // Grid Plus 3
                 break;
 
             case Inputs.DOWN:
-
+               // Grid Minus 3
                 break;
 
             case Inputs.LEFT:
-
+                // Grid Minus 1
                 break;
 
             case Inputs.RIGHT:
-
-                break;
-
-            case Inputs.START:
-
+                // Grid Plus 1
                 break;
         }
     }

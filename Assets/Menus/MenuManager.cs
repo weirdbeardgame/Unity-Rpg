@@ -77,9 +77,14 @@ namespace menu
                     InputData.Dequeue();
                     Open(0);
                 }
-                else if (IsOpened)
+                else if (IsOpened && InputData.Peek() != Inputs.START)
                 {
                     Screen.CurrentScreen.GetComponent<AppData>().Input(InputData.Dequeue());
+                }
+                if (InputData.Peek() == Inputs.START && IsOpened)
+                {
+                    InputData.Dequeue();
+                    Close();
                 }
             }
             if (Screen)

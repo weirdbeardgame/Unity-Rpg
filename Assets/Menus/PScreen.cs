@@ -23,7 +23,7 @@ public class PScreen : ScriptableObject
             CurrentScreen = CScreen; 
             Screen = GameObject.Find("Menu");
             CurrentScreen = Instantiate(CurrentScreen);
-            CurrentScreen.GetComponent<ScreenData>().Init();
+            CurrentScreen.GetComponent<AppData>().Init();
             CurrentScreen.transform.SetParent(Screen.transform);
             CurrentScreen.transform.localPosition = new Vector2(0, 0);
         }
@@ -44,7 +44,7 @@ public class PScreen : ScriptableObject
         // Should I use shaders on the screen to make it look more lcd like?
         if (CurrentScreen)
         {
-            CurrentScreen.GetComponent<ScreenData>().Draw();
+            CurrentScreen.GetComponent<AppData>().Draw();
         }
     }
 

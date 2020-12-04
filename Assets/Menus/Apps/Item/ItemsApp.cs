@@ -33,14 +33,6 @@ public class ItemsApp : AppData
         Sub.transform.localPosition = new Vector3(0, 0, 0);
     }
 
-    void SelectItem()
-    {
-        if(!SelectedItem)
-        {
-            SelectedItem = Widgets[WidgetIndex].GetComponent<InvetoryWidget>().item;
-        }
-    }
-
     public override void Draw() 
     {       
         // Handle Subscreen Logic in here. Always 0 will be details and character select. 1 might be use or go back like a list of buttons
@@ -52,31 +44,39 @@ public class ItemsApp : AppData
         switch (In)
         {
             case Inputs.A:
-
+                if (!SelectedItem)
+                {
+                    SelectedItem = Widgets[WidgetIndex].GetComponent<InvetoryWidget>().item;
+                    // Open character selection screen.
+                }
                 break;
 
             case Inputs.B:
-
+                if (SelectedItem)
+                {
+                    SelectedItem = null;
+                    // Close character selection screen
+                }
+                else
+                {
+                    // Swap back to Pause screen.
+                }
                 break;
 
             case Inputs.UP:
-
+                WidgetIndex += 1; // Vertical list so +1 in list
                 break;
 
             case Inputs.DOWN:
-
+                WidgetIndex -= 1; // Vertical list so - 1 in list
                 break;
 
             case Inputs.LEFT:
-
+                // Other screen functionality like selecting Use vs something else button wise. Assuming I add that functionality
                 break;
 
             case Inputs.RIGHT:
-
-                break;
-
-            case Inputs.START:
-
+                // Other screen functionality like selecting Use vs something else button wise. Assuming I add that functionality
                 break;
         }
     }

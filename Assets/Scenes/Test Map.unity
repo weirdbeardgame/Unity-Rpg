@@ -21483,7 +21483,7 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6733545880268123738}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1280709918
+--- !u!114 &1365881003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21733,7 +21733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToInit: []
-  Initalizer: {fileID: 1280709918}
+  Initalizer: {fileID: 1365881003}
 --- !u!114 &1582546539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21746,7 +21746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf703999311a7c478a74f326de2e2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Screens:
+  Apps:
   - {fileID: 6733545879267404110, guid: 0a0a3b829871fed47b188a45598e6caa, type: 3}
   - {fileID: 6733545879267404110, guid: 47c87303053f8ff40ada0b5894da3a65, type: 3}
   InstantiateArrow: {fileID: 5568023757274739715, guid: 2b6f505548a70c24b93f3c337a9eb62b,
