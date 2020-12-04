@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScreenData : MonoBehaviour
+public class AppData : MonoBehaviour
 {
-    protected int ScreenID;
-    protected string ScreenName;
+    protected int AppID;
+    protected string AppName;
     public List<Widget> Widgets;
-
     public List<GameObject> SubScreens;
+
+    protected int WidgetIndex;
 
     public virtual void Init()
     {
-        ScreenID = -1;
+        AppID = -1;
         Widgets = null;
-        ScreenName = "Boo!";
+        AppName = "Boo!";
     }
 
     public virtual void Draw()
     {
         // All Updates to screens and widgets happen in here.
+    }
+
+    public virtual void Input(Inputs In)
+    {
+        // Handling of Input per app happens here
     }
 
     public void AddWidget(Widget widget)

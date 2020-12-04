@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace menu
 {
-    public class WeaponMenu : ScreenData
+    public class WeaponApp : AppData
     {
         Party players;
         PScreen Manager;

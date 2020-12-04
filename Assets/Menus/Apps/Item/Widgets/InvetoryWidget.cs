@@ -6,6 +6,7 @@ using TMPro;
 public class InvetoryWidget : Widget
 {
     public ItemData item;
+    public Creature ToUse;
     Inventory inventory;
 
     public void SetItem(ItemData data)
@@ -17,7 +18,7 @@ public class InvetoryWidget : Widget
 
     public override void Execute()
     {
-        //item.Use(); // This is where we would add the sub screen. Who do you want to use it on!
+        item.Use(ToUse); // This is where we would add the sub screen. Who do you want to use it on!
     }
 
 }

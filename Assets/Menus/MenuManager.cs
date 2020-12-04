@@ -12,17 +12,13 @@ namespace menu
         Messaging message;
 
         PScreen Screen;
-        ScreenData CScreen;
+        AppData CApp;
         List<Widget> CurrentWidgets;
-        public List<GameObject> Screens;
+        public List<GameObject> Apps;
 
         Queue<Inputs> InputData;
 
         gameStateMessage StateMessage;
-
-        // Amount of Buttons in Menu and navagating it
-        private int _WidgetIndex = 0;
-        private int _MaxWidgets = 0;
 
         // What Menu are we looking at
         int _MenuContext = 0;
@@ -52,91 +48,6 @@ namespace menu
             Subscribe();
         }
 
-        void IncreaseIndex()
-        {
-            if (_WidgetIndex != _MaxWidgets)
-            {
-                _WidgetIndex += 1;
-                Arrow.transform.SetParent(CurrentWidgets[_WidgetIndex].transform);
-            }
-            return;
-        }
-
-        void DecreaseIndex()
-        {
-            // This lasts a frame stupid!
-            if (_WidgetIndex > 0)
-            {
-                _WidgetIndex -= 1;
-                Arrow.transform.SetParent(CurrentWidgets[_WidgetIndex].transform);
-                return;
-            }
-        }
-
-        IEnumerator DetectInput()
-        {
-            while (InputData.Count == 0)
-            {
-                yield return null;
-            }
-
-            Inputs CurrentInput = InputData.Dequeue();
-
-            if (IsOpened)
-            {
-                if (CurrentInput != Inputs.NULL)
-                {
-                    switch (CurrentInput)
-                    {
-                        case Inputs.UP:
-                            // For future Grid Movement
-                            break;
-
-                        case Inputs.DOWN:
-                            // For future Grid Movement
-                            break;
-
-                        case Inputs.RIGHT:
-                            IncreaseIndex();
-                            Debug.Log("Current Index: " + _WidgetIndex);
-                            CurrentInput = Inputs.NULL;
-                            break;
-
-                        case Inputs.LEFT:
-                            DecreaseIndex();
-                            Debug.Log("Current Index: " + _WidgetIndex);
-                            CurrentInput = Inputs.NULL;
-                            break;
-
-                        case Inputs.A:
-                            CurrentWidgets[_WidgetIndex].GetComponent<Widget>().Execute();
-                            CurrentInput = Inputs.NULL;
-                            break;
-                    }
-                }
-            }
-
-            if (CurrentInput == Inputs.START)
-            {
-                StateMessage = ScriptableObject.CreateInstance<gameStateMessage>();
-
-                switch (state.State)
-                {
-                    case States.MAIN:
-                        StateMessage.construct(States.PAUSE, state.CurrrentFlag);
-                        Open(0);     
-                        _WidgetIndex = 0;
-                        break;
-
-                    case States.PAUSE:
-                        StateMessage.construct(States.MAIN, state.CurrrentFlag);
-                        Close();
-                        break;
-                }
-            }
-            yield return _WidgetIndex;
-        }
-
         public void Subscribe()
         {
             if (!IsSubscribed)
@@ -161,7 +72,15 @@ namespace menu
         {
             if (InputData.Count > 0)
             {
-                StartCoroutine(DetectInput());
+                if (InputData.Peek() == Inputs.START && !IsOpened)
+                {
+                    InputData.Dequeue();
+                    Open(0);
+                }
+                else if (IsOpened)
+                {
+                    Screen.CurrentScreen.GetComponent<AppData>().Input(InputData.Dequeue());
+                }
             }
             if (Screen)
             {
@@ -175,12 +94,10 @@ namespace menu
             CurrentWidgets = null;
             CurrentWidgets = new List<Widget>();
 
-            Screen.Open(Screens[index]);
-            CScreen = Screens[index].GetComponent<ScreenData>();
+            Screen.Open(Apps[index]);
+            CApp = Apps[index].GetComponent<AppData>();
 
-            CurrentWidgets = Screen.CurrentScreen.GetComponent<ScreenData>().Widgets;
-            _MaxWidgets = CurrentWidgets.Count;
-
+            CurrentWidgets = Screen.CurrentScreen.GetComponent<AppData>().Widgets;
             Arrow = Instantiate(InstantiateArrow);
 
             IsOpened = true;
@@ -190,11 +107,5 @@ namespace menu
         {
             Screen.Close();
         }
-
-        public void ResetIndex()
-        {
-            _WidgetIndex = 0;
-        }
-
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using menu;
 
 
-public class questMenu : ScreenData
+public class questApp : AppData
 {
     int context = 3;
     PScreen Manager;
