@@ -46,7 +46,7 @@ public class questMessage : ScriptableObject
     public void send()
     {
         messenger = FindObjectOfType<Messaging>();
-        messenger.Send(this, MessageType.QUEST);
+        //messenger.Send(this, MessageType.QUEST);
     }
 
     public MessageType GetMessageType()

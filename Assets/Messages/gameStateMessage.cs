@@ -15,7 +15,7 @@ public class gameStateMessage : ScriptableObject
         _CurrentState = GameState;
         _Flag = SetFlag;
 
-        Messenger.Send(this, MessageType.GAME_STATE);
+        //Messenger.Enqueue();
     }
 
     public States GetState()

@@ -22,7 +22,7 @@ public class InventoryMessage : ScriptableObject
 
         messenger = FindObjectOfType<Messaging>();
 
-        messenger.Send(this, MessageType.INVENTORY);
+        //messenger.Send(this, MessageType.INVENTORY);
 
     }
 

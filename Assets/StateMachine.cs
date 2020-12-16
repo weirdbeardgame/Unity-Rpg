@@ -137,12 +137,12 @@ class StateMachine : MonoBehaviour, IReceiver
 
     public void Subscribe()
     {
-        Messenger.Subscribe(MessageType.GAME_STATE, this);
+        //Messenger.Subscribe(MessageType.GAME_STATE, this);
     }
 
     public void Unsubscribe()
     {
-        Messenger.Unsubscribe(MessageType.GAME_STATE, this);
+        //Messenger.Unsubscribe(MessageType.GAME_STATE, this);
     }
 
     public void Receive(object Message)

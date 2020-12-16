@@ -56,12 +56,12 @@ public class Battle : MonoBehaviour, IReceiver
 
     public void Subscribe()
     {
-        Messenger.Subscribe(MessageType.BATTLE, this);
+        //Messenger.Subscribe(MessageType.BATTLE, this);
     }
 
     public void Unsubscribe()
     {
-        Messenger.Unsubscribe(MessageType.BATTLE, this);
+        //Messenger.Unsubscribe(MessageType.BATTLE, this);
     }
 
 

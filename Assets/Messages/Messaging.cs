@@ -4,24 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using questing;
 
-
-public enum MessageType { BATTLE, QUEST, INPUT, GAME_STATE, INVENTORY, COLLISION, SWITCH }
-
-
 public class Messaging : MonoBehaviour
 {
-    Dictionary<MessageType, List<IReceiver>> subscriptions; // This contains the list of who's subscribing to what while the below is the accesser to who's subscribing specifically.
-    Dictionary<MessageType, List<IReceiver>> Subscriptions
-    {
-        get
-        {
-            if (subscriptions == null)
-            {
-                subscriptions = new Dictionary<MessageType, List<IReceiver>>();
-            }
-            return subscriptions;
-        }
-    }
+    Queue<Action<int>> Inbox;
+    List<IReceiver> Subscriptions;
 
     List<IReceiver> receivers;
     int mID;
@@ -35,82 +21,57 @@ public class Messaging : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         states = FindObjectOfType<StateMachine>();
-
+        Inbox = new Queue<Action<int>>();
     }
 
     public void Init()
     {
         states = FindObjectOfType<StateMachine>();
 
-
         if (states.State == States.BATTLE)
         {
             battle = FindObjectOfType<Battle>();
         }
 
-        if (subscriptions == null)
+        if (Subscriptions == null)
         {
-            subscriptions = new Dictionary<MessageType, List<IReceiver>>();
-        }
-
-    }
-
-    public void Subscribe(MessageType type, IReceiver listener)
-    {
-
-        if (!Subscriptions.ContainsKey(type))
-        {
-            Subscriptions.Add(type, new List<IReceiver>());
-        }
-
-        Subscriptions[type].Add(listener);
-
-    }
-
-    public void Unsubscribe(MessageType type, IReceiver listener)
-    {
-        if (Subscriptions.ContainsKey(type))
-        {
-            Subscriptions[type].Remove(listener);
+            Subscriptions = new List<IReceiver>();
         }
     }
 
-    MessageType GetMessageType()
+    public void Subscribe(IReceiver listener)
     {
-        return types;
+        if (!Subscriptions.Contains(listener))
+        {
+            Subscriptions.Add(listener);
+        }
+        Subscriptions.Add(listener);
     }
 
-    public void Send(object message, MessageType type) // S is sender, R is Receiver, D is data
+    public void Unsubscribe(IReceiver listener)
     {
-        if (states.State == States.MAIN || GetComponent<StateMachine>().State == States.PAUSE)
+        if (Subscriptions.Contains(listener))
         {
-            if (Subscriptions.Count > 0)
+            Subscriptions.Remove(listener);
+        }
+    }
+    public void Enqueue(Action<int> message)
+    {
+        if (Inbox != null && message != null)
+        {
+            Inbox.Enqueue(message);
+        }
+    }
+
+    public void Send() // S is sender, R is Receiver, D is data
+    {
+        while (Inbox.Count > 0)
+        {
+            for (int i = 0; i < Subscriptions.Count; i++)
             {
-                if (Subscriptions.ContainsKey(type))
-                {
-                    for (int i = 0; i < Subscriptions[type].Count; i++)
-                    {
-                        Subscriptions[type][i].Receive(message);
-                    }
-                }
-            }
-        }
-
-        if (states.State == States.BATTLE)
-        {
-            if (Subscriptions.Count > 0)
-            {
-                if (Subscriptions.ContainsKey(type))
-                {
-                    for (int i = 0; i < Subscriptions[type].Count; i++)
-                    {
-                        Subscriptions[type][i].Receive(message);
-                    }
-                }
-
-                message = null;
+                //if (Inbox.Peek())
+                Subscriptions[i].Receive(Inbox.Dequeue());
             }
         }
     }

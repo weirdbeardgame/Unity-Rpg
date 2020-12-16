@@ -50,12 +50,12 @@ public class PlayerMovement : MonoBehaviour, IReceiver
 
     public void Subscribe()
     {
-        messenger.Subscribe(MessageType.INPUT, this);
+        //messenger.Subscribe(MessageType.INPUT, this);
     }
 
     public void Unsubscribe()
     {
-        messenger.Unsubscribe(MessageType.INPUT, this);
+        //messenger.Unsubscribe(MessageType.INPUT, this);
     }
 
     void Start()

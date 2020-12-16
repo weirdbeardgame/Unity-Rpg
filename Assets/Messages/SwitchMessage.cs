@@ -29,7 +29,7 @@ public struct SwitchMessage : senderInterface
 
     public void send(object message)
     {
-        Messenger.Send(this, MessageType.SWITCH);
+        //Messenger.Send(this, MessageType.SWITCH);
     }
 
 }

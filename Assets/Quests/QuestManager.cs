@@ -32,8 +32,8 @@ public class QuestManager : MonoBehaviour, IReceiver
 
     public void Subscribe()
     {
-        Messenger.Subscribe(MessageType.QUEST, this);
-        Messenger.Subscribe(MessageType.INVENTORY, this);
+        //Messenger.Subscribe(MessageType.QUEST, this);
+        //Messenger.Subscribe(MessageType.INVENTORY, this);
     }
 
     // Start is called before the first frame update
@@ -77,7 +77,7 @@ public class QuestManager : MonoBehaviour, IReceiver
 
     public void Unsubscribe()
     {
-        Messenger.Unsubscribe(MessageType.QUEST, this);
+        //Messenger.Unsubscribe(MessageType.QUEST, this);
     }
 
     public void Progress() // progresses through the list of objectives

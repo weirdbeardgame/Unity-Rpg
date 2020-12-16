@@ -53,14 +53,14 @@ namespace menu
             if (!IsSubscribed)
             {
                 IsSubscribed = true;
-                message.Subscribe(MessageType.INPUT, this);
+                //message.Subscribe(MessageType.INPUT, this);
             }
         }
 
         public void Unsubscribe()
         {
             IsSubscribed = false;
-            message.Unsubscribe(MessageType.INPUT, this);
+            ///message.Unsubscribe(MessageType.INPUT, this);
         }
 
         public void Receive(object message)

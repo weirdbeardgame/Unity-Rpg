@@ -49,7 +49,7 @@ public class SkillMessage : ScriptableObject
     {
         Messenger = FindObjectOfType<Messaging>();
         Debug.Log("Sent Message");
-        Messenger.Send(this, MessageType.BATTLE);
+        //Messenger.Send(this, MessageType.BATTLE);
     }
 
     public ActionIface Data

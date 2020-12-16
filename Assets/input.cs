@@ -7,6 +7,7 @@ public enum Inputs { NULL, LEFT, RIGHT, UP, DOWN, A, B, X, Y, START }
 public class input : MonoBehaviour, IReceiver
 {
     StateMachine gameState;
+    Inputs CurrentInput;
     bool canInput = true;
     bool isPressed;
 
@@ -31,17 +32,22 @@ public class input : MonoBehaviour, IReceiver
 
     public void Subscribe()
     {
-        message.Subscribe(MessageType.GAME_STATE, this);
+        //message.Subscribe(MessageType.GAME_STATE, this);
     }
 
     public void Unsubscribe()
     {
-        message.Unsubscribe(MessageType.GAME_STATE, this);
+        //message.Unsubscribe(MessageType.GAME_STATE, this);
+    }
+
+    void PushButton(Inputs I)
+    {
+        CurrentInput = I;
     }
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         gameStateMessage temp = ScriptableObject.CreateInstance<gameStateMessage>() as gameStateMessage;
         if (inbox.Count > 0)
@@ -64,13 +70,13 @@ public class input : MonoBehaviour, IReceiver
                         if (Input.GetAxisRaw("Horizontal") == 1)
                         {
                             isPressed = true;
-                            message.Send(Inputs.RIGHT, MessageType.INPUT);
+                            CurrentInput = Inputs.RIGHT;
                         }
 
                         if (Input.GetAxisRaw("Horizontal") == -1)    /// Stick move 1, 0, -1 This lasts a frame
                         {
                             isPressed = true;
-                            message.Send(Inputs.LEFT, MessageType.INPUT);
+                            CurrentInput = Inputs.LEFT;
                         }
                     }
 
@@ -88,13 +94,13 @@ public class input : MonoBehaviour, IReceiver
                     if (Input.GetAxisRaw("Vertical") == 1)
                     {
                         isPressed = true;
-                        message.Send(Inputs.UP, MessageType.INPUT);
+                        CurrentInput = Inputs.UP;
                     }
 
                     if (Input.GetAxisRaw("Vertical") == -1)
                     {
                         isPressed = true;
-                        message.Send(Inputs.DOWN, MessageType.INPUT);
+                        CurrentInput = Inputs.DOWN;
                     }
                 }
             }
@@ -106,15 +112,18 @@ public class input : MonoBehaviour, IReceiver
 
             if (Input.GetButtonDown("Submit")) // Happy Ansem Noises
             {
-                message.Send(Inputs.A, MessageType.INPUT);
+                CurrentInput = Inputs.A;
                 return;
             }
 
             if (Input.GetButtonDown("Cancel"))
             {
-                message.Send(Inputs.START, MessageType.INPUT);
+                CurrentInput = Inputs.START;
                 return;
             }
+
+            message.Enqueue(PushButton => CurrentInput);
+
         }
     }
 

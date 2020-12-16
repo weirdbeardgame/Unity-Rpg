@@ -11,7 +11,7 @@ public class CollisionMessage : ScriptableObject
     {
         Messenger = FindObjectOfType<Messaging>();
         CollidedID = ID;
-        Messenger.Send(this, MessageType.COLLISION);
+        //Messenger.Send(this, MessageType.COLLISION);
     }
 
 }

@@ -127,13 +127,13 @@ public class commandMenus : MonoBehaviour, IReceiver
     public void Subscribe()
     {
         isSubscribed = true;
-        message.Subscribe(MessageType.INPUT, this);
+        //message.Subscribe(MessageType.INPUT, this);
     }
 
     public void Unsubscribe()
     {
         isSubscribed = false;
-        message.Unsubscribe(MessageType.INPUT, this);
+        //message.Unsubscribe(MessageType.INPUT, this);
     }
 
     public void Receive(object message)
