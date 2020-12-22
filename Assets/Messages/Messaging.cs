@@ -6,8 +6,8 @@ using questing;
 
 public class Messaging : MonoBehaviour
 {
-    Queue<Action<int>> Inbox;
-    List<IReceiver> Subscriptions;
+    Queue<IMessage> Inbox;
+    Dictionary<MessageType, List<IReceiver>> Subscriptions;
 
     List<IReceiver> receivers;
     int mID;
@@ -22,7 +22,7 @@ public class Messaging : MonoBehaviour
     void Start()
     {
         states = FindObjectOfType<StateMachine>();
-        Inbox = new Queue<Action<int>>();
+        Inbox = new Queue<IMessage>();
     }
 
     public void Init()
@@ -36,31 +36,37 @@ public class Messaging : MonoBehaviour
 
         if (Subscriptions == null)
         {
-            Subscriptions = new List<IReceiver>();
+            Subscriptions = new Dictionary<MessageType, List<IReceiver>>();
         }
     }
 
-    public void Subscribe(IReceiver listener)
+    public void Subscribe(MessageType T, IReceiver listener)
     {
-        if (!Subscriptions.Contains(listener))
+        if (Subscriptions == null)
         {
-            Subscriptions.Add(listener);
+            Subscriptions = new Dictionary<MessageType, List<IReceiver>>();
         }
-        Subscriptions.Add(listener);
-    }
 
-    public void Unsubscribe(IReceiver listener)
-    {
-        if (Subscriptions.Contains(listener))
+        if (!Subscriptions.ContainsKey(T))
         {
-            Subscriptions.Remove(listener);
+            Subscriptions.Add(T, new List<IReceiver>());
+        }
+        Subscriptions[T].Add(listener);
+   }
+
+    public void Unsubscribe(MessageType type, IReceiver listener)
+    {
+        if (Subscriptions.ContainsKey(type))
+        {
+            Subscriptions[type].Remove(listener);
         }
     }
-    public void Enqueue(Action<int> message)
+    public void Enqueue(IMessage Message)
     {
-        if (Inbox != null && message != null)
+        if (Inbox != null && Message != null)
         {
-            Inbox.Enqueue(message);
+            Inbox.Enqueue(Message);
+            mID += 1;
         }
     }
 
@@ -68,11 +74,17 @@ public class Messaging : MonoBehaviour
     {
         while (Inbox.Count > 0)
         {
-            for (int i = 0; i < Subscriptions.Count; i++)
+            IMessage ToSend = Inbox.Dequeue();
+            for (int i = 0; i < Subscriptions[ToSend.GetMessageType()].Count; i++)
             {
-                //if (Inbox.Peek())
-                Subscriptions[i].Receive(Inbox.Dequeue());
+                Subscriptions[ToSend.GetMessageType()][i].Receive(ToSend);
             }
         }
     }
+
+    private void Update()
+    {
+        Send();
+    }
+
 }

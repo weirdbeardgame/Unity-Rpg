@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -16,7 +17,7 @@ public class PlayerMovement : MonoBehaviour, IReceiver
 
     Messaging messenger;
 
-    Queue<Inputs> inbox;
+    Queue<InputData> inbox;
 
     float horizontal;
     float vertical;
@@ -45,17 +46,17 @@ public class PlayerMovement : MonoBehaviour, IReceiver
 
     public void Receive(object message)
     {
-        inbox.Enqueue((Inputs)message);
+        inbox.Enqueue((InputData)message);
     }
 
     public void Subscribe()
     {
-        //messenger.Subscribe(MessageType.INPUT, this);
+        messenger.Subscribe(MessageType.INPUT, this);
     }
 
     public void Unsubscribe()
     {
-        //messenger.Unsubscribe(MessageType.INPUT, this);
+        messenger.Unsubscribe(MessageType.INPUT, this);
     }
 
     void Start()
@@ -69,7 +70,7 @@ public class PlayerMovement : MonoBehaviour, IReceiver
 
         animator = GetComponent<Animator>();
 
-        inbox = new Queue<Inputs>();
+        inbox = new Queue<InputData>();
 
         DontDestroyOnLoad(this);
     }

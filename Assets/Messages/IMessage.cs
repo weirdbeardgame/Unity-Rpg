@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IMessage
 {
-
+    MessageType GetMessageType();
 }

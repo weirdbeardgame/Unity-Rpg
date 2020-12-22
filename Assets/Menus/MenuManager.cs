@@ -16,7 +16,7 @@ namespace menu
         List<Widget> CurrentWidgets;
         public List<GameObject> Apps;
 
-        Queue<Inputs> InputData;
+        Queue<InputData> CurrentInputs;
 
         gameStateMessage StateMessage;
 
@@ -43,7 +43,7 @@ namespace menu
             state = FindObjectOfType<StateMachine>();
             message = FindObjectOfType<Messaging>();
             Screen = new PScreen();
-            InputData = new Queue<Inputs>();
+            CurrentInputs = new Queue<InputData>();
 
             Subscribe();
         }
@@ -53,37 +53,38 @@ namespace menu
             if (!IsSubscribed)
             {
                 IsSubscribed = true;
-                //message.Subscribe(MessageType.INPUT, this);
+                message.Subscribe(MessageType.INPUT, this);
             }
         }
 
         public void Unsubscribe()
         {
             IsSubscribed = false;
-            ///message.Unsubscribe(MessageType.INPUT, this);
+            message.Unsubscribe(MessageType.INPUT, this);
         }
 
         public void Receive(object message)
         {
-            InputData.Enqueue((Inputs)message);
+            CurrentInputs.Enqueue((InputData)message);
         }
 
         void Update()
         {
-            if (InputData.Count > 0)
+            if (CurrentInputs.Count > 0)
             {
-                if (InputData.Peek() == Inputs.START && !IsOpened)
+                if (CurrentInputs.Peek().CurrentInput == Inputs.START && !IsOpened)
                 {
-                    InputData.Dequeue();
+                    Debug.Log("START PRESSED!");
+                    CurrentInputs.Dequeue();
                     Open(0);
                 }
-                else if (IsOpened && InputData.Peek() != Inputs.START)
+                else if (IsOpened && CurrentInputs.Peek().CurrentInput != Inputs.START)
                 {
-                    Screen.CurrentScreen.GetComponent<AppData>().Input(InputData.Dequeue());
+                    Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput);
                 }
-                if (InputData.Peek() == Inputs.START && IsOpened)
+                if (CurrentInputs.Peek().CurrentInput == Inputs.START && IsOpened)
                 {
-                    InputData.Dequeue();
+                    CurrentInputs.Dequeue();
                     Close();
                 }
             }
@@ -95,6 +96,9 @@ namespace menu
 
         public void Open(int index)
         {
+
+            Debug.Log("OPEN");
+
             Destroy(Arrow);
             CurrentWidgets = null;
             CurrentWidgets = new List<Widget>();

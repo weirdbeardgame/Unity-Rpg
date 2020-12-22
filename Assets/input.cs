@@ -4,12 +4,23 @@ using UnityEngine;
 
 public enum Inputs { NULL, LEFT, RIGHT, UP, DOWN, A, B, X, Y, START }
 
+struct InputData : IMessage
+{ 
+    public Inputs CurrentInput;
+    public float Axis; // For 3D games. Handle Full Joystick axis
+
+    public MessageType GetMessageType()
+    {
+        return MessageType.INPUT;
+    }
+}
+
 public class input : MonoBehaviour, IReceiver
 {
     StateMachine gameState;
-    Inputs CurrentInput;
     bool canInput = true;
-    bool isPressed;
+
+    InputData ToInput;
 
     Queue<object> inbox;
 
@@ -32,19 +43,30 @@ public class input : MonoBehaviour, IReceiver
 
     public void Subscribe()
     {
-        //message.Subscribe(MessageType.GAME_STATE, this);
+        message.Subscribe(MessageType.GAME_STATE, this);
     }
 
     public void Unsubscribe()
     {
-        //message.Unsubscribe(MessageType.GAME_STATE, this);
+        message.Unsubscribe(MessageType.GAME_STATE, this);
     }
 
     void PushButton(Inputs I)
     {
-        CurrentInput = I;
+        if (canInput)
+        {
+            ToInput = new InputData();
+            ToInput.CurrentInput = I;
+        }
     }
 
+    void SetAxis(float RecievedAxis)
+    {
+        if (canInput)
+        {
+            ToInput.Axis = RecievedAxis;
+        }
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -56,80 +78,53 @@ public class input : MonoBehaviour, IReceiver
 
             if (temp.GetState() == States.CUTSCENE)
             {
-                setCanInput(false);
+                //setCanInput(false);
             }
         }
-        if (canInput)
-        {
-            if (Input.GetAxisRaw("Horizontal") != 0)
-            {
-                if (!isPressed)
-                {
-                    if ((Input.GetAxisRaw("Horizontal") == 1) != (Input.GetAxis("Horizontal") == -1)) // HACKFIX, MANUALLY CLEAR LATER
-                    {
-                        if (Input.GetAxisRaw("Horizontal") == 1)
-                        {
-                            isPressed = true;
-                            CurrentInput = Inputs.RIGHT;
-                        }
-
-                        if (Input.GetAxisRaw("Horizontal") == -1)    /// Stick move 1, 0, -1 This lasts a frame
-                        {
-                            isPressed = true;
-                            CurrentInput = Inputs.LEFT;
-                        }
-                    }
-
-                    if (Input.GetAxisRaw("Horizontal") == 0)
-                    {
-                        isPressed = false;
-                    }
+                   
+        if (Input.GetAxisRaw("Horizontal") != 0)           
+        {                    
+            if ((Input.GetAxisRaw("Horizontal") == 1) != (Input.GetAxis("Horizontal") == -1)) // HACKFIX, MANUALLY CLEAR LATER                    
+            {                        
+                if (Input.GetAxisRaw("Horizontal") == 1)
+                {          
+                    PushButton(Inputs.RIGHT);                        
                 }
-            }
+         
+                if (Input.GetAxisRaw("Horizontal") == -1)    /// Stick move 1, 0, -1 This lasts a frame                       
+                {                            
+                    PushButton(Inputs.LEFT);                        
+                }        
+            }    
+        }
 
             if (Input.GetAxisRaw("Vertical") != 0)
-            {
-                if (!isPressed)
+            {    
+                if (Input.GetAxisRaw("Vertical") == 1)
                 {
-                    if (Input.GetAxisRaw("Vertical") == 1)
-                    {
-                        isPressed = true;
-                        CurrentInput = Inputs.UP;
-                    }
+                    PushButton(Inputs.UP);
+                }
 
                     if (Input.GetAxisRaw("Vertical") == -1)
                     {
-                        isPressed = true;
-                        CurrentInput = Inputs.DOWN;
+                        PushButton(Inputs.DOWN);
                     }
                 }
-            }
-
-            if (Input.GetAxisRaw("Vertical") == 0)
-            {
-                isPressed = false;
-            }
+            
 
             if (Input.GetButtonDown("Submit")) // Happy Ansem Noises
             {
-                CurrentInput = Inputs.A;
+                PushButton(Inputs.A);
                 return;
             }
 
             if (Input.GetButtonDown("Cancel"))
             {
-                CurrentInput = Inputs.START;
+                PushButton(Inputs.START);
                 return;
             }
 
-            message.Enqueue(PushButton => CurrentInput);
+        message.Enqueue(ToInput);
 
-        }
     }
-
-    public void setCanInput(bool i)
-    {
-        canInput = i;
-    }
-
 }
