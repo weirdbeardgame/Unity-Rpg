@@ -57,6 +57,7 @@ public class input : MonoBehaviour, IReceiver
         {
             ToInput = new InputData();
             ToInput.CurrentInput = I;
+            message.Enqueue(ToInput);
         }
     }
 
@@ -71,7 +72,7 @@ public class input : MonoBehaviour, IReceiver
     // Update is called once per frame
     void FixedUpdate()
     {
-        gameStateMessage temp = ScriptableObject.CreateInstance<gameStateMessage>() as gameStateMessage;
+        gameStateMessage temp = new gameStateMessage();
         if (inbox.Count > 0)
         {
             temp = (gameStateMessage)inbox.Dequeue();
@@ -123,8 +124,5 @@ public class input : MonoBehaviour, IReceiver
                 PushButton(Inputs.START);
                 return;
             }
-
-        message.Enqueue(ToInput);
-
     }
 }

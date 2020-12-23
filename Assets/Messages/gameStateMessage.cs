@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gameStateMessage : ScriptableObject
+public class gameStateMessage : IMessage
 {
 
     Messaging Messenger;
@@ -11,11 +11,13 @@ public class gameStateMessage : ScriptableObject
 
     public void construct(States GameState, Flags SetFlag)
     {
-        Messenger = FindObjectOfType<Messaging>();
         _CurrentState = GameState;
         _Flag = SetFlag;
+    }
 
-        //Messenger.Enqueue();
+    public MessageType GetMessageType()
+    {
+        return MessageType.GAME_STATE;
     }
 
     public States GetState()

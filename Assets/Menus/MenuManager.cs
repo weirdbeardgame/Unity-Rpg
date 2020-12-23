@@ -67,37 +67,42 @@ namespace menu
         {
             CurrentInputs.Enqueue((InputData)message);
         }
+ 
+        void FixedUpdate()        
+        {      
+            if (state.State != States.PAUSE && CurrentInputs.Count > 0 && CurrentInputs.Peek().CurrentInput == Inputs.START)                
+            {  
+                Debug.Log("START PRESSED!");    
+                CurrentInputs.Dequeue();    
+                Open(0);     
+            }
 
-        void Update()
-        {
-            if (CurrentInputs.Count > 0)
-            {
-                if (CurrentInputs.Peek().CurrentInput == Inputs.START && !IsOpened)
-                {
-                    Debug.Log("START PRESSED!");
-                    CurrentInputs.Dequeue();
-                    Open(0);
-                }
-                else if (IsOpened && CurrentInputs.Peek().CurrentInput != Inputs.START)
+            else if (state.State == States.PAUSE)
+            { 
+                if (CurrentInputs.Count > 0 && CurrentInputs.Peek().CurrentInput != Inputs.START)
                 {
                     Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput);
                 }
-                if (CurrentInputs.Peek().CurrentInput == Inputs.START && IsOpened)
+                if (CurrentInputs.Count > 0 && CurrentInputs.Peek().CurrentInput == Inputs.START)
                 {
                     CurrentInputs.Dequeue();
                     Close();
                 }
+                if (Screen)
+                {
+                    Screen.Draw(); // Run all screen and subscreen logic
+                }
             }
-            if (Screen)
+            else
             {
-                Screen.Draw(); // Run all screen and subscreen logic
+                return;
             }
         }
 
         public void Open(int index)
         {
-
             Debug.Log("OPEN");
+
 
             Destroy(Arrow);
             CurrentWidgets = null;
@@ -105,6 +110,7 @@ namespace menu
 
             Screen.Open(Apps[index]);
             CApp = Apps[index].GetComponent<AppData>();
+            state.State = States.PAUSE;
 
             CurrentWidgets = Screen.CurrentScreen.GetComponent<AppData>().Widgets;
             Arrow = Instantiate(InstantiateArrow);
@@ -115,6 +121,8 @@ namespace menu
         public void Close()
         {
             Screen.Close();
+            state.State = States.MAIN;
+            IsOpened = false;
         }
     }
 }

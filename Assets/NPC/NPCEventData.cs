@@ -23,6 +23,7 @@ public class NPCEventData : ScriptableObject
     InventoryMessage message;
     gameStateMessage state;
     DialogueManager Dialogue;
+    Messaging Messenger;
 
     public List<BinarySearchTree<DialogueMessage>> binarySearchTrees;
     
@@ -43,6 +44,8 @@ public class NPCEventData : ScriptableObject
                 Dialogue.OpenDialogueBox(binarySearchTrees[0]);
                 state = new gameStateMessage();
                 state.construct(CurrentState.State, FlagToSet);
+                Messenger = FindObjectOfType<Messaging>();
+                Messenger.Enqueue(state);
                 break;
 
             case NPCEventType.FOLLOW:
@@ -58,6 +61,8 @@ public class NPCEventData : ScriptableObject
 
                 state = new gameStateMessage();
                 state.construct(CurrentState.State, FlagToSet);
+                Messenger = FindObjectOfType<Messaging>();
+                Messenger.Enqueue(state);
                 break;
 
         }

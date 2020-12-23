@@ -56,12 +56,12 @@ public class Battle : MonoBehaviour, IReceiver
 
     public void Subscribe()
     {
-        //Messenger.Subscribe(MessageType.BATTLE, this);
+        Messenger.Subscribe(MessageType.BATTLE, this);
     }
 
     public void Unsubscribe()
     {
-        //Messenger.Unsubscribe(MessageType.BATTLE, this);
+        Messenger.Unsubscribe(MessageType.BATTLE, this);
     }
 
 
@@ -117,7 +117,7 @@ public class Battle : MonoBehaviour, IReceiver
         while (!unload.isDone)
         {
             Destroy(BattleObject);
-            gameStateMessage Message = ScriptableObject.CreateInstance<gameStateMessage>();
+            gameStateMessage Message = new gameStateMessage();
             Unsubscribe();
             Message.construct(States.MAIN, null);
             Messenger.Init();

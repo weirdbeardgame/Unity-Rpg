@@ -88,10 +88,12 @@ public class Transition : MonoBehaviour
                 BattleObject.AddComponent<Enemies>();
                 BattleObject.AddComponent<BattlePlayers>();
 
-                batttleStartMessage = ScriptableObject.CreateInstance<gameStateMessage>();
+                batttleStartMessage = new gameStateMessage();
                 batttleStartMessage.construct(States.BATTLE, states.CurrrentFlag);
+                message.Enqueue(batttleStartMessage);
 
                 message.Init();
+
 
                 BattleObject.AddComponent<Skills>();
                 BattleObject.AddComponent<CommandQueue>();

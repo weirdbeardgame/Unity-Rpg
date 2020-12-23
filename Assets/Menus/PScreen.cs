@@ -20,9 +20,8 @@ public class PScreen : ScriptableObject
                 Destroy(CurrentScreen);
             }
             
-            CurrentScreen = CScreen; 
             Screen = GameObject.Find("Menu");
-            CurrentScreen = Instantiate(CurrentScreen);
+            CurrentScreen = (GameObject)Instantiate(CScreen);
             CurrentScreen.GetComponent<AppData>().Init();
             CurrentScreen.transform.SetParent(Screen.transform);
             CurrentScreen.transform.localPosition = new Vector2(0, 0);
@@ -50,6 +49,11 @@ public class PScreen : ScriptableObject
 
     public void Close()
     {
+        foreach(Transform Widget in CurrentScreen.transform)
+        {
+            Destroy(Widget.gameObject);
+        }
+
         Destroy(CurrentScreen);    
         Screen.SetActive(false);
     }
