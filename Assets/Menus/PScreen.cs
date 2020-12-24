@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PScreen : ScriptableObject
 {
-    GameObject Screen;
+    public GameObject Screen;
     Shader ScreenShader;
     public GameObject CurrentScreen;
     bool isOpened;
@@ -21,12 +21,13 @@ public class PScreen : ScriptableObject
             }
             
             Screen = GameObject.Find("Menu");
+            Screen.SetActive(true);
             CurrentScreen = (GameObject)Instantiate(CScreen);
             CurrentScreen.GetComponent<AppData>().Init();
             CurrentScreen.transform.SetParent(Screen.transform);
             CurrentScreen.transform.localPosition = new Vector2(0, 0);
         }
-        Screen.SetActive(true);
+        //Screen.SetActive(true);
     }
 
     public GameObject GetScreen
@@ -55,6 +56,6 @@ public class PScreen : ScriptableObject
         }
 
         Destroy(CurrentScreen);    
-        Screen.SetActive(false);
+        //Screen.SetActive(false);
     }
 }

@@ -65,25 +65,37 @@ namespace menu
 
         public void Receive(object message)
         {
-            CurrentInputs.Enqueue((InputData)message);
+            if (state.State != States.PAUSE)
+            {
+
+                InputData temp = (InputData)message;
+
+                if (temp.CurrentInput == Inputs.START)
+                {
+                    Open(0);
+                }
+
+                if (CurrentInputs.Count > 0)
+                {
+                    CurrentInputs.Clear();
+                }
+            }
+
+            if (state.State == States.PAUSE)
+            {
+                CurrentInputs.Enqueue((InputData)message);
+            }
         }
  
         void FixedUpdate()        
-        {      
-            if (state.State != States.PAUSE && CurrentInputs.Count > 0 && CurrentInputs.Peek().CurrentInput == Inputs.START)                
-            {  
-                Debug.Log("START PRESSED!");    
-                CurrentInputs.Dequeue();    
-                Open(0);     
-            }
-
-            else if (state.State == States.PAUSE)
-            { 
-                if (CurrentInputs.Count > 0 && CurrentInputs.Peek().CurrentInput != Inputs.START)
+        {
+            if (CurrentInputs.Count > 0)
+            {
+                if (CurrentInputs.Peek().CurrentInput != Inputs.START)
                 {
                     Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput);
                 }
-                if (CurrentInputs.Count > 0 && CurrentInputs.Peek().CurrentInput == Inputs.START)
+                if (CurrentInputs.Peek().CurrentInput == Inputs.START)
                 {
                     CurrentInputs.Dequeue();
                     Close();
