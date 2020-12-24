@@ -72,13 +72,9 @@ namespace menu
 
                 if (temp.CurrentInput == Inputs.START)
                 {
-                    Open(0);
+                    CurrentInputs.Enqueue(temp);
                 }
 
-                if (CurrentInputs.Count > 0)
-                {
-                    CurrentInputs.Clear();
-                }
             }
 
             if (state.State == States.PAUSE)
@@ -91,18 +87,37 @@ namespace menu
         {
             if (CurrentInputs.Count > 0)
             {
-                if (CurrentInputs.Peek().CurrentInput != Inputs.START)
+                switch (state.State)
                 {
-                    Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput);
-                }
-                if (CurrentInputs.Peek().CurrentInput == Inputs.START)
-                {
-                    CurrentInputs.Dequeue();
-                    Close();
-                }
-                if (Screen)
-                {
-                    Screen.Draw(); // Run all screen and subscreen logic
+                    case States.PAUSE:
+
+                        if (CurrentInputs.Peek().CurrentInput != Inputs.START) 
+                        { 
+                            Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput); 
+                        }
+ 
+                        if (CurrentInputs.Peek().CurrentInput == Inputs.START) 
+                        { 
+                            CurrentInputs.Dequeue();                   
+                            Close();                
+                        } 
+                        if (Screen) 
+                        { 
+                            Screen.Draw(); // Run all screen and subscreen logic 
+                        }
+                        break;
+
+                    case States.MAIN:
+                        if (CurrentInputs.Peek().CurrentInput == Inputs.START)
+                        {
+                            CurrentInputs.Dequeue();
+                            Open(0);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        break;
                 }
             }
             else

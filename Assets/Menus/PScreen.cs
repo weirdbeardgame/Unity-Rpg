@@ -21,7 +21,6 @@ public class PScreen : ScriptableObject
             }
             
             Screen = GameObject.Find("Menu");
-            Screen.SetActive(true);
             CurrentScreen = (GameObject)Instantiate(CScreen);
             CurrentScreen.GetComponent<AppData>().Init();
             CurrentScreen.transform.SetParent(Screen.transform);
