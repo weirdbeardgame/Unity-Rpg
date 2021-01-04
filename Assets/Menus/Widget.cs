@@ -14,7 +14,11 @@ public class Widget : MonoBehaviour
     
     public GameObject Text;
 
-    public void Instantiate()
+    public virtual void Instantiate()
+    {
+    }
+
+    public virtual void Draw()
     {
     }
 
@@ -26,11 +30,9 @@ public class Widget : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    public virtual void Execute() // Override for each individual Widget type. This could be just widgetBase we're describing here
+    // Override for each individual Widget type. This could be just widgetBase we're describing here
+    public virtual void Execute() 
     {
 
     }
-
-
 }
