@@ -101,6 +101,9 @@
     <Compile Include="Assets\Menus\Apps\Pause\PauseApp.cs" />
     <Compile Include="Assets\Menus\Apps\Pause\Widgets\ItemWidget.cs" />
     <Compile Include="Assets\Menus\Apps\Pause\Widgets\WeaponWidget.cs" />
+    <Compile Include="Assets\Menus\Apps\SubScreens\PartySelect\SelectionScreen.cs" />
+    <Compile Include="Assets\Menus\Apps\SubScreens\PartySelect\Widgets\SelectorWidget.cs" />
+    <Compile Include="Assets\Menus\Apps\SubScreens\SubScreen.cs" />
     <Compile Include="Assets\Menus\Apps\Weapon\WeaponMenu.cs" />
     <Compile Include="Assets\Menus\Apps\Weapon\Widget\WeaponWidgetData.cs" />
     <Compile Include="Assets\Menus\MenuManager.cs" />

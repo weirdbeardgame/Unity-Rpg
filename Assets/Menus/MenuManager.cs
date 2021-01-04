@@ -91,16 +91,15 @@ namespace menu
                 {
                     case States.PAUSE:
 
-                        if (CurrentInputs.Peek().CurrentInput != Inputs.START) 
+                        if (CurrentInputs.Peek().CurrentInput == Inputs.START)
+                        {
+                            CurrentInputs.Dequeue();
+                            Close();
+                        }
+                        else if (CurrentInputs.Peek().CurrentInput != Inputs.START) 
                         { 
                             Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput); 
                         }
- 
-                        if (CurrentInputs.Peek().CurrentInput == Inputs.START) 
-                        { 
-                            CurrentInputs.Dequeue();                   
-                            Close();                
-                        } 
                         if (Screen) 
                         { 
                             Screen.Draw(); // Run all screen and subscreen logic 

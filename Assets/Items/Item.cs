@@ -68,6 +68,12 @@ public class Item : MonoBehaviour
         }
     }
 
+    public void Use(Creature creature, ItemData Item)
+    {
+            Item.Use(creature); // Then why ItemList
+            Debug.Log("Health" + creature.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
+    }
+
 
     public ItemData GetItem(int ItemID)
     {

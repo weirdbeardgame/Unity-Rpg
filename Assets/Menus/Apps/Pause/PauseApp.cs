@@ -31,18 +31,34 @@ public class PauseApp : AppData
 
             case Inputs.UP:
                 // Grid Plus 3
+                if (WidgetIndex < Widgets.Count)
+                {
+                    WidgetIndex += 3;
+                }
                 break;
 
             case Inputs.DOWN:
-               // Grid Minus 3
+                // Grid Minus 3
+                if (WidgetIndex >= Widgets.Count)
+                {
+                    WidgetIndex -= 3;
+                }
                 break;
 
             case Inputs.LEFT:
                 // Grid Minus 1
+                if (WidgetIndex >= Widgets.Count)
+                {
+                    WidgetIndex -= 1;
+                }
                 break;
 
             case Inputs.RIGHT:
                 // Grid Plus 1
+                if (WidgetIndex < Widgets.Count)
+                {
+                    WidgetIndex += 1;
+                }
                 break;
         }
     }
