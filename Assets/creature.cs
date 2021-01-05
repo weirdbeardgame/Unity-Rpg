@@ -87,7 +87,6 @@ public class Creature : senderInterface
 
     Appendage _Appendage;
 
-
     public void createWeaponSlots()
     {
         Slots = new weaponSlots[5];

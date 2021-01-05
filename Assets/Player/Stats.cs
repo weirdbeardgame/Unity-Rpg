@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 
 public enum StatType { HEALTH, SPEED, STRENGTH, MAGIC, DEFENSE }
 
@@ -43,6 +43,11 @@ public class Stats
         _Stat = Stats;
     }
 
+    public override string ToString() 
+    {
+        // Return name and Value
+        return CurrentStat.ToString() + ": " +  Stat.ToString();
+    }
 }
 
 public class StatManager

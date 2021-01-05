@@ -7,7 +7,7 @@ public enum AreaOfEffect { HEALTH, STRENGTH, MAGIC, SPEED }
 
 public class ItemBuffer
 {
-    public int Buff;
+    public Stats Buff;
     public ItemType Type;
     public AreaOfEffect Effect;
 }
@@ -16,7 +16,7 @@ public class ItemData : ScriptableObject
 {
     private string IName;
     private string IDescrip;
-    
+
     private int _ItemID;
     private int _Cost;
 
@@ -46,12 +46,12 @@ public class ItemData : ScriptableObject
     }
 
     public string ItemDescription
-    {  
+    {
         get
         {
             return IDescrip;
         }
-    
+
         set
         {
             IDescrip = value;
@@ -105,53 +105,6 @@ public class ItemData : ScriptableObject
 
     public void Use(Creature Creature)
     {
-        switch (_Effect.Type)
-        {
-
-            case ItemType.HEALING:
-
-                switch (_Effect.Effect)
-                {
-
-                    case AreaOfEffect.HEALTH:
-                        Creature.Stats.StatList[(int)StatType.HEALTH].Stat += _Effect.Buff;
-                        break;
-
-                    case AreaOfEffect.MAGIC:
-                        Creature.Stats.StatList[(int)StatType.MAGIC].Stat += _Effect.Buff;
-                        break;
-
-                    case AreaOfEffect.SPEED:
-                        Creature.Stats.StatList[(int)StatType.SPEED].Stat += _Effect.Buff;
-                        break;
-
-                    case AreaOfEffect.STRENGTH:
-                        Creature.Stats.StatList[(int)StatType.STRENGTH].Stat += _Effect.Buff;
-                        break;
-                }
-                break;
-
-            case ItemType.DAMAGING:
-                switch (_Effect.Effect)
-                {
-                    case AreaOfEffect.HEALTH:
-                        Creature.Stats.StatList[(int)StatType.HEALTH].Stat -= _Effect.Buff;
-                        break;
-
-                    case AreaOfEffect.MAGIC:
-                        Creature.Stats.StatList[(int)StatType.MAGIC].Stat -= _Effect.Buff;
-                        break;
-
-                    case AreaOfEffect.SPEED:
-                        Creature.Stats.StatList[(int)StatType.SPEED].Stat -= _Effect.Buff;
-                        break;
-
-                    case AreaOfEffect.STRENGTH:
-                        Creature.Stats.StatList[(int)StatType.STRENGTH].Stat -= _Effect.Buff;
-                        break;
-                }
-                break;
-        }
-
+        Creature.Stats.StatList[(int)Effect.Effect].Stat += Effect.Buff.Stat;
     }
 }

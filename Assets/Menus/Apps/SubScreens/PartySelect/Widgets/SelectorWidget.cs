@@ -22,8 +22,7 @@ public class SelectorWidget : Widget
         // GameObject Text could be like. 
         // Health or whatever but I think I need Stat Slots?
         
-        //Text.GetComponent<TextMeshProUGUI>().text = CharacterData.Stats[StatType.HEALTH];
-
+        Text.GetComponent<TextMeshProUGUI>().text = CharacterData.Stats.StatList[Item.Effect.Buff].ToString();
     }
 
     public override void Execute()
