@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using menu;
 
 public class AppData : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class AppData : MonoBehaviour
     protected string AppName;
     public List<Widget> Widgets;
     public List<GameObject> SubScreens;
+    public MenuManager Menu;
 
     protected int WidgetIndex;
 

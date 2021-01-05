@@ -78,7 +78,7 @@ public class NPCManager : MonoBehaviour, IReceiver
     public void Subscribe()
     {
         _Messenger = FindObjectOfType<Messaging>();
-        //_Messenger.Subscribe(MessageType.QUEST, this); // there's going to be alot of things subscribed too in here.
+        //_Messenger.Subscribe(MessageType.QUEST, this);
         //_Messenger.Subscribe(MessageType.COLLISION, this);
     }
 

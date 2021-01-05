@@ -1,18 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using menu;
 using TMPro;
 
 public class ItemsApp : AppData
 {
     Inventory Inv;
     public GameObject ItemWidget;
-    GameObject Sub;
+    public GameObject Sub;
     GameObject Rect;
 
     ItemData SelectedItem;
-
-    // Something about SubScreens should be here.
 
     public override void Init()
     {
@@ -48,18 +47,22 @@ public class ItemsApp : AppData
                 {
                     SelectedItem = Widgets[WidgetIndex].GetComponent<InvetoryWidget>().item;
                     // Open character selection screen.
+                    SubScreens[1].GetComponent<SelectionScreen>().Item = SelectedItem;
+                    Sub = Instantiate(SubScreens[1]);
+
                 }
                 break;
 
             case Inputs.B:
                 if (SelectedItem)
                 {
-                    SelectedItem = null;
-                    // Close character selection screen
+                    SelectedItem = null; // Item Select Buisness. Go back to your drinks
                 }
                 else
                 {
                     // Swap back to Pause screen.
+                    Menu = FindObjectOfType<MenuManager>();
+                    Menu.Open(0);
                 }
                 break;
 

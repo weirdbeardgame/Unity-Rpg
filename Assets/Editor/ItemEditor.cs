@@ -49,8 +49,8 @@ public class ItemEditor : EditorWindow
         if (File.Exists(FilePath))
         {
             JsonData = File.ReadAllText(FilePath);
-
             Items = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(JsonData);
+            ItemIndex = Items.Count;
 
             IsInitalized = true;
         }
@@ -90,7 +90,10 @@ public class ItemEditor : EditorWindow
             CurrentItem = ScriptableObject.CreateInstance<ItemData>();
             CurrentItem.ItemName = ItemName;
             CurrentItem.Effect = new ItemBuffer();
+            CurrentItem.Effect.Buff = new Stats();
             Items.Add(ItemIndex, CurrentItem);
+            string Data = JsonConvert.SerializeObject(Items);
+            File.WriteAllText(FilePath, Data);
         }
         GUILayout.EndArea();
 
@@ -122,10 +125,10 @@ public class ItemEditor : EditorWindow
             Items[SelectedIndex].ItemDescription = EditorGUILayout.TextArea(Items[SelectedIndex].ItemDescription);
             EditorGUILayout.LabelField("Buffer Type");
             Items[SelectedIndex].Effect.Type = (ItemType)EditorGUILayout.EnumPopup(Items[SelectedIndex].Effect.Type);
-            EditorGUILayout.LabelField("Effect Type");
+            EditorGUILayout.LabelField("Stat Affected");
             Items[SelectedIndex].Effect.Effect = (AreaOfEffect)EditorGUILayout.EnumPopup(Items[SelectedIndex].Effect.Effect);
             EditorGUILayout.LabelField("Buffer: ");
-            Items[SelectedIndex].Effect.Buff = EditorGUILayout.IntField(Items[SelectedIndex].Effect.Buff);
+            Items[SelectedIndex].Effect.Buff.Stat = EditorGUILayout.FloatField(Items[SelectedIndex].Effect.Buff.Stat);
             GUILayout.EndVertical();
             GUILayout.EndArea();
         }
