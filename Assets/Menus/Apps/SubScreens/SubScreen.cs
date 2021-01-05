@@ -34,4 +34,10 @@ public class SubScreen : MonoBehaviour
 
         Widgets.Add(widget);
     }
+
+    public void Close()
+    {
+        // Remove instance of screen prefab!
+    }
+
 }
