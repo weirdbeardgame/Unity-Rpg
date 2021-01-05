@@ -56,7 +56,7 @@ public class StatManager
     private List<Stats> _Stats;
     private Stats StatToCreate;
     [System.NonSerialized]
-    Dictionary<BufferEffect, Buffers> AppliedBuffer; // perma lasting effects
+    Dictionary<BufferEffect, Buffers> AppliedBuffer; // perma lasting effects Weapons equipped or any perma spell effects
 
     Buffers OneTimeEffect;
 
@@ -92,6 +92,4 @@ public class StatManager
     {
         AppliedBuffer.Add(Effect, BuffToApply);
     }
-
-
 }
