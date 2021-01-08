@@ -7,6 +7,8 @@ using UnityEngine.UI;
 namespace menu
 {
 
+    public enum MenuProperties { INPUT, APP, SUBAPP};
+
     public class MenuManager : MonoBehaviour, IReceiver // This is to handle functionality. To handle Inputs  
     {
         Messaging message;
@@ -14,7 +16,7 @@ namespace menu
         PScreen Screen;
         AppData CApp;
         List<Widget> CurrentWidgets;
-        public List<GameObject> Apps;
+        public List<GameObject> Apps; // List of Screens
 
         Queue<InputData> CurrentInputs;
 
@@ -67,14 +69,12 @@ namespace menu
         {
             if (state.State != States.PAUSE)
             {
-
                 InputData temp = (InputData)message;
 
                 if (temp.CurrentInput == Inputs.START)
                 {
                     CurrentInputs.Enqueue(temp);
                 }
-
             }
 
             if (state.State == States.PAUSE)
@@ -96,7 +96,7 @@ namespace menu
                             CurrentInputs.Dequeue();
                             Close();
                         }
-                        else if (CurrentInputs.Peek().CurrentInput != Inputs.START) 
+                        else if (CurrentInputs.Peek().CurrentInput != Inputs.START && Screen.CurrentScreen.GetComponent<AppData>().GetProperties(0) == MenuProperties.INPUT)
                         { 
                             Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput); 
                         }
@@ -142,6 +142,12 @@ namespace menu
             Arrow = Instantiate(InstantiateArrow);
 
             IsOpened = true;
+        }
+
+        public void OepnSub(SubScreen subScreen)
+        {
+            // Set Current Context to SubScreen. Pass input if needed.
+
         }
 
         public void Close()

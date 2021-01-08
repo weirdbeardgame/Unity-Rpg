@@ -19,7 +19,10 @@ public class ItemsApp : AppData
         AppName = "Items";
         Inv = FindObjectOfType<Inventory>();
         Rect = GameObject.Find("Rectangle");
-        
+        Properties = new List<MenuProperties>();
+        Properties.Add(MenuProperties.APP);
+        Properties.Add(MenuProperties.INPUT);
+
         for (int i = 0; i < Inv.ItemList.Count; i++)
         {
             ItemWidget = Instantiate(ItemWidget);

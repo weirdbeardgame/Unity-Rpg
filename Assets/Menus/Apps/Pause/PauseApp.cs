@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using menu;
 public class PauseApp : AppData
 {
     public GameObject ItemWidget;
@@ -11,6 +11,9 @@ public class PauseApp : AppData
     {
         AppID = 0;
         AppName = "Pause";
+        Properties = new List<MenuProperties>();
+        Properties.Add(MenuProperties.APP);
+        Properties.Add(MenuProperties.INPUT);
         ItemWidget.GetComponent<Widget>().Instantiate();
         AddWidget(ItemWidget.GetComponent<Widget>());
         WeaponWidget.GetComponent<Widget>().Instantiate();

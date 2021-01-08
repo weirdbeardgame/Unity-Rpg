@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using menu;
 public class PScreen : ScriptableObject
 {
     public GameObject Screen;
     Shader ScreenShader;
     public GameObject CurrentScreen;
+    public GameObject SubScreen;
     bool isOpened;
 
     public void Open(GameObject CScreen) // Instantiates the GameObject Screen. This is meant only to display what needs to be drawn in the current design.
@@ -39,11 +40,24 @@ public class PScreen : ScriptableObject
 
     public void Draw()
     {
+
+    }
+
+    void DrawScreen()
+    {
         // This is more like an update function? OR is this what spawns the screen from the get go.
         // Should I use shaders on the screen to make it look more lcd like?
         if (CurrentScreen)
         {
             CurrentScreen.GetComponent<AppData>().Draw();
+        }
+    }
+
+    void DrawSubScreen()
+    {
+        if (SubScreen)
+        {
+            SubScreen.GetComponent<SubScreen>().Draw();
         }
     }
 

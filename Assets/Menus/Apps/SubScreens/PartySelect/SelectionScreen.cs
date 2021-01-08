@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
+using menu;
 public class SelectionScreen : SubScreen
 {
     // Who we usin this shit on?
@@ -12,6 +13,10 @@ public class SelectionScreen : SubScreen
     // Start is called before the first frame update
     public override void Init()
     {
+        Properties = new List<MenuProperties>();
+        Properties.Add(MenuProperties.SUBAPP);
+        Properties.Add(MenuProperties.INPUT);
+
         foreach (Creature Member in SelectionParty.PartyMembers )
         {
             // Create Widget and fill with character data that's relevant. I need to know what Item or Weapon and the stats they're affecting

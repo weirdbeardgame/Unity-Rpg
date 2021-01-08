@@ -2,42 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SubScreen : MonoBehaviour
+namespace menu
 {
-    protected int AppID;
-    protected string AppName;
-    public List<Widget> Widgets;
-    protected int WidgetIndex;
-    public virtual void Init()
+    public class SubScreen : MonoBehaviour
     {
-        AppID = -1;
-        Widgets = null;
-        AppName = "Boo!";
-    }
+        protected int AppID;
+        protected string AppName;
+        public List<Widget> Widgets;
 
-    public virtual void Draw()
-    {
-        // All Updates to screens and widgets happen in here.
-    }
+        protected int WidgetIndex;
+        protected List<MenuProperties> Properties;
 
-    public virtual void Input(Inputs In)
-    {
-        // Handling of Input per app happens here
-    }
-
-    public void AddWidget(Widget widget)
-    {
-        if (Widgets == null)
+        public virtual void Init()
         {
-            Widgets = new List<Widget>();
+            AppID = -1;
+            Widgets = null;
+            AppName = "Boo!";
         }
 
-        Widgets.Add(widget);
-    }
+        public virtual void Draw()
+        {
+            // All Updates to screens and widgets happen in here.
+        }
 
-    public void Close()
-    {
-        // Remove instance of screen prefab!
-    }
+        public virtual void Input(Inputs In)
+        {
+            // Handling of Input per app happens here
+        }
 
+        public void AddWidget(Widget widget)
+        {
+            if (Widgets == null)
+            {
+                Widgets = new List<Widget>();
+            }
+
+            Widgets.Add(widget);
+        }
+
+        public void Close()
+        {
+            // Remove instance of screen prefab!
+        }
+
+    }
 }
