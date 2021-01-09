@@ -35,6 +35,18 @@ namespace menu
         public virtual void Draw()
         {
             // All Updates to screens and widgets happen in here.
+            foreach(var Prop in Properties)
+            {
+               switch (Prop)
+                {
+                    case MenuProperties.LIST:
+                        // Draw Verticle widgets
+                        break;
+                    case MenuProperties.GRID:
+                        // Draw grid of widgets
+                        break;
+                }
+            }
         }
 
         public virtual void Input(Inputs In)

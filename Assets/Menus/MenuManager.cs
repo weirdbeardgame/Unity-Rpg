@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 namespace menu
 {
-
-    public enum MenuProperties { INPUT, APP, SUBAPP};
+    // General Menu Properties, Type of screen. Needs input? Drawing modes
+    public enum MenuProperties { INPUT, APP, SUBAPP, GRID, LIST};
 
     public class MenuManager : MonoBehaviour, IReceiver // This is to handle functionality. To handle Inputs  
     {

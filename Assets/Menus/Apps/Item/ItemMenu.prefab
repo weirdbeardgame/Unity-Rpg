@@ -110,6 +110,7 @@ MonoBehaviour:
   Widgets: []
   SubScreens: []
   Menu: {fileID: 0}
+  CharacterSelect: {fileID: 0}
   Item: {fileID: 0}
 --- !u!1001 &3653786664930027766
 PrefabInstance:
@@ -524,7 +525,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rectangle
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2852136404488637789, guid: 03feb8a56506bfc44b85481fdb1383d8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 03feb8a56506bfc44b85481fdb1383d8, type: 3}
 --- !u!1 &7844369723552610462 stripped
 GameObject:

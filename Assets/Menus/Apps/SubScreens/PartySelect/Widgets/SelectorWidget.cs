@@ -21,7 +21,6 @@ public class SelectorWidget : Widget
         // Draw Character info in here.
         // GameObject Text could be like. 
         // Health or whatever but I think I need Stat Slots?
-
         Text.GetComponent<TextMeshProUGUI>().text = CharacterData.Stats.StatList[(int)Item.Effect.Effect].ToString();
     }
 
