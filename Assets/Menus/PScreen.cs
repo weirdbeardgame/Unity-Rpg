@@ -57,7 +57,8 @@ public class PScreen : ScriptableObject
     {
         if (SubScreen)
         {
-            SubScreen.GetComponent<SubScreen>().Draw();
+            // This needs to be aware of Other screen?
+            SubScreen.GetComponent<AppData>().Draw();
         }
     }
 

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using menu;
-public class SelectionScreen : SubScreen
+public class SelectionScreen : AppData
 {
     // Who we usin this shit on?
     Party SelectionParty;
-    GameObject CharacterSelect;
+    public GameObject CharacterSelect;
     public ItemData Item;
 
     // Start is called before the first frame update
@@ -16,6 +16,8 @@ public class SelectionScreen : SubScreen
         Properties = new List<MenuProperties>();
         Properties.Add(MenuProperties.SUBAPP);
         Properties.Add(MenuProperties.INPUT);
+
+        SelectionParty = FindObjectOfType<Party>();
 
         foreach (Creature Member in SelectionParty.PartyMembers )
         {
@@ -47,7 +49,7 @@ public class SelectionScreen : SubScreen
                 break;
 
             case Inputs.B:
-                Close();
+                //Close();
                 break;
         }
     }

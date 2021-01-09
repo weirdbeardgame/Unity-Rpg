@@ -20,6 +20,11 @@ namespace menu
             return Properties[i];
         }
 
+        public int PropertiesCount()
+        {
+            return Properties.Count;
+        }
+
         public virtual void Init()
         {
             AppID = -1;

@@ -91,8 +91,10 @@ MonoBehaviour:
   Widgets: []
   SubScreens:
   - {fileID: 6128469407929044774, guid: 46ab2a0292d869a4e9beb15a43cdb9d2, type: 3}
-  - {fileID: 6128469407929044774, guid: 46ab2a0292d869a4e9beb15a43cdb9d2, type: 3}
+  - {fileID: 6128469407929044774, guid: f5b129401a5ab7543a1d147e791fd30a, type: 3}
+  Menu: {fileID: 0}
   ItemWidget: {fileID: 6947825219720278991}
+  Sub: {fileID: 0}
 --- !u!114 &6679201808024098356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Widgets: []
+  SubScreens: []
+  Menu: {fileID: 0}
+  Item: {fileID: 0}
 --- !u!1001 &3653786664930027766
 PrefabInstance:
   m_ObjectHideFlags: 0

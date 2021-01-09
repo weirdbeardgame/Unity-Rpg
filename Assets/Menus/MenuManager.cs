@@ -91,14 +91,15 @@ namespace menu
                 {
                     case States.PAUSE:
 
-                        if (CurrentInputs.Peek().CurrentInput == Inputs.START)
+                        switch (CurrentInputs.Peek().CurrentInput)
                         {
-                            CurrentInputs.Dequeue();
-                            Close();
-                        }
-                        else if (CurrentInputs.Peek().CurrentInput != Inputs.START && Screen.CurrentScreen.GetComponent<AppData>().GetProperties(0) == MenuProperties.INPUT)
-                        { 
-                            Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput); 
+                            case Inputs.START:
+                                CurrentInputs.Dequeue();
+                                Close();
+                                break;
+                            default:
+                                Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput);
+                                break;
                         }
                         if (Screen) 
                         { 
@@ -142,12 +143,6 @@ namespace menu
             Arrow = Instantiate(InstantiateArrow);
 
             IsOpened = true;
-        }
-
-        public void OepnSub(SubScreen subScreen)
-        {
-            // Set Current Context to SubScreen. Pass input if needed.
-
         }
 
         public void Close()

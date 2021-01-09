@@ -36,55 +36,72 @@ public class ItemsApp : AppData
     }
 
     public override void Draw() 
-    {       
-        // Handle Subscreen Logic in here. Always 0 will be details and character select. 1 might be use or go back like a list of buttons
-        Sub.GetComponentInChildren<TextMeshProUGUI>().text = Widgets[0].GetComponent<InvetoryWidget>().item.ItemDescription; // This assumes SubScreen 0 for now.
+    {
+        // Handle Subscreen Logic in here?
+        Sub.GetComponent<AppData>().Draw();
     }
 
     public override void Input(Inputs In)
     {
-        switch (In)
+
+        if (!Sub.GetComponent<AppData>())
         {
-            case Inputs.A:
-                if (!SelectedItem)
-                {
-                    SelectedItem = Widgets[WidgetIndex].GetComponent<InvetoryWidget>().item;
-                    // Open character selection screen.
-                    SubScreens[1].GetComponent<SelectionScreen>().Item = SelectedItem;
-                    Sub = Instantiate(SubScreens[1]);
+            switch (In)
+            {
+                case Inputs.A:
+                    if (!SelectedItem)
+                    {
+                        SelectedItem = Widgets[WidgetIndex].GetComponent<InvetoryWidget>().item;
+                        // Open character selection screen.
+                        SubScreens[1].GetComponent<SelectionScreen>().Item = SelectedItem;
+                        Sub = Instantiate(SubScreens[1]);
+                        Sub.GetComponent<AppData>().Init();
+                    }
+                    break;
 
-                }
-                break;
+                case Inputs.B:
+                    if (SelectedItem)
+                    {
+                        SelectedItem = null; // Item Select Buisness. Go back to your drinks
+                    }
+                    else
+                    {
+                        // Swap back to Pause screen.
+                        Menu = FindObjectOfType<MenuManager>();
+                        Menu.Open(0);
+                    }
+                    break;
 
-            case Inputs.B:
-                if (SelectedItem)
+                case Inputs.UP:
+                    WidgetIndex += 1; // Vertical list so +1 in list
+                    break;
+
+                case Inputs.DOWN:
+                    WidgetIndex -= 1; // Vertical list so - 1 in list
+                    break;
+
+                case Inputs.LEFT:
+                    // Other screen functionality like selecting Use vs something else button wise. Assuming I add that functionality
+                    break;
+
+                case Inputs.RIGHT:
+                    // Other screen functionality like selecting Use vs something else button wise. Assuming I add that functionality
+                    break;
+            }
+        }
+        else
+        { 
+            for (int i = 0; i < Sub.GetComponent<AppData>().PropertiesCount(); i++)
+            {
+                if (Sub.GetComponent<AppData>().GetProperties(i) != MenuProperties.INPUT)
                 {
-                    SelectedItem = null; // Item Select Buisness. Go back to your drinks
+                    return;
                 }
                 else
                 {
-                    // Swap back to Pause screen.
-                    Menu = FindObjectOfType<MenuManager>();
-                    Menu.Open(0);
+                    Sub.GetComponent<AppData>().Input(In); // Pass that shit through to SubScreeens My dude. This should be in the virtual function me thinks
                 }
-                break;
-
-            case Inputs.UP:
-                WidgetIndex += 1; // Vertical list so +1 in list
-                break;
-
-            case Inputs.DOWN:
-                WidgetIndex -= 1; // Vertical list so - 1 in list
-                break;
-
-            case Inputs.LEFT:
-                // Other screen functionality like selecting Use vs something else button wise. Assuming I add that functionality
-                break;
-
-            case Inputs.RIGHT:
-                // Other screen functionality like selecting Use vs something else button wise. Assuming I add that functionality
-                break;
+            }
         }
     }
-
 }
