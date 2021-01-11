@@ -21477,12 +21477,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &1090739864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090739862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2256ae8272972d44bbb4734306131699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Screen: {fileID: 1090739862}
+  CurrentScreen: {fileID: 0}
+  SubScreen: {fileID: 0}
 --- !u!224 &1152010005 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6733545879267404111, guid: ef89ad6aae1e023449398dac9324cd4f,
     type: 3}
   m_PrefabInstance: {fileID: 6733545880268123738}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1309956113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf9ffc3630df2f46abead43465683d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcID: 1
+  NpcName: Tosh Nagoshi
+  NpcEventPath: Assets/NPC/Events/Tosh Nagoshi.json
+  NpcSpeakerProfilePrefab: 
 --- !u!1 &1409645993
 GameObject:
   m_ObjectHideFlags: 0
@@ -21717,7 +21748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToInit: []
-  Initalizer: {fileID: 1624502968}
+  Initalizer: {fileID: 1309956113}
 --- !u!114 &1582546539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21766,22 +21797,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 526943068}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1624502968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bf9ffc3630df2f46abead43465683d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NpcID: 1
-  NpcName: Tosh Nagoshi
-  NpcEventPath: Assets/NPC/Events/Tosh Nagoshi.json
-  NpcSpeakerProfilePrefab: 
 --- !u!1 &1667704440
 GameObject:
   m_ObjectHideFlags: 0

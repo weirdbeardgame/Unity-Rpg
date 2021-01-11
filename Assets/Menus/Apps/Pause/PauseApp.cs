@@ -14,6 +14,8 @@ public class PauseApp : AppData
         Properties = new List<MenuProperties>();
         Properties.Add(MenuProperties.APP);
         Properties.Add(MenuProperties.INPUT);
+        Properties.Add(MenuProperties.GRID);
+
         ItemWidget.GetComponent<Widget>().Instantiate();
         AddWidget(ItemWidget.GetComponent<Widget>());
         WeaponWidget.GetComponent<Widget>().Instantiate();

@@ -50,6 +50,11 @@ namespace menu
             Subscribe();
         }
 
+        public GameObject GetScreen()
+        {
+            return Screen.GetScreen;
+        }
+
         public void Subscribe()
         {
             if (!IsSubscribed)
@@ -73,8 +78,10 @@ namespace menu
 
                 if (temp.CurrentInput == Inputs.START)
                 {
-                    CurrentInputs.Enqueue(temp);
+                    temp.CurrentInput = Inputs.NULL;
+                    Open(0);
                 }
+                return;
             }
 
             if (state.State == States.PAUSE)
@@ -83,7 +90,7 @@ namespace menu
             }
         }
  
-        void FixedUpdate()        
+        void FixedUpdate()
         {
             if (CurrentInputs.Count > 0)
             {
@@ -100,22 +107,10 @@ namespace menu
                             default:
                                 Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput);
                                 break;
-                        }
+                        } 
                         if (Screen) 
                         { 
                             Screen.Draw(); // Run all screen and subscreen logic 
-                        }
-                        break;
-
-                    case States.MAIN:
-                        if (CurrentInputs.Peek().CurrentInput == Inputs.START)
-                        {
-                            CurrentInputs.Dequeue();
-                            Open(0);
-                        }
-                        else
-                        {
-                            break;
                         }
                         break;
                 }
@@ -129,7 +124,6 @@ namespace menu
         public void Open(int index)
         {
             Debug.Log("OPEN");
-
 
             Destroy(Arrow);
             CurrentWidgets = null;

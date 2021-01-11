@@ -59,6 +59,10 @@ public class input : MonoBehaviour, IReceiver
             ToInput.CurrentInput = I;
             message.Enqueue(ToInput);
         }
+        else
+        {
+            return;
+        }
     }
 
     void SetAxis(float RecievedAxis)

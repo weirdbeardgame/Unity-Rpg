@@ -14,14 +14,17 @@ public class ItemsApp : AppData
     ItemData SelectedItem;
 
     public override void Init()
-    {
+    {   
+        Properties = new List<MenuProperties>();
+        Properties.Add(MenuProperties.APP);
+        Properties.Add(MenuProperties.INPUT);
+        Properties.Add(MenuProperties.LIST);
+
+
         AppID = 1;
         AppName = "Items";
         Inv = FindObjectOfType<Inventory>();
         Rect = GameObject.Find("Rectangle");
-        Properties = new List<MenuProperties>();
-        Properties.Add(MenuProperties.APP);
-        Properties.Add(MenuProperties.INPUT);
 
         for (int i = 0; i < Inv.ItemList.Count; i++)
         {
@@ -32,7 +35,8 @@ public class ItemsApp : AppData
 
         Sub = Instantiate(SubScreens[0]);
         Sub.transform.SetParent(Rect.transform);
-        Sub.transform.localPosition = new Vector3(0, 0, 0);
+        Sub.transform.localPosition = new Vector3(0, 0, 0);        
+        base.Init();
     }
 
     public override void Draw() 

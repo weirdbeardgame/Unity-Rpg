@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using menu;
-public class PScreen : ScriptableObject
-{
+public class PScreen : MonoBehaviour
+{  
     public GameObject Screen;
     Shader ScreenShader;
     public GameObject CurrentScreen;
@@ -21,9 +21,9 @@ public class PScreen : ScriptableObject
                 Destroy(CurrentScreen);
             }
             
-            Screen = GameObject.Find("Menu");
-            CurrentScreen = (GameObject)Instantiate(CScreen);
+            CurrentScreen = (GameObject)Instantiate(CScreen); // Instantiate app prefab
             CurrentScreen.GetComponent<AppData>().Init();
+            Screen = CurrentScreen; // Solidify as drawing surface.
             CurrentScreen.transform.SetParent(Screen.transform);
             CurrentScreen.transform.localPosition = new Vector2(0, 0);
         }

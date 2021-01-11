@@ -12,6 +12,8 @@ namespace menu
         public List<GameObject> SubScreens;
         public MenuManager Menu;
 
+        int X, Y;
+
         protected int WidgetIndex;
         protected List<MenuProperties> Properties;
 
@@ -27,26 +29,28 @@ namespace menu
 
         public virtual void Init()
         {
-            AppID = -1;
-            Widgets = null;
-            AppName = "Boo!";
+            foreach (var Prop in Properties)
+            {
+                switch (Prop)
+                {
+                    case MenuProperties.GRID:
+
+                        break;
+
+                    case MenuProperties.LIST:
+                        for (int i = 0; i < Widgets.Count; i++)
+                        {
+                            Widgets[i].gameObject.transform.SetParent(Menu.GetScreen().transform);
+                            Widgets[i].gameObject.transform.localPosition = new Vector2(Menu.GetScreen().transform.localPosition.x, Y);
+                            Y += 5;
+                        }
+                        break;
+                }
+            }
         }
 
         public virtual void Draw()
         {
-            // All Updates to screens and widgets happen in here.
-            foreach(var Prop in Properties)
-            {
-               switch (Prop)
-                {
-                    case MenuProperties.LIST:
-                        // Draw Verticle widgets
-                        break;
-                    case MenuProperties.GRID:
-                        // Draw grid of widgets
-                        break;
-                }
-            }
         }
 
         public virtual void Input(Inputs In)
