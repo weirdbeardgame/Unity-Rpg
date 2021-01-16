@@ -23,7 +23,6 @@ public class PScreen : MonoBehaviour
             
             CurrentScreen = (GameObject)Instantiate(CScreen); // Instantiate app prefab
             CurrentScreen.GetComponent<AppData>().Init();
-            Screen = CurrentScreen; // Solidify as drawing surface.
             CurrentScreen.transform.SetParent(Screen.transform);
             CurrentScreen.transform.localPosition = new Vector2(0, 0);
         }

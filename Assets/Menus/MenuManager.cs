@@ -44,7 +44,7 @@ namespace menu
         {               
             state = FindObjectOfType<StateMachine>();
             message = FindObjectOfType<Messaging>();
-            Screen = new PScreen();
+            Screen = FindObjectOfType<PScreen>();
             CurrentInputs = new Queue<InputData>();
 
             Subscribe();

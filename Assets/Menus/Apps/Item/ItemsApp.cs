@@ -47,7 +47,6 @@ public class ItemsApp : AppData
 
     public override void Input(Inputs In)
     {
-
         if (!Sub.GetComponent<AppData>())
         {
             switch (In)

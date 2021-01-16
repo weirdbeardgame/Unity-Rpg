@@ -29,24 +29,6 @@ namespace menu
 
         public virtual void Init()
         {
-            foreach (var Prop in Properties)
-            {
-                switch (Prop)
-                {
-                    case MenuProperties.GRID:
-
-                        break;
-
-                    case MenuProperties.LIST:
-                        for (int i = 0; i < Widgets.Count; i++)
-                        {
-                            Widgets[i].gameObject.transform.SetParent(Menu.GetScreen().transform);
-                            Widgets[i].gameObject.transform.localPosition = new Vector2(Menu.GetScreen().transform.localPosition.x, Y);
-                            Y += 5;
-                        }
-                        break;
-                }
-            }
         }
 
         public virtual void Draw()
@@ -60,10 +42,13 @@ namespace menu
 
         public void AddWidget(Widget widget)
         {
+            Menu = FindObjectOfType<MenuManager>();
+
             if (Widgets == null)
             {
                 Widgets = new List<Widget>();
             }
+            widget.transform.SetParent(Menu.GetScreen().transform);
 
             Widgets.Add(widget);
         }
