@@ -6,10 +6,12 @@ using UnityEngine.UI;
 using menu;
 public class PScreen : MonoBehaviour
 {  
+
     public GameObject Screen;
-    Shader ScreenShader;
-    public GameObject CurrentScreen;
     public GameObject SubScreen;
+    public GameObject PlayerObject;
+    public GameObject CurrentScreen;
+    Shader ScreenShader;
     bool isOpened;
 
     public void Open(GameObject CScreen) // Instantiates the GameObject Screen. This is meant only to display what needs to be drawn in the current design.
@@ -20,20 +22,18 @@ public class PScreen : MonoBehaviour
             {
                 Destroy(CurrentScreen);
             }
-            
-            CurrentScreen = (GameObject)Instantiate(CScreen); // Instantiate app prefab
+
+            Vector2 Pos = new Vector2(PlayerObject.transform.localPosition.x + 5, PlayerObject.transform.localPosition.y);
+            CurrentScreen = Instantiate(CScreen, Pos, Quaternion.identity, Screen.transform) as GameObject; // Instantiate app prefab
             CurrentScreen.GetComponent<AppData>().Init();
-            CurrentScreen.transform.SetParent(Screen.transform);
-            CurrentScreen.transform.localPosition = new Vector2(0, 0);
         }
-        //Screen.SetActive(true);
     }
 
     public GameObject GetScreen
     {     
         get
         {
-            return Screen;
+            return CurrentScreen;
         }
     }
 
@@ -69,6 +69,5 @@ public class PScreen : MonoBehaviour
         }
 
         Destroy(CurrentScreen);    
-        //Screen.SetActive(false);
     }
 }

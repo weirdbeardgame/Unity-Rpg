@@ -20,6 +20,7 @@ public class ItemsApp : AppData
         Properties.Add(MenuProperties.INPUT);
         Properties.Add(MenuProperties.LIST);
 
+        Menu = FindObjectOfType<MenuManager>();
 
         AppID = 1;
         AppName = "Items";
@@ -30,6 +31,7 @@ public class ItemsApp : AppData
         {
             ItemWidget = Instantiate(ItemWidget);
             ItemWidget.GetComponent<InvetoryWidget>().SetItem(Inv.ItemList[i]); // Instantiate as an Item.
+            ItemWidget.transform.SetParent(Menu.GetScreen().transform);
             Widgets.Add(ItemWidget.GetComponent<InvetoryWidget>());
         }
 
