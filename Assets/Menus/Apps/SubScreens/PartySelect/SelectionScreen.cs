@@ -8,6 +8,7 @@ public class SelectionScreen : AppData
     // Who we usin this shit on?
     Party SelectionParty;
     public GameObject CharacterSelect;
+    public GameObject ToParent;
     public ItemData Item;
 
     // Start is called before the first frame update
@@ -22,8 +23,10 @@ public class SelectionScreen : AppData
         foreach (Creature Member in SelectionParty.PartyMembers )
         {
             // Create Widget and fill with character data that's relevant. I need to know what Item or Weapon and the stats they're affecting
-            CharacterSelect = Instantiate(CharacterSelect) as GameObject;
+            CharacterSelect = Instantiate(CharacterSelect, ToParent.transform, false) as GameObject;
             CharacterSelect.GetComponent<SelectorWidget>().Init(Member, Item);
+            CharacterSelect.transform.SetParent(ToParent.transform);
+            CharacterSelect.transform.localPosition = ToParent.transform.localPosition;
             AddWidget(CharacterSelect.GetComponent<SelectorWidget>());
         }
     }

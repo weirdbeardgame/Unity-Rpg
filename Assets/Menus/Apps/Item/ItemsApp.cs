@@ -8,6 +8,7 @@ public class ItemsApp : AppData
 {
     Inventory Inv;
     public GameObject ItemWidget;
+    public GameObject ItemLayout;
     public GameObject Sub;
     GameObject Rect;
 
@@ -25,19 +26,18 @@ public class ItemsApp : AppData
         AppID = 1;
         AppName = "Items";
         Inv = FindObjectOfType<Inventory>();
-        Rect = GameObject.Find("Rectangle");
+        Rect = GameObject.Find("SubScreen");
 
         for (int i = 0; i < Inv.ItemList.Count; i++)
         {
-            ItemWidget = Instantiate(ItemWidget);
+            Instantiate(ItemWidget);
             ItemWidget.GetComponent<InvetoryWidget>().SetItem(Inv.ItemList[i]); // Instantiate as an Item.
-            ItemWidget.transform.SetParent(Menu.GetScreen().transform);
+            ItemWidget.transform.SetParent(ItemLayout.transform);
             Widgets.Add(ItemWidget.GetComponent<InvetoryWidget>());
         }
 
-        Sub = Instantiate(SubScreens[0]);
+        Sub = Instantiate(SubScreens[0], Rect.transform, false);
         Sub.transform.SetParent(Rect.transform);
-        Sub.transform.localPosition = new Vector3(0, 0, 0);        
         base.Init();
     }
 
@@ -57,9 +57,17 @@ public class ItemsApp : AppData
                     if (!SelectedItem)
                     {
                         SelectedItem = Widgets[WidgetIndex].GetComponent<InvetoryWidget>().item;
+                        
+                        if (Sub)
+                        {
+                            Destroy(Sub);
+                        }
+                        
                         // Open character selection screen.
                         SubScreens[1].GetComponent<SelectionScreen>().Item = SelectedItem;
-                        Sub = Instantiate(SubScreens[1]);
+                        Sub = Instantiate(SubScreens[1], Rect.transform, false);
+                        Sub.transform.localPosition = Rect.transform.localPosition;
+                        Sub.transform.SetParent(Rect.transform);
                         Sub.GetComponent<AppData>().Init();
                     }
                     break;

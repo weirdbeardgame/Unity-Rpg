@@ -15,16 +15,17 @@ public class PScreen : MonoBehaviour
     bool isOpened;
 
     public void Open(GameObject CScreen) // Instantiates the GameObject Screen. This is meant only to display what needs to be drawn in the current design.
-    {
+    {     
+        if (CurrentScreen)            
+        {
+            Close();
+        }
+
         if (CScreen)
         {
-            if (CurrentScreen)
-            {
-                Destroy(CurrentScreen);
-            }
-
             Vector2 Pos = new Vector2(PlayerObject.transform.localPosition.x + 5, PlayerObject.transform.localPosition.y);
             CurrentScreen = Instantiate(CScreen, Pos, Quaternion.identity, Screen.transform) as GameObject; // Instantiate app prefab
+            CurrentScreen.transform.SetParent(Screen.transform);
             CurrentScreen.GetComponent<AppData>().Init();
         }
     }
