@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +8,7 @@ public class PScreen : MonoBehaviour
 {  
 
     public GameObject Screen;
-    public GameObject SubScreen;
+    public List<GameObject> SubScreens;
     public GameObject PlayerObject;
     public GameObject CurrentScreen;
     Shader ScreenShader;
@@ -55,9 +55,9 @@ public class PScreen : MonoBehaviour
 
     void DrawSubScreen()
     {
-        if (SubScreen)
+        foreach(var SubScreen in SubScreens)
         {
-            // This needs to be aware of Other screen?
+           // This needs to be aware of Other screen?
             SubScreen.GetComponent<AppData>().Draw();
         }
     }

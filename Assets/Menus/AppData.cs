@@ -9,6 +9,7 @@ namespace menu
         protected int AppID;
         protected string AppName;
         public List<Widget> Widgets;
+        public List<Widget> SubWidgets;
         public List<GameObject> SubScreens;
         public MenuManager Menu;
 
@@ -40,17 +41,33 @@ namespace menu
             // Handling of Input per app happens here
         }
 
-        public void AddWidget(Widget widget)
+        public void AddWidget(Widget widget, int i = 0)
         {
             Menu = FindObjectOfType<MenuManager>();
 
-            if (Widgets == null)
+            foreach(var Prop in Properties)
             {
-                Widgets = new List<Widget>();
-            }
-            widget.transform.SetParent(Menu.GetScreen().transform);
+                switch (Prop)
+                {
+                    case MenuProperties.APP:
+                        if (Widgets == null)
+                        {
+                            Widgets = new List<Widget>();
+                        }
+                        widget.transform.SetParent(Menu.GetScreen().transform);
 
-            Widgets.Add(widget);
+                        Widgets.Add(widget);
+                        break;
+                    case MenuProperties.SUBAPP:
+                        if (SubWidgets == null)
+                        {
+                            SubWidgets = new List<Widget>();
+                        }
+                        widget.transform.SetParent(Menu.GetSubScreen(i).transform);
+                        SubWidgets.Add(widget);
+                        break;
+                }
+            }
         }
     }
 }

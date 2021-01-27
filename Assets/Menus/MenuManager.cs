@@ -16,6 +16,7 @@ namespace menu
         PScreen Screen;
         AppData CApp;
         List<Widget> CurrentWidgets;
+        List<Widget> SubWidgets;
         public List<GameObject> Apps; // List of Screens
 
         Queue<InputData> CurrentInputs;
@@ -53,6 +54,18 @@ namespace menu
         public GameObject GetScreen()
         {
             return Screen.GetScreen;
+        }
+
+        public GameObject GetSubScreen(int i)
+        {
+            if (Screen.SubScreens != null)
+            {
+                return Screen.SubScreens[i];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void Subscribe()
