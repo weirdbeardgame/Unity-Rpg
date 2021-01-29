@@ -63,6 +63,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public ItemData Remove(ItemData Item)
+    {
+        for (int i = 0; i < _ItemList.Count; i++)
+        {
+            if (_ItemList[i] == Item)
+            {
+                _ItemList.Remove(i);
+            }
+        }
+        return Item;
+    }
+
     public void Add(WeaponData I)
     {
 

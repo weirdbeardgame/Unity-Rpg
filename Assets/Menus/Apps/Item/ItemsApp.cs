@@ -56,7 +56,7 @@ public class ItemsApp : AppData
                 case Inputs.A:
                     if (!SelectedItem)
                     {
-                        SelectedItem = Widgets[WidgetIndex].GetComponent<InvetoryWidget>().item;
+                        SelectedItem = Inv.Remove(Widgets[WidgetIndex].GetComponent<InvetoryWidget>().item);
                         
                         if (Sub)
                         {
@@ -75,6 +75,7 @@ public class ItemsApp : AppData
                 case Inputs.B:
                     if (SelectedItem)
                     {
+                        Inv.Add(SelectedItem);
                         SelectedItem = null; // Item Select Buisness. Go back to your drinks
                     }
                     else

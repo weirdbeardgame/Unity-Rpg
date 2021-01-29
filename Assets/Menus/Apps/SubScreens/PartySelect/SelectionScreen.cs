@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using menu;
+using TMPro;
 public class SelectionScreen : AppData
 {
     // Who we usin this shit on?
@@ -28,6 +29,7 @@ public class SelectionScreen : AppData
             AddWidget(CharacterSelect.GetComponent<SelectorWidget>(), 0);
             CharacterSelect.transform.SetParent(ToParent.transform);
             CharacterSelect.transform.localPosition = ToParent.transform.localPosition;
+            CharacterSelect.GetComponentInChildren<TextMeshProUGUI>().text = Item.Effect.Effect.ToString() + ": " + Member.Stats.StatList[(int)Item.Effect.Effect].ToString();
         }
     }
 
@@ -62,7 +64,7 @@ public class SelectionScreen : AppData
     {
         foreach(var Widget in Widgets)
         {
-            Widget.Draw(); // This seems mildly inefficent
+            //Widget.Draw(); // This seems mildly inefficent
         }
     }
 }
