@@ -29,7 +29,7 @@ public class SelectionScreen : AppData
             AddWidget(CharacterSelect.GetComponent<SelectorWidget>(), 0);
             CharacterSelect.transform.SetParent(ToParent.transform);
             CharacterSelect.transform.localPosition = ToParent.transform.localPosition;
-            CharacterSelect.GetComponentInChildren<TextMeshProUGUI>().text = Item.Effect.Effect.ToString() + ": " + Member.Stats.StatList[(int)Item.Effect.Effect].ToString();
+            CharacterSelect.GetComponentInChildren<TextMeshProUGUI>().text = Member.Stats.StatList[(int)Item.Effect.Effect].ToString();
         }
     }
 
@@ -42,15 +42,17 @@ public class SelectionScreen : AppData
 
             case Inputs.DOWN:
                 // Assume Verticle list?
-                WidgetIndex += 1;
+                if (WidgetIndex < SubWidgets.Count)
+                    WidgetIndex += 1;
                 break;
 
             case Inputs.UP:
-                WidgetIndex -= 1;
+                if (WidgetIndex > 0)
+                    WidgetIndex -= 1;
                 break;
 
             case Inputs.A:
-                Widgets[WidgetIndex].Execute();
+                SubWidgets[WidgetIndex].Execute();
                 break;
 
             case Inputs.B:

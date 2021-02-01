@@ -40,26 +40,6 @@ public class PScreen : MonoBehaviour
 
     public void Draw()
     {
-
-    }
-
-    void DrawScreen()
-    {
-        // This is more like an update function? OR is this what spawns the screen from the get go.
-        // Should I use shaders on the screen to make it look more lcd like?
-        if (CurrentScreen)
-        {
-            CurrentScreen.GetComponent<AppData>().Draw();
-        }
-    }
-
-    void DrawSubScreen()
-    {
-        foreach(var SubScreen in SubScreens)
-        {
-           // This needs to be aware of Other screen?
-            SubScreen.GetComponent<AppData>().Draw();
-        }
     }
 
     public void Close()
