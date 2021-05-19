@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 namespace menu
 {
     // General Menu Properties, Type of screen. Needs input? Drawing modes
     public enum MenuProperties { INPUT, APP, SUBAPP, GRID, LIST};
 
-    public class MenuManager : MonoBehaviour, IReceiver // This is to handle functionality. To handle Inputs  
+    public class MenuManager : MonoBehaviour
     {
         Messaging message;
-
+        [SerializeField]
+        InputActionMap menuInput;
         PScreen Screen;
-        AppData CApp;
+        public AppData CApp;
         List<Widget> CurrentWidgets;
         List<Widget> SubWidgets;
+        Widget selectedWidget;
         public List<GameObject> Apps; // List of Screens
-
-        Queue<InputData> CurrentInputs;
-
         gameStateMessage StateMessage;
 
         // What Menu are we looking at
@@ -30,25 +30,20 @@ namespace menu
 
         // The sate of game (PAUSED)
         StateMachine state;
-
         private bool IsSubscribed;
         private bool IsOpened;
 
         // The Arrow itself
         public GameObject InstantiateArrow;
         GameObject Arrow;
-
         public int WidgetIndex;
 
         // Start is called before the first frame update
         void Start()
-        {               
+        {
             state = FindObjectOfType<StateMachine>();
             message = FindObjectOfType<Messaging>();
             Screen = FindObjectOfType<PScreen>();
-            CurrentInputs = new Queue<InputData>();
-
-            Subscribe();
         }
 
         public GameObject GetScreen()
@@ -68,75 +63,10 @@ namespace menu
             }
         }
 
-        public void Subscribe()
-        {
-            if (!IsSubscribed)
-            {
-                IsSubscribed = true;
-                message.Subscribe(MessageType.INPUT, this);
-            }
-        }
-
-        public void Unsubscribe()
-        {
-            IsSubscribed = false;
-            message.Unsubscribe(MessageType.INPUT, this);
-        }
-
-        public void Receive(object message)
-        {
-            if (state.State != States.PAUSE)
-            {
-                InputData temp = (InputData)message;
-
-                if (temp.CurrentInput == Inputs.START)
-                {
-                    temp.CurrentInput = Inputs.NULL;
-                    Open(0);
-                }
-                return;
-            }
-
-            if (state.State == States.PAUSE)
-            {
-                CurrentInputs.Enqueue((InputData)message);
-            }
-        }
- 
-        void FixedUpdate()
-        {
-            if (CurrentInputs.Count > 0)
-            {
-                switch (state.State)
-                {
-                    case States.PAUSE:
-
-                        switch (CurrentInputs.Peek().CurrentInput)
-                        {
-                            case Inputs.START:
-                                CurrentInputs.Dequeue();
-                                Close();
-                                break;
-                            default:
-                                Screen.CurrentScreen.GetComponent<AppData>().Input(CurrentInputs.Dequeue().CurrentInput);
-                                break;
-                        } 
-                        if (Screen) 
-                        { 
-                            Screen.Draw(); // Run all screen and subscreen logic 
-                        }
-                        break;
-                }
-            }
-            else
-            {
-                return;
-            }
-        }
-
         public void Open(int index)
         {
             Debug.Log("OPEN");
+            menuInput.Enable();
 
             Destroy(Arrow);
             CurrentWidgets = null;
@@ -150,6 +80,33 @@ namespace menu
             Arrow = Instantiate(InstantiateArrow);
 
             IsOpened = true;
+        }
+
+        public void Accept()
+        {
+            if (selectedWidget)
+            {
+                selectedWidget.Execute();
+            }
+        }
+
+        public void Move(Vector2 pos)
+        {
+            Debug.Log("POS: " + pos);
+            Arrow.transform.Translate(pos);
+            // Grab each widget's position and go from there.
+            for (int i = 0; i < CurrentWidgets.Count; i++)
+            {
+                if (pos == (Vector2)CurrentWidgets[i].transform.position )
+                {
+                    selectedWidget = CurrentWidgets[i];
+                    Debug.Log("Widget: " + CurrentWidgets[i].name);
+                }
+                if (pos != (Vector2)CurrentWidgets[i].transform.position)
+                {
+                    // Get em back on track
+                }
+            }
         }
 
         public void Close()

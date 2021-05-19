@@ -74,9 +74,9 @@ public class NPC : MonoBehaviour
     {
         ApplyNPC();
 
-        if (Input.GetButtonDown("Submit") && Collided )
-        {
-            pollEvents();
-        }
+        //if (Input.GetButtonDown("Submit") && Collided )
+        //{
+            //pollEvents();
+        //}
     }
 }

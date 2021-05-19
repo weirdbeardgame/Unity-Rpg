@@ -233,7 +233,7 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Talking)
+        /*if (Talking)
         {
             if (Input.GetButtonDown("Submit"))
             {
@@ -258,7 +258,7 @@ public class DialogueManager : MonoBehaviour
                     NextNode(ScratchPad.Tree);
                 }
             }
-        }
+        }*/
 
     }
 }

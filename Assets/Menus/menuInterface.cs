@@ -5,16 +5,12 @@ using UnityEngine;
 
 namespace menu
 {
-
     enum menuUse { OPEN, USE };
     enum menuType { MAIN, SUB };
-
     public interface IMenu
     {
         void Open();
-
         void SetShader(Material m);
         Material GetShader();
-
     }
 }

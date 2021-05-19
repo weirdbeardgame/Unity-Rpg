@@ -5,11 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using menu;
 public class PScreen : MonoBehaviour
-{  
-
-    public GameObject Screen;
+{
+    [SerializeField]
+    GameObject Screen;
     public List<GameObject> SubScreens;
-    public GameObject PlayerObject;
+    [SerializeField]
+    GameObject PlayerObject;
+    [SerializeField]
     public GameObject CurrentScreen;
     Shader ScreenShader;
     bool isOpened;
@@ -36,10 +38,6 @@ public class PScreen : MonoBehaviour
         {
             return CurrentScreen;
         }
-    }
-
-    public void Draw()
-    {
     }
 
     public void Close()

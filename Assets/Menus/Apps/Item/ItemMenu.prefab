@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 7371240436059490680}
   - component: {fileID: 5234512711798143835}
   - component: {fileID: 6987547519803218897}
+  - component: {fileID: 3134257650711717895}
   m_Layer: 5
   m_Name: ItemMenu
   m_TagString: Untagged
@@ -118,6 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Widgets: []
+  SubWidgets: []
   SubScreens:
   - {fileID: 6128469407929044774, guid: 46ab2a0292d869a4e9beb15a43cdb9d2, type: 3}
   - {fileID: 6128469407929044774, guid: f5b129401a5ab7543a1d147e791fd30a, type: 3}
@@ -138,6 +140,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &3134257650711717895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6733545879267404110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bd5247b6ea5a0aea87e8d37bdc48974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controls: 1
 --- !u!1001 &1920743641246049292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -400,6 +415,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3351090869663207117, guid: d659815ff5ae831488740b3e7acccda5,
         type: 3}
+      propertyPath: m_textAlignment
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351090869663207117, guid: d659815ff5ae831488740b3e7acccda5,
+        type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -412,6 +432,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351090869663207117, guid: d659815ff5ae831488740b3e7acccda5,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351090869663207117, guid: d659815ff5ae831488740b3e7acccda5,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 3351090869663207117, guid: d659815ff5ae831488740b3e7acccda5,
         type: 3}

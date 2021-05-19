@@ -43,7 +43,7 @@ public class AddItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsTrigger && Input.GetButtonDown("Submit") && !ItemGiven)
+        if (IsTrigger && !ItemGiven)
         {
             GiveItem();
         }

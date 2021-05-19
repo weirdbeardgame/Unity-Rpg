@@ -48,11 +48,6 @@ public class InButton : MonoBehaviour
     void Update()
     {
 
-        if (Collided && Input.GetButtonDown("Submit"))
-        {
-            Press();
-        }
-
 
     }
 }

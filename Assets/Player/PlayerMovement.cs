@@ -1,158 +1,89 @@
 ﻿
-using System.Collections;
-using System.Collections.Generic;
+using menu;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Tilemaps;
+using UnityEngine.InputSystem;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-using menu;
-
-
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour, IReceiver
+public class PlayerMovement : MonoBehaviour
 {
     public Animator animate;
     public Rigidbody2D body;
     public bool canMove = true;
-
-    Messaging messenger;
-
-    Queue<InputData> inbox;
-
     float horizontal;
     float vertical;
 
-    Vector2 position;
+    Vector2 movement;
 
     StateMachine state;
 
-    //Pause pause;
-
     Animator animator;
+
+    MenuManager menu;
 
     string mapLoad = null;
     int index = 0;
     int X = 0;
     int Y = 0;
     int i = 0;
-
     public float playerSpeed = 4f;
 
-    Vector2 v2;
-
-    Tilemap tilemap;
-
     input recievedInput;
-
-    public void Receive(object message)
-    {
-        inbox.Enqueue((InputData)message);
-    }
-
-    public void Subscribe()
-    {
-        messenger.Subscribe(MessageType.INPUT, this);
-    }
-
-    public void Unsubscribe()
-    {
-        messenger.Unsubscribe(MessageType.INPUT, this);
-    }
 
     void Start()
     {
         state = FindObjectOfType<StateMachine>();
-        tilemap = FindObjectOfType<Tilemap>();
-        //pause = FindObjectOfType<Pause>();
-
-        messenger = FindObjectOfType<Messaging>();
-
-
+        menu = FindObjectOfType<MenuManager>();
+        body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
-        inbox = new Queue<InputData>();
-
         DontDestroyOnLoad(this);
     }
 
     void Update()
     {
-        if (state.State == States.MAIN)
+        switch(state.State)
         {
+            case States.MAIN:
             canMove = true;
-        }
-
-        if (state.State == States.BATTLE)
-        {
+            break;
+            default:
             canMove = false;
-        }
-
-        if (state.State == States.CUTSCENE)
-        {
-            canMove = false;
-        }
-        else if (state.State == States.PAUSE)
-        {
-            canMove = false;
+            break;
         }
     }
 
-    void FixedUpdate()
+    public void OnMove(InputAction.CallbackContext input)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        if (canMove)
+        if (input.action.triggered && canMove)
         {
-            v2 = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            GetComponent<Rigidbody2D>().velocity = v2 * playerSpeed;
+            movement = new Vector2(input.ReadValue<Vector2>().x, input.ReadValue<Vector2>().y);
+            body.velocity = (movement * playerSpeed);
+            animate.SetFloat("Horizontal", movement.x);
+            animate.SetFloat("Vertical", movement.y);
+            animate.SetFloat("Speed", movement.sqrMagnitude);
+        }
+        else
+        {
+            body.velocity = Vector2.zero;
+        }
+    }
+
+        public void OnAccept(InputAction.CallbackContext input)
+        {
+            // Check if near NPC. Go from there to execute their held event.
         }
 
-        else if (!canMove)
+    public void OnOpenMenu(InputAction.CallbackContext input)
+    {
+        if (input.action.triggered)
         {
-            v2 = new Vector2(0, 0);
-            GetComponent<Rigidbody2D>().velocity = v2 * 0.0f;
+            Debug.Log("PRESSED MENU");
+            // Open Menu
+            //PlayerInput
+            menu.Open(0);
         }
-
-
-        /*if (canMove)
-        {
-
-            if (inbox.Count > 0)
-            {
-                switch (inbox.Dequeue())
-                {
-                    case inputs.UP:
-                        v2 = new Vector2(0, 1);
-                        GetComponent<Rigidbody2D>().velocity = v2 * playerSpeed;
-                        break;
-
-                    case inputs.DOWN:
-                        v2 = new Vector2(0, -1);
-                        GetComponent<Rigidbody2D>().velocity = v2 * playerSpeed;
-                        break;
-
-                    case inputs.LEFT:
-                        v2 = new Vector2(-1, 0);
-                        GetComponent<Rigidbody2D>().velocity = v2 * playerSpeed;
-                        break;
-
-                    case inputs.RIGHT:
-                        v2 = new Vector2(1, 0);
-                        GetComponent<Rigidbody2D>().velocity = v2 * playerSpeed;
-                        break;
-                }
-            }
-
-            else
-            {
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            }
-
-        }*/
-
-
-        animate.SetFloat("Horizontal", v2.x);
-        animate.SetFloat("Vertical", v2.y);
-        animate.SetFloat("Speed", v2.sqrMagnitude);
     }
 }

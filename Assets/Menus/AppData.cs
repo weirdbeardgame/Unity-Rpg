@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace menu
 {
+    public enum MenuDisplay {GRID, LIST};
+
     public class AppData : MonoBehaviour
     {
         protected int AppID;
@@ -12,7 +15,7 @@ namespace menu
         public List<Widget> SubWidgets;
         public List<GameObject> SubScreens;
         public MenuManager Menu;
-
+        public MenuDisplay display;
         int X, Y;
 
         protected int WidgetIndex;

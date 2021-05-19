@@ -38,12 +38,6 @@ public class Lever : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Collided && Input.GetButtonDown("Submit"))
-        {
-            Flip();
-        }
-
-
+        
     }
 }

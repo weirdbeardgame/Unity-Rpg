@@ -46,9 +46,6 @@ public class weaponGiver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsTrigger && !ItemGiven && Input.GetButtonDown("Submit"))
-        {
-            GiveWeapon();
-        }
+
     }
 }

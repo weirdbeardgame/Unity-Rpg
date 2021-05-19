@@ -141,47 +141,6 @@ public class commandMenus : MonoBehaviour, IReceiver
         InputData.Enqueue((Inputs)message);
     }
 
-    IEnumerator DetectInput()
-    {
-        while (InputData.Count == 0)
-        {
-            yield return null;
-        }
-
-
-        if (InputData.Count > 0)
-        {
-            Inputs CurrentInput = InputData.Dequeue();
-
-
-            switch (CurrentInput)
-            {
-                case Inputs.UP:
-                    DecreaseIndex();
-                    Debug.Log("UP");
-                    Debug.Log("Current Index: " + WidgetIndex);
-                    CurrentInput = Inputs.NULL;
-                    break;
-
-                case Inputs.DOWN:
-                    IncreaseIndex();
-                    Debug.Log("Current Index: " + WidgetIndex);
-                    CurrentInput = Inputs.NULL;
-                    break;
-
-                case Inputs.A:
-                    Debug.Log("A press");
-                    //Widgets[WidgetIndex].GetComponent<Widget>().Execute();
-                    CurrentInput = Inputs.NULL;
-                    InputData.Clear();
-                    Targeting = true;
-                    break;
-            }
-        }
-        yield return WidgetIndex;
-    }
-
-
     public void AddWidget(GameObject w)
     {
         int Y = 0;
@@ -363,10 +322,7 @@ public class commandMenus : MonoBehaviour, IReceiver
 
             if (!Targeting)
             {
-                if (InputData.Count > 0)
-                {
-                    StartCoroutine(DetectInput());
-                }
+               
             }
 
             else if (Targeting)

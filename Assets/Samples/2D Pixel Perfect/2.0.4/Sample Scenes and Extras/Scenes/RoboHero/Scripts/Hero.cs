@@ -54,22 +54,6 @@ public class Hero : MonoBehaviour
 
         dashCooldown = Mathf.MoveTowards(dashCooldown, 0f, Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump")) {
-            if(dashCooldown <= 0f && tryMove.magnitude > 0) {
-
-                var hit = Physics2D.Raycast(transform.position + Vector3.up * .5f, tryMove.normalized, 3.5f, 1 << LayerMask.NameToLayer("Wall"));
-
-                float distance = 3f;
-                if(hit.collider != null) {
-                    distance = hit.distance - .5f;
-                }
-
-                transform.position = rb.position + Vector2.ClampMagnitude(tryMove, 1f) * distance;
-
-                if (audioSource != null) audioSource.Play();
-            }
-        }
-
         animator.SetBool("dash_ready", dashCooldown <= 0f);
 
 	}
