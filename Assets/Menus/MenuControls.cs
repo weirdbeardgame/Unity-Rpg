@@ -25,13 +25,13 @@ public class MenuControls : MonoBehaviour
             {
                 case MenuDisplay.GRID:
                     // Read x an y for true grid movement counting diagonals. We need to check which Widget we're looking at from there though this could easily just be the 2d array or list being moved in
-                    Vector2 posGrid = input.ReadValue<Vector2>();
+                    Vector2Int posGrid = input.ReadValue<Vector2Int>();
                     manager.Move(posGrid);
                     break;
                 case MenuDisplay.LIST:
                     // Vertical list lol
-                    float posList = input.ReadValue<Vector2>().y;
-                    manager.Move(new Vector2(0, posList));
+                    int posList = input.ReadValue<Vector2Int>().y;
+                    manager.Move(new Vector2Int(0, posList));
                     break;
             }
         }

@@ -17,6 +17,7 @@ namespace menu
         public AppData cApp;
         // Widgets
         List<Widget> listWidgets;
+        Vector2Int origPos, tarPos;
         Widget[,] gridWidgets;
         Widget selectedWidget;
         int widgetIndex = 0;
@@ -72,6 +73,7 @@ namespace menu
             screen.Open(apps[index]);
             cApp = apps[index].GetComponent<AppData>();
             state.State = States.PAUSE;
+            arrow = Instantiate(instantiateArrow);
 
             switch (cApp.GetComponent<AppData>().display)
             {
@@ -94,9 +96,6 @@ namespace menu
                 }
             break;
             }
-
-            arrow = Instantiate(instantiateArrow);
-
             isOpened = true;
         }
 
@@ -108,7 +107,7 @@ namespace menu
             }
         }
 
-        public void Move(Vector2 pos)
+        public void Move(Vector2Int pos)
         {
             switch (cApp.GetComponent<AppData>().display)
             {
@@ -123,7 +122,27 @@ namespace menu
                 break;
 
                 case MenuDisplay.GRID:
-
+                int movementX = 0;
+                int movementY = 0;
+                // Adjust position in grid and check for widget
+                if (pos.x > 0 || pos.x < 0)
+                {
+                    movementX = (int)Mathf.Sign(pos.x);
+                }
+                if (pos.y > 0 || pos.y < 0)
+                {
+                    movementY = (int)Mathf.Sign(pos.y);
+                }
+                for (int x = 0; x < gridWidgets.GetLength(0); x += movementX)
+                {
+                    for (int y = 0; y < gridWidgets.GetLength(1); y += movementY)
+                    {
+                        if (gridWidgets[x, y])
+                        {
+                            selectedWidget = gridWidgets[x, y];
+                        }
+                    }
+                }
                 break;
             }
         }
