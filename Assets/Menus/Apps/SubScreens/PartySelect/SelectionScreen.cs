@@ -15,9 +15,9 @@ public class SelectionScreen : AppData
     // Start is called before the first frame update
     public override void Init()
     {
-        Properties = new List<MenuProperties>();
-        Properties.Add(MenuProperties.SUBAPP);
-        Properties.Add(MenuProperties.INPUT);
+        properties = new List<MenuProperties>();
+        properties.Add(MenuProperties.SUBAPP);
+        properties.Add(MenuProperties.INPUT);
 
         SelectionParty = FindObjectOfType<Party>();
 
@@ -42,17 +42,17 @@ public class SelectionScreen : AppData
 
             case Inputs.DOWN:
                 // Assume Verticle list?
-                if (WidgetIndex < SubWidgets.Count)
-                    WidgetIndex += 1;
+                if (widgetIndex < widgets.Count)
+                    widgetIndex += 1;
                 break;
 
             case Inputs.UP:
-                if (WidgetIndex > 0)
-                    WidgetIndex -= 1;
+                if (widgetIndex > 0)
+                    widgetIndex -= 1;
                 break;
 
             case Inputs.A:
-                SubWidgets[WidgetIndex].Execute();
+                widgets[widgetIndex].Execute();
                 break;
 
             case Inputs.B:
@@ -64,7 +64,7 @@ public class SelectionScreen : AppData
     // Update is called once per frame
     void Update()
     {
-        foreach(var Widget in Widgets)
+        foreach(var Widget in widgets)
         {
             //Widget.Draw(); // This seems mildly inefficent
         }

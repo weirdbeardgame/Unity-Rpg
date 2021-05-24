@@ -12,9 +12,12 @@ public class PlayerMovement : MonoBehaviour
 {
     public Animator animate;
     public Rigidbody2D body;
+
+    [Header("Player stats")]
     public bool canMove = true;
-    float horizontal;
-    float vertical;
+    public float playerSpeed = 4f;
+
+    PlayerInput playerInput;
 
     Vector2 movement;
 
@@ -24,12 +27,13 @@ public class PlayerMovement : MonoBehaviour
 
     MenuManager menu;
 
+    [Header("Map Info: ")]
     string mapLoad = null;
     int index = 0;
     int X = 0;
     int Y = 0;
     int i = 0;
-    public float playerSpeed = 4f;
+
 
     input recievedInput;
 
@@ -39,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         menu = FindObjectOfType<MenuManager>();
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerInput = GetComponent<PlayerInput>();
         DontDestroyOnLoad(this);
     }
 
@@ -71,18 +76,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-        public void OnAccept(InputAction.CallbackContext input)
-        {
-            // Check if near NPC. Go from there to execute their held event.
-        }
+    public void OnAccept(InputAction.CallbackContext input)
+    {
+        // Check if near NPC. Go from there to execute their held event.
+    }
 
     public void OnOpenMenu(InputAction.CallbackContext input)
     {
         if (input.action.triggered)
         {
+            animate.SetFloat("Horizontal", movement.x);
+            animate.SetBool("Pause", true);
+            //playerInput.actions.FindActionMap("Default").Disable();
+            playerInput.actions.FindActionMap("Menu").Enable();
             Debug.Log("PRESSED MENU");
             // Open Menu
-            //PlayerInput
             menu.Open(0);
         }
     }

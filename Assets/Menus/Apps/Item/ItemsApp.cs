@@ -16,15 +16,14 @@ public class ItemsApp : AppData
 
     public override void Init()
     {   
-        Properties = new List<MenuProperties>();
-        Properties.Add(MenuProperties.APP);
-        Properties.Add(MenuProperties.INPUT);
-        Properties.Add(MenuProperties.LIST);
+        properties = new List<MenuProperties>();
+        properties.Add(MenuProperties.APP);
+        properties.Add(MenuProperties.INPUT);
 
-        Menu = FindObjectOfType<MenuManager>();
+        menu = FindObjectOfType<MenuManager>();
 
-        AppID = 1;
-        AppName = "Items";
+        appID = 1;
+        appName = "Items";
         Inv = FindObjectOfType<Inventory>();
         Rect = GameObject.Find("SubScreen");
 
@@ -33,10 +32,10 @@ public class ItemsApp : AppData
             Instantiate(ItemWidget);
             ItemWidget.GetComponent<InvetoryWidget>().SetItem(Inv.ItemList[i]); // Instantiate as an Item.
             ItemWidget.transform.SetParent(ItemLayout.transform);
-            Widgets.Add(ItemWidget.GetComponent<InvetoryWidget>());
+            widgets.Add(ItemWidget.GetComponent<InvetoryWidget>());
         }
 
-        Sub = Instantiate(SubScreens[0], Rect.transform, false);
+        Sub = Instantiate(subScreens[0], Rect.transform, false);
         Sub.transform.SetParent(Rect.transform);
         base.Init();
     }
@@ -56,7 +55,7 @@ public class ItemsApp : AppData
                 case Inputs.A:
                     if (!SelectedItem)
                     {
-                        SelectedItem = Inv.Remove(Widgets[WidgetIndex].GetComponent<InvetoryWidget>().item);
+                        SelectedItem = Inv.Remove(widgets[widgetIndex].GetComponent<InvetoryWidget>().item);
                         
                         if (Sub)
                         {
@@ -64,8 +63,8 @@ public class ItemsApp : AppData
                         }
                         
                         // Open character selection screen.
-                        SubScreens[1].GetComponent<SelectionScreen>().Item = SelectedItem;
-                        Sub = Instantiate(SubScreens[1], Rect.transform, false);
+                        subScreens[1].GetComponent<SelectionScreen>().Item = SelectedItem;
+                        Sub = Instantiate(subScreens[1], Rect.transform, false);
                         Sub.transform.localPosition = Rect.transform.localPosition;
                         Sub.transform.SetParent(Rect.transform);
                         Sub.GetComponent<AppData>().Init();
@@ -81,17 +80,17 @@ public class ItemsApp : AppData
                     else
                     {
                         // Swap back to Pause screen.
-                        Menu = FindObjectOfType<MenuManager>();
-                        Menu.Open(0);
+                        menu = FindObjectOfType<MenuManager>();
+                        menu.Open(0);
                     }
                     break;
 
                 case Inputs.UP:
-                    WidgetIndex += 1; // Vertical list so +1 in list
+                    widgetIndex += 1; // Vertical list so +1 in list
                     break;
 
                 case Inputs.DOWN:
-                    WidgetIndex -= 1; // Vertical list so - 1 in list
+                    widgetIndex -= 1; // Vertical list so - 1 in list
                     break;
 
                 case Inputs.LEFT:

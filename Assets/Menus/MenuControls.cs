@@ -8,6 +8,7 @@ public class MenuControls : MonoBehaviour
 {
     StateMachine state;
     MenuManager manager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class MenuControls : MonoBehaviour
         if (state.State == States.PAUSE)
         {
             // Grid or list movement
-            switch(manager.CApp.display)
+            switch(manager.cApp.display)
             {
                 case MenuDisplay.GRID:
                     // Read x an y for true grid movement counting diagonals. We need to check which Widget we're looking at from there though this could easily just be the 2d array or list being moved in

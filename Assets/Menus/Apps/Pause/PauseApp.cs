@@ -9,12 +9,11 @@ public class PauseApp : AppData
 
     public override void Init()
     {
-        AppID = 0;
-        AppName = "Pause";
-        Properties = new List<MenuProperties>();
-        Properties.Add(MenuProperties.APP);
-        Properties.Add(MenuProperties.INPUT);
-        Properties.Add(MenuProperties.GRID);
+        appID = 0;
+        appName = "Pause";
+        properties = new List<MenuProperties>();
+        properties.Add(MenuProperties.APP);
+        properties.Add(MenuProperties.INPUT);
 
         ItemWidget.GetComponent<Widget>().Instantiate();
         AddWidget(ItemWidget.GetComponent<Widget>());
@@ -27,7 +26,7 @@ public class PauseApp : AppData
         switch(In)
         {
             case Inputs.A:
-                Widgets[WidgetIndex].Execute();
+            //if (position == gridWidgets[x , y])
                 break;
 
             case Inputs.B:
@@ -36,34 +35,18 @@ public class PauseApp : AppData
 
             case Inputs.UP:
                 // Grid Plus 3
-                if (WidgetIndex < Widgets.Count)
-                {
-                    WidgetIndex += 3;
-                }
                 break;
 
             case Inputs.DOWN:
                 // Grid Minus 3
-                if (WidgetIndex >= Widgets.Count)
-                {
-                    WidgetIndex -= 3;
-                }
                 break;
 
             case Inputs.LEFT:
                 // Grid Minus 1
-                if (WidgetIndex >= Widgets.Count)
-                {
-                    WidgetIndex -= 1;
-                }
                 break;
 
             case Inputs.RIGHT:
                 // Grid Plus 1
-                if (WidgetIndex < Widgets.Count)
-                {
-                    WidgetIndex += 1;
-                }
                 break;
         }
     }

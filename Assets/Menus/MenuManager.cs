@@ -8,54 +8,54 @@ using UnityEngine.InputSystem;
 namespace menu
 {
     // General Menu Properties, Type of screen. Needs input? Drawing modes
-    public enum MenuProperties { INPUT, APP, SUBAPP, GRID, LIST};
+    public enum MenuProperties { INPUT, APP, SUBAPP};
 
     public class MenuManager : MonoBehaviour
     {
         Messaging message;
-        [SerializeField]
-        InputActionMap menuInput;
-        PScreen Screen;
-        public AppData CApp;
-        List<Widget> CurrentWidgets;
-        List<Widget> SubWidgets;
+        PScreen screen;
+        public AppData cApp;
+        // Widgets
+        List<Widget> listWidgets;
+        Widget[,] gridWidgets;
         Widget selectedWidget;
-        public List<GameObject> Apps; // List of Screens
-        gameStateMessage StateMessage;
+        int widgetIndex = 0;
+
+        public List<GameObject> apps; // List of Screens
+        gameStateMessage stateMessage;
 
         // What Menu are we looking at
-        int _MenuContext = 0;
-
-        PlayerCamera Pcam;
+        int menuContext = 0;
+        PlayerCamera pCam;
 
         // The sate of game (PAUSED)
         StateMachine state;
-        private bool IsSubscribed;
-        private bool IsOpened;
+        private bool isSubscribed;
+        private bool isOpened;
 
         // The Arrow itself
-        public GameObject InstantiateArrow;
-        GameObject Arrow;
-        public int WidgetIndex;
+        public GameObject instantiateArrow;
+        GameObject arrow;
+        Vector2 position;
 
         // Start is called before the first frame update
         void Start()
         {
             state = FindObjectOfType<StateMachine>();
             message = FindObjectOfType<Messaging>();
-            Screen = FindObjectOfType<PScreen>();
+            screen = FindObjectOfType<PScreen>();
         }
 
         public GameObject GetScreen()
         {
-            return Screen.GetScreen;
+            return screen.GetScreen;
         }
 
         public GameObject GetSubScreen(int i)
         {
-            if (Screen.SubScreens != null)
+            if (screen.SubScreens != null)
             {
-                return Screen.SubScreens[i];
+                return screen.SubScreens[i];
             }
             else
             {
@@ -66,20 +66,38 @@ namespace menu
         public void Open(int index)
         {
             Debug.Log("OPEN");
-            menuInput.Enable();
-
-            Destroy(Arrow);
-            CurrentWidgets = null;
-            CurrentWidgets = new List<Widget>();
-
-            Screen.Open(Apps[index]);
-            CApp = Apps[index].GetComponent<AppData>();
+            RectTransform transform = null;
+            Destroy(arrow);
+            Debug.Log("Apps: " + apps[index].GetComponent<AppData>().name);
+            screen.Open(apps[index]);
+            cApp = apps[index].GetComponent<AppData>();
             state.State = States.PAUSE;
 
-            CurrentWidgets = Screen.CurrentScreen.GetComponent<AppData>().Widgets;
-            Arrow = Instantiate(InstantiateArrow);
+            switch (cApp.GetComponent<AppData>().display)
+            {
+            case MenuDisplay.LIST:
+                listWidgets = new List<Widget>();
+                listWidgets = cApp.widgets;
 
-            IsOpened = true;
+                if (listWidgets.Count > 0)
+                {
+                    selectedWidget = listWidgets[0];
+                }
+            break;
+            case MenuDisplay.GRID:
+                transform = (RectTransform)screen.CurrentScreen.transform;
+                gridWidgets = new Widget[(int)transform.rect.width, (int)transform.rect.height];
+                gridWidgets = cApp.gridWidgets;
+                if (gridWidgets != null)
+                {
+                    selectedWidget = gridWidgets[(int)position.x, (int)position.y];
+                }
+            break;
+            }
+
+            arrow = Instantiate(instantiateArrow);
+
+            isOpened = true;
         }
 
         public void Accept()
@@ -92,28 +110,30 @@ namespace menu
 
         public void Move(Vector2 pos)
         {
-            Debug.Log("POS: " + pos);
-            Arrow.transform.Translate(pos);
-            // Grab each widget's position and go from there.
-            for (int i = 0; i < CurrentWidgets.Count; i++)
+            switch (cApp.GetComponent<AppData>().display)
             {
-                if (pos == (Vector2)CurrentWidgets[i].transform.position )
-                {
-                    selectedWidget = CurrentWidgets[i];
-                    Debug.Log("Widget: " + CurrentWidgets[i].name);
-                }
-                if (pos != (Vector2)CurrentWidgets[i].transform.position)
-                {
-                    // Get em back on track
-                }
+                case MenuDisplay.LIST:
+                    Debug.Log("POS: " + position);
+                    arrow.transform.Translate(position);
+                    widgetIndex += (int)Mathf.Sign(position.y);
+                    // Grab each widget's position and go from there.
+                    selectedWidget = listWidgets[widgetIndex];
+                    Debug.Log("Widget Name: " + selectedWidget.GetComponent<Widget>().name);
+
+                break;
+
+                case MenuDisplay.GRID:
+
+                break;
             }
         }
 
         public void Close()
         {
-            Screen.Close();
+            Destroy(arrow);
+            screen.Close();
             state.State = States.MAIN;
-            IsOpened = false;
+            isOpened = false;
         }
     }
 }

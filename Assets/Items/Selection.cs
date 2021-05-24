@@ -57,7 +57,7 @@ namespace menu
 
         void apply()
         {
-            Use(Manager.WidgetIndex);
+            //Use(Manager.WidgetIndex);
         }
 
         public void Use(int i)

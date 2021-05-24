@@ -9,26 +9,26 @@ namespace menu
 
     public class AppData : MonoBehaviour
     {
-        protected int AppID;
-        protected string AppName;
-        public List<Widget> Widgets;
-        public List<Widget> SubWidgets;
-        public List<GameObject> SubScreens;
-        public MenuManager Menu;
+        protected int appID;
+        protected string appName;
+        PScreen screen;
+        public List<Widget> widgets;
+        public Widget[,] gridWidgets;
+        public List<GameObject> subScreens;
+        public MenuManager menu;
         public MenuDisplay display;
-        int X, Y;
-
-        protected int WidgetIndex;
-        protected List<MenuProperties> Properties;
+        protected int x, y;
+        protected int widgetIndex;
+        protected List<MenuProperties> properties;
 
         public MenuProperties GetProperties(int i)
         {
-            return Properties[i];
+            return properties[i];
         }
 
         public int PropertiesCount()
         {
-            return Properties.Count;
+            return properties.Count;
         }
 
         public virtual void Init()
@@ -46,28 +46,31 @@ namespace menu
 
         public void AddWidget(Widget widget, int i = 0)
         {
-            Menu = FindObjectOfType<MenuManager>();
+            menu = FindObjectOfType<MenuManager>();
+            screen = FindObjectOfType<PScreen>();
 
-            foreach(var Prop in Properties)
+            foreach(var Prop in properties)
             {
                 switch (Prop)
                 {
                     case MenuProperties.APP:
-                        if (Widgets == null)
+                    switch (display)
+                    { 
+                        case MenuDisplay.LIST:
+                        if (widgets == null)
                         {
-                            Widgets = new List<Widget>();
+                            widgets = new List<Widget>();
                         }
-                        widget.transform.SetParent(Menu.GetScreen().transform);
+                        widget.transform.SetParent(menu.GetScreen().transform);
 
-                        Widgets.Add(widget);
+                        widgets.Add(widget);
                         break;
-                    case MenuProperties.SUBAPP:
-                        if (SubWidgets == null)
-                        {
-                            SubWidgets = new List<Widget>();
-                        }
-                        widget.transform.SetParent(Menu.GetSubScreen(i).transform);
-                        SubWidgets.Add(widget);
+                        case MenuDisplay.GRID:
+                        RectTransform transform = (RectTransform)screen.CurrentScreen.transform;
+                        gridWidgets = new Widget[(int)transform.rect.width, (int)transform.rect.height];
+                        gridWidgets[(int)widget.transform.position.x , (int)widget.transform.position.y] = widget;
+                        break;
+                    }
                         break;
                 }
             }
