@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace menu
 {
-    public enum MenuDisplay {GRID, LIST};
+    public enum MenuDisplay { GRID, LIST };
 
     public class AppData : MonoBehaviour
     {
         protected int appID;
         protected string appName;
         PScreen screen;
-        public List<Widget> widgets;
-        public Widget[,] gridWidgets;
+        public static List<Widget> widgets;
+        public static Widget[,] gridWidgets;
         public List<GameObject> subScreens;
         public MenuManager menu;
         public MenuDisplay display;
@@ -24,6 +24,22 @@ namespace menu
         public MenuProperties GetProperties(int i)
         {
             return properties[i];
+        }
+
+        public List<Widget> GetList
+        {
+            get
+            {
+                return widgets;
+            }
+        }
+
+        public Widget[,] GetGrid
+        {
+            get
+            {
+                return gridWidgets;
+            } 
         }
 
         public int PropertiesCount()
@@ -49,28 +65,31 @@ namespace menu
             menu = FindObjectOfType<MenuManager>();
             screen = FindObjectOfType<PScreen>();
 
-            foreach(var Prop in properties)
+            foreach (var Prop in properties)
             {
                 switch (Prop)
                 {
                     case MenuProperties.APP:
-                    switch (display)
-                    { 
-                        case MenuDisplay.LIST:
-                        if (widgets == null)
+                        switch (display)
                         {
-                            widgets = new List<Widget>();
-                        }
-                        widget.transform.SetParent(menu.GetScreen().transform);
+                            case MenuDisplay.LIST:
+                                if (widgets == null)
+                                {
+                                    widgets = new List<Widget>();
+                                }
+                                widget.transform.SetParent(menu.GetScreen().transform);
 
-                        widgets.Add(widget);
-                        break;
-                        case MenuDisplay.GRID:
-                        RectTransform transform = (RectTransform)screen.CurrentScreen.transform;
-                        gridWidgets = new Widget[(int)transform.rect.width, (int)transform.rect.height];
-                        gridWidgets[(int)widget.transform.position.x , (int)widget.transform.position.y] = widget;
-                        break;
-                    }
+                                widgets.Add(widget);
+                                break;
+                            case MenuDisplay.GRID:
+                                RectTransform transform = (RectTransform)screen.CurrentScreen.transform;
+                                if (gridWidgets == null)
+                                {
+                                    gridWidgets = new Widget[(int)transform.rect.width, (int)transform.rect.height];
+                                }
+                                gridWidgets[(int)widget.transform.position.x, (int)widget.transform.position.y] = widget;
+                                break;
+                        }
                         break;
                 }
             }

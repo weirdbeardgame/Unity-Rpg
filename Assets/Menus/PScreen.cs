@@ -16,7 +16,7 @@ public class PScreen : MonoBehaviour
     Shader ScreenShader;
     bool isOpened;
 
-    public void Open(GameObject CScreen) // Instantiates the GameObject Screen. This is meant only to display what needs to be drawn in the current design.
+    public AppData Open(GameObject CScreen) // Instantiates the GameObject Screen. This is meant only to display what needs to be drawn in the current design.
     {     
         if (CurrentScreen)            
         {
@@ -30,6 +30,7 @@ public class PScreen : MonoBehaviour
             CurrentScreen.transform.SetParent(Screen.transform);
             CurrentScreen.GetComponent<AppData>().Init();
         }
+        return CScreen.GetComponent<AppData>();
     }
 
     public GameObject GetScreen

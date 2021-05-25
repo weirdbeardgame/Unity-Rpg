@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 namespace menu
 {
     // General Menu Properties, Type of screen. Needs input? Drawing modes
-    public enum MenuProperties { INPUT, APP, SUBAPP};
+    public enum MenuProperties { INPUT, APP, SUBAPP };
 
     public class MenuManager : MonoBehaviour
     {
@@ -70,31 +70,29 @@ namespace menu
             RectTransform transform = null;
             Destroy(arrow);
             Debug.Log("Apps: " + apps[index].GetComponent<AppData>().name);
-            screen.Open(apps[index]);
-            cApp = apps[index].GetComponent<AppData>();
+            cApp = screen.Open(apps[index]);
             state.State = States.PAUSE;
             arrow = Instantiate(instantiateArrow);
 
             switch (cApp.GetComponent<AppData>().display)
             {
-            case MenuDisplay.LIST:
-                listWidgets = new List<Widget>();
-                listWidgets = cApp.widgets;
+                case MenuDisplay.LIST:
+                    listWidgets = cApp.GetList;
 
-                if (listWidgets.Count > 0)
-                {
-                    selectedWidget = listWidgets[0];
-                }
-            break;
-            case MenuDisplay.GRID:
-                transform = (RectTransform)screen.CurrentScreen.transform;
-                gridWidgets = new Widget[(int)transform.rect.width, (int)transform.rect.height];
-                gridWidgets = cApp.gridWidgets;
-                if (gridWidgets != null)
-                {
-                    selectedWidget = gridWidgets[(int)position.x, (int)position.y];
-                }
-            break;
+                    if (listWidgets.Count > 0)
+                    {
+                        selectedWidget = listWidgets[0];
+                    }
+                    break;
+                case MenuDisplay.GRID:
+                    transform = (RectTransform)screen.CurrentScreen.transform;
+                    gridWidgets = new Widget[(int)transform.rect.width, (int)transform.rect.height];
+                    gridWidgets = cApp.GetGrid;
+                    if (gridWidgets != null)
+                    {
+                        selectedWidget = gridWidgets[(int)position.x, (int)position.y]; // Position [0,0] I need to do an inital search along X to find first element
+                    }
+                    break;
             }
             isOpened = true;
         }
@@ -105,6 +103,29 @@ namespace menu
             {
                 selectedWidget.Execute();
             }
+        }
+
+        Widget FindNext(Vector2Int dir)
+        {
+            Widget toFind = null;
+            switch (cApp.display)
+            {
+                case MenuDisplay.GRID:
+                    for (int x = 0; x < screen.CurrentScreen.GetComponent<RectTransform>().rect.width; x += dir.x)
+                    {
+                        for (int y = 0; y < screen.CurrentScreen.GetComponent<RectTransform>().rect.height; y += dir.y)
+                        {
+                            // Do a search in here through current grid
+                        }
+                    }
+                    break;
+                case MenuDisplay.LIST:
+                    // return next index in here
+                    widgetIndex += dir.y;
+                    toFind = listWidgets[widgetIndex];
+                    break;
+            }
+            return toFind;
         }
 
         public void Move(Vector2Int pos)
@@ -119,31 +140,31 @@ namespace menu
                     selectedWidget = listWidgets[widgetIndex];
                     Debug.Log("Widget Name: " + selectedWidget.GetComponent<Widget>().name);
 
-                break;
+                    break;
 
                 case MenuDisplay.GRID:
-                int movementX = 0;
-                int movementY = 0;
-                // Adjust position in grid and check for widget
-                if (pos.x > 0 || pos.x < 0)
-                {
-                    movementX = (int)Mathf.Sign(pos.x);
-                }
-                if (pos.y > 0 || pos.y < 0)
-                {
-                    movementY = (int)Mathf.Sign(pos.y);
-                }
-                for (int x = 0; x < gridWidgets.GetLength(0); x += movementX)
-                {
-                    for (int y = 0; y < gridWidgets.GetLength(1); y += movementY)
+                    int movementX = 0;
+                    int movementY = 0;
+                    // Adjust position in grid and check for widget
+                    if (pos.x > 0 || pos.x < 0)
                     {
-                        if (gridWidgets[x, y])
+                        movementX = (int)Mathf.Sign(pos.x);
+                    }
+                    if (pos.y > 0 || pos.y < 0)
+                    {
+                        movementY = (int)Mathf.Sign(pos.y);
+                    }
+                    for (int x = 0; x < gridWidgets.GetLength(0); x += movementX)
+                    {
+                        for (int y = 0; y < gridWidgets.GetLength(1); y += movementY)
                         {
-                            selectedWidget = gridWidgets[x, y];
+                            if (gridWidgets[x, y])
+                            {
+                                selectedWidget = gridWidgets[x, y];
+                            }
                         }
                     }
-                }
-                break;
+                    break;
             }
         }
 
