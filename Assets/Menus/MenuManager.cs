@@ -22,6 +22,8 @@ namespace menu
         Widget selectedWidget;
         int widgetIndex = 0;
 
+        int x = 0, y = 0;
+
         public List<GameObject> apps; // List of Screens
         gameStateMessage stateMessage;
 
@@ -128,7 +130,7 @@ namespace menu
             return toFind;
         }
 
-        public void Move(Vector2Int pos)
+        public void Move(Vector2 pos)
         {
             switch (cApp.GetComponent<AppData>().display)
             {
@@ -139,30 +141,32 @@ namespace menu
                     // Grab each widget's position and go from there.
                     selectedWidget = listWidgets[widgetIndex];
                     Debug.Log("Widget Name: " + selectedWidget.GetComponent<Widget>().name);
-
                     break;
 
                 case MenuDisplay.GRID:
                     int movementX = 0;
                     int movementY = 0;
                     // Adjust position in grid and check for widget
-                    if (pos.x > 0 || pos.x < 0)
+                    if (pos.x != 0)
                     {
-                        movementX = (int)Mathf.Sign(pos.x);
+                        movementX = (int)Mathf.Sign(pos.x) * 5;
                     }
-                    if (pos.y > 0 || pos.y < 0)
+                    if (pos.y != 0)
                     {
-                        movementY = (int)Mathf.Sign(pos.y);
+                        movementY = (int)Mathf.Sign(pos.y) * 5;
                     }
-                    for (int x = 0; x < gridWidgets.GetLength(0); x += movementX)
+
+                    x += movementX;
+                    y += movementY;
+
+                    Debug.Log("X: " + x);
+                    Debug.Log("Y: " + y);
+
+                    if (gridWidgets[x, y])
                     {
-                        for (int y = 0; y < gridWidgets.GetLength(1); y += movementY)
-                        {
-                            if (gridWidgets[x, y])
-                            {
-                                selectedWidget = gridWidgets[x, y];
-                            }
-                        }
+                        selectedWidget = gridWidgets[x, y];
+                        Debug.Log("Widget: " + selectedWidget.name);
+                        return;
                     }
                     break;
             }

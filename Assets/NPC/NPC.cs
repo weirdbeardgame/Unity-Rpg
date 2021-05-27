@@ -26,28 +26,7 @@ public class NPC : MonoBehaviour
         NpcData.Construct(SpeakerProfile);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Collided = true;
-        }
-
-        else
-        {
-            Collided = false;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Collided = false;
-        }
-    }
-
-    void pollEvents()
+    public void pollEvents()
     {
         Debug.Log("Current FLAG : " + states.CurrrentFlag.Flag);
         Debug.Log("Current FLAG ID : " + states.CurrrentFlag.ID);

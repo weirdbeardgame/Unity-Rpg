@@ -5,7 +5,7 @@ using menu;
 public class PauseApp : AppData
 {
     public GameObject ItemWidget;
-    public GameObject WeaponWidget;
+    public GameObject WeaponMenuWidget;
 
     public override void Init()
     {
@@ -15,10 +15,11 @@ public class PauseApp : AppData
         properties.Add(MenuProperties.APP);
         properties.Add(MenuProperties.INPUT);
 
+        WeaponMenuWidget.GetComponent<Widget>().Instantiate();
+        AddWidget(WeaponMenuWidget.GetComponent<Widget>());
         ItemWidget.GetComponent<Widget>().Instantiate();
         AddWidget(ItemWidget.GetComponent<Widget>());
-        WeaponWidget.GetComponent<Widget>().Instantiate();
-        AddWidget(WeaponWidget.GetComponent<Widget>());
+
     }
 
     public override void Input(Inputs In)

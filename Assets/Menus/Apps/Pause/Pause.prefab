@@ -63,10 +63,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d1fd1cd86bacb40b8c45b361643a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Widgets: []
-  SubWidgets: []
-  SubScreens: []
-  Menu: {fileID: 0}
+  subScreens: []
+  menu: {fileID: 0}
+  display: 0
   ItemWidget: {fileID: 2883792609522416945}
   WeaponWidget: {fileID: 6037095906878483235}
 --- !u!114 &7488996080638030782
@@ -462,13 +461,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4974490018115594614, guid: 1d98a21daf0ab944c8d1af64cebc2420,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.4826884
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974490018115594614, guid: 1d98a21daf0ab944c8d1af64cebc2420,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4.2755895
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974490018115594614, guid: 1d98a21daf0ab944c8d1af64cebc2420,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4.2755895
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974490018115594614, guid: 1d98a21daf0ab944c8d1af64cebc2420,
+        type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000034332
+      value: -0.00020666006
       objectReference: {fileID: 0}
     - target: {fileID: 4974490018115594614, guid: 1d98a21daf0ab944c8d1af64cebc2420,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -72.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5240949204718242310, guid: 1d98a21daf0ab944c8d1af64cebc2420,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10.557131
+      objectReference: {fileID: 0}
+    - target: {fileID: 5240949204718242310, guid: 1d98a21daf0ab944c8d1af64cebc2420,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 8.803111
+      objectReference: {fileID: 0}
+    - target: {fileID: 5240949204718242310, guid: 1d98a21daf0ab944c8d1af64cebc2420,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 47.19894
       objectReference: {fileID: 0}
     - target: {fileID: 5240949204718242310, guid: 1d98a21daf0ab944c8d1af64cebc2420,
         type: 3}

@@ -2,39 +2,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using menu;
 
-namespace menu
+public class WeaponApp : AppData
 {
-    public class WeaponApp : AppData
-    {
-        Party players;
-        PScreen Manager;
-        Inventory inventory;
-        GameObject Slot;
+    Inventory Inv;
+    public GameObject WeaponWidget;
+    public GameObject Sub;
+    GameObject Rect;
 
-        Material shader;
+    ItemData SelectedItem;
 
-        Weapon Weapon;
-        WeaponWidgetData WeaponWidget;
+    public override void Init()
+    {   
+        properties = new List<MenuProperties>();
+        properties.Add(MenuProperties.APP);
+        properties.Add(MenuProperties.INPUT);
 
-        int PlayerIndex;
-        int WeaponIndex;
+        menu = FindObjectOfType<MenuManager>();
 
-        // Start is called before the first frame update
-        void Start()
+        appID = 1;
+        appName = "Items";
+        Inv = FindObjectOfType<Inventory>();
+        Rect = GameObject.Find("SubScreen");
+
+        for (int i = 0; i < Inv.ItemList.Count; i++)
         {
-            Manager = FindObjectOfType<PScreen>();
-            inventory = FindObjectOfType<Inventory>();
-            players = FindObjectOfType<Party>(); // For the player select screen.
-            Weapon = FindObjectOfType<Weapon>();
+            Instantiate(WeaponWidget);
+            //WeaponWidget.GetComponent<WeaponWidget>().ini // Instantiate as an Item.
+            //WeaponWidget.transform.SetParent(ItemLayout.transform);
+            //widgets.Add(ItemWidget.GetComponent<InvetoryWidget>());
         }
 
-        public override void Init()
-        {
-            for (int i = 0; i < inventory.Equipables.Count; i++)
-            {
-                WeaponWidget = new WeaponWidgetData(inventory.getEquipables(i));
-            }
-        }
+        Sub = Instantiate(subScreens[0], Rect.transform, false);
+        Sub.transform.SetParent(Rect.transform);
+        base.Init();
     }
 }

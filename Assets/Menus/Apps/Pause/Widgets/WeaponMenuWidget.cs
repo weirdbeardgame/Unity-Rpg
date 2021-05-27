@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using menu;
 
-public class WeaponWidget : Widget
+public class WeaponMenuWidget : Widget
 {
     int MenuID = 2;
     MenuManager Manager;

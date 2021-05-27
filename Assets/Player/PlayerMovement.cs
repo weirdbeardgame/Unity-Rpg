@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    GameObject currentlySelected;
     public Animator animate;
     public Rigidbody2D body;
 
@@ -60,6 +61,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision)
+        {
+            currentlySelected = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        currentlySelected = null;
+    }
+
     public void OnMove(InputAction.CallbackContext input)
     {
         if (input.action.triggered && canMove)
@@ -78,7 +92,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnAccept(InputAction.CallbackContext input)
     {
-        // Check if near NPC. Go from there to execute their held event.
+        if (currentlySelected)
+        {
+            // Check if near NPC. Go from there to execute their held event.
+            if (currentlySelected.tag == "NPC")
+            {
+                currentlySelected.GetComponent<NPC>().pollEvents();
+            }
+        }
     }
 
     public void OnOpenMenu(InputAction.CallbackContext input)

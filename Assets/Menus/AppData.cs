@@ -64,7 +64,9 @@ namespace menu
         {
             menu = FindObjectOfType<MenuManager>();
             screen = FindObjectOfType<PScreen>();
+            RectTransform transform = (RectTransform)screen.CurrentScreen.transform;
 
+            int row = (int)transform.rect.width, col = (int)transform.rect.height;
             foreach (var Prop in properties)
             {
                 switch (Prop)
@@ -82,12 +84,20 @@ namespace menu
                                 widgets.Add(widget);
                                 break;
                             case MenuDisplay.GRID:
-                                RectTransform transform = (RectTransform)screen.CurrentScreen.transform;
                                 if (gridWidgets == null)
                                 {
-                                    gridWidgets = new Widget[(int)transform.rect.width, (int)transform.rect.height];
+                                    gridWidgets = new Widget[row , col];
                                 }
-                                gridWidgets[(int)widget.transform.position.x, (int)widget.transform.position.y] = widget;
+                                if (x < row && y < col)
+                                {
+                                    gridWidgets[x, y] = widget;
+                                    x += 5;
+                                    if ((x % 3) == 0)
+                                    {
+                                        y += 5;
+                                        x = 0;
+                                    }
+                                }
                                 break;
                         }
                         break;
