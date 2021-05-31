@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &3615496286976262141
+--- !u!114 &3808905360814686151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8757369609340306597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7542620d7eae754182e3f964f18291b, type: 3}
+  m_Script: {fileID: 11500000, guid: 64636027da21ab34b91476db5463ea1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonText: 
   Icon: {fileID: 0}
   Text: {fileID: 0}
+  MenuID: 0
 --- !u!1001 &83091894234993699
 PrefabInstance:
   m_ObjectHideFlags: 0

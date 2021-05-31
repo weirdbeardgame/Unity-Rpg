@@ -16,7 +16,7 @@ public class QuestManager : MonoBehaviour, IReceiver
     QuestData QuestD;
     Messaging Messenger;
 
-    questBook Book;
+    QuestBook Book;
 
     string FilePath = "Assets/Quests/Quest.json";
     string Data;
@@ -46,7 +46,7 @@ public class QuestManager : MonoBehaviour, IReceiver
     void Initialize()
     {
         Messenger = FindObjectOfType<Messaging>();
-        Book = FindObjectOfType<questBook>();
+        Book = FindObjectOfType<QuestBook>();
         inbox = new Queue<object>();
         if (File.Exists(FilePath))
         {

@@ -33,34 +33,6 @@ public class SelectionScreen : AppData
         }
     }
 
-    public override void Input(Inputs In)
-    {
-        base.Input(In); // Use to Capture from Current Menu. This is just a screen that can be opened.
-        
-        switch(In)     
-        {
-
-            case Inputs.DOWN:
-                // Assume Verticle list?
-                if (widgetIndex < widgets.Count)
-                    widgetIndex += 1;
-                break;
-
-            case Inputs.UP:
-                if (widgetIndex > 0)
-                    widgetIndex -= 1;
-                break;
-
-            case Inputs.A:
-                widgets[widgetIndex].Execute();
-                break;
-
-            case Inputs.B:
-                //Close();
-                break;
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {

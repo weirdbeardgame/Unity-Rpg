@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/***************************************************************
+* All Screens must be a scale of 1, 1, 1 and a size of
+* Width: 176 Height: 258
+***************************************************************/
 namespace menu
 {
     public enum MenuDisplay { GRID, LIST };
@@ -12,6 +15,7 @@ namespace menu
         protected int appID;
         protected string appName;
         PScreen screen;
+        public List<Widget> widgetsToAdd;
         public static List<Widget> widgets;
         public static Widget[,] gridWidgets;
         public List<GameObject> subScreens;
@@ -49,15 +53,6 @@ namespace menu
 
         public virtual void Init()
         {
-        }
-
-        public virtual void Draw()
-        {
-        }
-
-        public virtual void Input(Inputs In)
-        {
-            // Handling of Input per app happens here
         }
 
         public void AddWidget(Widget widget, int i = 0)

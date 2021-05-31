@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 namespace menu
 {
     // General Menu Properties, Type of screen. Needs input? Drawing modes
-    public enum MenuProperties { INPUT, APP, SUBAPP };
+    public enum MenuProperties { INPUT, APP, SUBAPP, HORIZONTAL, VERTICAL };
 
     public class MenuManager : MonoBehaviour
     {
@@ -92,7 +92,7 @@ namespace menu
                     gridWidgets = cApp.GetGrid;
                     if (gridWidgets != null)
                     {
-                        selectedWidget = gridWidgets[(int)position.x, (int)position.y]; // Position [0,0] I need to do an inital search along X to find first element
+                        selectedWidget = gridWidgets[(int)position.x, (int)position.y];
                     }
                     break;
             }

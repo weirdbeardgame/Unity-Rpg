@@ -53,7 +53,7 @@ public class DialogueManager : MonoBehaviour
     private StateMachine _Machine;
 
     QuestManager Quests;
-    questBook Book;
+    QuestBook Book;
 
     NPCManager manager;
 
@@ -66,7 +66,7 @@ public class DialogueManager : MonoBehaviour
         DialougeData = new List<BinarySearchTree<DialogueMessage>>();
         _Machine = FindObjectOfType<StateMachine>();
         Quests = FindObjectOfType<QuestManager>();
-        Book = FindObjectOfType<questBook>();
+        Book = FindObjectOfType<QuestBook>();
         manager = FindObjectOfType<NPCManager>();
 
         if (File.Exists(FilePath))

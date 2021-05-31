@@ -18,7 +18,7 @@ public class NPCEventData : ScriptableObject
     public ItemData Item;
     public Inventory Inv;
 
-    questBook QuestBook;
+    QuestBook QuestBook;
     StateMachine CurrentState; 
     InventoryMessage message;
     gameStateMessage state;
@@ -54,7 +54,7 @@ public class NPCEventData : ScriptableObject
                 
             // Give that bitch a Quest no matter what!
             case NPCEventType.ADDQUEST:                
-                QuestBook = FindObjectOfType<questBook>();
+                QuestBook = FindObjectOfType<QuestBook>();
                 CurrentState = FindObjectOfType<StateMachine>();
                 
                 QuestBook.Give(Quests);
