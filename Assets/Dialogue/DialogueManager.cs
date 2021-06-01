@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using Newtonsoft.Json.Linq;
-using questing;
+using System.Collections;
+using Newtonsoft.Json;
+using UnityEngine.UI;
+using UnityEngine;
 using System.IO;
+using questing;
 using TMPro;
 
 
@@ -24,7 +25,6 @@ public class DialogueManager : MonoBehaviour
     string CurrentLine;
 
     int Index;
-
     int NpcId;
     int QuestDialogue; // For Quest events IE. Tutorials
 
@@ -39,7 +39,6 @@ public class DialogueManager : MonoBehaviour
 
     GameObject SpeakerProfile;
     GameObject Speaker;
-
 
     public Canvas canvas;
     List<BinarySearchTree<DialogueMessage>> DialougeData;
@@ -184,7 +183,6 @@ public class DialogueManager : MonoBehaviour
         GameObject Canvas = GameObject.Find("Dialogue");
 
         SpeakerProfile = GameObject.Find("Speaker");
-        
         Speaker = Instantiate(manager.ConstructedNPC[N.Data.SpeakerID.NpcID].CurrentSpeaker);
         Speaker.transform.SetParent(Canvas.transform);
         Speaker.transform.localPosition = SpeakerProfile.transform.localPosition;
@@ -199,20 +197,20 @@ public class DialogueManager : MonoBehaviour
         Name.text = null;
         canvas.enabled = false;
         Talking = false;
+        PlayerInput input = FindObjectOfType<PlayerInput>();
         Destroy(Speaker);
         StateMessage.construct(States.MAIN, _Machine.CurrrentFlag);
         Messenger = FindObjectOfType<Messaging>();
         Messenger.Enqueue(StateMessage);
+        //input.actions.FindActionMap("Talk").Disable();
+        input.actions.FindActionMap("Default").Enable();
     }
 
     public void OpenDialogueBox(int Location)
     {
         Index = Location;
-
         ScratchPad = new BinarySearchTree<DialogueMessage>();
-
         ScratchPad.Tree = DialougeData[Index].Tree;
-
         rendering.enabled = true;
         canvas.enabled = true;
         Name.enabled = true;
@@ -220,45 +218,40 @@ public class DialogueManager : MonoBehaviour
         NextNode(ScratchPad.Tree);
     }
     public void OpenDialogueBox(BinarySearchTree<DialogueMessage> Tree)
-    {         
-        rendering.enabled = true;            
-        canvas.enabled = true;        
-        Name.enabled = true;                    
+    {
+        rendering.enabled = true;
+        canvas.enabled = true;
+        Name.enabled = true;
         Talking = true;
-        ScratchPad = Tree;     
+        ScratchPad = Tree;
         NextNode(ScratchPad.Tree);
         return;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnSubmit(InputAction.CallbackContext input)
     {
-        /*if (Talking)
+        if (input.action.triggered)
         {
-            if (Input.GetButtonDown("Submit"))
+            CurrentLine = null;
+            rendering.text = null;
+
+            if (ScratchPad.Tree.Right == null)
             {
-                CurrentLine = null;
-                rendering.text = null;
-
-                if (ScratchPad.Tree.Right == null)
-                {
-                    Close();
-                }
-
-                ScratchPad.Tree = ScratchPad.Tree.Right;
-
-                //Debug.Log("Incolent fool. Submit!");
-
-                if (ScratchPad.Tree == null)
-                {
-                    Close();
-                }
-                else
-                {
-                    NextNode(ScratchPad.Tree);
-                }
+                Close();
             }
-        }*/
 
+            ScratchPad.Tree = ScratchPad.Tree.Right;
+            //Debug.Log("Incolent fool. Submit!");
+
+            if (ScratchPad.Tree == null)
+            {
+                Close();
+            }
+            else
+            {
+                NextNode(ScratchPad.Tree);
+            }
+        }
     }
 }
+

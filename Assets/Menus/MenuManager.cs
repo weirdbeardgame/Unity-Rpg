@@ -113,13 +113,6 @@ namespace menu
             switch (cApp.display)
             {
                 case MenuDisplay.GRID:
-                    for (int x = 0; x < screen.CurrentScreen.GetComponent<RectTransform>().rect.width; x += dir.x)
-                    {
-                        for (int y = 0; y < screen.CurrentScreen.GetComponent<RectTransform>().rect.height; y += dir.y)
-                        {
-                            // Do a search in here through current grid
-                        }
-                    }
                     break;
                 case MenuDisplay.LIST:
                     // return next index in here

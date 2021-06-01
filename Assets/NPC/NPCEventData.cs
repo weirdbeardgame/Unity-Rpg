@@ -1,5 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using System.Collections;
 using UnityEngine;
 using UnityEditor;
 using questing;
@@ -24,6 +25,7 @@ public class NPCEventData : ScriptableObject
     gameStateMessage state;
     DialogueManager Dialogue;
     Messaging Messenger;
+    PlayerInput playerInput;
 
     public List<BinarySearchTree<DialogueMessage>> binarySearchTrees;
     
@@ -41,10 +43,12 @@ public class NPCEventData : ScriptableObject
             case NPCEventType.DIALOUGE:
                 Dialogue = FindObjectOfType<DialogueManager>();
                 CurrentState = FindObjectOfType<StateMachine>();
+                playerInput = FindObjectOfType<PlayerInput>();
                 Dialogue.OpenDialogueBox(binarySearchTrees[0]);
                 state = new gameStateMessage();
                 state.construct(CurrentState.State, FlagToSet);
                 Messenger = FindObjectOfType<Messaging>();
+                playerInput.actions.FindActionMap("Talk").Enable();
                 Messenger.Enqueue(state);
                 break;
 

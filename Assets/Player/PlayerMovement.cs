@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision)
         {
+            Debug.Log("COLLIDED!");
             currentlySelected = collision.gameObject;
         }
     }
@@ -94,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (currentlySelected)
         {
+            Debug.Log("NPC FOUND");
             // Check if near NPC. Go from there to execute their held event.
             if (currentlySelected.tag == "NPC")
             {
