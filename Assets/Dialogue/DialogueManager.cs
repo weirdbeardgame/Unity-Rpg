@@ -36,24 +36,17 @@ public class DialogueManager : MonoBehaviour
 
     public TextMeshProUGUI rendering;
     public TextMeshProUGUI Name;
-
     GameObject SpeakerProfile;
     GameObject Speaker;
-
     public Canvas canvas;
     List<BinarySearchTree<DialogueMessage>> DialougeData;
     BinarySearchTree<DialogueMessage> ScratchPad;
     BinarySearchTree<DialogueMessage> DialogueTree;
-
     List<List<DialogueMessage>> Temp;
-
     QuestFlag _QuestFlag;
-
     private StateMachine _Machine;
-
     QuestManager Quests;
     QuestBook Book;
-
     NPCManager manager;
 
     // Start is called before the first frame update
@@ -166,7 +159,6 @@ public class DialogueManager : MonoBehaviour
                 case NodeType.EVENT:
                     //Play animation, Control basic events like Give Item etc.
                     break;
-
             }
         }
     }
@@ -202,8 +194,6 @@ public class DialogueManager : MonoBehaviour
         StateMessage.construct(States.MAIN, _Machine.CurrrentFlag);
         Messenger = FindObjectOfType<Messaging>();
         Messenger.Enqueue(StateMessage);
-        //input.actions.FindActionMap("Talk").Disable();
-        input.actions.FindActionMap("Default").Enable();
     }
 
     public void OpenDialogueBox(int Location)
@@ -228,30 +218,37 @@ public class DialogueManager : MonoBehaviour
         return;
     }
 
-    public void OnSubmit(InputAction.CallbackContext input)
+    public void OnSubmit()
     {
-        if (input.action.triggered)
+        CurrentLine = null;
+        rendering.text = null;
+
+        if (ScratchPad.Tree.Right == null)
         {
-            CurrentLine = null;
-            rendering.text = null;
+            Close();
+        }
 
-            if (ScratchPad.Tree.Right == null)
-            {
-                Close();
-            }
+        ScratchPad.Tree = ScratchPad.Tree.Right;
+        //Debug.Log("Incolent fool. Submit!");
 
-            ScratchPad.Tree = ScratchPad.Tree.Right;
-            //Debug.Log("Incolent fool. Submit!");
+        if (ScratchPad.Tree == null)
+        {
+            Close();
+        }
 
-            if (ScratchPad.Tree == null)
-            {
-                Close();
-            }
-            else
-            {
-                NextNode(ScratchPad.Tree);
-            }
+        else
+        {
+            NextNode(ScratchPad.Tree);
         }
     }
+
+    private void Update() {
+        if (Input.GetButtonDown("Submit"))
+        {
+            OnSubmit();
+        }
+    }
+
+
 }
 

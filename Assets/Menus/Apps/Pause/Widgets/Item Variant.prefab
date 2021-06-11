@@ -15,6 +15,7 @@ MonoBehaviour:
   ButtonText: 
   Icon: {fileID: 0}
   Text: {fileID: 0}
+  MenuID: 2
 --- !u!114 &1229923741680514319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   ButtonText: 
   Icon: {fileID: 0}
   Text: {fileID: 0}
+  MenuID: 1
 --- !u!1001 &5124999619371788806
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,50 +1,54 @@
 ﻿
-using menu;
-using UnityEngine;
 using System.Collections;
-using UnityEngine.Tilemaps;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
+using menu;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    GameObject currentlySelected;
     public Animator animate;
     public Rigidbody2D body;
-
-    [Header("Player stats")]
     public bool canMove = true;
-    public float playerSpeed = 4f;
 
-    PlayerInput playerInput;
+    Messaging messenger;
 
-    Vector2 movement;
+    Queue<InputData> inbox;
+
+    float horizontal;
+    float vertical;
+
+    Vector2 position;
 
     StateMachine state;
+    MenuManager manager;
 
     Animator animator;
 
-    MenuManager menu;
-
-    [Header("Map Info: ")]
     string mapLoad = null;
     int index = 0;
     int X = 0;
     int Y = 0;
     int i = 0;
 
+    public float playerSpeed = 4f;
+
+    Vector2 v2;
+
+    Tilemap tilemap;
 
     input recievedInput;
 
     void Start()
     {
         state = FindObjectOfType<StateMachine>();
-        menu = FindObjectOfType<MenuManager>();
-        body = GetComponent<Rigidbody2D>();
+        tilemap = FindObjectOfType<Tilemap>();
+        messenger = FindObjectOfType<Messaging>();
+        manager = FindObjectOfType<MenuManager>();
         animator = GetComponent<Animator>();
-        playerInput = GetComponent<PlayerInput>();
+
         DontDestroyOnLoad(this);
     }
 
@@ -55,66 +59,43 @@ public class PlayerMovement : MonoBehaviour
             case States.MAIN:
             canMove = true;
             break;
+
             default:
             canMove = false;
             break;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void FixedUpdate()
     {
-        if (collision)
-        {
-            Debug.Log("COLLIDED!");
-            currentlySelected = collision.gameObject;
-        }
-    }
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        currentlySelected = null;
-    }
-
-    public void OnMove(InputAction.CallbackContext input)
-    {
-        if (input.action.triggered && canMove)
+        if (canMove)
         {
-            movement = new Vector2(input.ReadValue<Vector2>().x, input.ReadValue<Vector2>().y);
-            body.velocity = (movement * playerSpeed);
-            animate.SetFloat("Horizontal", movement.x);
-            animate.SetFloat("Vertical", movement.y);
-            animate.SetFloat("Speed", movement.sqrMagnitude);
+            v2 = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            GetComponent<Rigidbody2D>().velocity = v2 * playerSpeed;
         }
-        else
-        {
-            body.velocity = Vector2.zero;
-        }
-    }
 
-    public void OnAccept(InputAction.CallbackContext input)
-    {
-        if (currentlySelected)
+        else if (!canMove)
         {
-            Debug.Log("NPC FOUND");
-            // Check if near NPC. Go from there to execute their held event.
-            if (currentlySelected.tag == "NPC")
+            v2 = new Vector2(0, 0);
+            GetComponent<Rigidbody2D>().velocity = v2 * 0.0f;
+        }
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (!manager.isOpen)
             {
-                currentlySelected.GetComponent<NPC>().pollEvents();
+                manager.Open(0);
+            }
+            else
+            {
+                manager.Close();
             }
         }
-    }
 
-    public void OnOpenMenu(InputAction.CallbackContext input)
-    {
-        if (input.action.triggered)
-        {
-            animate.SetFloat("Horizontal", movement.x);
-            animate.SetBool("Pause", true);
-            //playerInput.actions.FindActionMap("Default").Disable();
-            playerInput.actions.FindActionMap("Menu").Enable();
-            Debug.Log("PRESSED MENU");
-            // Open Menu
-            menu.Open(0);
-        }
+        animate.SetFloat("Horizontal", v2.x);
+        animate.SetFloat("Vertical", v2.y);
+        animate.SetFloat("Speed", v2.sqrMagnitude);
     }
 }

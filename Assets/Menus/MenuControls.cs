@@ -16,7 +16,8 @@ public class MenuControls : MonoBehaviour
         manager = FindObjectOfType<MenuManager>();
     }
 
-    public void OnMove(InputAction.CallbackContext input)
+    // Update is called once per frame
+    void FixedUpdate()
     {
         if (state.State == States.PAUSE)
         {
@@ -25,29 +26,20 @@ public class MenuControls : MonoBehaviour
             {
                 case MenuDisplay.GRID:
                     // Read x an y for true grid movement counting diagonals. We need to check which Widget we're looking at from there though this could easily just be the 2d array or list being moved in
-                    Vector2 posGrid = input.ReadValue<Vector2>();
+                    Vector2 posGrid = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
                     manager.Move(posGrid);
                     break;
                 case MenuDisplay.LIST:
                     // Vertical list lol
-                    int posList = (int)input.ReadValue<Vector2>().y;
+                    int posList = (int)Input.GetAxisRaw("Vertical");
                     manager.Move(new Vector2(0, posList));
                     break;
             }
-        }
-    }
 
-    public void OnAccept(InputAction.CallbackContext input)
-    {
-        if (input.action.triggered)
-        {
-            manager.Accept();
+            if (Input.GetButtonDown("Submit"))
+            {
+                manager.Accept();
+            }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

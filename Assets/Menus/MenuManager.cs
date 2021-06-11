@@ -19,23 +19,20 @@ namespace menu
         List<Widget> listWidgets;
         Vector2Int origPos, tarPos;
         Widget[,] gridWidgets;
+
+        [SerializeField]
         Widget selectedWidget;
         int widgetIndex = 0;
-
         int x = 0, y = 0;
-
         public List<GameObject> apps; // List of Screens
         gameStateMessage stateMessage;
-
         // What Menu are we looking at
         int menuContext = 0;
         PlayerCamera pCam;
-
         // The sate of game (PAUSED)
         StateMachine state;
         private bool isSubscribed;
         private bool isOpened;
-
         // The Arrow itself
         public GameObject instantiateArrow;
         GameObject arrow;
@@ -47,6 +44,14 @@ namespace menu
             state = FindObjectOfType<StateMachine>();
             message = FindObjectOfType<Messaging>();
             screen = FindObjectOfType<PScreen>();
+        }
+
+        public bool isOpen
+        {
+            get
+            {
+                return isOpened;
+            }
         }
 
         public GameObject GetScreen()
@@ -158,6 +163,7 @@ namespace menu
                     if (gridWidgets[x, y])
                     {
                         selectedWidget = gridWidgets[x, y];
+                        pos = Vector2.zero;
                         Debug.Log("Widget: " + selectedWidget.name);
                         return;
                     }

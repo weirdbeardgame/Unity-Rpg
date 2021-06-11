@@ -10,7 +10,7 @@ public class NPC : MonoBehaviour
     StateMachine states;    
     DialogueManager Dialogue;
     public GameObject SpeakerProfile;
-    bool Collided;
+    bool collided;
 
     private void Start()
     {
@@ -24,6 +24,20 @@ public class NPC : MonoBehaviour
         NpcData = NpcM.ToInit[NpcID - 1];
         NpcData.CurrentSpeaker = SpeakerProfile;
         NpcData.Construct(SpeakerProfile);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision)
+        {
+            Debug.Log("COLLIDED!");
+            collided = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        collided = false;
     }
 
     public void pollEvents()
@@ -53,9 +67,9 @@ public class NPC : MonoBehaviour
     {
         ApplyNPC();
 
-        //if (Input.GetButtonDown("Submit") && Collided )
-        //{
-            //pollEvents();
-        //}
+        if (Input.GetButtonDown("Submit") && collided)
+        {
+            pollEvents();
+        }
     }
 }
