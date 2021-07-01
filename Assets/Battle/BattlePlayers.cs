@@ -108,7 +108,7 @@ public class BattlePlayers : MonoBehaviour
 
             case BattleState.COMMAND:
 
-                if (!Menu.IsOpened && BadParty != null)
+                if (!Menu && BadParty != null)
                 {
                     //Menu.Open(BattleParty[i].Player, BadParty);
                 }

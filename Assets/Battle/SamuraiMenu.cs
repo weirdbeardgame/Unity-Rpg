@@ -4,58 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SamuraiMenu : MonoBehaviour, BattleMIface
+public class SamuraiMenu : BattleMIface
 {
-
     public GameObject Widget;
-
     Skills skills;
-
     commandMenus Menu;
-
-    Creature Caster;
-
     SkillMessage message;
-
-    TextMeshPro DamageDisplay;
-
-    Inputs Input;
-
 
     private void Start()
     {
         skills = FindObjectOfType<Skills>();
         Menu = FindObjectOfType<commandMenus>();
-        Add();
-    }
-
-    public void Open(Creature Opener)
-    {
-
-        Caster = Opener;
-
-        // Below is the widgets for Samurai
-        Widget = Instantiate(Widget);
-        //Widget.GetComponent<Widget>().Initalize(Attack, "Attack");
-        Widget.GetComponentInChildren<TextMeshPro>().text = "Attack";
-        Menu.AddWidget(Widget);
-
-        Widget = Instantiate(Widget);
-        //Widget.GetComponent<Widget>().Initalize(Item, "Item");
-        Widget.GetComponentInChildren<TextMeshPro>().text = "Item";
-        Menu.AddWidget(Widget);
-
-        Widget = Instantiate(Widget);
-        //Widget.GetComponent<Widget>().Initalize(Skills, "Skills");
-        Widget.GetComponentInChildren<TextMeshPro>().text = "Skills";
-        Menu.AddWidget(Widget);
-
-        Debug.Log("Samurai Menu Open");
-
-        Menu.IsOpened = true;
-
-        return;
-
     }
 
     public void Open()
@@ -63,12 +22,12 @@ public class SamuraiMenu : MonoBehaviour, BattleMIface
 
     }
 
-    public void Close()
+    public override void Close()
     {
-        Menu.Close();
+        
     }
 
-    void Attack()
+    /*void Attack()
     {
         Debug.Log("Skill Added");
 
@@ -92,5 +51,5 @@ public class SamuraiMenu : MonoBehaviour, BattleMIface
     {
         Menu = FindObjectOfType<commandMenus>();
         Menu.AddMenu(JobSystem.SAMURAI, this);
-    }
+    }*/
 }

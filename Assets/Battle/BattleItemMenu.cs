@@ -20,14 +20,14 @@ public class BattleItemMenu : BattleMIface
 
     public void Add()
     {
-        _Menu = FindObjectOfType<commandMenus>();
-        _Menu.AddSubMenu(0, this);
+        menu = FindObjectOfType<commandMenus>();
+        menu.AddSubMenu(0, this);
     }
 
     void use()
     {
-        ItemMessage = new SkillMessage();
-        ItemMessage.construct(null, MessageType.BATTLE, CommandType.ITEM, 0);
+        itemMessage = new SkillMessage();
+        itemMessage.construct(null, MessageType.BATTLE, CommandType.ITEM, 0);
     }
 
     public void Open(Creature Opener)
@@ -38,18 +38,18 @@ public class BattleItemMenu : BattleMIface
 
     public void Open()
     {
-        _Menu.Close();
+        //menu.Close();
 
-        for (int i = 0; i < _Inventory.ItemList.Count; i++)
+        for (int i = 0; i < inventory.ItemList.Count; i++)
         {
 
 
             Instantiate(Temp);
-            _Menu.AddWidget(Temp);
+            menu.AddWidget(Temp);
         }
     }
 
-    public void Close()
+    public override void Close()
     {
 
     }
