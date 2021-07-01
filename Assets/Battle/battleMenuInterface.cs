@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface BattleMIface
+public class BattleMIface
 {
-    void Add();
-    void Open();
     void Close();
-    void Open(Creature opener);
+    void Open(Creature opener)
+    {
+        // Grab job type and go from there to decide where this should call. Also, should this really be in here? Or in the Menu's it allows to inherit it.
+    }
 
 }

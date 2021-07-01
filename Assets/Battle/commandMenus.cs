@@ -11,17 +11,20 @@ public class commandMenus : MonoBehaviour, IReceiver
     //Player Menus
     SortedDictionary<JobSystem, BattleMIface> Menus;
 
+    GameObject cMenu;
+
     // Action Menus (Item, Skills, Magic)
     SortedDictionary<int, BattleMIface> SubMenus;
 
-    List<GameObject> Widgets;
+    MenuControls controls;
 
-    Queue<Inputs> InputData;
+    List<GameObject> widgets;
+    GameObject selectedWidget;
 
     Gauge gauge;
 
-    int WidgetIndex = 0;
-    int Index = 0;
+    int widgetIndex = 0;
+    int index = 0;
 
     Creature Opened;
 
@@ -29,19 +32,20 @@ public class commandMenus : MonoBehaviour, IReceiver
     GameObject PlayerStatus;
     GameObject Panel;
 
-
     GameObject PlayerStatSlot1;
     GameObject PlayerStatSlot2;
     GameObject PlayerStatSlot3;
 
-    GameObject SelectionArrow;
-    GameObject Arrow;
+    GameObject selectionArrow;
+    GameObject arrow;
 
     List<Baddies> BadParty;
 
-    bool Init;
-    public bool IsOpened;
-    bool Targeting;
+    bool init;
+    bool isOpened;
+    // The issue with this is the enemy targeting system is in here instead of directly attached to the battle system like it should be.
+    // This should be a state the characters can be in ABS style!
+    bool targeting;
     bool isSubscribed;
     public bool CommandSelected;
 
@@ -58,10 +62,10 @@ public class commandMenus : MonoBehaviour, IReceiver
         Commands = GameObject.Find("Command Screen");
         Commands.GetComponent<Image>().enabled = false;
 
-       // Widgets = new List<Widget>();
+        controls = GetComponent<MenuControls>();
+
+        // Widgets = new List<Widget>();
         message = FindObjectOfType<Messaging>();
-        Subscribe();
-        InputData = new Queue<Inputs>();
         Menus = new SortedDictionary<JobSystem, BattleMIface>();
         SubMenus = new SortedDictionary<int, BattleMIface>();
     }
@@ -69,10 +73,10 @@ public class commandMenus : MonoBehaviour, IReceiver
     void IncreaseIndex()
     {
         //This lasts a frame you fool! Thunder Cross Splito Attack!
-        if (WidgetIndex <= Widgets.Count)
+        if (widgetIndex <= widgets.Count)
         {
-            WidgetIndex += 1;
-            Arrow.transform.SetParent(Widgets[WidgetIndex].transform);
+            widgetIndex += 1;
+            arrow.transform.SetParent(widgets[widgetIndex].transform);
 
         }
 
@@ -84,23 +88,22 @@ public class commandMenus : MonoBehaviour, IReceiver
 
     public void CreateArrow()
     {
-        Arrow = new GameObject("Arrow");
-        Arrow.AddComponent<RectTransform>();
-        Arrow.AddComponent<Image>();
+        arrow = new GameObject("Arrow");
+        arrow.AddComponent<RectTransform>();
+        arrow.AddComponent<Image>();
 
-        Arrow.GetComponent<Image>().sprite = Resources.Load<Sprite>("Triangle");
-        Arrow.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
-        Arrow.transform.SetParent(Widgets[WidgetIndex].transform);
-        Arrow.transform.localPosition = new Vector2(-100, 0);
-
+        arrow.GetComponent<Image>().sprite = Resources.Load<Sprite>("Triangle");
+        arrow.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
+        arrow.transform.SetParent(widgets[widgetIndex].transform);
+        arrow.transform.localPosition = new Vector2(-100, 0);
     }
 
     void DecreaseIndex()
     {
-        if (WidgetIndex > 0)
+        if (widgetIndex > 0)
         {
-            WidgetIndex -= 1;
-            Arrow.transform.SetParent(Widgets[WidgetIndex].transform);
+            widgetIndex -= 1;
+            arrow.transform.SetParent(widgets[widgetIndex].transform);
             return;
         }
     }
@@ -112,63 +115,70 @@ public class commandMenus : MonoBehaviour, IReceiver
 
         Subscribe();
 
-        Widgets = new List<GameObject>();
-        InputData = new Queue<Inputs>();
+        widgets = new List<GameObject>();
         Menus = new SortedDictionary<JobSystem, BattleMIface>();
         SubMenus = new SortedDictionary<int, BattleMIface>();
+    }
+
+    public void Move(Vector2 position)
+    {
+        Debug.Log("POS: " + position);
+        selectionArrow.transform.Translate(position);
+        widgetIndex += (int)Mathf.Sign(position.y);
+        // Grab each widget's position and go from there.
+        selectedWidget = widgets[widgetIndex];
+        Debug.Log("Widget Name: " + selectedWidget.GetComponent<Widget>().name);
     }
 
 
     public void SetIsOpened(bool open)
     {
-        IsOpened = open;
+        isOpened = open;
     }
 
     public void Subscribe()
     {
         isSubscribed = true;
-        //message.Subscribe(MessageType.INPUT, this);
     }
 
     public void Unsubscribe()
     {
         isSubscribed = false;
-        //message.Unsubscribe(MessageType.INPUT, this);
     }
 
     public void Receive(object message)
     {
-        InputData.Enqueue((Inputs)message);
     }
 
     public void AddWidget(GameObject w)
     {
-        int Y = 0;
+        int y = 0;
 
         Panel = Commands.transform.GetChild(0).gameObject;
 
-        if (Widgets == null)
+        if (widgets == null)
         {
-            Widgets = new List<GameObject>();
+            widgets = new List<GameObject>();
         }
 
         w.transform.SetParent(Panel.transform);
-        w.transform.localPosition = new Vector2(0, Y);
-        Widgets.Add(w);
+        w.transform.localPosition = new Vector2(0, y);
+        widgets.Add(w);
 
-        Y -= 5;
+        y -= 5;
     }
 
     public void Open(Creature Opener, List<Baddies> Villan)
     {
-        if (!IsOpened)
+        if (!isOpened)
         {
             Commands = (GameObject)Instantiate(Resources.Load("BattlePrefabs/BattleMenu"));
             Commands.GetComponentInChildren<Image>().enabled = true;
             Opened = Opener;
-            Menus[Opened.Job].Open(Opened);
+            //Menus[Opened.Job].Open(Opened);
             BadParty = Villan;
-            IsOpened = true;
+            // I need to add error checking in here
+            isOpened = true;
         }
 
         Debug.Log("Menu is Opened");
@@ -176,30 +186,30 @@ public class commandMenus : MonoBehaviour, IReceiver
 
     public void Open(int index)
     {
-        SubMenus[index].Open();
+        //SubMenus[index].Open();
     }
 
-    public void AddMenu(JobSystem J, BattleMIface M)
+    public void AddMenu(JobSystem j, BattleMIface m)
     {
         if (Menus == null)
         {
             Initlaize();
         }
 
-        if (!Menus.ContainsKey(J))
+        if (!Menus.ContainsKey(j))
         {
-            Menus.Add(J, M);
+            Menus.Add(j, m);
         }
     }
 
-    public void AddSubMenu(int I, BattleMIface M)
+    public void AddSubMenu(int i, BattleMIface m)
     {
-        SubMenus.Add(I, M);
+        SubMenus.Add(i, m);
     }
 
     public void DrawStats(List<CharacterInfo> Battlers)
     {
-        if (!Init)
+        if (!init)
         {
             PlayerStatSlot1 = GameObject.Find("Stat1");
             PlayerStatSlot2 = GameObject.Find("Stat2");
@@ -213,23 +223,18 @@ public class commandMenus : MonoBehaviour, IReceiver
 
     public void CreateTargetArrow()
     {
-        SelectionArrow = new GameObject("Arrow");
-        SelectionArrow.AddComponent<RectTransform>();
-        SelectionArrow.AddComponent<SpriteRenderer>();
+        selectionArrow = new GameObject("Arrow");
+        selectionArrow.AddComponent<RectTransform>();
+        selectionArrow.AddComponent<SpriteRenderer>();
 
-        SelectionArrow.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Triangle");
-        SelectionArrow.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
-        SelectionArrow.transform.SetParent(BadParty[Index].Battler.transform);
-        SelectionArrow.transform.localPosition = new Vector2(-100, 0);
+        selectionArrow.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Triangle");
+        selectionArrow.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
+        selectionArrow.transform.SetParent(BadParty[index].Battler.transform);
+        selectionArrow.transform.localPosition = new Vector2(-100, 0);
 
     }
 
-    public void ResetInput()
-    {
-        InputData.Clear();
-    }
-
-    public IEnumerator Target(SkillData SkillToEnqueue)
+    public void Target(SkillData SkillToEnqueue)
     {
         // Select a Target for an attack in here?
         // Implicitably we have an enqueued skill that were trying to 
@@ -239,73 +244,29 @@ public class commandMenus : MonoBehaviour, IReceiver
 
         //Debug.Log("Targeting");
 
-        Inputs CurrentInput = new Inputs();
-        if (SelectionArrow == null)
+        if (selectionArrow == null)
         {
             CreateTargetArrow();
         }
-
-        while (InputData.Count == 0)
-        {
-            yield return null;
-        }
-
-        if (InputData.Count > 0)
-        {
-
-            CurrentInput = (Inputs)InputData.Dequeue();
-
-            switch (CurrentInput)
-            {
-                case Inputs.UP:
-                    if (Index != BadParty.Count)
-                    {
-                        Index += 1;
-                        SelectionArrow.transform.SetParent(BadParty[Index].Battler.transform);
-                        Debug.Log("Bad Index: " + Index);
-                    }
-                    break;
-
-                case Inputs.DOWN:
-                    if (Index > 0)
-                    {
-                        Index -= 1;
-                        SelectionArrow.transform.SetParent(BadParty[Index].Battler.transform);
-                        Debug.Log("Bad Index: " + Index);
-                    }
-                    break;
-
-                case Inputs.A:
-                    SkillToEnqueue.Enqueue(Opened, BadParty[Index]);
-                    SkillToEnqueue = null;
-                    SkillToTarget = null;
-                    CurrentInput = Inputs.NULL;
-                    Close();
-
-                    Debug.Log("A press");
-                    break;
-            }
-        }
-        yield return Index;
     }
+
 
     public void Close()
     {
-        InputData.Clear();
-        Targeting = false;
+        targeting = false;
         CommandSelected = true;
         StopAllCoroutines();
 
-        for (int i = 0; i < Widgets.Count; i++)
+        for (int i = 0; i < widgets.Count; i++)
         {
-            Widgets[i] = null;
+            widgets[i] = null;
         }
 
-        Widgets.Clear();
+        widgets.Clear();
         Destroy(Commands);
         Destroy(Panel);
 
-        IsOpened = false;
+        isOpened = false;
         Debug.Log("Menu Closed");
     }
 
@@ -313,24 +274,21 @@ public class commandMenus : MonoBehaviour, IReceiver
     void Update()
     {
         // Debug.Log("IsOpened: " + IsOpened);
-        if (IsOpened)
+        if (isOpened)
         {
-            if (Widgets.Count == 0)
+            if (widgets.Count == 0)
             {
                 Debug.Log("No Widget");
             }
 
-            if (!Targeting)
+            if (!targeting)
             {
-               
+
             }
 
-            else if (Targeting)
+            else if (targeting)
             {
-                if (InputData.Count > 0)
-                {
-                    StartCoroutine(Target(SkillToTarget));
-                }
+
             }
         }
     }

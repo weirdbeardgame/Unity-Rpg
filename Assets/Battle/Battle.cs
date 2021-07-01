@@ -64,7 +64,6 @@ public class Battle : MonoBehaviour, IReceiver
         Messenger.Unsubscribe(MessageType.BATTLE, this);
     }
 
-
     public void StartBattle(Scene PreviousScene, GameObject BattleObject, int Scene)
     {
         SceneToReturnTo = PreviousScene;
