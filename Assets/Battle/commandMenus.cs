@@ -5,13 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class commandMenus : MonoBehaviour, IReceiver
+public class commandMenus : MonoBehaviour
 {
 
     //Player Menus
     SortedDictionary<JobSystem, BattleMIface> Menus;
 
-    GameObject cMenu;
+    BattleMIface cMenu;
 
     // Action Menus (Item, Skills, Magic)
     SortedDictionary<int, BattleMIface> SubMenus;
@@ -26,7 +26,7 @@ public class commandMenus : MonoBehaviour, IReceiver
     int widgetIndex = 0;
     int index = 0;
 
-    Creature Opened;
+    Creature opened;
 
     GameObject Commands;
     GameObject PlayerStatus;
@@ -38,8 +38,6 @@ public class commandMenus : MonoBehaviour, IReceiver
 
     GameObject selectionArrow;
     GameObject arrow;
-
-    List<Baddies> BadParty;
 
     bool init;
     bool isOpened;
@@ -113,8 +111,6 @@ public class commandMenus : MonoBehaviour, IReceiver
         PlayerStatus = GameObject.Find("menu");
         message = FindObjectOfType<Messaging>();
 
-        Subscribe();
-
         widgets = new List<GameObject>();
         Menus = new SortedDictionary<JobSystem, BattleMIface>();
         SubMenus = new SortedDictionary<int, BattleMIface>();
@@ -128,26 +124,6 @@ public class commandMenus : MonoBehaviour, IReceiver
         // Grab each widget's position and go from there.
         selectedWidget = widgets[widgetIndex];
         Debug.Log("Widget Name: " + selectedWidget.GetComponent<Widget>().name);
-    }
-
-
-    public void SetIsOpened(bool open)
-    {
-        isOpened = open;
-    }
-
-    public void Subscribe()
-    {
-        isSubscribed = true;
-    }
-
-    public void Unsubscribe()
-    {
-        isSubscribed = false;
-    }
-
-    public void Receive(object message)
-    {
     }
 
     public void AddWidget(GameObject w)
@@ -168,20 +144,22 @@ public class commandMenus : MonoBehaviour, IReceiver
         y -= 5;
     }
 
-    public void Open(Creature Opener, List<Baddies> Villan)
+    public bool Open(Creature opener)
     {
         if (!isOpened)
         {
             Commands = (GameObject)Instantiate(Resources.Load("BattlePrefabs/BattleMenu"));
             Commands.GetComponentInChildren<Image>().enabled = true;
-            Opened = Opener;
-            //Menus[Opened.Job].Open(Opened);
-            BadParty = Villan;
-            // I need to add error checking in here
-            isOpened = true;
+            cMenu = Menus[opener.Job];
+            if (!cMenu)
+            {
+                return isOpened = false;
+            }
+            Debug.Log("Menu is Opened");
+            return isOpened = true;
         }
-
-        Debug.Log("Menu is Opened");
+        // Assume it was "already opened" in error.
+        return false;
     }
 
     public void Open(int index)
@@ -221,36 +199,6 @@ public class commandMenus : MonoBehaviour, IReceiver
         //PlayerStatSlot3.GetComponent<TextMeshProUGUI>().SetText(Battlers[2].CreatureName + ':' + " Health: " + Battlers[2].Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
     }
 
-    public void CreateTargetArrow()
-    {
-        selectionArrow = new GameObject("Arrow");
-        selectionArrow.AddComponent<RectTransform>();
-        selectionArrow.AddComponent<SpriteRenderer>();
-
-        selectionArrow.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Triangle");
-        selectionArrow.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
-        selectionArrow.transform.SetParent(BadParty[index].Battler.transform);
-        selectionArrow.transform.localPosition = new Vector2(-100, 0);
-
-    }
-
-    public void Target(SkillData SkillToEnqueue)
-    {
-        // Select a Target for an attack in here?
-        // Implicitably we have an enqueued skill that were trying to 
-        // Aim or rather are currently enqueuing? don't forget amount of targets
-
-        SkillToTarget = SkillToEnqueue;
-
-        //Debug.Log("Targeting");
-
-        if (selectionArrow == null)
-        {
-            CreateTargetArrow();
-        }
-    }
-
-
     public void Close()
     {
         targeting = false;
@@ -281,15 +229,8 @@ public class commandMenus : MonoBehaviour, IReceiver
                 Debug.Log("No Widget");
             }
 
-            if (!targeting)
-            {
+            // Process input in here
 
-            }
-
-            else if (targeting)
-            {
-
-            }
         }
     }
 }

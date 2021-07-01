@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleItemMenu : MonoBehaviour, BattleMIface
+public class BattleItemMenu : BattleMIface
 {
 
-    commandMenus _Menu;
-    Inventory _Inventory;
-    SkillMessage ItemMessage;
+    commandMenus menu;
+    Inventory inventory;
+    SkillMessage itemMessage;
 
     public GameObject Temp;
 
     // Start is called before the first frame update
     void Start()
     {
-        _Menu = FindObjectOfType<commandMenus>();
-        _Inventory = FindObjectOfType<Inventory>();
-        Add();
+        menu = FindObjectOfType<commandMenus>();
+        inventory = FindObjectOfType<Inventory>();
     }
 
     public void Add()
