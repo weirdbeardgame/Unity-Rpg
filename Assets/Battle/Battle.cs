@@ -16,29 +16,18 @@ public class Battle : MonoBehaviour, IReceiver
 
     Queue<object> Inbox; // The Receiver
     Messaging Messenger;
-
     BattlePlayers Players;
-
     Enemies Enemy;
     Skills Skills;
-
     List<Baddies> BadParty;
-
     CommandQueue Queue;
-
     GameObject BattleObject;
     GameObject SelectionArrow;
-
-
     GameObject[] PlayerObjects = new GameObject[3];
-
     Scene SceneToReturnTo;
-
     Creature Caster;
     Creature Receiver;
-
     Animator BattleAnimations;
-
     int Index = 0;
     int PlayerIndex;
     int X, Y = 3;
@@ -126,6 +115,10 @@ public class Battle : MonoBehaviour, IReceiver
         }
     }
 
+    void Target()
+    {
+        // Run skill targeter in here? Or should that belong to battle players given this is ABS styled
+    }
 
     void Update()
     {

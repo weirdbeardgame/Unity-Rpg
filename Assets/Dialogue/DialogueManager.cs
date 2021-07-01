@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine.InputSystem;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using Newtonsoft.Json;
@@ -189,7 +188,6 @@ public class DialogueManager : MonoBehaviour
         Name.text = null;
         canvas.enabled = false;
         Talking = false;
-        PlayerInput input = FindObjectOfType<PlayerInput>();
         Destroy(Speaker);
         StateMessage.construct(States.MAIN, _Machine.CurrrentFlag);
         Messenger = FindObjectOfType<Messaging>();

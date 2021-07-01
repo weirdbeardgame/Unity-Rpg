@@ -106,6 +106,10 @@ public class BattlePlayers : MonoBehaviour
                 }
                 break;
 
+            case BattleState.SELECTION:
+            
+                break;
+
             case BattleState.COMMAND:
 
                 if (!Menu && BadParty != null)
@@ -124,7 +128,7 @@ public class BattlePlayers : MonoBehaviour
                 break;
 
             case BattleState.ACTION:
-                // Execute command
+
                 Menu.Close();
                 if (Queue.Peek() != null && Queue.Peek().GetCaster().Tag == BattleTag.PLAYER)
                 {
@@ -142,6 +146,11 @@ public class BattlePlayers : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    void Target()
+    {
+        // Assume we have an enqueued skill that needs to be constructed
     }
 
     public void Reset(int i)
