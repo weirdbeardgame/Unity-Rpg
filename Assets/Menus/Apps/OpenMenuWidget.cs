@@ -6,12 +6,12 @@ using menu;
 public class OpenMenuWidget : Widget
 {
     [SerializeField]
-    int MenuID = 0; // Menu 1 will always be Item
-    MenuManager Manager;
+    private int menuID = 0;
+    MenuManager manager;
 
     public override void Execute()
     {
-        Manager = FindObjectOfType<MenuManager>();
-        Manager.Open(MenuID);
+        manager = FindObjectOfType<MenuManager>();
+        manager.Open(menuID);
     }
 }

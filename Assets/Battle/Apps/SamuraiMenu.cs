@@ -6,7 +6,6 @@ using TMPro;
 
 public class SamuraiMenu : BattleMIface
 {
-    public GameObject Widget;
     Skills skills;
     commandMenus Menu;
     SkillMessage message;
@@ -17,9 +16,16 @@ public class SamuraiMenu : BattleMIface
         Menu = FindObjectOfType<commandMenus>();
     }
 
-    public void Open()
+    public override void Open()
     {
+        // Would involve looking for widgets?
+        appID = ((int)job);
+        appName = "SamuraiMenu";
 
+        for (int i = 0; i < widgetsToAdd.Count; i++)
+        {
+            widgets.Add(widgetsToAdd[i]);
+        }
     }
 
     public override void Close()

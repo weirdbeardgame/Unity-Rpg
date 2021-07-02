@@ -164,7 +164,7 @@ public class commandMenus : MonoBehaviour
 
     public void Open(int index)
     {
-        //SubMenus[index].Open();
+        SubMenus[index].Open();
     }
 
     public void AddMenu(JobSystem j, BattleMIface m)

@@ -7,10 +7,8 @@ using TMPro;
 
 public class WarriorMenu : BattleMIface
 {
-    public GameObject Widget;
     Skills skills;
     commandMenus Menu;
-    Creature Caster;
     SkillMessage message;
     TextMeshPro DamageDisplay;
     Inputs Input;
@@ -21,9 +19,15 @@ public class WarriorMenu : BattleMIface
         Menu = FindObjectOfType<commandMenus>();
     }
 
-    public void Open()
+    public override void Open()
     {
+        appID = ((int)job);
+        appName = "WarriorMenu";
 
+        for (int i = 0; i < widgetsToAdd.Count; i++)
+        {
+            widgets.Add(widgetsToAdd[i]);
+        }
     }
 
     public override void Close()
@@ -31,8 +35,7 @@ public class WarriorMenu : BattleMIface
         Menu.Close();
     }
 
-/*
-    void Attack()
+  /*void Attack()
     {
         Debug.Log("Skill Added");
         StopAllCoroutines();

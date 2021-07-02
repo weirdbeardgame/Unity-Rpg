@@ -4,46 +4,46 @@ using UnityEngine;
 
 public class CommandQueue : MonoBehaviour
 {
-    private List<ActionIface> _Commands;
+    private List<ActionIface> commands;
 
     public List<ActionIface> Commands
     {
         get
         {
-            return _Commands;
+            return commands;
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        _Commands = new List<ActionIface>();
+        commands = new List<ActionIface>();
     }
 
     public void Enqueue(ActionIface Action, int i = 0)
     {
-        if (_Commands == null)
+        if (commands == null)
         {
-            _Commands = new List<ActionIface>();
+            commands = new List<ActionIface>();
         }
 
         /*if (i > 0)
         {
-            _Commands[i] = Action; // Enqueue Action above slow persons.
+            commands[i] = Action; // Enqueue Action above slow persons.
         }*/
 
         else
         {
-            _Commands.Add(Action);
+            commands.Add(Action);
         }
     }
 
     public ActionIface Dequeue()
     {
-        if (_Commands.Count > 0)
+        if (commands.Count > 0)
         {
-            ActionIface Temp = _Commands[0];
-            _Commands.RemoveAt(0);
+            ActionIface Temp = commands[0];
+            commands.RemoveAt(0);
             return Temp;
         }
         else
@@ -55,9 +55,9 @@ public class CommandQueue : MonoBehaviour
 
     public ActionIface Peek()
     {
-        if (_Commands.Count > 0)
+        if (commands.Count > 0)
         {
-            return _Commands[0];
+            return commands[0];
         }
 
         else
@@ -68,6 +68,6 @@ public class CommandQueue : MonoBehaviour
 
     public int Size()
     {
-        return _Commands.Count;
+        return commands.Count;
     }
 }
