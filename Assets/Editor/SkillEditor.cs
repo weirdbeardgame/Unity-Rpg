@@ -31,7 +31,7 @@ public class SkillEditor : EditorWindow
 
     int SkillIndex;
 
-    [MenuItem("Window/Skill")]
+    [MenuItem("Window/General/Skill")]
     public static void ShowWindow()
     {
         GetWindow<SkillEditor>("New Skill");
@@ -120,27 +120,27 @@ public class SkillEditor : EditorWindow
             EditorGUILayout.LabelField("Item Name");
             Skills[SelectedIndex].SkillName = EditorGUILayout.TextField(Skills[SelectedIndex].SkillName);
             EditorGUILayout.LabelField("Buffer Type");
-            Skills[SelectedIndex].SkillType = (SkillTypes)EditorGUILayout.EnumPopup(Skills[SelectedIndex].SkillType);
+            Skills[SelectedIndex].skillType = (SkillTypes)EditorGUILayout.EnumPopup(Skills[SelectedIndex].skillType);
             EditorGUILayout.LabelField("Effect Type");
-            Skills[SelectedIndex].Attribute = (AttributeType)EditorGUILayout.EnumPopup(Skills[SelectedIndex].Attribute);
+            Skills[SelectedIndex].attribute = (AttributeType)EditorGUILayout.EnumPopup(Skills[SelectedIndex].attribute);
             EditorGUILayout.LabelField("Effect: ");
             Skills[SelectedIndex].Effect = EditorGUILayout.FloatField(Skills[SelectedIndex].Effect);
             EditorGUILayout.LabelField("Buffs / Debuffs: ");
             if (GUILayout.Button("Add Buffer"))
             {
-                Skills[SelectedIndex].Buffer = new Buffers();
+                Skills[SelectedIndex].buffer = new Buffers();
             }
 
-            if (Skills[SelectedIndex].Buffer != null)
+            if (Skills[SelectedIndex].buffer != null)
             {
                 EditorGUILayout.LabelField("Type of Effect: ");
-                Skills[SelectedIndex].Buffer.Effect = (BufferEffect)EditorGUILayout.EnumPopup(Skills[SelectedIndex].Buffer.Effect);
+                Skills[SelectedIndex].buffer.effect = (BufferEffect)EditorGUILayout.EnumPopup(Skills[SelectedIndex].buffer.effect);
                 EditorGUILayout.LabelField("Buffer Effect: ");
-                Skills[SelectedIndex].Buffer.Type = (BuffType)EditorGUILayout.EnumPopup(Skills[SelectedIndex].Buffer.Type);
+                Skills[SelectedIndex].buffer.type = (BuffType)EditorGUILayout.EnumPopup(Skills[SelectedIndex].buffer.type);
                 EditorGUILayout.LabelField("Time of Buffer");
-                Skills[SelectedIndex].Buffer.EffectTimer = EditorGUILayout.FloatField(Skills[SelectedIndex].Buffer.EffectTimer);
+                Skills[SelectedIndex].buffer.effectTimer = EditorGUILayout.FloatField(Skills[SelectedIndex].buffer.effectTimer);
                 EditorGUILayout.LabelField("Buffer to Apply");
-                Skills[SelectedIndex].Buffer.Buff = EditorGUILayout.FloatField(Skills[SelectedIndex].Buffer.Buff);
+                Skills[SelectedIndex].buffer.buff = EditorGUILayout.FloatField(Skills[SelectedIndex].buffer.buff);
             }
 
 

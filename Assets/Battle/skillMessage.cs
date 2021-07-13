@@ -12,24 +12,22 @@ public class SkillMessage : ScriptableObject
 
     object mess;
 
-    public int SkillID;
-
     // Start is called before the first frame update
     void Start()
     {
+        Messenger = FindObjectOfType<Messaging>();
     }
 
     public void construct(Creature Caster, MessageType type, CommandType Type, int sID = -1)
     {
         Skills = FindObjectOfType<Skills>();
 
-        SkillID = sID;
         BattleM = type;
         Sender = Caster;
 
-        if (SkillID >= 0) // Remember attack is 0 
+        if (sID >= 0) // Remember attack is 0 
         {
-            Skill = Skills.GetSkill(SkillID);
+            Skill = Skills.GetSkill(sID);
         }
 
         send();
@@ -47,9 +45,8 @@ public class SkillMessage : ScriptableObject
 
     public void send()
     {
-        Messenger = FindObjectOfType<Messaging>();
         Debug.Log("Sent Message");
-        //Messenger.Send(this, MessageType.BATTLE);
+        Messenger.Send();
     }
 
     public ActionIface Data
@@ -59,8 +56,6 @@ public class SkillMessage : ScriptableObject
             return Skill;
         }
     }
-
-
 
     // Update is called once per frame
     void Update()

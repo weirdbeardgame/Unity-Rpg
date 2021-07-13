@@ -2,12 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ActionIface
+public class ActionIface : ScriptableObject
 {
-    void Enqueue(Creature caster, Creature target);
-    void Execute();
-    float GetWeight();
-    float GetBuff();
-    Creature GetCaster();
-    Creature GetTarget();
-}
+    public virtual void Enqueue(Creature caster, Creature target)
+    {
+
+    }
+    public virtual void Execute()
+    {
+
+    }
+
+    public Creature target;
+
+    public Creature caster
+    {
+        get
+        {
+            return caster;
+        }
+
+        protected set
+        {
+            caster = value;
+        }
+
+    }
+    public Buffers buffer
+    {
+        get
+        {
+            return buffer;
+        }
+        set
+        {
+            buffer = value;
+        }
+    }
+    public float weight
+    {
+        get
+        {
+            return weight;
+        }
+        protected set
+        {
+            weight = value;
+        }
+    }
+
+    }

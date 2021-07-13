@@ -126,29 +126,11 @@ public class commandMenus : MonoBehaviour
         Debug.Log("Widget Name: " + selectedWidget.GetComponent<Widget>().name);
     }
 
-    public void AddWidget(GameObject w)
-    {
-        int y = 0;
-
-        Panel = Commands.transform.GetChild(0).gameObject;
-
-        if (widgets == null)
-        {
-            widgets = new List<GameObject>();
-        }
-
-        w.transform.SetParent(Panel.transform);
-        w.transform.localPosition = new Vector2(0, y);
-        widgets.Add(w);
-
-        y -= 5;
-    }
-
     public bool Open(Creature opener)
     {
         if (!isOpened)
         {
-            Commands = (GameObject)Instantiate(Resources.Load("BattlePrefabs/BattleMenu"));
+            Commands = Instantiate(Commands);
             Commands.GetComponentInChildren<Image>().enabled = true;
             cMenu = Menus[opener.Job];
             if (!cMenu)

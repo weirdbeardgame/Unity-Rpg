@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -11,26 +11,37 @@ public class CharacterInfo
     public int ID;
     public GameObject Prefab;
     public Creature Player;
+    public CommandQueue playerQueue;
+
+    public void enque(ActionIface i)
+    {
+        playerQueue.enqueue(i);
+    }
+
+    public ActionIface deque()
+    {
+        return playerQueue.dequeue();
+    }
+
 }
 
 public class BattlePlayers : MonoBehaviour
 {
     Party Players;
-    public List<CharacterInfo> AllCharacters;
+    public List<CharacterInfo> allCharacters;
 
-    public Dictionary<int, CharacterInfo> BattleParty;
+    public Dictionary<int, CharacterInfo> battleParty;
 
     CharacterInfo Temp;
-
 
     public bool isInitalized = false;
 
     int maxIndex = 0;
     int killCount = 0;
+    int i = 0;
 
     List<Baddies> BadParty;
 
-    CommandQueue Queue;
     commandMenus Menu;
 
     GameObject BattleObject;
@@ -40,49 +51,40 @@ public class BattlePlayers : MonoBehaviour
         if (!isInitalized)
         {
             Players = FindObjectOfType<Party>();
-
-            Queue = FindObjectOfType<CommandQueue>();
-
-            BattleParty = new Dictionary<int, CharacterInfo>();
-
+            for (int j = 0; j < allCharacters.Capacity; j++)
+            {
+                allCharacters[j].playerQueue = FindObjectOfType<CommandQueue>();
+            }
+            battleParty = new Dictionary<int, CharacterInfo>();
             BattleObject = BattleO;
-
             isInitalized = true;
-
             Menu = FindObjectOfType<commandMenus>();
-        
 
-        if (Players != null)
-        {
-            BadParty = Bad;
-
-            AllCharacters[i].Player = Players.PartyMembers[i];
-
-            BattleParty.Add(i, AllCharacters[i]);
-
-            DontDestroyOnLoad(BattleParty[i].Prefab);
+            if (Players != null)
+            {
+                BadParty = Bad;
+                allCharacters[i].Player = Players.PartyMembers[i];
+                battleParty.Add(i, allCharacters[i]);
+                DontDestroyOnLoad(battleParty[i].Prefab);
+            }
         }
-}
-
-        return BattleParty;
-
+        return battleParty;
     }
     // In here goes the logic for Battle! If God is love then you can call me cupid! ooh rah
     // Calculate the magical equations for Attack any status effects etc here. 
 
-
     public GameObject CreateCharacterById(int ID)
     {
-        return (GameObject)Instantiate(BattleParty[ID].Prefab);
+        return (GameObject)Instantiate(battleParty[ID].Prefab);
     }
 
     public void OpenWindow(int i)
     {
-        if (BattleParty[i].Prefab.GetComponent<Gauge>().getFilled())
+        if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled())
         {
-            if (BattleParty[i].Player.State == BattleState.WAIT)
+            if (battleParty[i].Player.State == BattleState.WAIT)
             {
-                BattleParty[i].Player.State = BattleState.COMMAND;
+                battleParty[i].Player.State = BattleState.COMMAND;
             }
 
             else
@@ -94,27 +96,22 @@ public class BattlePlayers : MonoBehaviour
 
     public void Battle(int i)
     {
-        switch (BattleParty[i].Player.State)
+        switch (battleParty[i].Player.State)
         {
 
             case BattleState.WAIT:
-                BattleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
-                BattleParty[i].Prefab.GetComponent<Gauge>().fill(BattleParty[i].Player.Stats.StatList[(int)StatType.SPEED].Stat);
-                if (BattleParty[i].Prefab.GetComponent<Gauge>().getFilled())
+                battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
+                battleParty[i].Prefab.GetComponent<Gauge>().fill(battleParty[i].Player.Stats.StatList[(int)StatType.SPEED].Stat);
+                if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled())
                 {
-                    BattleParty[i].Player.State = BattleState.COMMAND;
+                    battleParty[i].Player.State = BattleState.COMMAND;
                 }
                 break;
-
-            case BattleState.SELECTION:
-            
-                break;
-
             case BattleState.COMMAND:
 
                 if (!Menu && BadParty != null)
                 {
-                    //Menu.Open(BattleParty[i].Player, BadParty);
+                    Menu.Open(battleParty[i].Player);
                 }
                 else
                 {
@@ -123,59 +120,66 @@ public class BattlePlayers : MonoBehaviour
 
                 if (Menu.CommandSelected)
                 {
-                    BattleParty[i].Player.State = BattleState.ACTION;
+                    battleParty[i].Player.State = BattleState.SELECTION;
                 }
                 break;
-
+            case BattleState.SELECTION:
+                IList temp = (IList)BadParty;
+                //Target(temp.Cast<object>());
+                break;
             case BattleState.ACTION:
 
                 Menu.Close();
-                if (Queue.Peek() != null && Queue.Peek().GetCaster().Tag == BattleTag.PLAYER)
+                if (battleParty[i].playerQueue.Peek() != null && battleParty[i].playerQueue.Peek().caster.Tag == BattleTag.PLAYER)
                 {
-                    ActionIface Temp = Queue.Dequeue();
-                    BattleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Attack", true);
+                    ActionIface Temp = battleParty[i].deque();
+                    battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Attack", true);
                     Temp.Execute();
-                    BattleObject.GetComponent<DamageRecieved>().Create(Temp.GetTarget().Battler.transform.localPosition, Temp.GetTarget().ActualDamage);
+                    BattleObject.GetComponent<DamageRecieved>().Create(Temp.target.Battler.transform.localPosition, Temp.target.ActualDamage);
                 }
 
-                if (Queue.Peek() == null)
+                if (battleParty[i].playerQueue.Peek() == null)
                 {
-                    BattleParty[i].Player.State = BattleState.WAIT;
-                    BattleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
+                    battleParty[i].Player.State = BattleState.WAIT;
+                    battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
                     Reset(i);
                 }
                 break;
         }
     }
 
-    void Target()
+    object Target(List<object> targets)
     {
-        // Assume we have an enqueued skill that needs to be constructed
+        // Assume we have an enqueued skill that needs to be constructed    // This is suppoosed to cover negative clause. That's not what it does tho
+        if ((i += ((int)Input.GetAxisRaw("Horizontal"))) < targets.Count || (i += ((int)Input.GetAxisRaw("Horizontal"))) > targets.Count)
+        {
+            return targets[i];
+        }
+        return null;
     }
 
     public void Reset(int i)
     {
-        if (BattleParty[i].Prefab.GetComponent<Gauge>().getFilled() && BattleParty[i].Player.State == BattleState.WAIT)
+        if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled() && battleParty[i].Player.State == BattleState.WAIT)
         {
-            BattleParty[i].Prefab.GetComponent<Gauge>().Reset();
+            battleParty[i].Prefab.GetComponent<Gauge>().Reset();
             Menu.CommandSelected = false;
         }
     }
 
     public Creature GetPlayer(int i)
     {
-        return BattleParty[i].Player;
+        return battleParty[i].Player;
     }
 
     public void CheckHealth(int i)
     {
         // In here goeth the holy calls for Death upon the characters which can behave differently depending on circumstance.
-        if (BattleParty[i].Player.Stats.StatList[(int)StatType.HEALTH].Stat <= 0)
+        if (battleParty[i].Player.Stats.StatList[(int)StatType.HEALTH].Stat <= 0)
         {
             killCount += 1;
             Debug.Log("Kill Count:" + killCount);
         }
-
     }
 
     public bool checkDeath()

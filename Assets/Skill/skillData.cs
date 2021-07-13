@@ -7,38 +7,32 @@ using System.IO;
 public enum AttributeType { PHYSICAL, MAGIC };
 public enum SkillTypes { HEALING, DAMAGING };
 
-
-public class SkillData : ScriptableObject, ActionIface
+public class SkillData : ActionIface
 {
-    public SkillTypes SkillType;
-    public AttributeType Attribute;
-    private string _SkillName;
-    private int _SkillID = 0;
-    private float _Effect;
-    public StatType AffectedStat;
+    public SkillTypes skillType;
+    public AttributeType attribute;
+    private string skillName;
+    private int skillID = 0;
+    private float effect;
+    public StatType affectedStat;
     public int TargetAmount;
-    public Buffers Buffer;
-
 
     [System.NonSerialized]
     public int timer;
-    [System.NonSerialized]
-    Creature Caster;
-    [System.NonSerialized]
-    Creature Target;
+
     [System.NonSerialized]
     CommandQueue Queue;
 
-    private float ActionWeight;
+    private float actionWeight;
 
     public float GetWeight()
     {
-        return ActionWeight;
+        return actionWeight;
     }
 
     public float GetBuff()
     {
-        return _Effect;
+        return effect;
     }
 
     public float Effect
@@ -46,12 +40,12 @@ public class SkillData : ScriptableObject, ActionIface
 
         get
         {
-            return _Effect;
+            return effect;
         }
 
         set
         {
-            _Effect = value;
+            effect = value;
         }
     }
 
@@ -59,12 +53,12 @@ public class SkillData : ScriptableObject, ActionIface
     {
         get
         {
-            return _SkillID;
+            return skillID;
         }
 
         set
         {
-            _SkillID = value;
+            skillID = value;
         }
     }
 
@@ -72,35 +66,34 @@ public class SkillData : ScriptableObject, ActionIface
     {
         get
         {
-            return _SkillName;
+            return skillName;
         }
 
         set
         {
-            _SkillName = value;
+            skillName = value;
         }
     }
 
-    public void Enqueue(Creature C, Creature T)
+    public override void Enqueue(Creature c, Creature t)
     {
         Queue = ScriptableObject.FindObjectOfType<CommandQueue>();
 
-        Caster = C;
-        Target = T;
+        caster = c;
+        target = t;
 
         //This is to determine location of Action in queue not the time to action but I guess it could be that?
-
         //ActionWeight = C.Stats.Speed * C.Stats.Agility / MaxTicks;
 
         if (Queue.Commands.Count > 0)
         {
             for (int i = 1; i < Queue.Commands.Count; i++)
             {
-                if (ActionWeight > Queue.Commands[i].GetWeight())
+                if (actionWeight > Queue.Commands[i].weight)
                 {
                     ActionIface temp = Queue.Commands[i];
-                    Queue.Enqueue(this, i);
-                    Queue.Enqueue(temp, i++);
+                    Queue.Enqueue(this, false);
+                    Queue.Enqueue(temp, true);
                     break;
                 }
                 else
@@ -113,39 +106,27 @@ public class SkillData : ScriptableObject, ActionIface
         {
             Queue.Enqueue(this);
         }
-
     }
 
-    public Creature GetCaster()
+    public override void Execute() // Because Caster will be important for the absorption system
     {
-        return Caster;
-    }
+        Debug.Log(this.target.CreatureName + " BEFORE: ");
+        Debug.Log("Bad Health: " + this.target.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
+        Debug.Log("Bad Magic: " + this.target.Stats.StatList[(int)StatType.MAGIC].Stat.ToString());
 
-    public Creature GetTarget()
-    {
-        return Target;
-    }
-
-
-    public void Execute() // Because Caster will be important for the absorption system
-    {
-        Debug.Log(this.Target.CreatureName + " BEFORE: ");
-        Debug.Log("Bad Health: " + this.Target.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
-        Debug.Log("Bad Magic: " + this.Target.Stats.StatList[(int)StatType.MAGIC].Stat.ToString());
-
-        switch (SkillType)
+        switch (skillType)
         {
             case SkillTypes.HEALING:
-                this.Target.Stats.StatList[(int)AffectedStat].Stat += _Effect;
+                this.target.Stats.StatList[(int)affectedStat].Stat += effect;
                 break;
 
             case SkillTypes.DAMAGING:
-                this.Target.TakeDamage(this.Caster, Effect, 0);
+                this.target.TakeDamage(this.caster, effect, 0);
                 break;
         }
 
-        Debug.Log(this.Target.CreatureName + " AFTER: ");
-        Debug.Log("Bad Health: " + this.Target.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
-        Debug.Log("Bad Magic: " + this.Target.Stats.StatList[(int)StatType.MAGIC].Stat.ToString());
+        Debug.Log(this.target.CreatureName + " AFTER: ");
+        Debug.Log("Bad Health: " + this.target.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
+        Debug.Log("Bad Magic: " + this.target.Stats.StatList[(int)StatType.MAGIC].Stat.ToString());
     }
 }

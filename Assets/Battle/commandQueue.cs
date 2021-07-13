@@ -20,31 +20,26 @@ public class CommandQueue : MonoBehaviour
         commands = new List<ActionIface>();
     }
 
-    public void Enqueue(ActionIface Action, int i = 0)
+    public void enqueue(ActionIface action, bool haste = false)
     {
         if (commands == null)
         {
             commands = new List<ActionIface>();
         }
-
-        /*if (i > 0)
-        {
-            commands[i] = Action; // Enqueue Action above slow persons.
-        }*/
-
         else
         {
-            commands.Add(Action);
+            commands.Add(action);
+            // Set Player state!
         }
     }
 
-    public ActionIface Dequeue()
+    public ActionIface dequeue()
     {
         if (commands.Count > 0)
         {
-            ActionIface Temp = commands[0];
+            ActionIface temp = commands[0];
             commands.RemoveAt(0);
-            return Temp;
+            return temp;
         }
         else
         {

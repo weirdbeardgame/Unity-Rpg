@@ -13,7 +13,6 @@ public enum CommandType { SKILL, ITEM };
 
 public class Battle : MonoBehaviour, IReceiver
 {
-
     Queue<object> Inbox; // The Receiver
     Messaging Messenger;
     BattlePlayers Players;
@@ -123,10 +122,10 @@ public class Battle : MonoBehaviour, IReceiver
     void Update()
     {
         // Run Battle Logic in here
-        for (int i = 0; i < Players.BattleParty.Count; i++)
+        for (int i = 0; i < Players.battleParty.Count; i++)
         {
             Players.Battle(i);
-            BattleObject.GetComponent<commandMenus>().DrawStats(Players.AllCharacters);
+            BattleObject.GetComponent<commandMenus>().DrawStats(Players.allCharacters);
         }
 
         EndBattle();

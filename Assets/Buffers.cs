@@ -9,24 +9,20 @@ public enum BuffType { FLAT, PERCENTAGE }
 
 public class Buffers : ScriptableObject
 {
-
-    public float Buff;
-    public float EffectTimer;
+    public float buff;
+    public float effectTimer;
 
     [System.NonSerialized]
-    float TimeRemaining;
-
-    public BufferEffect Effect;
-    public TimeAmount Timer;
-    public BuffType Type;
-
-
+    float timeRemaining;
+    public BufferEffect effect;
+    public TimeAmount timer;
+    public BuffType type;
     bool IsActive = false;
 
     public void AddBuffer(Creature Target)
     {
-        TimeRemaining = new float();
-        TimeRemaining = EffectTimer;
+        timeRemaining = new float();
+        timeRemaining = effectTimer;
         //Target.Stats.
         //AddBuffer(this);
     }
@@ -34,37 +30,34 @@ public class Buffers : ScriptableObject
 
     public Buffers CreateBuffer(float Buffer, TimeAmount Time, BufferEffect Eff, BuffType T)
     {
-        this.Buff = Buffer;
-        this.Timer = Time;
-        this.Effect = Eff;
-        this.Type = T;
+        this.buff = Buffer;
+        this.timer = Time;
+        this.effect = Eff;
+        this.type = T;
 
         return this;
     }
 
-
-
     public float ApplyOnce() // Item, Basic Skill, Attack
     {
-        return Buff;
+        return buff;
     }
-
 
     public float ApplyPermaBuffers() // Weapon, Absorbtion
     {
         if (!IsActive)
             IsActive = true;
 
-        return Buff;
+        return buff;
     }
 
     public float ApplyTimedBuffer() // Temp Lasting effects Burn, Frost etc. Though those could have a condition rather then a timer.
     {
         // If timer == isActive apply buffer to stats!
-        if (EffectTimer > 0)
+        if (effectTimer > 0)
         {
-            EffectTimer -= 1;
-            return Buff;
+            effectTimer -= 1;
+            return buff;
         }
 
         else
@@ -75,11 +68,11 @@ public class Buffers : ScriptableObject
 
     public void ApplyBuffer(StatManager Stat, int Stat1, int Stat2 = 0, int Stat3 = 0) // Should I assume this is damage?
     {
-        switch (Type)
+        switch (type)
         {
             case BuffType.FLAT:
 
-                switch (Timer)
+                switch (timer)
                 {
                     case TimeAmount.TIMED:
                         Stat.StatList[Stat1].Stat += ApplyTimedBuffer();
