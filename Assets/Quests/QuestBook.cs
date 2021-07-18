@@ -8,7 +8,15 @@ namespace questing
     {
         public List<QuestData> Quests;
 
-        QuestData ActiveQuest;
+        QuestData activeQuest;
+
+        public QuestData getActiveQuest
+        {
+            get
+            {
+                return activeQuest;
+            }
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -22,14 +30,14 @@ namespace questing
 
         public bool IsActive(QuestData curQuest)
         {
-            return ActiveQuest == curQuest;
+            return activeQuest == curQuest;
         }
 
         public void Activate(int QuestD)
         {
             questMessage active = new questMessage();
-            ActiveQuest = Quests[QuestD];
-            ActiveQuest.QuestState = QuestState.IS_ACTIVE;
+            activeQuest = Quests[QuestD];
+            activeQuest.QuestState = QuestState.IS_ACTIVE;
             active.construct(QuestD, QuestState.IS_ACTIVE);
             Debug.Log("Active Quest: " + Quests[QuestD].QuestName);
         }
@@ -37,8 +45,8 @@ namespace questing
         public void Activate(QuestData QuestD)
         {
             questMessage active = new questMessage();
-            ActiveQuest = QuestD;
-            ActiveQuest.QuestState = QuestState.IS_ACTIVE;
+            activeQuest = QuestD;
+            activeQuest.QuestState = QuestState.IS_ACTIVE;
             active.construct(QuestD.QuestID, QuestState.IS_ACTIVE);
             Debug.Log("Active Quest: " + QuestD.QuestName);
         }
@@ -46,7 +54,7 @@ namespace questing
         public void DeActivate(QuestData ID)
         {
             questMessage Active = new questMessage();
-            ActiveQuest.QuestState = QuestState.NOT_ACTIVE;
+            activeQuest.QuestState = QuestState.NOT_ACTIVE;
             Active.construct(ID.QuestID, QuestState.NOT_ACTIVE);
         }
     }

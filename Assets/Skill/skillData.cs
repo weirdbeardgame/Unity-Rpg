@@ -92,8 +92,8 @@ public class SkillData : ActionIface
                 if (actionWeight > Queue.Commands[i].weight)
                 {
                     ActionIface temp = Queue.Commands[i];
-                    Queue.Enqueue(this, false);
-                    Queue.Enqueue(temp, true);
+                    Queue.enqueue(this, false);
+                    Queue.enqueue(temp, true);
                     break;
                 }
                 else
@@ -104,11 +104,11 @@ public class SkillData : ActionIface
         }
         else
         {
-            Queue.Enqueue(this);
+            Queue.enqueue(this);
         }
     }
 
-    public override void Execute() // Because Caster will be important for the absorption system
+    /*public override void Execute() // Because Caster will be important for the absorption system
     {
         Debug.Log(this.target.CreatureName + " BEFORE: ");
         Debug.Log("Bad Health: " + this.target.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
@@ -128,5 +128,5 @@ public class SkillData : ActionIface
         Debug.Log(this.target.CreatureName + " AFTER: ");
         Debug.Log("Bad Health: " + this.target.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
         Debug.Log("Bad Magic: " + this.target.Stats.StatList[(int)StatType.MAGIC].Stat.ToString());
-    }
+    }*/ // The Menu's should never preform an action in the battle system itself! Let the skill system or the battle system itself handle these interactions!
 }

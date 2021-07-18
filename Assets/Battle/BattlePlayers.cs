@@ -22,7 +22,6 @@ public class CharacterInfo
     {
         return playerQueue.dequeue();
     }
-
 }
 
 public class BattlePlayers : MonoBehaviour
@@ -53,7 +52,9 @@ public class BattlePlayers : MonoBehaviour
             Players = FindObjectOfType<Party>();
             for (int j = 0; j < allCharacters.Capacity; j++)
             {
-                allCharacters[j].playerQueue = FindObjectOfType<CommandQueue>();
+                // allCharacters[j].playerQueue = FindObjectOfType<CommandQueue>(); Incorrect! 
+                // Each player could have their own instance! Not look for the one in scene
+                Instantiate<CommandQueue>(allCharacters[j].playerQueue);
             }
             battleParty = new Dictionary<int, CharacterInfo>();
             BattleObject = BattleO;
@@ -124,8 +125,7 @@ public class BattlePlayers : MonoBehaviour
                 }
                 break;
             case BattleState.SELECTION:
-                IList temp = (IList)BadParty;
-                //Target(temp.Cast<object>());
+                Target(BadParty);
                 break;
             case BattleState.ACTION:
 
@@ -148,7 +148,7 @@ public class BattlePlayers : MonoBehaviour
         }
     }
 
-    object Target(List<object> targets)
+    Baddies Target(List<Baddies> targets)
     {
         // Assume we have an enqueued skill that needs to be constructed    // This is suppoosed to cover negative clause. That's not what it does tho
         if ((i += ((int)Input.GetAxisRaw("Horizontal"))) < targets.Count || (i += ((int)Input.GetAxisRaw("Horizontal"))) > targets.Count)

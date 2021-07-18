@@ -82,18 +82,18 @@ public class QuestManager : MonoBehaviour, IReceiver
 
     public void Progress() // progresses through the list of objectives
     {
-
-        /*if (Book.ActiveQuest != null)
+        // Need's rewrite
+        /*if (Book.getActiveQuest != null)
         {
-            switch (Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].Type)
+            switch (Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].Type)
             {
                 case QuestObjectiveType.COLLECT:
-                    if (Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].AmountCollected == Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].RequiredItems[0].RequiredAmount)
+                    if (Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].AmountCollected == Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective].RequiredItems[0].RequiredAmount)
                     {
                         // ADD REWARD
-                        Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].State = QuestObjectiveState.COMPLETED;
-                        Book.ActiveQuest.ActiveObjective++;
-                        if (Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective] == null)
+                        Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].State = QuestObjectiveState.COMPLETED;
+                        //Book.getActiveQuest.ActiveObjective.ObjectiveID++;
+                        if (Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID] == null)
                         {
                             Complete();
                         }
@@ -101,11 +101,11 @@ public class QuestManager : MonoBehaviour, IReceiver
                     }
                     break;
                 case QuestObjectiveType.KILL:
-                    if (Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].AmountCollected == Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].RequiredItems[0].RequiredAmount)
+                    if (Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].AmountCollected == Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective].RequiredItems[0].RequiredAmount)
                     {
                         // ADD REWARD
-                        Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].State = QuestObjectiveState.COMPLETED;
-                        Book.ActiveQuest.ActiveObjective++;
+                        Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].State = QuestObjectiveState.COMPLETED;
+                        //Book.getActiveQuest.ActiveObjective++;
                     }
                     break;
             }

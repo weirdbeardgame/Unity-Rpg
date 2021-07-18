@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class commandMenus : MonoBehaviour
 {
 
@@ -41,6 +40,7 @@ public class commandMenus : MonoBehaviour
 
     bool init;
     bool isOpened;
+
     // The issue with this is the enemy targeting system is in here instead of directly attached to the battle system like it should be.
     // This should be a state the characters can be in ABS style!
     bool targeting;
@@ -75,7 +75,6 @@ public class commandMenus : MonoBehaviour
         {
             widgetIndex += 1;
             arrow.transform.SetParent(widgets[widgetIndex].transform);
-
         }
 
         else

@@ -17,7 +17,7 @@ namespace questing
         public List<Flags> Flag; // Multiple flags set and requiured?
         public FlagReqSet FlagRequirement;
 
-        QuestObjective ActiveObjective;
+        public QuestObjective ActiveObjective;
 
         public QuestState QuestState;
 

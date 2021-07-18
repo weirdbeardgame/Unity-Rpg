@@ -35,8 +35,7 @@ public class BattleItemMenu : BattleMIface
 
     }
 
-
-    public void Open()
+    public override void Open()
     {
         //menu.Close();
 
@@ -45,7 +44,6 @@ public class BattleItemMenu : BattleMIface
 
 
             Instantiate(Temp);
-            menu.AddWidget(Temp);
         }
     }
 
