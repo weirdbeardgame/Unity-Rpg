@@ -9,24 +9,16 @@ public class commandMenus : MonoBehaviour
 
     //Player Menus
     SortedDictionary<JobSystem, BattleMIface> Menus;
-
     BattleMIface cMenu;
-
     // Action Menus (Item, Skills, Magic)
     SortedDictionary<int, BattleMIface> SubMenus;
-
-    MenuControls controls;
-
+    BattleControls controls;
     List<GameObject> widgets;
     GameObject selectedWidget;
-
     Gauge gauge;
-
     int widgetIndex = 0;
     int index = 0;
-
     Creature opened;
-
     GameObject Commands;
     GameObject PlayerStatus;
     GameObject Panel;
@@ -60,7 +52,7 @@ public class commandMenus : MonoBehaviour
         Commands = GameObject.Find("Command Screen");
         Commands.GetComponent<Image>().enabled = false;
 
-        controls = GetComponent<MenuControls>();
+        controls = GetComponent<BattleControls>();
 
         // Widgets = new List<Widget>();
         message = FindObjectOfType<Messaging>();
@@ -148,24 +140,6 @@ public class commandMenus : MonoBehaviour
         SubMenus[index].Open();
     }
 
-    public void AddMenu(JobSystem j, BattleMIface m)
-    {
-        if (Menus == null)
-        {
-            Initlaize();
-        }
-
-        if (!Menus.ContainsKey(j))
-        {
-            Menus.Add(j, m);
-        }
-    }
-
-    public void AddSubMenu(int i, BattleMIface m)
-    {
-        SubMenus.Add(i, m);
-    }
-
     public void DrawStats(List<CharacterInfo> Battlers)
     {
         if (!init)
@@ -211,7 +185,17 @@ public class commandMenus : MonoBehaviour
             }
 
             // Process input in here
+            widgetIndex += controls.index();
 
+            if (controls.submit())
+            {
+                widgets[widgetIndex].GetComponent<Widget>().Execute();
+            }
+
+            if (controls.back())
+            {
+                // Back out of current selection or menu
+            }
         }
     }
 }

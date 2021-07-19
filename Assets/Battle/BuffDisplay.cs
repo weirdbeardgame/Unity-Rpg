@@ -6,7 +6,6 @@ using TMPro;
 
 public class BuffDisplay : MonoBehaviour
 {
-
     DamageRecieved Damage;
 
 

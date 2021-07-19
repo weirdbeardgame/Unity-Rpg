@@ -16,6 +16,7 @@ public class Battle : MonoBehaviour, IReceiver
     Queue<object> Inbox; // The Receiver
     Messaging Messenger;
     BattlePlayers Players;
+    BattleSlots slots;
     Enemies Enemy;
     Skills Skills;
     List<Baddies> BadParty;
@@ -59,6 +60,8 @@ public class Battle : MonoBehaviour, IReceiver
         Enemy = BattleObject.AddComponent<Enemies>();
         Enemy = Enemy.Initalize();
 
+        slots = BattleObject.GetComponent<BattleSlots>();
+
         Messenger = FindObjectOfType<Messaging>();
         Inbox = new Queue<object>();
 
@@ -79,6 +82,7 @@ public class Battle : MonoBehaviour, IReceiver
         {
             Enemy.EnemyData[i].createBattler(X, Y);
             BadParty.Add(Enemy.EnemyData[i]);
+            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, Enemy.EnemyData[i], i);
             Y += 1;
         }
 
@@ -88,6 +92,7 @@ public class Battle : MonoBehaviour, IReceiver
             Players.Initialize(GameObject.Find(i.ToString()), BattleObject, BadParty, i);
             PlayerObjects[i] = Players.CreateCharacterById(i);
             DontDestroyOnLoad(PlayerObjects[i]);
+            slots.createSlots(SlotPosition.FRONT, BattleTag.PLAYER, Players.GetPlayer(i), i);
         }
     }
 

@@ -21,7 +21,6 @@ public class BattleItemMenu : BattleMIface
     public void Add()
     {
         menu = FindObjectOfType<commandMenus>();
-        menu.AddSubMenu(0, this);
     }
 
     void use()
@@ -41,8 +40,6 @@ public class BattleItemMenu : BattleMIface
 
         for (int i = 0; i < inventory.ItemList.Count; i++)
         {
-
-
             Instantiate(Temp);
         }
     }

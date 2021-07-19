@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum SlotPosition { FRONT, BACK };
+public enum SlotPosition { FRONT, BACK };
 
 struct Slot
 {
@@ -35,8 +35,7 @@ struct Slot
 }
 public class BattleSlots : MonoBehaviour
 {
-
-     Dictionary<SlotPosition, Slot> battleSlots;
+    Dictionary<SlotPosition, Slot> battleSlots;
     Slot newSlot;
 
     // Start is called before the first frame update
@@ -45,7 +44,7 @@ public class BattleSlots : MonoBehaviour
 
     }
 
-    void CreateSlots(SlotPosition pos, BattleTag type, Creature c, int requestedSlotCount)
+    public void createSlots(SlotPosition pos, BattleTag type, Creature c, int requestedSlotCount)
     {
         battleSlots = new Dictionary<SlotPosition, Slot>();
         for (int i = 0; i < requestedSlotCount; i++)
@@ -56,9 +55,14 @@ public class BattleSlots : MonoBehaviour
         }
     }
 
-    void move(SlotPosition pos, Creature c, BattleTag t)
+    public void move(SlotPosition pos, Creature c, BattleTag t)
     {
         battleSlots[pos].moveSlot(t, c);
+    }
+
+    public void destroySlot(SlotPosition pos)
+    {
+        battleSlots[pos].destroySlot();
     }
 
     // Update is called once per frame

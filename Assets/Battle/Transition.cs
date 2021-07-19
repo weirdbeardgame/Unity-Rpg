@@ -28,7 +28,6 @@ public class Transition : MonoBehaviour
     GameObject BattleObject;
     Camera battleCamera;
 
-
     [SerializeField] string mapLoad = "BattleScene";
     [SerializeField] int index = 1;
     [SerializeField] int X = 0;
