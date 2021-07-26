@@ -128,7 +128,7 @@ public class ItemEditor : EditorWindow
             EditorGUILayout.LabelField("Stat Affected");
             Items[SelectedIndex].Effect.Effect = (AreaOfEffect)EditorGUILayout.EnumPopup(Items[SelectedIndex].Effect.Effect);
             EditorGUILayout.LabelField("Buffer: ");
-            Items[SelectedIndex].Effect.Buff.Stat = EditorGUILayout.FloatField(Items[SelectedIndex].Effect.Buff.Stat);
+            Items[SelectedIndex].Effect.Buff.stat = EditorGUILayout.FloatField(Items[SelectedIndex].Effect.Buff.stat);
             GUILayout.EndVertical();
             GUILayout.EndArea();
         }

@@ -86,9 +86,9 @@ public class BattlePlayers : MonoBehaviour
     {
         if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled())
         {
-            if (battleParty[i].Player.State == BattleState.WAIT)
+            if (battleParty[i].Player.state == BattleState.WAIT)
             {
-                battleParty[i].Player.State = BattleState.COMMAND;
+                //battleParty[i].Player.state = BattleState.COMMAND;
             }
 
             else
@@ -100,15 +100,15 @@ public class BattlePlayers : MonoBehaviour
 
     public void Battle(int i)
     {
-        switch (battleParty[i].Player.State)
+        switch (battleParty[i].Player.state)
         {
 
             case BattleState.WAIT:
                 battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
-                battleParty[i].Prefab.GetComponent<Gauge>().fill(battleParty[i].Player.Stats.StatList[(int)StatType.SPEED].Stat);
+                battleParty[i].Prefab.GetComponent<Gauge>().fill(battleParty[i].Player.Stats.statList[(int)StatType.SPEED].stat);
                 if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled())
                 {
-                    battleParty[i].Player.State = BattleState.COMMAND;
+                    //battleParty[i].Player.state = BattleState.COMMAND;
                 }
                 break;
             case BattleState.COMMAND:
@@ -124,7 +124,7 @@ public class BattlePlayers : MonoBehaviour
 
                 if (Menu.CommandSelected)
                 {
-                    battleParty[i].Player.State = BattleState.SELECTION;
+                    //battleParty[i].Player.state = BattleState.SELECTION;
                 }
                 break;
             case BattleState.SELECTION:
@@ -138,12 +138,12 @@ public class BattlePlayers : MonoBehaviour
                     ActionIface Temp = battleParty[i].deque();
                     battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Attack", true);
                     Temp.Execute();
-                    BattleObject.GetComponent<DamageRecieved>().Create(Temp.target.Battler.transform.localPosition, Temp.target.ActualDamage);
+                    BattleObject.GetComponent<DamageRecieved>().Create(Temp.target.Battler.transform.localPosition, Temp.target.actualDamage);
                 }
 
                 if (battleParty[i].playerQueue.Peek() == null)
                 {
-                    battleParty[i].Player.State = BattleState.WAIT;
+                    //battleParty[i].Player.state = BattleState.WAIT;
                     battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
                     Reset(i);
                 }
@@ -163,7 +163,7 @@ public class BattlePlayers : MonoBehaviour
 
     public void Reset(int i)
     {
-        if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled() && battleParty[i].Player.State == BattleState.WAIT)
+        if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled() && battleParty[i].Player.state == BattleState.WAIT)
         {
             battleParty[i].Prefab.GetComponent<Gauge>().Reset();
             Menu.CommandSelected = false;
@@ -178,7 +178,7 @@ public class BattlePlayers : MonoBehaviour
     public void CheckHealth(int i)
     {
         // In here goeth the holy calls for Death upon the characters which can behave differently depending on circumstance.
-        if (battleParty[i].Player.Stats.StatList[(int)StatType.HEALTH].Stat <= 0)
+        if (battleParty[i].Player.Stats.statList[(int)StatType.HEALTH].stat <= 0)
         {
             killCount += 1;
             Debug.Log("Kill Count:" + killCount);

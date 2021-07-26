@@ -9,7 +9,7 @@ using UnityEngine;
 public class Player : Creature
 {
     public string SpritePath;
-    public int Level;
+    public int level;
     public void Kill()
     {
         // A later to be implemented Death function. I'm still betting on an afterlife mechanic.
@@ -20,19 +20,19 @@ public class Player : Creature
         // Increase level Int. Increase Stats 
     }
 
-    public void Equip(Appendage Index, Weapon WeaponToEquip)
+    public void Equip(Appendage append, Weapon WeaponToEquip)
     {
-        WeaponToEquip.Equip((int)Index, this);
+        WeaponToEquip.Equip((int)append, this);
     }
 
     public void Dequip(Appendage Slot, WeaponData WeaponToRemove)
     {
-        WeaponToRemove.Dequip(Slots[(int)Slot]);
+        WeaponToRemove.Dequip(slots[(int)Slot]);
     }
 
     void ApplyWeaponBuffs()
     {
-
+        // Things like. Str +5 or Spd +2 or whatever.
     }
 
 }

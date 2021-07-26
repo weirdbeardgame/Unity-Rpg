@@ -105,6 +105,6 @@ public class ItemData : ScriptableObject
 
     public void Use(Creature Creature)
     {
-        Creature.Stats.StatList[(int)Effect.Effect].Stat += Effect.Buff.Stat;
+        Creature.Stats.statList[(int)Effect.Effect].stat += Effect.Buff.stat;
     }
 }

@@ -13,7 +13,17 @@ public enum Appendage { LLEG, RLEG, LHAND, RHAND, HEAD };
 public class Creature : senderInterface
 {
     public StatManager Stats;
-    private weaponSlots[] slots;
+    public weaponSlots[] slots
+    {
+        get
+        {
+            return slots;
+        }
+        private set
+        {
+            slots = value;
+        }
+    }
 
     BattleTag _Tag;
 
@@ -90,8 +100,8 @@ public class Creature : senderInterface
     public float TakeDamage(Creature Attacker, float BaseDMG, Appendage WeaponSlot)
     {
         OneTime = new Buffers();
-        Buff = Attacker.Stats.StatList[(int)StatType.STRENGTH].Stat + BaseDMG; // Note that base damage is basic attack skills damage
-        actualDamage = Buff - Stats.StatList[(int)StatType.DEFENSE].Stat;
+        Buff = Attacker.Stats.statList[(int)StatType.STRENGTH].stat + BaseDMG; // Note that base damage is basic attack skills damage
+        actualDamage = Buff - Stats.statList[(int)StatType.DEFENSE].stat;
         OneTime = OneTime.CreateBuffer(-actualDamage, TimeAmount.ONCE, BufferEffect.NORMAL, BuffType.FLAT);
         OneTime.ApplyBuffer(Stats, (int)StatType.HEALTH);
         return actualDamage;

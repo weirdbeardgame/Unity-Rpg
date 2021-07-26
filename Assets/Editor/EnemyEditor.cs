@@ -100,15 +100,15 @@ public class EnemyEditorWindow : EditorWindow
                 EditorGUILayout.LabelField("Level");
                 Edit.Level = EditorGUILayout.IntField(Edit.Level);
                 EditorGUILayout.LabelField("Health");
-                Edit.Stats.StatList[(int)StatType.HEALTH].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.HEALTH].Stat);
+                Edit.Stats.statList[(int)StatType.HEALTH].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.HEALTH].stat);
                 EditorGUILayout.LabelField("Strength");
-                Edit.Stats.StatList[(int)StatType.STRENGTH].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.STRENGTH].Stat);
+                Edit.Stats.statList[(int)StatType.STRENGTH].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.STRENGTH].stat);
                 EditorGUILayout.LabelField("Magic");
-                Edit.Stats.StatList[(int)StatType.MAGIC].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.MAGIC].Stat);
+                Edit.Stats.statList[(int)StatType.MAGIC].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.MAGIC].stat);
                 EditorGUILayout.LabelField("Speed");
-                Edit.Stats.StatList[(int)StatType.SPEED].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.SPEED].Stat);
+                Edit.Stats.statList[(int)StatType.SPEED].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.SPEED].stat);
                 EditorGUILayout.LabelField("Defense");
-                Edit.Stats.StatList[(int)StatType.DEFENSE].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.DEFENSE].Stat);
+                Edit.Stats.statList[(int)StatType.DEFENSE].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.DEFENSE].stat);
                 EditorGUILayout.LabelField("Job");
                 Edit.Job = (JobSystem)EditorGUILayout.EnumPopup(Edit.Job);
             }

@@ -64,14 +64,14 @@ public class Item : MonoBehaviour
         {
             _Items[ItemID].Use(creature);
 
-            Debug.Log("Health" + creature.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
+            Debug.Log("Health" + creature.Stats.statList[(int)StatType.HEALTH].stat.ToString());
         }
     }
 
     public void Use(Creature creature, ItemData Item)
     {
             Item.Use(creature); // Then why ItemList
-            Debug.Log("Health" + creature.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
+            Debug.Log("Health" + creature.Stats.statList[(int)StatType.HEALTH].stat.ToString());
     }
 
 

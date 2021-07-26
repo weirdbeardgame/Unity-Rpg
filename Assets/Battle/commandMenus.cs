@@ -149,8 +149,8 @@ public class commandMenus : MonoBehaviour
             PlayerStatSlot3 = GameObject.Find("Stat3");
         }
 
-        PlayerStatSlot1.GetComponent<TextMeshProUGUI>().SetText(Battlers[0].Player.CreatureName + ':' + " Health: " + Battlers[0].Player.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
-        PlayerStatSlot2.GetComponent<TextMeshProUGUI>().SetText(Battlers[1].Player.CreatureName + ':' + " Health: " + Battlers[1].Player.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
+        PlayerStatSlot1.GetComponent<TextMeshProUGUI>().SetText(Battlers[0].Player.CreatureName + ':' + " Health: " + Battlers[0].Player.Stats.statList[(int)StatType.HEALTH].stat.ToString());
+        PlayerStatSlot2.GetComponent<TextMeshProUGUI>().SetText(Battlers[1].Player.CreatureName + ':' + " Health: " + Battlers[1].Player.Stats.statList[(int)StatType.HEALTH].stat.ToString());
         //PlayerStatSlot3.GetComponent<TextMeshProUGUI>().SetText(Battlers[2].CreatureName + ':' + " Health: " + Battlers[2].Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
     }
 

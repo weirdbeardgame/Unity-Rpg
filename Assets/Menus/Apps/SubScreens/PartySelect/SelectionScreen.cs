@@ -29,7 +29,7 @@ public class SelectionScreen : AppData
             AddWidget(CharacterSelect.GetComponent<SelectorWidget>(), 0);
             CharacterSelect.transform.SetParent(ToParent.transform);
             CharacterSelect.transform.localPosition = ToParent.transform.localPosition;
-            CharacterSelect.GetComponentInChildren<TextMeshProUGUI>().text = Member.Stats.StatList[(int)Item.Effect.Effect].ToString();
+            CharacterSelect.GetComponentInChildren<TextMeshProUGUI>().text = Member.Stats.statList[(int)Item.Effect.Effect].ToString();
         }
     }
 

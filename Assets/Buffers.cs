@@ -75,44 +75,44 @@ public class Buffers : ScriptableObject
                 switch (timer)
                 {
                     case TimeAmount.TIMED:
-                        Stat.StatList[Stat1].Stat += ApplyTimedBuffer();
+                        Stat.statList[Stat1].stat += ApplyTimedBuffer();
 
                         if (Stat2 > 0)
                         {
-                            Stat.StatList[Stat2].Stat += ApplyTimedBuffer();
+                            Stat.statList[Stat2].stat += ApplyTimedBuffer();
                         }
 
                         if (Stat3 > 0)
                         {
-                            Stat.StatList[Stat3].Stat += ApplyTimedBuffer();
+                            Stat.statList[Stat3].stat += ApplyTimedBuffer();
                         }
                         break;
 
                     case TimeAmount.ONCE:
-                        Stat.StatList[Stat1].Stat += ApplyOnce();
+                        Stat.statList[Stat1].stat += ApplyOnce();
 
                         if (Stat2 > 0)
                         {
-                            Stat.StatList[Stat2].Stat += ApplyOnce();
+                            Stat.statList[Stat2].stat += ApplyOnce();
                         }
 
                         if (Stat3 > 0)
                         {
-                            Stat.StatList[Stat3].Stat += ApplyOnce();
+                            Stat.statList[Stat3].stat += ApplyOnce();
                         }
                         break;
 
                     case TimeAmount.PERMA:
-                        Stat.StatList[Stat1].Stat += ApplyPermaBuffers();
+                        Stat.statList[Stat1].stat += ApplyPermaBuffers();
 
                         if (Stat2 > 0)
                         {
-                            Stat.StatList[Stat2].Stat += ApplyPermaBuffers();
+                            Stat.statList[Stat2].stat += ApplyPermaBuffers();
                         }
 
                         if (Stat3 > 0)
                         {
-                            Stat.StatList[Stat3].Stat += ApplyPermaBuffers();
+                            Stat.statList[Stat3].stat += ApplyPermaBuffers();
                         }
                         break;
                 }

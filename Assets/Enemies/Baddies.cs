@@ -112,7 +112,7 @@ public class Baddies : Creature
 
     public bool checkHealth()
     {
-        if (Stats.StatList[(int)StatType.HEALTH].Stat <= 0)
+        if (Stats.statList[(int)StatType.HEALTH].stat <= 0)
         {
             // Increase Kill Counter
             return false;
