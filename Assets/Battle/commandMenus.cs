@@ -140,7 +140,7 @@ public class commandMenus : MonoBehaviour
         SubMenus[index].Open();
     }
 
-    public void DrawStats(List<CharacterInfo> Battlers)
+    public void DrawStats(Dictionary<int, CharacterInfo> Battlers)
     {
         if (!init)
         {

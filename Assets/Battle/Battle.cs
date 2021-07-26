@@ -90,7 +90,7 @@ public class Battle : MonoBehaviour, IReceiver
         {
             PlayerObjects[i] = new GameObject();
             Players.Initialize(GameObject.Find(i.ToString()), BattleObject, BadParty, i);
-            PlayerObjects[i] = Players.CreateCharacterById(i);
+            //PlayerObjects[i] = Players.CreateCharacterById(i);
             DontDestroyOnLoad(PlayerObjects[i]);
             slots.createSlots(SlotPosition.FRONT, BattleTag.PLAYER, Players.GetPlayer(i), i);
         }
@@ -130,9 +130,8 @@ public class Battle : MonoBehaviour, IReceiver
         for (int i = 0; i < Players.battleParty.Count; i++)
         {
             Players.Battle(i);
-            BattleObject.GetComponent<commandMenus>().DrawStats(Players.allCharacters);
+            BattleObject.GetComponent<commandMenus>().DrawStats(Players.battleParty);
         }
-
         EndBattle();
     }
 

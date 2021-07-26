@@ -13,6 +13,13 @@ public class CharacterInfo
     public Creature Player;
     public CommandQueue playerQueue;
 
+    public void init(Creature c, GameObject pre, int i)
+    {
+        ID = i;
+        Prefab = pre;
+        Player = c;
+    }
+
     public void enque(ActionIface i)
     {
         playerQueue.enqueue(i);
@@ -27,10 +34,7 @@ public class CharacterInfo
 public class BattlePlayers : MonoBehaviour
 {
     Party Players;
-    public List<CharacterInfo> allCharacters;
-
     public Dictionary<int, CharacterInfo> battleParty;
-
     CharacterInfo Temp;
 
     public bool isInitalized = false;
@@ -45,29 +49,28 @@ public class BattlePlayers : MonoBehaviour
 
     GameObject BattleObject;
 
-    public Dictionary<int, CharacterInfo> Initialize(GameObject Battle, GameObject BattleO, List<Baddies> Bad, int i)
+    public Dictionary<int, CharacterInfo> Initialize(GameObject playerPrefab, GameObject BattleO, List<Baddies> Bad, int i)
     {
         if (!isInitalized)
         {
             Players = FindObjectOfType<Party>();
-            for (int j = 0; j < allCharacters.Capacity; j++)
+            battleParty = new Dictionary<int, CharacterInfo>();
+            // Grab the top 3 members of the party
+            for (int j = 0; j < 2; j++)
             {
+                CharacterInfo c = new CharacterInfo();
+                c.playerQueue = new CommandQueue();
+                c.init(Players.PartyMembers[j], playerPrefab, j);
+                battleParty.Add(j, c);
+
                 // allCharacters[j].playerQueue = FindObjectOfType<CommandQueue>(); Incorrect! 
                 // Each player could have their own instance! Not look for the one in scene
-                Instantiate<CommandQueue>(allCharacters[j].playerQueue);
+//                DontDestroyOnLoad(battleParty[j].Prefab);
             }
-            battleParty = new Dictionary<int, CharacterInfo>();
+
             BattleObject = BattleO;
             isInitalized = true;
             Menu = FindObjectOfType<commandMenus>();
-
-            if (Players != null)
-            {
-                BadParty = Bad;
-                allCharacters[i].Player = Players.PartyMembers[i];
-                battleParty.Add(i, allCharacters[i]);
-                DontDestroyOnLoad(battleParty[i].Prefab);
-            }
         }
         return battleParty;
     }

@@ -10,10 +10,9 @@ public class Player : Creature
 {
     public string SpritePath;
     public int Level;
-
     public void Kill()
     {
-        // A later to be implemented Death function
+        // A later to be implemented Death function. I'm still betting on an afterlife mechanic.
     }
 
     public void LevelUp()

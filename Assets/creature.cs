@@ -13,7 +13,7 @@ public enum Appendage { LLEG, RLEG, LHAND, RHAND, HEAD };
 public class Creature : senderInterface
 {
     public StatManager Stats;
-    private weaponSlots[] _Slots;
+    private weaponSlots[] slots;
 
     BattleTag _Tag;
 
@@ -21,27 +21,32 @@ public class Creature : senderInterface
 
     JobSystem _Job;
 
-    BattleState _State;
+    public BattleState state
+    {
+        get
+        {
+            return state;
+        }
+        private set
+        {
+            state = value;
+        }
+    }
 
     float Buff;
 
     Buffers OneTime;
-    float _ActualDamage = 0;
-
-
-    public weaponSlots[] Slots
+    public float actualDamage
     {
         get
         {
-            return _Slots;
+            return actualDamage;
         }
-
-        set
+        private set
         {
-            _Slots = value;
+            actualDamage = value;
         }
     }
-
 
     public BattleTag Tag
     {
@@ -56,7 +61,6 @@ public class Creature : senderInterface
         }
     }
 
-
     public JobSystem Job
     {
         get
@@ -70,30 +74,15 @@ public class Creature : senderInterface
         }
     }
 
-    public BattleState State
-    {
-        get
-        {
-            return _State;
-        }
-
-        set
-        {
-            _State = value;
-        }
-    }
-
     public string CreatureName;
-
-    Appendage _Appendage;
 
     public void createWeaponSlots()
     {
-        Slots = new weaponSlots[5];
+        slots = new weaponSlots[5];
 
         for (int i = 0; i < 5; i++)
         {
-            Slots[i] = new weaponSlots((Appendage)i, _Job);
+            slots[i] = new weaponSlots((Appendage)i, _Job);
         }
     }
 
@@ -102,22 +91,13 @@ public class Creature : senderInterface
     {
         OneTime = new Buffers();
         Buff = Attacker.Stats.StatList[(int)StatType.STRENGTH].Stat + BaseDMG; // Note that base damage is basic attack skills damage
-        _ActualDamage = Buff - Stats.StatList[(int)StatType.DEFENSE].Stat;
-        OneTime = OneTime.CreateBuffer(-_ActualDamage, TimeAmount.ONCE, BufferEffect.NORMAL, BuffType.FLAT);
+        actualDamage = Buff - Stats.StatList[(int)StatType.DEFENSE].Stat;
+        OneTime = OneTime.CreateBuffer(-actualDamage, TimeAmount.ONCE, BufferEffect.NORMAL, BuffType.FLAT);
         OneTime.ApplyBuffer(Stats, (int)StatType.HEALTH);
-        return _ActualDamage;
+        return actualDamage;
     }
 
-
-    public float ActualDamage
-    {
-        get
-        {
-            return _ActualDamage;
-        }
-    }
-
-    /*public void ApplyBuffs(Buffers Buff)
+    public void ApplyBuffs(Buffers Buff)
     {
 
     }
@@ -125,21 +105,19 @@ public class Creature : senderInterface
     public void ApplyDebuffs(Buffers Buff)
     {
 
-    }Potental later design */
-
+    }
     public weaponSlots GetSlot(Appendage app)
     {
-        return Slots[(int)app];
+        return slots[(int)app];
     }
 
     public void send(object message)
     {
-        // I could maybe see this being used?
+        
     }
 
     public Creature getCreature()
     {
         return this;
     }
-
 }

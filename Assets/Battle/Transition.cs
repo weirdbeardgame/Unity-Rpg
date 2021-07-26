@@ -9,34 +9,27 @@ using menu;
 public class Transition : MonoBehaviour
 {
     Scene CurrentScene;
-
     StateMachine states;
-
     Party playerParty;
     Battle battle;
     Messaging message;
-
     gameStateMessage batttleStartMessage;
-
     commandMenus Menus;
-
     Vector2 v2;
-
     GameObject scripts;
     GameObject mainCamera;
-
     GameObject BattleObject;
     Camera battleCamera;
-
-    [SerializeField] string mapLoad = "BattleScene";
-    [SerializeField] int index = 1;
-    [SerializeField] int X = 0;
-    [SerializeField] int Y = 0;
-
+    [SerializeField]
+    string mapLoad = "BattleScene";
+    [SerializeField] 
+    int index = 1;
+    [SerializeField]
+    int X = 0;
+    [SerializeField]
+    int Y = 0;
     int PreviousIndex;
-
     PlayerMovement move;
-
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +71,7 @@ public class Transition : MonoBehaviour
                 battle = BattleObject.AddComponent<Battle>();
                 Menus = FindObjectOfType<commandMenus>();
 
-                //Menus.Initlaize();
+                Menus.Initlaize();
 
                 BattleObject.AddComponent<BattleItemMenu>();
                 BattleObject.AddComponent<BattleSlots>();
@@ -93,7 +86,6 @@ public class Transition : MonoBehaviour
 
                 message.Init();
 
-
                 BattleObject.AddComponent<Skills>();
                 BattleObject.AddComponent<CommandQueue>();
 
@@ -103,7 +95,7 @@ public class Transition : MonoBehaviour
             }
 
             Scene load = SceneManager.GetSceneByName(mapLoad);
-            //SceneManager.MoveGameObjectToScene(other.gameObject, load);
+            SceneManager.MoveGameObjectToScene(other.gameObject, load);
         }
     }
 }

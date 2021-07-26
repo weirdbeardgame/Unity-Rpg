@@ -10,8 +10,7 @@ using System.Collections.Generic;
 public class playerEditorWindow : EditorWindow
 {
     List<Player> Editable;
-
-    Player Edit;
+    Player edit;
     string filePath = "Assets/Player/Actors.json";
     string jsonData;
 
@@ -73,12 +72,12 @@ public class playerEditorWindow : EditorWindow
                 Names = new List<string>();
             }
 
-            Edit = new Player();
-            Edit.CreatureName = PlayerName;
-            Edit.Stats = new StatManager();
-            Edit.Stats.Initalize();
+            edit = new Player();
+            edit.CreatureName = PlayerName;
+            edit.Stats = new StatManager();
+            edit.Stats.Initalize();
 
-            Editable.Add(Edit);
+            Editable.Add(edit);
             Names.Add(PlayerName);
             Repaint();
         }
@@ -86,28 +85,28 @@ public class playerEditorWindow : EditorWindow
         if (Editable != null && Editable.Count > 0)
         {
             Index = EditorGUILayout.Popup(Index, Names.ToArray());
-            Edit = Editable[Index];
+            edit = Editable[Index];
 
-            if (Edit != null)
+            if (edit != null)
             {
                 //Rect spriteRect = new Rect();
                 //spriteRect.position = new Vector2(10, 10);
                 //sprite = (Sprite)EditorGUI.ObjectField(spriteRect, sprite, typeof(Texture2D), false);
 
                 EditorGUILayout.LabelField("Level");
-                Edit.Level = EditorGUILayout.IntField(Edit.Level);
+                edit.Level = EditorGUILayout.IntField(edit.Level);
                 EditorGUILayout.LabelField("Health");
-                Edit.Stats.StatList[(int)StatType.HEALTH].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.HEALTH].Stat);
+                edit.Stats.StatList[(int)StatType.HEALTH].Stat = EditorGUILayout.FloatField(edit.Stats.StatList[(int)StatType.HEALTH].Stat);
                 EditorGUILayout.LabelField("Strength");
-                Edit.Stats.StatList[(int)StatType.STRENGTH].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.STRENGTH].Stat);
+                edit.Stats.StatList[(int)StatType.STRENGTH].Stat = EditorGUILayout.FloatField(edit.Stats.StatList[(int)StatType.STRENGTH].Stat);
                 EditorGUILayout.LabelField("Magic");
-                Edit.Stats.StatList[(int)StatType.MAGIC].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.MAGIC].Stat);
+                edit.Stats.StatList[(int)StatType.MAGIC].Stat = EditorGUILayout.FloatField(edit.Stats.StatList[(int)StatType.MAGIC].Stat);
                 EditorGUILayout.LabelField("Speed");
-                Edit.Stats.StatList[(int)StatType.SPEED].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.SPEED].Stat);
+                edit.Stats.StatList[(int)StatType.SPEED].Stat = EditorGUILayout.FloatField(edit.Stats.StatList[(int)StatType.SPEED].Stat);
                 EditorGUILayout.LabelField("Defense");
-                Edit.Stats.StatList[(int)StatType.DEFENSE].Stat = EditorGUILayout.FloatField(Edit.Stats.StatList[(int)StatType.DEFENSE].Stat);
+                edit.Stats.StatList[(int)StatType.DEFENSE].Stat = EditorGUILayout.FloatField(edit.Stats.StatList[(int)StatType.DEFENSE].Stat);
                 EditorGUILayout.LabelField("Job");
-                Edit.Job = (JobSystem)EditorGUILayout.EnumPopup(Edit.Job);
+                edit.Job = (JobSystem)EditorGUILayout.EnumPopup(edit.Job);
             }
         }
         GUILayout.FlexibleSpace();
