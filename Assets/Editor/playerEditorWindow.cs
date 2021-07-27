@@ -86,9 +86,9 @@ public class playerEditorWindow : EditorWindow
 
             if (edit != null)
             {
-                Rect spriteRect = new Rect();
+                /*Rect spriteRect = new Rect();
                 spriteRect.position = new Vector2(10, 10);
-                sprite = (Sprite)EditorGUI.ObjectField(spriteRect, sprite, typeof(Texture2D), false);
+                sprite = (Sprite)EditorGUI.ObjectField(spriteRect, sprite, typeof(Texture2D), false);*/
 
                 EditorGUILayout.LabelField("Level");
                 edit.level = EditorGUILayout.IntField(edit.level);
@@ -119,7 +119,6 @@ public class playerEditorWindow : EditorWindow
     {
         this.Repaint();
     }
-
 
     [MenuItem("Window/Player")]
     public static void ShowWindow()

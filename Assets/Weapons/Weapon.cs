@@ -35,15 +35,12 @@ public class Weapon : MonoBehaviour
         return Weapons[Weapon];
     }
 
-    public void Equip(int Index, Creature equipTO)
+    public void Equip(int index, Creature equipTO)
     {
 
-        int Weapon = Index - 1;
-
-        Debug.Log("Weapon Index: " + Weapon.ToString());
-        Debug.Log("Weapon Name: " + Weapons[Weapon].WeaponName);
-
-        Weapons[Weapon].Equip(Weapons[Weapon], equipTO.getCreature().GetSlot(Weapons[Weapon].Appendage));
+        Debug.Log("Weapon Index: " + index.ToString());
+        Debug.Log("Weapon Name: " + Weapons[index].WeaponName);
+        Weapons[index].Equip(Weapons[index], equipTO.GetSlot(Weapons[index].Appendage));
     }
 
     // Update is called once per frame

@@ -32,7 +32,7 @@ public class QuestManager : MonoBehaviour, IReceiver
 
     public void Subscribe()
     {
-        //Messenger.Subscribe(MessageType.QUEST, this);
+        Messenger.Subscribe(MessageType.QUEST, this);
         //Messenger.Subscribe(MessageType.INVENTORY, this);
     }
 
@@ -77,7 +77,7 @@ public class QuestManager : MonoBehaviour, IReceiver
 
     public void Unsubscribe()
     {
-        //Messenger.Unsubscribe(MessageType.QUEST, this);
+        Messenger.Unsubscribe(MessageType.QUEST, this);
     }
 
     public void Progress() // progresses through the list of objectives
@@ -115,39 +115,12 @@ public class QuestManager : MonoBehaviour, IReceiver
     public void Complete()
     {
 
-        // Apply next flag then go from there. I really need subflags. What I can do is have this be a loop checking for required subflags?
-
     }
 
 
     void Update()
     {
 
-        /*if (inbox.Count > 0)
-        {
-            if (inbox.Peek() is InventoryMessage && Book.ActiveQuest != null && Book.ActiveQuest.Type == QuestType.COLLECT)
-            {
-                InvMessage = (InventoryMessage)inbox.Dequeue();
-                if (InvMessage.GetID() == Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].RequiredItems[0].ItemID)
-                {
-                    Book.ActiveQuest.Objectives[Book.ActiveQuest.ActiveObjective].AmountCollected++;
-                    Debug.Log("Item recieved");
-                }
-            }
-
-            else if (inbox.Peek() is questMessage)
-            {
-                questMessage = (questMessage)inbox.Dequeue();
-                ActiveID = questMessage.getID();
-
-                Debug.Log("Quest Active");
-            }
-        }
-
-
-        Progress(); // Whether this belongs here or in the book's half is TBD
-
-    }*/
-
     }
 }
+

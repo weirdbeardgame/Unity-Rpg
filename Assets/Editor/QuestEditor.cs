@@ -149,8 +149,8 @@ public class QuestEditor : EditorWindow
             EditorGUILayout.LabelField("Objective Description");
             Objective.Description = EditorGUILayout.TextField(Objective.Description);
             EditorGUILayout.LabelField("Type of Objective");
-            Objective.Type = (QuestObjectiveType)EditorGUILayout.EnumPopup(Objective.Type);
-            switch (Objective.Type)
+            Objective.objectiveType = (QuestObjectiveType)EditorGUILayout.EnumPopup(Objective.objectiveType);
+            switch (Objective.objectiveType)
             {
                 case QuestObjectiveType.COLLECT:
                     EditorGUILayout.LabelField("Item To Collect");

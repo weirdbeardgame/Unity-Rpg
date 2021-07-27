@@ -10,6 +10,14 @@ public class Player : Creature
 {
     public string SpritePath;
     public int level;
+
+    /*********************************************************************************
+    * This isn't seralizable in Json because unity won't allow it!
+    * We need to figure out a logic that either reads from folder or
+    * We need to figure a different way to store this data. Perhaps a custom format?
+    ***********************************************************************************/
+    // public GameObject prefab;
+
     public void Kill()
     {
         // A later to be implemented Death function. I'm still betting on an afterlife mechanic.
