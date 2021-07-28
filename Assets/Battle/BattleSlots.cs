@@ -8,6 +8,7 @@ public enum SlotPosition { FRONT, BACK };
 struct Slot
 {
     int id;
+    // Also known as the battle player's prefab
     public GameObject slotInstance;
     BattleTag type;
     Creature fighter;

@@ -13,42 +13,41 @@ public class Enemies : MonoBehaviour
 
     string parsedData;
 
-    List<Baddies> _EnemyData;
-
-    int X, Y = 3;
+    public List<Baddies> enemyData
+    {
+        get
+        {
+            return enemyData;
+        }
+        private set
+        {
+            enemyData = value;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        _EnemyData = new List<Baddies>();
-        if (File.Exists(filePath))
-        {
-            parsedData = File.ReadAllText(filePath);
-            _EnemyData = JsonConvert.DeserializeObject<List<Baddies>>(parsedData);
-
-        }
+        Initalize();
     }
 
 
     public Enemies Initalize() // Just incase
     {
-        this._EnemyData = new List<Baddies>();
+        enemyData = new List<Baddies>();
         if (File.Exists(filePath))
         {
             parsedData = File.ReadAllText(filePath);
-            this._EnemyData = JsonConvert.DeserializeObject<List<Baddies>>(parsedData);
+            enemyData = JsonConvert.DeserializeObject<List<Baddies>>(parsedData);
         }
 
         return this;
     }
 
-    public List<Baddies> EnemyData
+    public Baddies RandomSelectEnemy()
     {
-        get
-        {
-            return _EnemyData;
-        }
-
+        // Given an index or scale of enemy based on area. IE. What's allowed to load generate a random selection
+        return enemyData[0];
     }
 
 }

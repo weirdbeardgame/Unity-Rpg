@@ -84,7 +84,7 @@ public class Baddies : Creature
         }
     }*/
 
-    public void createBattler(int x, int y)
+    public Baddies createBattler(float x, float y)
     {
         Battler = new GameObject(EnemyName);
 
@@ -97,8 +97,8 @@ public class Baddies : Creature
         Battler.GetComponent<Rigidbody2D>().gravityScale = 0;
         Battler.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
         Battler.GetComponent<RectTransform>().position = new Vector2(x, y);
-        //Battler.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(sprite);
-        //Battler.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        Battler.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(sprite);
+        Battler.GetComponent<SpriteRenderer>().sortingOrder = 1;
         Battler.tag = "Enemy";
 
         Tag = BattleTag.ENEMY;
@@ -107,8 +107,8 @@ public class Baddies : Creature
 
         createWeaponSlots(); // We need a separate constrcut function to give weapons to Baddies?
         //setJob((jobSystem)Enum.Parse(typeof(jobSystem), token.Value<string>("job")));
+        return this;
     }
-
 
     public bool checkHealth()
     {

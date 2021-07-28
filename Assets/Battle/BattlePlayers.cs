@@ -102,7 +102,6 @@ public class BattlePlayers : MonoBehaviour
     {
         switch (battleParty[i].Player.state)
         {
-
             case BattleState.WAIT:
                 battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
                 battleParty[i].Prefab.GetComponent<Gauge>().fill(battleParty[i].Player.Stats.statList[(int)StatType.SPEED].stat);
@@ -153,7 +152,8 @@ public class BattlePlayers : MonoBehaviour
 
     Baddies Target(List<Baddies> targets)
     {
-        // Assume we have an enqueued skill that needs to be constructed    // This is suppoosed to cover negative clause. That's not what it does tho
+        // Assume we have an enqueued skill that needs to be constructed 
+        // This is suppoosed to cover negative clause. That's not what it does tho
         if ((i += ((int)Input.GetAxisRaw("Horizontal"))) < targets.Count || (i += ((int)Input.GetAxisRaw("Horizontal"))) > targets.Count)
         {
             return targets[i];

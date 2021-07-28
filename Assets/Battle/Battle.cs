@@ -30,7 +30,7 @@ public class Battle : MonoBehaviour, IReceiver
     Animator BattleAnimations;
     int Index = 0;
     int PlayerIndex;
-    int X, Y = 3;
+    int x, y = 3;
     int EnemyKilled;
     int PlayerKilled;
     int PreviousSceneIndex;
@@ -80,10 +80,9 @@ public class Battle : MonoBehaviour, IReceiver
 
         for (int i = 0; i < 2; i++)
         {
-            Enemy.EnemyData[i].createBattler(X, Y);
-            BadParty.Add(Enemy.EnemyData[i]);
-            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, Enemy.EnemyData[i], i);
-            Y += 1;
+            BadParty.Add(Enemy.RandomSelectEnemy().createBattler(x, y));
+            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, Enemy.enemyData[i], i);
+            x += 1;
         }
 
         for (int i = 0; i < 2; i++)
