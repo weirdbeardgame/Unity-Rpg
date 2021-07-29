@@ -11,7 +11,7 @@ public class EnemyEditorWindow : EditorWindow
 {
     List<Baddies> Editable;
 
-    Baddies Edit;
+    Baddies edit;
     string filePath = "Assets/Enemies/Enemies.json";
     string jsonData;
 
@@ -22,7 +22,7 @@ public class EnemyEditorWindow : EditorWindow
     List<string> Names;
 
     bool IsInit = false;
-
+    Sprite sprite;
 
     //Rect Position;
     SerializedProperty property;
@@ -73,12 +73,12 @@ public class EnemyEditorWindow : EditorWindow
                 Names = new List<string>();
             }
 
-            Edit = new Baddies();
-            Edit.CreatureName = PlayerName;
-            Edit.Stats = new StatManager();
-            Edit.Stats.Initalize();
+            edit = new Baddies();
+            edit.CreatureName = PlayerName;
+            edit.Stats = new StatManager();
+            edit.Stats.Initalize();
 
-            Editable.Add(Edit);
+            Editable.Add(edit);
             Names.Add(PlayerName);
             Repaint();
         }
@@ -86,37 +86,41 @@ public class EnemyEditorWindow : EditorWindow
         if (Editable != null && Editable.Count > 0)
         {
             Index = EditorGUILayout.Popup(Index, Names.ToArray());
-            Edit = Editable[Index];
+            edit = Editable[Index];
 
-            if (Edit != null)
+            if (edit != null)
             {
                 //Rect spriteRect = new Rect();
                 //spriteRect.position = new Vector2(10, 10);
                 //sprite = (Sprite)EditorGUI.ObjectField(spriteRect, sprite, typeof(Texture2D), false);
 
                 EditorGUILayout.LabelField("Enemy ID");
-                Edit.ID = EditorGUILayout.IntField(Edit.ID);
+                edit.ID = EditorGUILayout.IntField(edit.ID);
 
                 EditorGUILayout.LabelField("Level");
-                Edit.Level = EditorGUILayout.IntField(Edit.Level);
+                edit.Level = EditorGUILayout.IntField(edit.Level);
                 EditorGUILayout.LabelField("Health");
-                Edit.Stats.statList[(int)StatType.HEALTH].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.HEALTH].stat);
+                edit.Stats.statList[(int)StatType.HEALTH].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.HEALTH].stat);
                 EditorGUILayout.LabelField("Strength");
-                Edit.Stats.statList[(int)StatType.STRENGTH].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.STRENGTH].stat);
+                edit.Stats.statList[(int)StatType.STRENGTH].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.STRENGTH].stat);
                 EditorGUILayout.LabelField("Magic");
-                Edit.Stats.statList[(int)StatType.MAGIC].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.MAGIC].stat);
+                edit.Stats.statList[(int)StatType.MAGIC].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.MAGIC].stat);
                 EditorGUILayout.LabelField("Speed");
-                Edit.Stats.statList[(int)StatType.SPEED].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.SPEED].stat);
+                edit.Stats.statList[(int)StatType.SPEED].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.SPEED].stat);
                 EditorGUILayout.LabelField("Defense");
-                Edit.Stats.statList[(int)StatType.DEFENSE].stat = EditorGUILayout.FloatField(Edit.Stats.statList[(int)StatType.DEFENSE].stat);
+                edit.Stats.statList[(int)StatType.DEFENSE].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.DEFENSE].stat);
                 EditorGUILayout.LabelField("Job");
-                Edit.Job = (JobSystem)EditorGUILayout.EnumPopup(Edit.Job);
+                edit.job = (JobSystem)EditorGUILayout.EnumPopup(edit.job);
+                EditorGUILayout.LabelField("Sprite Selector");
+                sprite = (Sprite)EditorGUILayout.ObjectField("Sprite", sprite, typeof(Sprite), false);
+                edit.spritePath = sprite.name;
             }
         }
         GUILayout.FlexibleSpace();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Save"))
         {
+            Editable[Index] = edit;
             string data = JsonConvert.SerializeObject(Editable);
             File.WriteAllText(filePath, data);
         }

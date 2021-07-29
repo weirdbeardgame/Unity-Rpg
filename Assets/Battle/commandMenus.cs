@@ -123,7 +123,7 @@ public class commandMenus : MonoBehaviour
         {
             Commands = Instantiate(Commands);
             Commands.GetComponentInChildren<Image>().enabled = true;
-            cMenu = Menus[opener.Job];
+            cMenu = Menus[opener.job];
             if (!cMenu)
             {
                 return isOpened = false;

@@ -5,11 +5,8 @@ using UnityEngine;
 
 public enum BattleState { COMMAND, SELECTION, ACTION, WAIT };
 public enum JobSystem { MAGE, WARRIOR, FIGHTER, DRAGOON, THIEF, SAMURAI }; // Does Musungo fit in the warrior box?
-
 public enum BattleTag { PLAYER, ENEMY }
-
 public enum Appendage { LLEG, RLEG, LHAND, RHAND, HEAD };
-
 public class Creature : senderInterface
 {
     public StatManager Stats;
@@ -25,11 +22,9 @@ public class Creature : senderInterface
         }
     }
 
-    BattleTag _Tag;
-
+    public BattleTag tag;
     public GameObject Battler;
-
-    JobSystem _Job;
+    public JobSystem job;
 
     public BattleState state
     {
@@ -58,41 +53,17 @@ public class Creature : senderInterface
         }
     }
 
-    public BattleTag Tag
-    {
-        get
-        {
-            return _Tag;
-        }
-
-        set
-        {
-            _Tag = value;
-        }
-    }
-
-    public JobSystem Job
-    {
-        get
-        {
-            return _Job;
-        }
-
-        set
-        {
-            _Job = value;
-        }
-    }
-
     public string CreatureName;
 
     public void createWeaponSlots()
     {
+        Debug.Log("Attempting to create Slots");
         slots = new weaponSlots[5];
+        Debug.Log("SLOTS: " + slots);
 
         for (int i = 0; i < 5; i++)
         {
-            slots[i] = new weaponSlots((Appendage)i, _Job);
+            slots[i] = new weaponSlots((Appendage)i, job);
         }
     }
 

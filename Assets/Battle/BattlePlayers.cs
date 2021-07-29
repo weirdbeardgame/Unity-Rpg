@@ -132,7 +132,7 @@ public class BattlePlayers : MonoBehaviour
             case BattleState.ACTION:
 
                 Menu.Close();
-                if (battleParty[i].playerQueue.Peek() != null && battleParty[i].playerQueue.Peek().caster.Tag == BattleTag.PLAYER)
+                if (battleParty[i].playerQueue.Peek() != null && battleParty[i].playerQueue.Peek().caster.tag == BattleTag.PLAYER)
                 {
                     ActionIface Temp = battleParty[i].deque();
                     battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Attack", true);

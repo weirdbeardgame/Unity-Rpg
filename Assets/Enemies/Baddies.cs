@@ -11,7 +11,7 @@ public class Baddies : Creature
 
     string enemyName;
     string type;
-    string sprite;
+    public string spritePath;
     int eID;
 
     int _Level;
@@ -97,11 +97,11 @@ public class Baddies : Creature
         Battler.GetComponent<Rigidbody2D>().gravityScale = 0;
         Battler.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
         Battler.GetComponent<RectTransform>().position = new Vector2(x, y);
-        Battler.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(sprite);
+        Battler.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spritePath);
         Battler.GetComponent<SpriteRenderer>().sortingOrder = 1;
         Battler.tag = "Enemy";
 
-        Tag = BattleTag.ENEMY;
+        tag = BattleTag.ENEMY;
 
         MonoBehaviour.DontDestroyOnLoad(Battler);
 

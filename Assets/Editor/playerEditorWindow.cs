@@ -103,7 +103,9 @@ public class playerEditorWindow : EditorWindow
                 EditorGUILayout.LabelField("Defense");
                 edit.Stats.statList[(int)StatType.DEFENSE].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.DEFENSE].stat);
                 EditorGUILayout.LabelField("Job");
-                edit.Job = (JobSystem)EditorGUILayout.EnumPopup(edit.Job);
+                edit.job = (JobSystem)EditorGUILayout.EnumPopup(edit.job);
+                EditorGUILayout.LabelField("Sprite Selector");
+                edit.SpritePath = EditorGUILayout.ObjectField("Sprite", sprite, typeof(Sprite), false).ToString();
             }
         }
         GUILayout.FlexibleSpace();

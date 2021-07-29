@@ -34,7 +34,6 @@ public class Party : MonoBehaviour
         {
             PartyMembers[i].createWeaponSlots();
         }
-
     }
 
 
