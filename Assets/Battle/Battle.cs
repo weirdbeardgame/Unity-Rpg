@@ -19,7 +19,6 @@ public class Battle : MonoBehaviour, IReceiver
     BattleSlots slots;
     Enemies Enemy;
     Skills Skills;
-    List<Baddies> BadParty;
     CommandQueue Queue;
     GameObject BattleObject;
     GameObject SelectionArrow;
@@ -72,7 +71,6 @@ public class Battle : MonoBehaviour, IReceiver
         Skills = BattleObject.AddComponent<Skills>();
 
         Players = BattleObject.GetComponent<BattlePlayers>();
-        BadParty = new List<Baddies>();
 
         Queue = BattleObject.GetComponent<CommandQueue>();
 
@@ -80,7 +78,7 @@ public class Battle : MonoBehaviour, IReceiver
 
         for (int i = 0; i < 2; i++)
         {
-            BadParty.Add(Enemy.RandomSelectEnemy().createBattler(x, y));
+            //BadParty.Add(Enemy.RandomSelectEnemy().createBattler(x, y));
             slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, Enemy.enemyData[i], i);
             x += 1;
         }
@@ -88,7 +86,7 @@ public class Battle : MonoBehaviour, IReceiver
         for (int i = 0; i < 2; i++)
         {
             PlayerObjects[i] = new GameObject();
-            Players.Initialize(GameObject.Find(i.ToString()), BattleObject, BadParty, i);
+            //Players.Initialize(GameObject.Find(i.ToString()), BattleObject, BadParty, i);
             //PlayerObjects[i] = Players.CreateCharacterById(i);
             DontDestroyOnLoad(PlayerObjects[i]);
             slots.createSlots(SlotPosition.FRONT, BattleTag.PLAYER, Players.GetPlayer(i), i);
@@ -113,7 +111,6 @@ public class Battle : MonoBehaviour, IReceiver
             Message.construct(States.MAIN, null);
             Messenger.Init();
             Destroy(Players);
-            BadParty.Clear();
             yield return null;
         }
     }
@@ -137,23 +134,6 @@ public class Battle : MonoBehaviour, IReceiver
 
     public void EndBattle()
     {
-
-        for (int i = 0; i < BadParty.Count; i++)
-        {
-            if (!BadParty[i].checkHealth())
-            {
-                EnemyKilled++;
-                BadParty.RemoveAt(i);
-            }
-        }
-
-        if (EnemyKilled == 2)
-        {
-            Debug.Log("Battle Finished");
-            StartCoroutine(ChangeScene());
-        }
-
-
         // Add Exp, Items and Levels
 
 

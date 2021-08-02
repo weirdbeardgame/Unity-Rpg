@@ -58,7 +58,7 @@ public class Creature : senderInterface
     public void createWeaponSlots()
     {
         Debug.Log("Attempting to create Slots");
-        slots = new weaponSlots[5];
+        slots = new weaponSlots[5]; // Need to figure out why this is throwing an exception. Oddly nothing on the surface appears "null"
         Debug.Log("SLOTS: " + slots);
 
         for (int i = 0; i < 5; i++)

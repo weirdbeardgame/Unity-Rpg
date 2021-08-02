@@ -43,11 +43,4 @@ public class Enemies : MonoBehaviour
 
         return this;
     }
-
-    public Baddies RandomSelectEnemy()
-    {
-        // Given an index or scale of enemy based on area. IE. What's allowed to load generate a random selection
-        return enemyData[0];
-    }
-
 }
