@@ -54,8 +54,10 @@ public class Battle : MonoBehaviour, IReceiver
 
     public void StartBattle(Scene PreviousScene, GameObject BattleObject, int Scene)
     {
+
         SceneToReturnTo = PreviousScene;
         this.BattleObject = BattleObject;
+
         Enemy = BattleObject.AddComponent<Enemies>();
         Enemy = Enemy.Initalize();
 
@@ -76,10 +78,10 @@ public class Battle : MonoBehaviour, IReceiver
 
         BattleAnimations = BattleObject.GetComponent<Animator>();
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().badParty.Count; i++)
         {
             //BadParty.Add(Enemy.RandomSelectEnemy().createBattler(x, y));
-            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, Enemy.enemyData[i], i);
+            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, BattleObject.GetComponent<BattleEnemies>().badParty[i], i);
             x += 1;
         }
 

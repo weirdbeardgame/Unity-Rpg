@@ -48,7 +48,7 @@ public class EnemyEditorWindow : EditorWindow
         {
             for (int i = 0; i < Editable.Count; i++)
             {
-                Names.Add(Editable[i].CreatureName);
+                Names.Add(Editable[i].creatureName);
             }
         }
 
@@ -74,7 +74,7 @@ public class EnemyEditorWindow : EditorWindow
             }
 
             edit = new Baddies();
-            edit.CreatureName = PlayerName;
+            edit.creatureName = PlayerName;
             edit.Stats = new StatManager();
             edit.Stats.Initalize();
 
@@ -95,10 +95,10 @@ public class EnemyEditorWindow : EditorWindow
                 //sprite = (Sprite)EditorGUI.ObjectField(spriteRect, sprite, typeof(Texture2D), false);
 
                 EditorGUILayout.LabelField("Enemy ID");
-                edit.ID = EditorGUILayout.IntField(edit.ID);
+                edit.id = EditorGUILayout.IntField(edit.id);
 
                 EditorGUILayout.LabelField("Level");
-                edit.Level = EditorGUILayout.IntField(edit.Level);
+                edit.level = EditorGUILayout.IntField(edit.level);
                 EditorGUILayout.LabelField("Health");
                 edit.Stats.statList[(int)StatType.HEALTH].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.HEALTH].stat);
                 EditorGUILayout.LabelField("Strength");

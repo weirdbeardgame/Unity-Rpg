@@ -8,13 +8,22 @@ using System;
 
 public class Baddies : Creature
 {
-
-    string enemyName;
+    public string enemyName
+    {
+        get
+        {
+            return enemyName;
+        }
+        protected set
+        {
+            enemyName = value;
+        }
+    }
     string type;
     public string spritePath;
-    int eID;
+    public int id;
 
-    int _Level;
+    public int level;
 
     [System.NonSerialized]
     public Gauge gauge;
@@ -22,90 +31,28 @@ public class Baddies : Creature
     [System.NonSerialized]
     bool isBattle;
 
-    public string EnemyName
+    public Baddies createBattler(BattleSlots slot)
     {
-        get
-        {
-            return enemyName;
-        }
+        BattlePrefab = new GameObject(enemyName);
 
-        set
-        {
-            enemyName = value;
-        }
-    }
+        BattlePrefab.AddComponent<SpriteRenderer>();
+        BattlePrefab.AddComponent<BoxCollider2D>();
+        BattlePrefab.AddComponent<RectTransform>();
+        BattlePrefab.AddComponent<Rigidbody2D>();
+        gauge = BattlePrefab.AddComponent<Gauge>();
 
-    public string Type
-    {
-        get
-        {
-            return type;
-        }
-
-        set
-        {
-            type = value;
-        }
-    }
-
-    public int ID
-    {
-        get
-        {
-            return eID;
-        }
-
-        set
-        {
-            eID = value;
-        }
-    }
-
-    public int Level
-    {
-
-        get
-        {
-            return _Level;
-        }
-
-        set
-        {
-            _Level = value;
-        }
-
-    }
-
-    /*public GameObject Battler
-    {
-        get
-        {
-            return battler;
-        }
-    }*/
-
-    public Baddies createBattler(float x, float y)
-    {
-        Battler = new GameObject(EnemyName);
-
-        Battler.AddComponent<SpriteRenderer>();
-        Battler.AddComponent<BoxCollider2D>();
-        Battler.AddComponent<RectTransform>();
-        Battler.AddComponent<Rigidbody2D>();
-        gauge = Battler.AddComponent<Gauge>();
-
-        Battler.GetComponent<Rigidbody2D>().gravityScale = 0;
-        Battler.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
-        Battler.GetComponent<RectTransform>().position = new Vector2(x, y);
-        Battler.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spritePath);
-        Battler.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        Battler.tag = "Enemy";
+        BattlePrefab.GetComponent<Rigidbody2D>().gravityScale = 0;
+        BattlePrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
+        BattlePrefab.GetComponent<RectTransform>().position = new Vector2(slot.gameObject.transform.localPosition.x, slot.gameObject.transform.localPosition.y);
+        BattlePrefab.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spritePath);
+        BattlePrefab.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        BattlePrefab.tag = "Enemy";
 
         tag = BattleTag.ENEMY;
 
-        MonoBehaviour.DontDestroyOnLoad(Battler);
+        MonoBehaviour.DontDestroyOnLoad(BattlePrefab);
 
-        createWeaponSlots(); // We need a separate constrcut function to give weapons to Baddies?
+        createWeaponSlots();
         //setJob((jobSystem)Enum.Parse(typeof(jobSystem), token.Value<string>("job")));
         return this;
     }
@@ -114,7 +61,7 @@ public class Baddies : Creature
     {
         if (Stats.statList[(int)StatType.HEALTH].stat <= 0)
         {
-            // Increase Kill Counter
+            Die();
             return false;
         }
 

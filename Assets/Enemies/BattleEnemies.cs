@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class BattleEnemies : MonoBehaviour
 {
-    List<Baddies> badParty;
+    public List<Baddies> badParty
+    {
+        get
+        {
+            return badParty;
+        }
+        private set
+        {
+            badParty = value;
+        }
+
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -12,7 +23,7 @@ public class BattleEnemies : MonoBehaviour
         
     }
 
-    void Insert(Baddies bad)
+    public void Insert(Baddies bad)
     {
         if (badParty == null)
         {
@@ -21,13 +32,18 @@ public class BattleEnemies : MonoBehaviour
         badParty.Add(bad);
     }
 
-    void Remove(Baddies bad)
+    public void Remove(Baddies bad)
     {
         if (badParty == null)
         {
             return;
         }
         badParty.Remove(bad);
+    }
+
+    void Kill(int id)
+    {
+        badParty[id].Die();
     }
 
     // Update is called once per frame

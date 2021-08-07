@@ -44,7 +44,7 @@ public class playerEditorWindow : EditorWindow
         {
             for (int i = 0; i < Editable.Count; i++)
             {
-                Names.Add(Editable[i].CreatureName);
+                Names.Add(Editable[i].creatureName);
             }
         }
 
@@ -70,7 +70,7 @@ public class playerEditorWindow : EditorWindow
             }
 
             edit = new Player();
-            edit.CreatureName = PlayerName;
+            edit.creatureName = PlayerName;
             edit.Stats = new StatManager();
             edit.Stats.Initalize();
 

@@ -33,6 +33,8 @@ public class Transition : MonoBehaviour
     int PreviousIndex;
     PlayerMovement move;
 
+    public List<Baddies> allowedEnemies;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,14 +48,16 @@ public class Transition : MonoBehaviour
     * This way I can determine count of enemies that will spawn.
     * I want to loop through a random range of enemies set as allowed based on map and active flags
     ************************************************************************************************/
-    void selectEnemies(List<int>allowedBad) // I'm assuming there'll be something else that feeds this? Or! I could have Transition hold this
+    void selectEnemies() // I'm assuming there'll be something else that feeds this? Or! I could have Transition hold this
     {
         var rand = new System.Random();
-        int count = rand.Next(1, 3);
-        int baddieIndex = rand.Next(allowedBad[0], allowedBad[allowedBad.Count]);
-        for (int i = 0; i < count; i++)
+        int amount = rand.Next(1, 3);
+        int baddieIndex = rand.Next(allowedEnemies[0].id, allowedEnemies[allowedEnemies.Count].id);
+        for (int i = 0; i < amount; i++)
         {
             // Spawn and add into BattleEnemies from here
+            Instantiate<GameObject>(allowedEnemies[baddieIndex].BattlePrefab);
+            BattleObject.GetComponent<BattleEnemies>().Insert(allowedEnemies[baddieIndex]);
         }
     }
 
@@ -94,18 +98,20 @@ public class Transition : MonoBehaviour
 
                 message = FindObjectOfType<Messaging>(); // Grab Messaging from states
 
+                BattleObject.AddComponent<Skills>();
                 BattleObject.AddComponent<Enemies>();
+                BattleObject.AddComponent<BattleSlots>();
+                BattleObject.AddComponent<CommandQueue>();
+                BattleObject.AddComponent<BattleEnemies>();
                 BattleObject.AddComponent<BattlePlayers>();
                 BattleObject.AddComponent<BattleItemMenu>();
-                BattleObject.AddComponent<BattleSlots>();
-                BattleObject.AddComponent<Skills>();
-                BattleObject.AddComponent<CommandQueue>();
 
                 batttleStartMessage = new gameStateMessage();
                 batttleStartMessage.construct(States.BATTLE, states.CurrrentFlag);
 
                 message.Enqueue(batttleStartMessage);
                 message.Init();
+                selectEnemies();
 
                 battle.StartBattle(CurrentScene, BattleObject, PreviousIndex);
 

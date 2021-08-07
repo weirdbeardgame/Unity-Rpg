@@ -137,7 +137,7 @@ public class BattlePlayers : MonoBehaviour
                     ActionIface Temp = battleParty[i].deque();
                     battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Attack", true);
                     Temp.Execute();
-                    BattleObject.GetComponent<DamageRecieved>().Create(Temp.target.Battler.transform.localPosition, Temp.target.actualDamage);
+                    BattleObject.GetComponent<DamageRecieved>().Create(Temp.target.BattlePrefab.transform.localPosition, Temp.target.actualDamage);
                 }
 
                 if (battleParty[i].playerQueue.Peek() == null)

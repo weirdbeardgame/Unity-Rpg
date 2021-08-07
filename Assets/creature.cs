@@ -9,6 +9,7 @@ public enum BattleTag { PLAYER, ENEMY }
 public enum Appendage { LLEG, RLEG, LHAND, RHAND, HEAD };
 public class Creature : senderInterface
 {
+    public bool isAlive;
     public StatManager Stats;
     public weaponSlots[] slots
     {
@@ -23,7 +24,8 @@ public class Creature : senderInterface
     }
 
     public BattleTag tag;
-    public GameObject Battler;
+    // ToDo. Figure out best method for prefab serialization
+    public GameObject BattlePrefab;
     public JobSystem job;
 
     public BattleState state
@@ -32,7 +34,7 @@ public class Creature : senderInterface
         {
             return state;
         }
-        private set
+        protected set
         {
             state = value;
         }
@@ -47,13 +49,13 @@ public class Creature : senderInterface
         {
             return actualDamage;
         }
-        private set
+        protected set
         {
             actualDamage = value;
         }
     }
 
-    public string CreatureName;
+    public string creatureName;
 
     public void createWeaponSlots()
     {
@@ -86,6 +88,14 @@ public class Creature : senderInterface
     public void ApplyDebuffs(Buffers Buff)
     {
 
+    }
+
+    public void Die()
+    {
+        // There's no more health. Be gone... THOT!
+        MonoBehaviour.Destroy(BattlePrefab);
+        slots = null; // Doth we needeth this?
+        isAlive = false;
     }
     public weaponSlots GetSlot(Appendage app)
     {
