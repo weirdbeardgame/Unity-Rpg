@@ -3,15 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum AudioType { LOOPING, PLAYTHROUGH }
+
+
 public class AudioManager : MonoBehaviour
 {
-
     List<Sound> sounds;
-
-    void Start()
-    {
-
-    }
 
     public void Play()
     {

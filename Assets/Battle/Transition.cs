@@ -56,7 +56,7 @@ public class Transition : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             // Spawn and add into BattleEnemies from here
-            BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(allowedEnemies[baddieIndex].BattlePrefab));
+            //BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(allowedEnemies[baddieIndex].BattlePrefab));
         }
     }
 

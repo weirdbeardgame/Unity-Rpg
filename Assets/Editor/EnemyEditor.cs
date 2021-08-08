@@ -9,20 +9,17 @@ using System.Collections.Generic;
 [CustomPropertyDrawer(typeof(Texture2D))]
 public class EnemyEditorWindow : EditorWindow
 {
-    Dictionary<int, Baddies> Editable;
-
+    List<Baddies> Editable;
+    List<Asset> serialize;
     Baddies edit;
-    string filePath = "Assets/Enemies/Enemies.json";
-    string jsonData;
     int Index = 0;
-    string PlayerName;
+    string enemyName;
     static bool[] fold = new bool[10];
     List<string> Names;
     bool IsInit = false;
     Sprite sprite;
-    //Rect Position;
     SerializedProperty property;
-
+    GameAssetManager manager;
     int ID = 0;
 
     static JsonSerializerSettings settings = new JsonSerializerSettings
@@ -30,91 +27,120 @@ public class EnemyEditorWindow : EditorWindow
         TypeNameHandling = TypeNameHandling.All
     };
 
-    public void readJson()
+    void init()
     {
-        Editable = new Dictionary<int, Baddies>();
-
-        if (File.Exists(filePath))
+        if (manager.isFilled() > 0)
         {
-            jsonData = File.ReadAllText(filePath);
-            Editable = JsonConvert.DeserializeObject<Dictionary<int, Baddies>>(jsonData, settings);
-        }
-
-        Names = new List<string>();
-
-        if (Editable != null && Editable.Count > 0)
-        {
-            for (int i = 1; i < Editable.Count; i++)
+            foreach(var asset in manager.Data)
             {
-                Names.Add(Editable[i].creatureName);
+                if (asset.Value.indexedType == AssetType.ENEMY)
+                {
+                    Baddies bad = (Baddies)asset.Value.Data;
+                    bad.Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(bad.prefabPath);
+                    Editable.Add(bad);
+                    Names.Add(bad.Data.creatureName);
+                    ID += 1;
+                }
             }
         }
+    }
 
-        IsInit = true;
+    void createPrefab()
+    {
+        edit.Prefab = new GameObject();
+        edit.Prefab.AddComponent<Gauge>();
+        edit.Prefab.AddComponent<Animator>();
+        edit.Prefab.AddComponent<Rigidbody2D>();
+        edit.Prefab.AddComponent<BoxCollider2D>();
+        edit.Prefab.AddComponent<SpriteRenderer>();
+        edit.Prefab.name = edit.Data.creatureName;
+        if (!Directory.Exists("Resources/Prefabs/Enemies/"))
+        {
+            Directory.CreateDirectory("Resources/Prefabs/Enemies/");
+        }
+        PrefabUtility.SaveAsPrefabAsset(edit.Prefab, ("Resources/Prefabs/Enemies/" + edit.Data.creatureName + ".prefab"));
+        edit.prefabPath = ("Prefabs/Enemies/" + edit.Data.creatureName + ".prefab");
     }
 
     void OnGUI()
     {
         if (!IsInit)
         {
-            readJson();
+            Names = new List<string>();
+            Editable = new List<Baddies>();
+            manager = new GameAssetManager();
+            manager.Init();
+            init();
+            IsInit = true;
         }
 
         EditorGUILayout.LabelField("Name: ");
-        PlayerName = EditorGUILayout.TextField(PlayerName, PlayerName);
+        enemyName = EditorGUILayout.TextField(enemyName, enemyName);
 
         if (GUILayout.Button("New Enemy"))
         {
-            if (Editable == null)
-            {
-                Editable = new Dictionary<int, Baddies>();
-                Names = new List<string>();
-            }
-
             edit = new Baddies();
-            edit.creatureName = PlayerName;
-            edit.id = (ID += 1); // This'll handle local instance but no more then that!
-            edit.Stats = new StatManager();
-            edit.Stats.Initalize();
 
-            Editable.Add(edit.id, edit);
-            Names.Add(PlayerName);
+            edit.Data = new Creature();
+            edit.Data.creatureName = enemyName;
+
+            edit.id = ID;
+
+            edit.Data.Stats = new StatManager();
+            edit.Data.Stats.Initalize();
+
+            createPrefab();
+
+            if (!Editable.Contains(edit))
+            {
+                Editable.Add(edit);
+                Names.Add(enemyName);
+            }
+            ID += 1;
             Repaint();
         }
 
         if (Editable != null && Editable.Count > 0)
         {
-            Index = EditorGUILayout.Popup(Index, Names.ToArray()) + 1;
-            if (Editable.ContainsKey(Index))
-            {
-                edit = Editable[Index];
-                Debug.Log("EID: " + Index);
-                ID = Editable[Editable.Count].id;
-            }
-            if (edit != null)
+            Index = EditorGUILayout.Popup(Index, Names.ToArray());
+            edit = Editable[Index];
+            //Debug.Log("EID: " + Index);
+
+            if (edit.Data != null)
             {
                 EditorGUILayout.LabelField("Enemy ID");
                 edit.id = EditorGUILayout.IntField(edit.id);
 
+                EditorGUILayout.LabelField("Description");
+                edit.Data.description = EditorGUILayout.TextArea(edit.Data.description, GUILayout.Height(75));
+
                 EditorGUILayout.LabelField("Level");
                 edit.level = EditorGUILayout.IntField(edit.level);
+
                 EditorGUILayout.LabelField("Health");
-                edit.Stats.statList[(int)StatType.HEALTH].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.HEALTH].stat);
+                edit.Data.Stats.statList[(int)StatType.HEALTH].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.HEALTH].stat);
+
                 EditorGUILayout.LabelField("Strength");
-                edit.Stats.statList[(int)StatType.STRENGTH].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.STRENGTH].stat);
+                edit.Data.Stats.statList[(int)StatType.STRENGTH].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.STRENGTH].stat);
+
                 EditorGUILayout.LabelField("Magic");
-                edit.Stats.statList[(int)StatType.MAGIC].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.MAGIC].stat);
+                edit.Data.Stats.statList[(int)StatType.MAGIC].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.MAGIC].stat);
+
                 EditorGUILayout.LabelField("Speed");
-                edit.Stats.statList[(int)StatType.SPEED].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.SPEED].stat);
+                edit.Data.Stats.statList[(int)StatType.SPEED].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.SPEED].stat);
+
                 EditorGUILayout.LabelField("Defense");
-                edit.Stats.statList[(int)StatType.DEFENSE].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.DEFENSE].stat);
+                edit.Data.Stats.statList[(int)StatType.DEFENSE].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.DEFENSE].stat);
+
                 EditorGUILayout.LabelField("Job");
-                edit.job = (JobSystem)EditorGUILayout.EnumPopup(edit.job);
-                EditorGUILayout.LabelField("Sprite Selector");
-                sprite = (Sprite)EditorGUILayout.ObjectField("Sprite", sprite, typeof(Sprite), false);
-                if (sprite)
+                edit.Data.job = (JobSystem)EditorGUILayout.EnumPopup(edit.Data.job);
+
+                if (edit.Prefab)
                 {
-                    edit.spritePath = AssetDatabase.GetAssetPath(sprite);
+                    if (GUILayout.Button("Edit Prefab"))
+                    {
+                        AssetDatabase.OpenAsset(PrefabUtility.LoadPrefabContents(("Resources/Prefabs/Enemies/" + edit.Data.creatureName + ".prefab")));
+                    }
                 }
             }
         }
@@ -122,9 +148,10 @@ public class EnemyEditorWindow : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Save"))
         {
-            //Editable[Index] = edit;
-            string data = JsonConvert.SerializeObject(Editable);
-            File.WriteAllText(filePath, data);
+            for (int i = 0; i < Editable.Count; i++)
+            {
+                manager.AddAsset(new Asset(Editable[i], AssetType.ENEMY), Editable[i].Data.creatureName);
+            }
         }
         GUILayout.EndHorizontal();
     }
@@ -132,7 +159,6 @@ public class EnemyEditorWindow : EditorWindow
     {
         this.Repaint();
     }
-
 
     [MenuItem("Window/Enemy")]
     public static void ShowWindow()

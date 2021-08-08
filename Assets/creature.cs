@@ -3,20 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BattleState { COMMAND, SELECTION, ACTION, WAIT };
-public enum JobSystem { MAGE, WARRIOR, FIGHTER, DRAGOON, THIEF, SAMURAI }; // Does Musungo fit in the warrior box?
+// This is programed to be ABS style ala ff vi - ff ix
 public enum BattleTag { PLAYER, ENEMY }
-public enum Appendage { LLEG, RLEG, LHAND, RHAND, HEAD };
+public enum BattleState { COMMAND, SELECTION, ACTION, WAIT };
+public enum Appendage { LLEG, RLEG, LHAND, RHAND, HEAD, BODY };
+public enum JobSystem { MAGE, WARRIOR, FIGHTER, DRAGOON, THIEF, SAMURAI }; // Does Musungo fit in the warrior box?
+
 public class Creature : senderInterface
 {
     public bool isAlive;
     public StatManager Stats;
     public List<weaponSlots>slots;
     public BattleTag tag;
-    // TODO: Figure out best method for prefab serialization!
-    // Should that just be a static path in Json? Or should that be the whole prefab forcibly serialized
-    public GameObject BattlePrefab;
+
+    [SerializeField]
+    private GameObject BattlePrefab;
     public JobSystem job;
+
     [System.NonSerialized]
     public BattleState state;
 
@@ -28,6 +31,7 @@ public class Creature : senderInterface
     public float actualDamage;
 
     public string creatureName;
+    public string description;
 
     public void createWeaponSlots()
     {
@@ -61,8 +65,6 @@ public class Creature : senderInterface
 
     public void Die()
     {
-        // There's no more health. Be gone... THOT!
-        MonoBehaviour.Destroy(BattlePrefab);
         slots = null;
         isAlive = false;
     }

@@ -60,7 +60,7 @@ public class BattlePlayers : MonoBehaviour
             {
                 CharacterInfo c = new CharacterInfo();
                 c.playerQueue = new CommandQueue();
-                c.init(Players.PartyMembers[j], playerPrefab, j);
+                //c.init(Players.PartyMembers[j], playerPrefab, j);
                 battleParty.Add(j, c);
 
                 // allCharacters[j].playerQueue = FindObjectOfType<CommandQueue>(); Incorrect! 
@@ -137,7 +137,7 @@ public class BattlePlayers : MonoBehaviour
                     ActionIface Temp = battleParty[i].deque();
                     battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Attack", true);
                     Temp.Execute();
-                    BattleObject.GetComponent<DamageRecieved>().Create(Temp.target.BattlePrefab.transform.localPosition, Temp.target.actualDamage);
+                    //BattleObject.GetComponent<DamageRecieved>().Create(Temp.prefab.transform.localPosition, Temp.target.actualDamage);
                 }
 
                 if (battleParty[i].playerQueue.Peek() == null)

@@ -3,24 +3,55 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+#if UNITY_EDITOR
+using UnityEditor;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
+#endif
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(PlayerMovement))]
-public class Player : Creature
+
+// Either this hold an instance of Creature data and GameObject. Or I use Creature as a common type and these hold specific functions?
+public class Player : ScriptableObject
 {
-    public string SpritePath;
+    public string prefabPath;
     public int level;
 
     /*********************************************************************************
     * This isn't seralizable in Json because unity won't allow it!
     * We need to figure out a logic that either reads from folder or
     * We need to figure a different way to store this data. Perhaps a custom format?
+    * Even better idea. LET THE ASSET MANAGER DO THIS!!!
     ***********************************************************************************/
-    // public GameObject prefab;
+    [System.NonSerialized]
+    public GameObject prefab;
+
+    private Creature data;
+
+    public Creature Data
+    {
+        get
+        {
+            return data;
+        }
+        #if UNITY_EDITOR
+        set
+        {
+            data = value;
+        }
+
+        #else
+        private set
+        {
+            data = value;
+        }
+        #endif
+    }
 
     public void Kill()
     {
-        // A later to be implemented Death function. I'm still betting on an afterlife mechanic.
+        // A later to be implemented death function. I'm still betting on an afterlife mechanic.
     }
 
     public void LevelUp()
@@ -30,12 +61,12 @@ public class Player : Creature
 
     public void Equip(Appendage append, Weapon WeaponToEquip)
     {
-        WeaponToEquip.Equip((int)append, this);
+        WeaponToEquip.Equip((int)append, data);
     }
 
     public void Dequip(Appendage Slot, WeaponData WeaponToRemove)
     {
-        WeaponToRemove.Dequip(slots[(int)Slot]);
+        WeaponToRemove.Dequip(data.slots[(int)Slot]);
     }
 
     void ApplyWeaponBuffs()
@@ -43,4 +74,42 @@ public class Player : Creature
         // Things like. Str +5 or Spd +2 or whatever.
     }
 
+    public Player serialize()
+    {
+        #if UNITY_EDITOR
+        if (prefab)
+        {
+            prefabPath = AssetDatabase.GetAssetPath(prefab);
+        }
+        return this;
+        #endif
+        return null;
+    }
 }
+
+public class PlayerConverter : JsonConverter
+{
+    const string ValuePropertyName = "Value";// nameof(LikeType<object>.Value); // in C#6+
+
+    private readonly Type[] types;
+
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+        Player temp = (Player)value;
+        JToken t = JToken.FromObject(temp.serialize());
+        serializer.Serialize(writer, t);
+    }
+
+    public override bool CanConvert(Type objectType)
+    {
+        return objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Player);
+    }
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        //var value = serializer.Deserialize(reader, valueType);
+
+        return null;
+    }
+}
+

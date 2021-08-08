@@ -58,9 +58,6 @@ public class Battle : MonoBehaviour, IReceiver
         SceneToReturnTo = PreviousScene;
         this.BattleObject = BattleObject;
 
-        Enemy = BattleObject.AddComponent<Enemies>();
-        Enemy = Enemy.Initalize();
-
         slots = BattleObject.GetComponent<BattleSlots>();
 
         Messenger = FindObjectOfType<Messaging>();
@@ -71,17 +68,14 @@ public class Battle : MonoBehaviour, IReceiver
         Subscribe();
 
         Skills = BattleObject.AddComponent<Skills>();
-
-        Players = BattleObject.GetComponent<BattlePlayers>();
-
         Queue = BattleObject.GetComponent<CommandQueue>();
-
+        Players = BattleObject.GetComponent<BattlePlayers>();
         BattleAnimations = BattleObject.GetComponent<Animator>();
 
         for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().badParty.Count; i++)
         {
             //BadParty.Add(Enemy.RandomSelectEnemy().createBattler(x, y));
-            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, BattleObject.GetComponent<BattleEnemies>().badParty[i].GetComponent<Baddies>(), i);
+            //slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, BattleObject.GetComponent<BattleEnemies>().badParty[i].GetComponent<Baddies>(), i);
             x += 1;
         }
 

@@ -38,7 +38,7 @@ public class ConnectionPoints
     {
         _Node = N;
         _Link = L;
-        _NType = N.DNode.NodeT;
+        _NType = N.dNode.NodeT;
         _Style = Style;
         OnClickConnectionPoint = Action;
         Rect = new Rect(0, 0, 10f, 20f);
@@ -51,16 +51,16 @@ public class ConnectionPoints
         {
             case NodeType.DIALOUGE:
 
-                Rect.y = _Node.Node.y + (_Node.Node.height * 0.5f) - Rect.height * 0.5f;
+                Rect.y = _Node.node.y + (_Node.node.height * 0.5f) - Rect.height * 0.5f;
 
                 switch (_Link)
                 {
                     case Link.LEFT:
-                        Rect.x = _Node.Node.x - Rect.width + 0f;
+                        Rect.x = _Node.node.x - Rect.width + 0f;
                         break;
 
                     case Link.RIGHT:
-                        Rect.x = _Node.Node.x + _Node.Node.width - 0f;
+                        Rect.x = _Node.node.x + _Node.node.width - 0f;
                         break;
                 }
 
@@ -78,13 +78,13 @@ public class ConnectionPoints
                 switch (_Link)
                 {
                     case Link.LEFT:
-                        Rect.x = _Node.Node.x - Rect.width + 0f;
-                        Rect.y = _Node.Node.y - Rect.height + 0f;
+                        Rect.x = _Node.node.x - Rect.width + 0f;
+                        Rect.y = _Node.node.y - Rect.height + 0f;
                         break;
 
                     case Link.RIGHT:
-                        Rect.x = _Node.Node.x + _Node.Node.width - 0f;
-                        Rect.y = _Node.Node.y - _Node.Node.height - 0f;
+                        Rect.x = _Node.node.x + _Node.node.width - 0f;
+                        Rect.y = _Node.node.y - _Node.node.height - 0f;
                         break;
 
                 }

@@ -17,14 +17,14 @@ public class WeaponStats
 
 public class WeaponData
 {
-    private string _WeaponName;
-    private string _Description;
+    private string weaponName;
+    private string description;
     string iconPath;
 
     public Buffers Buffer;
 
-    private JobSystem _Job;
-    private Appendage _Appendage;
+    private JobSystem job;
+    private Appendage appendage;
 
     Inventory inv;
 
@@ -39,12 +39,12 @@ public class WeaponData
     {
         get
         {
-            return _WeaponName;
+            return weaponName;
         }
 
         set
         {
-            _WeaponName = value;
+            weaponName = value;
         }
     }
 
@@ -52,12 +52,12 @@ public class WeaponData
     {
         get
         {
-            return _Description;
+            return description;
         }
 
         set
         {
-            _Description = value;
+            description = value;
         }
     }
 
@@ -66,12 +66,12 @@ public class WeaponData
     {
         get
         {
-            return _Job;
+            return job;
         }
 
         set
         {
-            _Job = value;
+            job = value;
         }
     }
 
@@ -79,12 +79,12 @@ public class WeaponData
     {
         get
         {
-            return _Appendage;
+            return appendage;
         }
 
         set
         {
-            _Appendage = value;
+            appendage = value;
         }
     }
 

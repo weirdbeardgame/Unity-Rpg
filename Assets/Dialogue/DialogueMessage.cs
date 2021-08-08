@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum NodeType { DIALOUGE, FLAG, CHOICE, EVENT }
 public enum NodeDirection { LEFT, RIGHT }
-
+public enum Emotion {HAPPY, NEUTRAL, EXCITED, SURPISED, SCARED}
 
 public struct ChoiceData
 {
@@ -20,22 +20,22 @@ public struct ChoiceData
 public class DialogueMessage : IComparable<DialogueMessage>
 {
 
-    private int _ID;
-    private int _Index;
-    private NPCData _SpeakerID;
+    private int id;
+    private int index;
+    private NPCData speakerID;
 
-    private string _ToReturn;
-    private string _Line;
+    private string toReturn;
+    private string line;
 
     public ChoiceData[] Choices;
 
-    private Flags _NodeFlag;
+    private Flags nodeFlag;
 
-    private NodeType _NodeT;
+    private NodeType nodeT;
 
-    private FlagReqSet _FlagType;
+    private FlagReqSet flagType;
 
-    public int Quest;
+    public int quest;
 
     public DialogueMessage()
     {
@@ -44,19 +44,19 @@ public class DialogueMessage : IComparable<DialogueMessage>
 
     public DialogueMessage(ref int mID)
     {
-        _ID = mID;
+        id = mID;
     }
 
     public string Line
     {
         get
         {
-            return _Line;
+            return line;
         }
 
         set
         {
-            _Line = value;
+            line = value;
         }
     }
 
@@ -64,11 +64,11 @@ public class DialogueMessage : IComparable<DialogueMessage>
     {
         get
         {
-            return _ID;
+            return id;
         }
         set
         {
-            _ID = value;
+            id = value;
         }
     }
 
@@ -76,12 +76,12 @@ public class DialogueMessage : IComparable<DialogueMessage>
     {
         get
         {
-            return _SpeakerID;
+            return speakerID;
         }
 
         set
         {
-            _SpeakerID = value;
+            speakerID = value;
         }
     }
 
@@ -89,12 +89,12 @@ public class DialogueMessage : IComparable<DialogueMessage>
     {
         get
         {
-            return _NodeFlag;
+            return nodeFlag;
         }
 
         set
         {
-            _NodeFlag = value;
+            nodeFlag = value;
         }
     }
 
@@ -103,12 +103,12 @@ public class DialogueMessage : IComparable<DialogueMessage>
 
         get
         {
-            return _NodeT;
+            return nodeT;
         }
 
         set
         {
-            _NodeT = value;
+            nodeT = value;
         }
 
     }
@@ -117,23 +117,23 @@ public class DialogueMessage : IComparable<DialogueMessage>
     {
         get
         {
-            return _FlagType;
+            return flagType;
         }
 
         set
         {
-            _FlagType = value;
+            flagType = value;
         }
     }
 
     public int CompareTo(DialogueMessage obj)
     {
-        if (this._ID < obj._ID)
+        if (id < obj.id)
         {
             return -1;
         }
 
-        if (_ID > obj._ID)
+        if (id > obj.id)
         {
             return 1;
         }

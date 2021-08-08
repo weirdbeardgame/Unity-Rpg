@@ -111,7 +111,6 @@ public class SpeakerEditor : EditorWindow
 
             GUILayout.BeginArea(PropertyPage);
             GUILayout.BeginVertical();
-
             EditorGUILayout.LabelField("Speaker ID: ");
             Speakers[ClickedIndex].SpeakerID = EditorGUILayout.IntField(Speakers[ClickedIndex].SpeakerID);
             EditorGUILayout.LabelField("Speaker Name");

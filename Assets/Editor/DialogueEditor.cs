@@ -47,7 +47,6 @@ public class DialogueEditor : EditorWindow
     [JsonConverter(typeof(TreeSerialize<DialogueMessage>))]
     public string JsonData;
 
-    [MenuItem("Window/Dialogue")]
     private static void OpenWindow()
     {
         DialogueEditor window = GetWindow<DialogueEditor>();
@@ -298,8 +297,8 @@ public class DialogueEditor : EditorWindow
         LeftPoint.border = new RectOffset(4, 4, 12, 12);
 
         Size = new Vector2(400, 150);
-        Node.DNode.Flag = new Flags();
-        Node.CreateNode("", new Vector2(Node.PosX, Node.PosY), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node.DNode, Type);
+        Node.dNode.Flag = new Flags();
+        Node.CreateNode("", new Vector2(Node.posX, Node.posY), 250, 150, Style, LeftPoint, RightPoint, OnClickRemoveNode, ref NodeID, Node.dNode, Type);
 
         DialogueDisplay.Insert(Node);
         NodeID += 1;

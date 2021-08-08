@@ -66,7 +66,7 @@ namespace menu
 
             currentMessage.construct(current, itemState.USED);
 
-            current.Use(selection.PartyMembers[i]);
+            //current.Use(selection.PartyMembers[i]);
         }
     }
 }

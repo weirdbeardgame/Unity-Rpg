@@ -6,40 +6,31 @@ using UnityEngine;
 using System.IO;
 using System;
 
+
+// TODO Add custom asset manager code to handle prefab and scriptable object creature data
 public class Enemies : MonoBehaviour
 {
-    [SerializeField]
-    string filePath = "Assets/Enemies/Enemies.json";
-
-    string parsedData;
-
-    public Dictionary<int, Baddies> enemyData
-    {
-        get
-        {
-            return enemyData;
-        }
-        private set
-        {
-            enemyData = value;
-        }
-    }
+    GameAssetManager manager;
+    public Dictionary<int, Baddies> enemyData;
 
     // Start is called before the first frame update
     void Start()
     {
-        Initalize();
-    }
-
-    public Enemies Initalize() // Just incase
-    {
         enemyData = new Dictionary<int, Baddies>();
-        if (File.Exists(filePath))
+        manager = GetComponent<GameAssetManager>();
+        if (manager.isFilled() > 0)
         {
-            parsedData = File.ReadAllText(filePath);
-            enemyData = JsonConvert.DeserializeObject<Dictionary<int, Baddies>>(parsedData);
+            foreach(var asset in manager.Data)
+            {
+                if (asset.Value.indexedType == AssetType.ENEMY)
+                {
+                        Baddies bTemp = (Baddies)asset.Value.Data;
+                    // Instantiate Prefab from path and then add the entire baddie to Dictionary
+                    // Resources.Load is inefficent enough it shouldn't be used except at start
+                     bTemp.Prefab = Resources.Load(bTemp.prefabPath) as GameObject;
+                    enemyData.Add(bTemp.id, bTemp);
+                }
+            }
         }
-
-        return this;
     }
 }

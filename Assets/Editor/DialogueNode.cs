@@ -11,78 +11,78 @@ using System;
 [System.Serializable]
 public class DialogueNode : IComparable<DialogueNode>
 {
-    private int _NodeID;
-    public int TreeID;
+    private int nodeID;
+    public int treeID;
 
-    int FlagToSet = 0;
-    int FlagType = 0;
-    int FlagChoice1 = 0;
-    int FlagChoice2 = 0;
-    int SetSpeaker = 0;
+    int flagToSet = 0;
+    int flagType = 0;
+    int flagChoice1 = 0;
+    int flagChoice2 = 0;
+    int setSpeaker = 0;
 
-    string JsonData;
+    string jsonData;
 
     [System.NonSerialized]
-    public Rect Node;
+    public Rect node;
 
     string FilePath = "Assets/NPC/NPC.json";
 
-    List<NPCData> SpeakerSelection;
-    List<String> SpeakerName;
+    List<NPCData> speakerSelection;
+    List<String> speakerName;
 
-    NodeType NType;
+    NodeType nType;
 
-    private Vector2 _NodeSize;
+    private Vector2 nodeSize;
 
-    public float PosX, PosY;
+    public float posX, posY;
 
-    private string _NodeTitle;
+    private string nodeTitle;
 
-    public int NpcId;
-    public int Quest;
-
-    [System.NonSerialized]
-    private GUIStyle _NodeStyle;
-
-    private bool IsDragged;
-
-    public DialogueMessage DNode;
+    public int npcId;
+    public int quest;
 
     [System.NonSerialized]
-    public Action<DialogueMessage> OnRemoveNode;
+    private GUIStyle nodeStyle;
+
+    private bool isDragged;
+
+    public DialogueMessage dNode;
+
+    [System.NonSerialized]
+    public Action<DialogueMessage> onRemoveNode;
 
     public void CreateNode(string NodeTitle, Vector2 Position, float SizeW, float SizeH, GUIStyle NodeStyle,
     GUIStyle inPointStyle, GUIStyle outPointStyle, Action<DialogueMessage> RemoveNode, ref int ID, NodeType Type)
     {
-        _NodeStyle = NodeStyle;
-        _NodeTitle = NodeTitle;
+        nodeStyle = NodeStyle;
+        nodeTitle = NodeTitle;
 
-        _NodeID = ID;
+        nodeID = ID;
 
-        DNode = new DialogueMessage();
-        DNode.ID = _NodeID;
+        dNode = new DialogueMessage();
+        dNode.ID = nodeID;
 
-        DNode.NodeT = Type;
+        dNode.NodeT = Type;
 
         if (File.Exists(FilePath))
         {
-            JsonData = File.ReadAllText(FilePath);
-            SpeakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(JsonData);
+            jsonData = File.ReadAllText(FilePath);
+            speakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(jsonData);
 
-            SpeakerName = new List<string>();
-            DNode.SpeakerID = new NPCData();
+            speakerName = new List<string>();
+            dNode.SpeakerID = new NPCData();
 
-            for (int i = 0; i < SpeakerSelection.Count; i++)
+            for (int i = 0; i < speakerSelection.Count; i++)
             {
-                SpeakerName.Add(SpeakerSelection[i].NpcName);
+                speakerName.Add(speakerSelection[i].NpcName);
             }
         }
 
-        OnRemoveNode = RemoveNode;
+        onRemoveNode = RemoveNode;
 
-        SetSpeaker = DNode.SpeakerID.NpcID;
+        setSpeaker = dNode.SpeakerID.NpcID;
 
-        Node = new Rect(Position.x, Position.y, SizeW, SizeH);
+        node = new Rect(Position.x, Position.y, SizeW, SizeH);
         ID += 1;
         return;
     }
@@ -91,27 +91,27 @@ public class DialogueNode : IComparable<DialogueNode>
     public void CreateNode(string NodeTitle, Vector2 Position, float SizeW, float SizeH, GUIStyle NodeStyle,
         GUIStyle inPointStyle, GUIStyle outPointStyle, Action<DialogueMessage> RemoveNode, ref int ID, DialogueMessage MNode, NodeType Type)
     {
-        _NodeStyle = NodeStyle;
-        _NodeTitle = NodeTitle;
+        nodeStyle = NodeStyle;
+        nodeTitle = NodeTitle;
 
-        _NodeID = ID;
+        nodeID = ID;
 
-        DNode = new DialogueMessage();
-        DNode = MNode;
+        dNode = new DialogueMessage();
+        dNode = MNode;
 
-        DNode.NodeT = Type;        
+        dNode.NodeT = Type;        
         if (File.Exists(FilePath))        
         {        
-            JsonData = File.ReadAllText(FilePath);                    
-            SpeakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(JsonData);
+            jsonData = File.ReadAllText(FilePath);                    
+            speakerSelection = JsonConvert.DeserializeObject<List<NPCData>>(jsonData);
          
-            SpeakerName = new List<string>();                   
-            DNode.SpeakerID = new NPCData();
+            speakerName = new List<string>();                   
+            dNode.SpeakerID = new NPCData();
         
-            for (int i = 0; i < SpeakerSelection.Count; i++)
-            {                        
-                SpeakerName.Add(SpeakerSelection[i].NpcName);                  
-            }         
+            for (int i = 0; i < speakerSelection.Count; i++)
+            {
+                speakerName.Add(speakerSelection[i].NpcName);                  
+            }
         }
 
         switch (Type)
@@ -120,72 +120,72 @@ public class DialogueNode : IComparable<DialogueNode>
                 break;
 
             case NodeType.FLAG:
-                DNode.Flag = new Flags();
-                FlagToSet = 0;
+                dNode.Flag = new Flags();
+                flagToSet = 0;
                 break;
 
             case NodeType.CHOICE:
-                DNode.Choices = new ChoiceData[2];
-                FlagChoice1 = 0;
-                FlagChoice2 = 0;
+                dNode.Choices = new ChoiceData[2];
+                flagChoice1 = 0;
+                flagChoice2 = 0;
                 break;
         }
 
-        PosX = Position.x;
-        PosY = Position.y;
+        posX = Position.x;
+        posY = Position.y;
 
-        OnRemoveNode = RemoveNode;
+        onRemoveNode = RemoveNode;
 
-        Node = new Rect(Position.x, Position.y, SizeW, SizeH);
+        node = new Rect(Position.x, Position.y, SizeW, SizeH);
         return;
     }
 
 
-    public void Drag(Vector2 Drag)
+    public void Drag(Vector2 drag)
     {
 
-        PosX = Drag.x;
-        PosY = Drag.y;
+        posX = drag.x;
+        posY = drag.y;
 
 
         // Set position based on Mouse Cordinites
-        Node.position += Drag;
+        node.position += drag;
     }
 
-    public void Draw(string[] Flag, List<Flags> FlagData)
+    public void Draw(string[] flag, List<Flags> flagData)
     {
-        GUI.Box(Node, _NodeTitle, _NodeStyle);
+        GUI.Box(node, nodeTitle, nodeStyle);
 
-        GUILayout.BeginArea(new Rect(Node.x, Node.y, 250, 450));
+        GUILayout.BeginArea(new Rect(node.x, node.y, 250, 450));
         GUILayout.BeginVertical();
 
-        switch (DNode.NodeT)
+        switch (dNode.NodeT)
         {
             case NodeType.FLAG:
                 EditorGUILayout.LabelField("Flag: ");
-                FlagToSet = DNode.Flag.ID;
-                FlagToSet = EditorGUILayout.Popup(FlagToSet, Flag);
+                flagToSet = dNode.Flag.ID;
+                flagToSet = EditorGUILayout.Popup(flagToSet, flag);
                 EditorGUILayout.LabelField("Is Required?");
-                DNode.FlagType = (FlagReqSet)EditorGUILayout.EnumPopup(DNode.FlagType);
-                DNode.Flag = FlagData[FlagToSet];
+                dNode.FlagType = (FlagReqSet)EditorGUILayout.EnumPopup(dNode.FlagType);
+                dNode.Flag = flagData[flagToSet];
                 break;
 
             case NodeType.DIALOUGE:
                 EditorGUILayout.LabelField("Speaker ID: ");
-                SetSpeaker = EditorGUILayout.Popup(SetSpeaker, SpeakerName.ToArray());
-                DNode.SpeakerID = SpeakerSelection[SetSpeaker];
-                DNode.Line = GUILayout.TextArea(DNode.Line, GUILayout.Height(EditorGUIUtility.singleLineHeight * 5));
+                setSpeaker = EditorGUILayout.Popup(setSpeaker, speakerName.ToArray());
+                dNode.SpeakerID = speakerSelection[setSpeaker];
+                dNode.Line = GUILayout.TextArea(dNode.Line, GUILayout.Height(EditorGUIUtility.singleLineHeight * 5));
                 break;
 
             case NodeType.CHOICE:
                 // List Options and flags they set
                 EditorGUILayout.LabelField("Options");
-                FlagChoice1 = EditorGUILayout.Popup(FlagChoice1, Flag);
-                FlagChoice2 = EditorGUILayout.Popup(FlagChoice2, Flag);
-                DNode.Choices[0].SetFlag = FlagData[FlagChoice1];
-                DNode.Choices[1].SetFlag = FlagData[FlagChoice2];
-                DNode.Choices[0].ChoiceName = EditorGUILayout.TextField(DNode.Choices[0].ChoiceName);
-                DNode.Choices[1].ChoiceName = EditorGUILayout.TextField(DNode.Choices[1].ChoiceName);
+                flagChoice1 = EditorGUILayout.Popup(flagChoice1, flag);
+                flagChoice2 = EditorGUILayout.Popup(flagChoice2, flag);
+                dNode.Choices[0].SetFlag = flagData[flagChoice1];
+                dNode.Choices[1].SetFlag = flagData[flagChoice2];
+                dNode.Choices[0].ChoiceName = EditorGUILayout.TextField(dNode.Choices[0].ChoiceName);
+                dNode.Choices[1].ChoiceName = EditorGUILayout.TextField(dNode.Choices[1].ChoiceName);
                 break;
         }
 
@@ -195,7 +195,7 @@ public class DialogueNode : IComparable<DialogueNode>
 
     private void OnClickRemoveNode()
     {
-        if (OnRemoveNode != null)
+        if (onRemoveNode != null)
         {
             //OnRemoveNode(this);
         }
@@ -216,20 +216,20 @@ public class DialogueNode : IComparable<DialogueNode>
             case EventType.MouseDown:
                 if (e.button == 0) // left clicky
                 {
-                    if (Node.Contains(e.mousePosition))
+                    if (node.Contains(e.mousePosition))
                     {
-                        IsDragged = true;
+                        isDragged = true;
                         GUI.changed = true;
                     }
                 }
                 break;
 
             case EventType.MouseUp:
-                IsDragged = false;
+                isDragged = false;
                 break;
 
             case EventType.MouseDrag:
-                if (e.button == 0 && IsDragged)
+                if (e.button == 0 && isDragged)
                 {
                     Drag(e.delta);
                     e.Use();
@@ -238,7 +238,7 @@ public class DialogueNode : IComparable<DialogueNode>
                 break;
         }
 
-        if (e.button == 1 && Node.Contains(e.mousePosition))
+        if (e.button == 1 && node.Contains(e.mousePosition))
         {
             ProcessContextMenu();
             e.Use();
@@ -249,12 +249,12 @@ public class DialogueNode : IComparable<DialogueNode>
 
     public int CompareTo(DialogueNode obj)
     {
-        if (this._NodeID < obj._NodeID)
+        if (nodeID < obj.nodeID)
         {
             return -1;
         }
 
-        if (_NodeID > obj._NodeID)
+        if (nodeID > obj.nodeID)
         {
             return 1;
         }

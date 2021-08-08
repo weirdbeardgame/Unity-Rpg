@@ -45,7 +45,7 @@ public class BattleEnemies : MonoBehaviour
     void Kill(int id)
     {
         // Doesn't that mean this'll destroy itself?
-        badParty[id].GetComponent<Baddies>().Die();
+        //badParty[id].GetComponent<Baddies>().Die();
     }
 
     // Update is called once per frame

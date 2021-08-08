@@ -10,29 +10,26 @@ public class Party : MonoBehaviour
     string PlayerData;
     public List<Player> PartyMembers;
 
+    GameAssetManager manager;
+
     Player PlayerObject;
-
-    string FilePath = "Assets/Player/Actors.json";
-
-    JsonSerializerSettings settings = new JsonSerializerSettings
-    {
-        TypeNameHandling = TypeNameHandling.All
-    };
 
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(this);
 
-        if (File.Exists(FilePath))
+        manager = GetComponent<GameAssetManager>();
+        if (manager.isFilled() > 0)
         {
-            PlayerData = File.ReadAllText(FilePath);
-            PartyMembers = JsonConvert.DeserializeObject<List<Player>>(PlayerData);
-        }
-
-        for (int i = 0; i < PartyMembers.Count; i++)
-        {
-            PartyMembers[i].createWeaponSlots();
+            foreach(var asset in manager.Data)
+            {
+                if (asset.Value.indexedType == AssetType.PLAYER)
+                {
+                    Player pTemp = (Player)asset.Value.Data;
+                    PartyMembers.Add(pTemp);
+                }
+            }
         }
     }
 

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 public class playerEditorWindow : EditorWindow
 {
     List<Player> Editable;
+    List<Asset> serialize;
     Player edit;
     string filePath = "Assets/Player/Actors.json";
     string jsonData;
@@ -20,6 +21,8 @@ public class playerEditorWindow : EditorWindow
     bool IsInit = false;
     Sprite sprite;
 
+    GameAssetManager manager;
+
     //Rect Position;
     SerializedProperty property;
 
@@ -28,34 +31,44 @@ public class playerEditorWindow : EditorWindow
         TypeNameHandling = TypeNameHandling.All
     };
 
-    public void readJson()
+    void init()
     {
-        Editable = new List<Player>();
-
-        if (File.Exists(filePath))
+        if (manager.isFilled() > 0)
         {
-            jsonData = File.ReadAllText(filePath);
-            Editable = JsonConvert.DeserializeObject<List<Player>>(jsonData, settings);
-        }
-
-        Names = new List<string>();
-
-        if (Editable != null && Editable.Count > 0)
-        {
-            for (int i = 0; i < Editable.Count; i++)
+            foreach(var asset in manager.Data)
             {
-                Names.Add(Editable[i].creatureName);
+                if (asset.Value.indexedType == AssetType.PLAYER)
+                {
+                    Player player = (Player)asset.Value.Data;
+                    player.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(player.prefabPath);
+                    Editable.Add(player);
+                    Names.Add(player.Data.creatureName);
+                }
             }
         }
-
         IsInit = true;
+    }
+
+    void createPrefab()
+    {
+        edit.prefab = new GameObject();
+        edit.prefab.AddComponent<Gauge>();
+        edit.prefab.AddComponent<Animator>();
+        edit.prefab.AddComponent<Rigidbody2D>();
+        edit.prefab.AddComponent<BoxCollider2D>();
+        edit.prefab.AddComponent<SpriteRenderer>();
+        edit.prefab.name = edit.Data.creatureName;
     }
 
     void OnGUI()
     {
         if (!IsInit)
         {
-            readJson();
+            Names = new List<string>();
+            Editable = new List<Player>();
+            manager = new GameAssetManager();
+            manager.Init();
+            init();
         }
 
         EditorGUILayout.LabelField("Name: ");
@@ -70,9 +83,24 @@ public class playerEditorWindow : EditorWindow
             }
 
             edit = new Player();
-            edit.creatureName = PlayerName;
-            edit.Stats = new StatManager();
-            edit.Stats.Initalize();
+
+            edit.Data = new Creature();
+
+            edit.Data.creatureName = PlayerName;
+
+            edit.Data.Stats = new StatManager();
+            edit.Data.Stats.Initalize();
+
+            if (!edit.prefab)
+            {
+                createPrefab();
+                if (!Directory.Exists("Resources/Prefabs/Players/"))
+                {
+                    Directory.CreateDirectory("Resources/Prefabs/Players/");
+                }
+                PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab"));
+                edit.prefabPath = ("Prefabs/Players/" + edit.Data.creatureName + ".prefab");
+            }
 
             Editable.Add(edit);
             Names.Add(PlayerName);
@@ -90,30 +118,46 @@ public class playerEditorWindow : EditorWindow
                 spriteRect.position = new Vector2(10, 10);
                 sprite = (Sprite)EditorGUI.ObjectField(spriteRect, sprite, typeof(Texture2D), false);*/
 
+                EditorGUILayout.LabelField("Description");
+                edit.Data.description = EditorGUILayout.TextArea(edit.Data.description, GUILayout.Height(75));
+
                 EditorGUILayout.LabelField("Level");
                 edit.level = EditorGUILayout.IntField(edit.level);
+
                 EditorGUILayout.LabelField("Health");
-                edit.Stats.statList[(int)StatType.HEALTH].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.HEALTH].stat);
+                edit.Data.Stats.statList[(int)StatType.HEALTH].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.HEALTH].stat);
+
                 EditorGUILayout.LabelField("Strength");
-                edit.Stats.statList[(int)StatType.STRENGTH].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.STRENGTH].stat);
+                edit.Data.Stats.statList[(int)StatType.STRENGTH].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.STRENGTH].stat);
+
                 EditorGUILayout.LabelField("Magic");
-                edit.Stats.statList[(int)StatType.MAGIC].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.MAGIC].stat);
+                edit.Data.Stats.statList[(int)StatType.MAGIC].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.MAGIC].stat);
+
                 EditorGUILayout.LabelField("Speed");
-                edit.Stats.statList[(int)StatType.SPEED].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.SPEED].stat);
+                edit.Data.Stats.statList[(int)StatType.SPEED].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.SPEED].stat);
+
                 EditorGUILayout.LabelField("Defense");
-                edit.Stats.statList[(int)StatType.DEFENSE].stat = EditorGUILayout.FloatField(edit.Stats.statList[(int)StatType.DEFENSE].stat);
+                edit.Data.Stats.statList[(int)StatType.DEFENSE].stat = EditorGUILayout.FloatField(edit.Data.Stats.statList[(int)StatType.DEFENSE].stat);
+
                 EditorGUILayout.LabelField("Job");
-                edit.job = (JobSystem)EditorGUILayout.EnumPopup(edit.job);
-                EditorGUILayout.LabelField("Sprite Selector");
-                edit.SpritePath = EditorGUILayout.ObjectField("Sprite", sprite, typeof(Sprite), false).ToString();
+                edit.Data.job = (JobSystem)EditorGUILayout.EnumPopup(edit.Data.job);
+            }
+            if (edit.prefab)
+            {
+                if (GUILayout.Button("Edit Prefab"))
+                {
+                    AssetDatabase.OpenAsset(PrefabUtility.LoadPrefabContents(("Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab")));
+                }
             }
         }
         GUILayout.FlexibleSpace();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Save"))
         {
-            string data = JsonConvert.SerializeObject(Editable);
-            File.WriteAllText(filePath, data);
+            for (int i = 0; i < Editable.Count; i++)
+            {
+                manager.AddAsset(new Asset(Editable[i], AssetType.PLAYER), Editable[i].Data.creatureName);
+            }
         }
         GUILayout.EndHorizontal();
     }
