@@ -12,38 +12,18 @@ public class Baddies : Creature
     string type;
     public string spritePath;
     public int id;
-
     public int level;
-
     [System.NonSerialized]
     public Gauge gauge;
 
-    [System.NonSerialized]
-    bool isBattle;
-
     public Baddies createBattler(BattleSlots slot)
     {
-        BattlePrefab = new GameObject(creatureName);
-
-        BattlePrefab.AddComponent<SpriteRenderer>();
-        BattlePrefab.AddComponent<BoxCollider2D>();
-        BattlePrefab.AddComponent<RectTransform>();
-        BattlePrefab.AddComponent<Rigidbody2D>();
-        gauge = BattlePrefab.AddComponent<Gauge>();
-
-        BattlePrefab.GetComponent<Rigidbody2D>().gravityScale = 0;
-        BattlePrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
-        BattlePrefab.GetComponent<RectTransform>().position = new Vector2(slot.gameObject.transform.localPosition.x, slot.gameObject.transform.localPosition.y);
-        BattlePrefab.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(spritePath);
-        BattlePrefab.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        BattlePrefab.tag = "Enemy";
-
-        tag = BattleTag.ENEMY;
-
+        BattlePrefab = MonoBehaviour.Instantiate(BattlePrefab);
         MonoBehaviour.DontDestroyOnLoad(BattlePrefab);
-
+        gauge = BattlePrefab.GetComponent<Gauge>();
+        BattlePrefab.tag = "Enemy";
+        tag = BattleTag.ENEMY;
         createWeaponSlots();
-        //setJob((jobSystem)Enum.Parse(typeof(jobSystem), token.Value<string>("job")));
         return this;
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BattleEnemies : MonoBehaviour
 {
+    // Just the enemies spawned in scene
     public List<GameObject> badParty
     {
         get

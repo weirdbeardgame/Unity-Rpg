@@ -12,10 +12,9 @@ public class Creature : senderInterface
     public bool isAlive;
     public StatManager Stats;
     public List<weaponSlots>slots;
-
-
     public BattleTag tag;
-    // ToDo. Figure out best method for prefab serialization
+    // TODO: Figure out best method for prefab serialization!
+    // Should that just be a static path in Json? Or should that be the whole prefab forcibly serialized
     public GameObject BattlePrefab;
     public JobSystem job;
     [System.NonSerialized]
@@ -32,7 +31,7 @@ public class Creature : senderInterface
 
     public void createWeaponSlots()
     {
-        slots = new List<weaponSlots>(); // Need to figure out why this is throwing an exception. Oddly nothing on the surface appears "null"
+        slots = new List<weaponSlots>();
         for (int i = 0; i < 5; i++)
         {
             slots.Add(new weaponSlots((Appendage)i, job));
@@ -64,7 +63,7 @@ public class Creature : senderInterface
     {
         // There's no more health. Be gone... THOT!
         MonoBehaviour.Destroy(BattlePrefab);
-        slots = null; // Doth we needeth this?
+        slots = null;
         isAlive = false;
     }
     public weaponSlots GetSlot(Appendage app)
