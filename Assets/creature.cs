@@ -11,61 +11,31 @@ public class Creature : senderInterface
 {
     public bool isAlive;
     public StatManager Stats;
-    public weaponSlots[] slots
-    {
-        get
-        {
-            return slots;
-        }
-        private set
-        {
-            slots = value;
-        }
-    }
+    public List<weaponSlots>slots;
+
 
     public BattleTag tag;
     // ToDo. Figure out best method for prefab serialization
     public GameObject BattlePrefab;
     public JobSystem job;
-
-    public BattleState state
-    {
-        get
-        {
-            return state;
-        }
-        protected set
-        {
-            state = value;
-        }
-    }
+    [System.NonSerialized]
+    public BattleState state;
 
     float Buff;
 
     Buffers OneTime;
-    public float actualDamage
-    {
-        get
-        {
-            return actualDamage;
-        }
-        protected set
-        {
-            actualDamage = value;
-        }
-    }
+
+    [System.NonSerialized]
+    public float actualDamage;
 
     public string creatureName;
 
     public void createWeaponSlots()
     {
-        Debug.Log("Attempting to create Slots");
-        slots = new weaponSlots[5]; // Need to figure out why this is throwing an exception. Oddly nothing on the surface appears "null"
-        Debug.Log("SLOTS: " + slots);
-
+        slots = new List<weaponSlots>(); // Need to figure out why this is throwing an exception. Oddly nothing on the surface appears "null"
         for (int i = 0; i < 5; i++)
         {
-            slots[i] = new weaponSlots((Appendage)i, job);
+            slots.Add(new weaponSlots((Appendage)i, job));
         }
     }
 

@@ -81,7 +81,7 @@ public class Battle : MonoBehaviour, IReceiver
         for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().badParty.Count; i++)
         {
             //BadParty.Add(Enemy.RandomSelectEnemy().createBattler(x, y));
-            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, BattleObject.GetComponent<BattleEnemies>().badParty[i], i);
+            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, BattleObject.GetComponent<BattleEnemies>().badParty[i].GetComponent<Baddies>(), i);
             x += 1;
         }
 

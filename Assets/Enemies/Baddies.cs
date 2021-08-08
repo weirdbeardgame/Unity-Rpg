@@ -6,19 +6,9 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System;
 
+[System.Serializable]
 public class Baddies : Creature
 {
-    public string enemyName
-    {
-        get
-        {
-            return enemyName;
-        }
-        protected set
-        {
-            enemyName = value;
-        }
-    }
     string type;
     public string spritePath;
     public int id;
@@ -33,7 +23,7 @@ public class Baddies : Creature
 
     public Baddies createBattler(BattleSlots slot)
     {
-        BattlePrefab = new GameObject(enemyName);
+        BattlePrefab = new GameObject(creatureName);
 
         BattlePrefab.AddComponent<SpriteRenderer>();
         BattlePrefab.AddComponent<BoxCollider2D>();

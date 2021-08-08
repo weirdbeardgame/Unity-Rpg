@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class weaponSlots : ScriptableObject
 {
-
     bool IsEquiped;
     JobSystem Jobs;
     Appendage Appendage;

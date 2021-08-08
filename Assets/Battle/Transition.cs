@@ -33,6 +33,7 @@ public class Transition : MonoBehaviour
     int PreviousIndex;
     PlayerMovement move;
 
+    [SerializeField]
     public List<Baddies> allowedEnemies;
 
     // Start is called before the first frame update
@@ -41,23 +42,21 @@ public class Transition : MonoBehaviour
         move = FindObjectOfType<PlayerMovement>();
     }
 
-
     /************************************************************************************************
     * TODO:
     * I want to loop through a random range set between 1 and 3.
     * This way I can determine count of enemies that will spawn.
     * I want to loop through a random range of enemies set as allowed based on map and active flags
     ************************************************************************************************/
-    void selectEnemies() // I'm assuming there'll be something else that feeds this? Or! I could have Transition hold this
+    void selectEnemies()
     {
         var rand = new System.Random();
         int amount = rand.Next(1, 3);
-        int baddieIndex = rand.Next(allowedEnemies[0].id, allowedEnemies[allowedEnemies.Count].id);
+        int baddieIndex = rand.Next(allowedEnemies[0].id, allowedEnemies[allowedEnemies.Count].id); // This seems a grave misuse of enemy ID
         for (int i = 0; i < amount; i++)
         {
             // Spawn and add into BattleEnemies from here
-            Instantiate<GameObject>(allowedEnemies[baddieIndex].BattlePrefab);
-            BattleObject.GetComponent<BattleEnemies>().Insert(allowedEnemies[baddieIndex]);
+            BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(allowedEnemies[baddieIndex].BattlePrefab));
         }
     }
 

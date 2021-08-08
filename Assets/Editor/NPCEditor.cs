@@ -28,10 +28,9 @@ public class NPCEditor : Editor
 
     Dictionary<int, ItemData> ItemsToCollect;
     
-    List<Flags>FlagList;
+    List<Flags> FlagList;
     List<NPCData> Editable;
     List<QuestData> Quests;
-
     List<string> NpcNames;
     List<string> ItemNames;
     List<string> EventNames;

@@ -13,7 +13,7 @@ public class Enemies : MonoBehaviour
 
     string parsedData;
 
-    public List<Baddies> enemyData
+    public Dictionary<int, Baddies> enemyData
     {
         get
         {
@@ -31,14 +31,13 @@ public class Enemies : MonoBehaviour
         Initalize();
     }
 
-
     public Enemies Initalize() // Just incase
     {
-        enemyData = new List<Baddies>();
+        enemyData = new Dictionary<int, Baddies>();
         if (File.Exists(filePath))
         {
             parsedData = File.ReadAllText(filePath);
-            enemyData = JsonConvert.DeserializeObject<List<Baddies>>(parsedData);
+            enemyData = JsonConvert.DeserializeObject<Dictionary<int, Baddies>>(parsedData);
         }
 
         return this;

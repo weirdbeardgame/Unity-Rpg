@@ -9,23 +9,21 @@ using System.Collections.Generic;
 [CustomPropertyDrawer(typeof(Texture2D))]
 public class EnemyEditorWindow : EditorWindow
 {
-    List<Baddies> Editable;
+    Dictionary<int, Baddies> Editable;
 
     Baddies edit;
     string filePath = "Assets/Enemies/Enemies.json";
     string jsonData;
-
-    int Index;
+    int Index = 0;
     string PlayerName;
-
     static bool[] fold = new bool[10];
     List<string> Names;
-
     bool IsInit = false;
     Sprite sprite;
-
     //Rect Position;
     SerializedProperty property;
+
+    int ID = 0;
 
     static JsonSerializerSettings settings = new JsonSerializerSettings
     {
@@ -34,19 +32,19 @@ public class EnemyEditorWindow : EditorWindow
 
     public void readJson()
     {
-        Editable = new List<Baddies>();
+        Editable = new Dictionary<int, Baddies>();
 
         if (File.Exists(filePath))
         {
             jsonData = File.ReadAllText(filePath);
-            Editable = JsonConvert.DeserializeObject<List<Baddies>>(jsonData, settings);
+            Editable = JsonConvert.DeserializeObject<Dictionary<int, Baddies>>(jsonData, settings);
         }
 
         Names = new List<string>();
 
         if (Editable != null && Editable.Count > 0)
         {
-            for (int i = 0; i < Editable.Count; i++)
+            for (int i = 1; i < Editable.Count; i++)
             {
                 Names.Add(Editable[i].creatureName);
             }
@@ -69,31 +67,32 @@ public class EnemyEditorWindow : EditorWindow
         {
             if (Editable == null)
             {
-                Editable = new List<Baddies>();
+                Editable = new Dictionary<int, Baddies>();
                 Names = new List<string>();
             }
 
             edit = new Baddies();
             edit.creatureName = PlayerName;
+            edit.id = (ID += 1); // This'll handle local instance but no more then that!
             edit.Stats = new StatManager();
             edit.Stats.Initalize();
 
-            Editable.Add(edit);
+            Editable.Add(edit.id, edit);
             Names.Add(PlayerName);
             Repaint();
         }
 
         if (Editable != null && Editable.Count > 0)
         {
-            Index = EditorGUILayout.Popup(Index, Names.ToArray());
-            edit = Editable[Index];
-
+            Index = EditorGUILayout.Popup(Index, Names.ToArray()) + 1;
+            if (Editable.ContainsKey(Index))
+            {
+                edit = Editable[Index];
+                Debug.Log("EID: " + Index);
+                ID = Editable[Editable.Count].id;
+            }
             if (edit != null)
             {
-                //Rect spriteRect = new Rect();
-                //spriteRect.position = new Vector2(10, 10);
-                //sprite = (Sprite)EditorGUI.ObjectField(spriteRect, sprite, typeof(Texture2D), false);
-
                 EditorGUILayout.LabelField("Enemy ID");
                 edit.id = EditorGUILayout.IntField(edit.id);
 
@@ -113,14 +112,17 @@ public class EnemyEditorWindow : EditorWindow
                 edit.job = (JobSystem)EditorGUILayout.EnumPopup(edit.job);
                 EditorGUILayout.LabelField("Sprite Selector");
                 sprite = (Sprite)EditorGUILayout.ObjectField("Sprite", sprite, typeof(Sprite), false);
-                edit.spritePath = sprite.name;
+                if (sprite)
+                {
+                    edit.spritePath = AssetDatabase.GetAssetPath(sprite);
+                }
             }
         }
         GUILayout.FlexibleSpace();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Save"))
         {
-            Editable[Index] = edit;
+            //Editable[Index] = edit;
             string data = JsonConvert.SerializeObject(Editable);
             File.WriteAllText(filePath, data);
         }

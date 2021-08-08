@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BattleEnemies : MonoBehaviour
 {
-    public List<Baddies> badParty
+    public List<GameObject> badParty
     {
         get
         {
@@ -23,16 +23,16 @@ public class BattleEnemies : MonoBehaviour
         
     }
 
-    public void Insert(Baddies bad)
+    public void Insert(GameObject bad)
     {
         if (badParty == null)
         {
-            badParty = new List<Baddies>();
+            badParty = new List<GameObject>();
         }
         badParty.Add(bad);
     }
 
-    public void Remove(Baddies bad)
+    public void Remove(GameObject bad)
     {
         if (badParty == null)
         {
@@ -43,7 +43,8 @@ public class BattleEnemies : MonoBehaviour
 
     void Kill(int id)
     {
-        badParty[id].Die();
+        // Doesn't that mean this'll destroy itself?
+        badParty[id].GetComponent<Baddies>().Die();
     }
 
     // Update is called once per frame
