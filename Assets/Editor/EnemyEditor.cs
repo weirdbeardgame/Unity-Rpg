@@ -54,11 +54,11 @@ public class EnemyEditorWindow : EditorWindow
         edit.Prefab.AddComponent<BoxCollider2D>();
         edit.Prefab.AddComponent<SpriteRenderer>();
         edit.Prefab.name = edit.Data.creatureName;
-        if (!Directory.Exists("Resources/Prefabs/Enemies/"))
+        if (!Directory.Exists("Assets/Resources/Prefabs/Enemies/"))
         {
-            Directory.CreateDirectory("Resources/Prefabs/Enemies/");
+            Directory.CreateDirectory("Assets/Resources/Prefabs/Enemies/");
         }
-        PrefabUtility.SaveAsPrefabAsset(edit.Prefab, ("Resources/Prefabs/Enemies/" + edit.Data.creatureName + ".prefab"));
+        PrefabUtility.SaveAsPrefabAsset(edit.Prefab, ("Assets/Resources/Prefabs/Enemies/" + edit.Data.creatureName + ".prefab"));
         edit.prefabPath = ("Prefabs/Enemies/" + edit.Data.creatureName + ".prefab");
     }
 

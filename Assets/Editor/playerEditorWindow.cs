@@ -94,11 +94,11 @@ public class playerEditorWindow : EditorWindow
             if (!edit.prefab)
             {
                 createPrefab();
-                if (!Directory.Exists("Resources/Prefabs/Players/"))
+                if (!Directory.Exists("Assets/Resources/Prefabs/Players/"))
                 {
-                    Directory.CreateDirectory("Resources/Prefabs/Players/");
+                    Directory.CreateDirectory("Assets/Resources/Prefabs/Players/");
                 }
-                PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab"));
+                PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Assets/Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab"));
                 edit.prefabPath = ("Prefabs/Players/" + edit.Data.creatureName + ".prefab");
             }
 
