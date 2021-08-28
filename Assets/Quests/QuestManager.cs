@@ -64,15 +64,7 @@ public class QuestManager : MonoBehaviour, IReceiver
 
     public void Receive(object message)
     {
-        if (message is questMessage)
-        {
-            inbox.Enqueue((questMessage)message);
-        }
-
-        if (message is InventoryMessage)
-        {
-            inbox.Enqueue((InventoryMessage)message);
-        }
+        inbox.Enqueue(message);
     }
 
     public void Unsubscribe()
@@ -82,34 +74,7 @@ public class QuestManager : MonoBehaviour, IReceiver
 
     public void Progress() // progresses through the list of objectives
     {
-        // Need's rewrite
-        /*if (Book.getActiveQuest != null)
-        {
-            switch (Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].Type)
-            {
-                case QuestObjectiveType.COLLECT:
-                    if (Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].AmountCollected == Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective].RequiredItems[0].RequiredAmount)
-                    {
-                        // ADD REWARD
-                        Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].State = QuestObjectiveState.COMPLETED;
-                        //Book.getActiveQuest.ActiveObjective.ObjectiveID++;
-                        if (Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID] == null)
-                        {
-                            Complete();
-                        }
-                        Debug.Log("Quest Complete");
-                    }
-                    break;
-                case QuestObjectiveType.KILL:
-                    if (Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].AmountCollected == Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective].RequiredItems[0].RequiredAmount)
-                    {
-                        // ADD REWARD
-                        Book.getActiveQuest.Objectives[Book.getActiveQuest.ActiveObjective.ObjectiveID].State = QuestObjectiveState.COMPLETED;
-                        //Book.getActiveQuest.ActiveObjective++;
-                    }
-                    break;
-            }
-        }*/
+
     }
 
     public void Complete()

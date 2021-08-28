@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public enum States { MAIN, BATTLE, CUTSCENE, PAUSE };
+public enum States { MAIN, BATTLE, CUTSCENE, PAUSE, DIALOGUE };
 public enum FlagReqSet { REQUIRED, SET }
 
 public class Flags

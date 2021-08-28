@@ -11,7 +11,6 @@ public class DialogueEditor : EditorWindow
     Vector2 Size;
     Vector2 Offset;
     Vector2 Drag;
-
     BinarySearchTree<DialogueMessage> DialogueTree;
     BinarySearchTree<DialogueNode> DialogueDisplay;
 

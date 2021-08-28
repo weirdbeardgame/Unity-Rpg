@@ -12,8 +12,6 @@ public class playerEditorWindow : EditorWindow
     List<Player> Editable;
     List<Asset> serialize;
     Player edit;
-    string filePath = "Assets/Player/Actors.json";
-    string jsonData;
     int Index;
     string PlayerName;
     static bool[] fold = new bool[10];
@@ -114,10 +112,6 @@ public class playerEditorWindow : EditorWindow
 
             if (edit != null)
             {
-                /*Rect spriteRect = new Rect();
-                spriteRect.position = new Vector2(10, 10);
-                sprite = (Sprite)EditorGUI.ObjectField(spriteRect, sprite, typeof(Texture2D), false);*/
-
                 EditorGUILayout.LabelField("Description");
                 edit.Data.description = EditorGUILayout.TextArea(edit.Data.description, GUILayout.Height(75));
 

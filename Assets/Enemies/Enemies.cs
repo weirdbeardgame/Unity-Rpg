@@ -24,10 +24,10 @@ public class Enemies : MonoBehaviour
             {
                 if (asset.Value.indexedType == AssetType.ENEMY)
                 {
-                        Baddies bTemp = (Baddies)asset.Value.Data;
+                    Baddies bTemp = (Baddies)asset.Value.Data;
                     // Instantiate Prefab from path and then add the entire baddie to Dictionary
                     // Resources.Load is inefficent enough it shouldn't be used except at start
-                     bTemp.Prefab = Resources.Load(bTemp.prefabPath) as GameObject;
+                    bTemp.Prefab = Resources.Load(bTemp.prefabPath) as GameObject;
                     enemyData.Add(bTemp.id, bTemp);
                 }
             }

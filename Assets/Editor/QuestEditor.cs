@@ -9,6 +9,7 @@ using UnityEngine.Assertions.Must;
 
 public class QuestEditor : EditorWindow
 {
+
     string JsonData;
     string ItemFilePath = "Assets/Items.json";
     string FilePath = "Assets/Quests/Quest.json";
@@ -17,21 +18,21 @@ public class QuestEditor : EditorWindow
 
     List<Flags> FlagList;
     List<QuestData> Quests;
+
+    // For item collect quests
     public Dictionary<int, ItemData> ItemsToCollect;
     List<string> TempItemNames;
-
     Item GetItem;
-
-    QuestData QuestToCreate;
-    QuestObjective Objective;
-
+    int itemSelection = 0;
+    QuestData questToCreate;
+    QuestEvent questEvent;
     Rect PropertyPage;
     Rect ButtonList;
     Rect TopProperties;
 
-    int ItemSelection = 0;
-
     bool IsInit = false;
+    string[] array = {"Quest, Objectives, Events"}; 
+    int tabIndex = 0;
 
     [MenuItem("Window/Quest Editor")]
     public static void ShowWindow()
@@ -40,7 +41,7 @@ public class QuestEditor : EditorWindow
     }
 
     void ReadJson()
-    {        
+    {
         if (File.Exists(ItemFilePath))
         {
             ItemsToCollect = new Dictionary<int, ItemData>();
@@ -93,92 +94,59 @@ public class QuestEditor : EditorWindow
         {
             Init();
         }
-            
-        GUI.Box(PropertyPage, "Quests");            
-        GUI.Box(ButtonList, "Buttons");
-    
-        GUILayout.BeginArea(TopProperties);
-            
-        if (GUILayout.Button("New Quest"))            
-        {                    
-            QuestToCreate = new QuestData();
-            QuestToCreate.Objectives = new List<QuestObjective>();
-            QuestToCreate.QuestName = "Temp";
-            Quests.Add(QuestToCreate);
-        }
-        
-        if (QuestToCreate != null)        
+
+        tabIndex = GUILayout.Toolbar(tabIndex, array);
+
+        switch(tabIndex)
         {
-            EditorGUILayout.LabelField("Quest Data");
-            QuestToCreate.QuestID = EditorGUILayout.IntField(QuestToCreate.QuestID);
-            EditorGUILayout.LabelField("Name Of Quest");
-            QuestToCreate.QuestName = EditorGUILayout.TextField(QuestToCreate.QuestName);
-            EditorGUILayout.LabelField("Quest Description");
-            QuestToCreate.Description = EditorGUILayout.TextArea(QuestToCreate.Description);
-                      
-            if (GUILayout.Button("Add Objective"))
-            { 
-                Objective = new QuestObjective();
-                Objective.RequiredItems = new List<ItemData>();
-                QuestToCreate.Objectives.Add(Objective);
-            }
+            case 0:
+                if (GUILayout.Button("New Quest"))
+                {
+                    questToCreate = new QuestData();
+                    questToCreate.events = new List<QuestEvent>();
+                    questToCreate.QuestName = "temp";
+                    Quests.Add(questToCreate);
+                }
+
+                GUI.Box(PropertyPage, "Quests");
+
+                GUILayout.BeginHorizontal();
+                GUILayout.BeginVertical("box", GUILayout.MaxWidth(150), GUILayout.ExpandHeight(true));
+                if (questToCreate != null)
+                {
+                    EditorGUILayout.LabelField("Quest Data");
+                    questToCreate.QuestID = EditorGUILayout.IntField(questToCreate.QuestID);
+                    EditorGUILayout.LabelField("Name Of Quest");
+                    questToCreate.QuestName = EditorGUILayout.TextField(questToCreate.QuestName);
+                    EditorGUILayout.LabelField("Quest Description");
+                    questToCreate.Description = EditorGUILayout.TextArea(questToCreate.Description);
+                }
+
+                for (int i = 0; i < Quests.Count; i++)
+                {
+                    if (GUILayout.Button(Quests[i].QuestName))
+                    {
+                        questToCreate = Quests[i];
+                    }
+                }
+                GUILayout.EndVertical();
+                GUILayout.EndHorizontal();
+
+
+                GUILayout.FlexibleSpace();
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Save"))
+                {
+                    if (!Quests.Contains(questToCreate))
+                    {
+                        Quests.Add(questToCreate);
+                    }
+                    string Data = JsonConvert.SerializeObject(Quests);
+                    File.WriteAllText(FilePath, Data);
+                }
+                GUILayout.EndHorizontal();
+                break;
         }
-
-        GUILayout.EndArea();
-
-        GUILayout.BeginHorizontal();
-        GUILayout.BeginVertical("box", GUILayout.MaxWidth(150), GUILayout.ExpandHeight(true));
-        for (int i = 0; i < Quests.Count; i++)
-        {
-            if (GUILayout.Button(Quests[i].QuestName))
-            {
-                QuestToCreate = Quests[i];
-                Objective = QuestToCreate.Objectives[0];
-            }
-        }
-        GUILayout.EndVertical();
-        GUILayout.EndHorizontal();
-
-        if (Objective != null)            
-        {               
-            GUILayout.BeginArea(PropertyPage);
-            EditorGUILayout.LabelField("Objective ID");
-            Objective.ObjectiveID = EditorGUILayout.IntField(Objective.ObjectiveID);
-            EditorGUILayout.LabelField("Objective Name");
-            Objective.Name = EditorGUILayout.TextField(Objective.Name);
-            EditorGUILayout.LabelField("Objective Description");
-            Objective.Description = EditorGUILayout.TextField(Objective.Description);
-            EditorGUILayout.LabelField("Type of Objective");
-            Objective.objectiveType = (QuestObjectiveType)EditorGUILayout.EnumPopup(Objective.objectiveType);
-            switch (Objective.objectiveType)
-            {
-                case QuestObjectiveType.COLLECT:
-                    EditorGUILayout.LabelField("Item To Collect");
-                    ItemSelection = EditorGUILayout.Popup(ItemSelection, TempItemNames.ToArray());
-                    Objective.RequiredItems.Add(ItemsToCollect[ItemSelection]);
-                    break;
-
-                case QuestObjectiveType.KILL:
-                    EditorGUILayout.LabelField("Monster to Kill");
-                    break;
-            
-            }
-
-            GUILayout.EndArea();            
-        }
-        
-        GUILayout.FlexibleSpace();
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Save"))
-        {
-            if (!Quests.Contains(QuestToCreate))
-            {
-                Quests.Add(QuestToCreate);
-            }
-            string Data = JsonConvert.SerializeObject(Quests);
-            File.WriteAllText(FilePath, Data);
-        }
-        GUILayout.EndHorizontal();
     }
 }
 
