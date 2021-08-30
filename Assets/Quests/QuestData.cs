@@ -81,15 +81,34 @@ namespace questing
 
     public class QuestData
     {
+        public QuestData()
+        {
+            flag = null;
+            questID = 0;
+            questName = " ";
+            questState = QuestState.NOT_ACTIVE;
+            questProgress = 0;
+            flagRequirement = FlagReqSet.SET;
+        }
+        public QuestData (QuestData data)
+        {
+            questProgress = data.questProgress;
+            questID = data.questID;
+            questName = data.questName;
+            description = data.description;
+            flag = data.flag;
+            flagRequirement = data.flagRequirement;
+            questState = data.questState;
+        }
         public float questProgress;
-        public int QuestID;
-        public string QuestName;
-        public string Description;
-        public List<Flags> Flag; // Multiple flags set and requiured?
-        public FlagReqSet FlagRequirement;
-        public QuestState QuestState;
+        public int questID;
+        public string questName;
+        public string description;
+        public List<Flags> flag; // Multiple flags set and requiured?
+        public FlagReqSet flagRequirement;
+        public QuestState questState;
         // Rewards
-        public List<Item> Reward;
+        public List<Item> reward;
         public List<QuestEvent> events;
     }
 }

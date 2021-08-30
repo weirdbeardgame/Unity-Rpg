@@ -79,7 +79,7 @@ public sealed class GameAssetManager : MonoBehaviour
                     case AssetType.ENEMY:
                         Asset temp = item.Value;
                         Baddies bad = (Baddies)temp.Data;
-                        GameObject bInst = Resources.Load(bad.prefabPath, typeof(GameObject)) as GameObject;
+                        var bInst = Resources.Load(bad.prefabPath, typeof(GameObject)) as GameObject;
                         bad.Prefab = Instantiate(bInst);
                         temp.Data = bad;
                         data.Add(item.Key, temp);
@@ -87,7 +87,7 @@ public sealed class GameAssetManager : MonoBehaviour
                     case AssetType.PLAYER:
                         Asset pTemp = item.Value;
                         Player play = (Player)pTemp.Data;
-                        GameObject pInst = Resources.Load(play.prefabPath, typeof(GameObject)) as GameObject;
+                        var pInst = Resources.Load(play.prefabPath) as GameObject;
                         play.prefab = Instantiate(pInst);
                         pTemp.Data = play;
                         data.Add(item.Key, pTemp);

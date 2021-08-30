@@ -13,19 +13,11 @@ public class QuestWidget : Widget
     public void setQuest(QuestData quest)
     {
         data = quest;
-        Text.GetComponent<TextMeshProUGUI>().text = data.QuestName;
+        Text.GetComponent<TextMeshProUGUI>().text = data.questName;
     }
     // Need Description getter?
     public override void Execute()
     {
         base.Execute();
-        if (!book.IsActive(data))
-        {
-            book.Activate(data);
-        }
-        else if (book.IsActive(data))
-        {
-            book.DeActivate(data);
-        }
     }
 }

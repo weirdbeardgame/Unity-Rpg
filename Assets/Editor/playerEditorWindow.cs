@@ -97,7 +97,7 @@ public class playerEditorWindow : EditorWindow
                     Directory.CreateDirectory("Assets/Resources/Prefabs/Players/");
                 }
                 PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Assets/Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab"));
-                edit.prefabPath = ("Prefabs/Players/" + edit.Data.creatureName + ".prefab");
+                edit.prefabPath = ("Prefabs/Players/" + edit.Data.creatureName);
             }
 
             Editable.Add(edit);

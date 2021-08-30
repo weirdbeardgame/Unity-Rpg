@@ -59,7 +59,7 @@ public class EnemyEditorWindow : EditorWindow
             Directory.CreateDirectory("Assets/Resources/Prefabs/Enemies/");
         }
         PrefabUtility.SaveAsPrefabAsset(edit.Prefab, ("Assets/Resources/Prefabs/Enemies/" + edit.Data.creatureName + ".prefab"));
-        edit.prefabPath = ("Prefabs/Enemies/" + edit.Data.creatureName + ".prefab");
+        edit.prefabPath = ("Prefabs/Enemies/" + edit.Data.creatureName);
     }
 
     void OnGUI()

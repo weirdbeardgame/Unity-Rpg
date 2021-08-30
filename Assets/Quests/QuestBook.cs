@@ -6,56 +6,44 @@ namespace questing
 {
     public class QuestBook : MonoBehaviour
     {
-        public List<QuestData> Quests;
-
-        QuestData activeQuest;
-
-        public QuestData getActiveQuest
-        {
-            get
-            {
-                return activeQuest;
-            }
-        }
+        public List<QuestData> obtainedQuests;
+        QuestManager manager;
+        public delegate QuestData activeQuest(QuestData quest);
 
         // Start is called before the first frame update
         void Start()
         {
-            Quests = new List<QuestData>();
+            obtainedQuests = new List<QuestData>();
+            // Assuming this will be seperate from the menu and attached to the scripts object
+            manager = GetComponent<QuestManager>();
         }
         public void Give(QuestData cQuest)
         {
-            Quests.Add(cQuest);
+            if (!obtainedQuests.Contains(cQuest) && cQuest != null)
+            {
+                obtainedQuests.Add(cQuest);
+            }
         }
-
-        public bool IsActive(QuestData curQuest)
-        {
-            return activeQuest == curQuest;
-        }
-
         public void Activate(int QuestD)
         {
-            questMessage active = new questMessage();
-            activeQuest = Quests[QuestD];
-            activeQuest.QuestState = QuestState.IS_ACTIVE;
-            active.construct(QuestD, QuestState.IS_ACTIVE);
-            Debug.Log("Active Quest: " + Quests[QuestD].QuestName);
+            Debug.Log("Active Quest: " + obtainedQuests[QuestD].questName);
         }
 
-        public void Activate(QuestData QuestD)
+        /*****************************************************************
+        * I'm not dropping the messaging system design. 
+        * We do need a posted events for other systems like Npc or battle
+        * I just think using C# events would be better
+        ****************************************************************/
+        public void Activate(QuestData questD)
         {
-            questMessage active = new questMessage();
-            activeQuest = QuestD;
-            activeQuest.QuestState = QuestState.IS_ACTIVE;
-            active.construct(QuestD.QuestID, QuestState.IS_ACTIVE);
-            Debug.Log("Active Quest: " + QuestD.QuestName);
+            //activeQuest q = new activeQuest(questD);
         }
 
         public void DeActivate(QuestData ID)
         {
-            questMessage Active = new questMessage();
-            activeQuest.QuestState = QuestState.NOT_ACTIVE;
-            Active.construct(ID.QuestID, QuestState.NOT_ACTIVE);
+            /*questMessage Active = new questMessage();
+            activeQuest.questState = QuestState.NOT_ACTIVE;
+            Active.construct(ID.QuestID, QuestState.NOT_ACTIVE);*/
         }
     }
 }

@@ -22,11 +22,11 @@ public class QuestMenu : AppData
 
         display = MenuDisplay.LIST;
 
-        for (int i = 0; i < book.Quests.Count; i++)
+        for (int i = 0; i < book.obtainedQuests.Count; i++)
         {
             // Summon widgets based on Quests in book
             questWidget = (QuestWidget)Instantiate(widgetsToAdd[0]);
-            questWidget.setQuest(book.Quests[i]);
+            questWidget.setQuest(book.obtainedQuests[i]);
             AddWidget(questWidget);
         }
     }

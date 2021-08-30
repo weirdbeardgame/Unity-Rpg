@@ -104,7 +104,7 @@ public class QuestEditor : EditorWindow
                 {
                     questToCreate = new QuestData();
                     questToCreate.events = new List<QuestEvent>();
-                    questToCreate.QuestName = "temp";
+                    questToCreate.questName = "temp";
                     Quests.Add(questToCreate);
                 }
 
@@ -115,23 +115,22 @@ public class QuestEditor : EditorWindow
                 if (questToCreate != null)
                 {
                     EditorGUILayout.LabelField("Quest Data");
-                    questToCreate.QuestID = EditorGUILayout.IntField(questToCreate.QuestID);
+                    questToCreate.questID = EditorGUILayout.IntField(questToCreate.questID);
                     EditorGUILayout.LabelField("Name Of Quest");
-                    questToCreate.QuestName = EditorGUILayout.TextField(questToCreate.QuestName);
+                    questToCreate.questName = EditorGUILayout.TextField(questToCreate.questName);
                     EditorGUILayout.LabelField("Quest Description");
-                    questToCreate.Description = EditorGUILayout.TextArea(questToCreate.Description);
+                    questToCreate.description = EditorGUILayout.TextArea(questToCreate.description);
                 }
 
                 for (int i = 0; i < Quests.Count; i++)
                 {
-                    if (GUILayout.Button(Quests[i].QuestName))
+                    if (GUILayout.Button(Quests[i].questName))
                     {
                         questToCreate = Quests[i];
                     }
                 }
                 GUILayout.EndVertical();
                 GUILayout.EndHorizontal();
-
 
                 GUILayout.FlexibleSpace();
                 GUILayout.BeginHorizontal();

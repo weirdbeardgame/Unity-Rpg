@@ -111,7 +111,7 @@ public class NPCEditor : Editor
             Quests = JsonConvert.DeserializeObject<List<QuestData>> (JsonData);
             foreach(var QD in Quests)
             {
-                QuestNames.Add(QD.QuestName);
+                QuestNames.Add(QD.questName);
             }
         }
     }

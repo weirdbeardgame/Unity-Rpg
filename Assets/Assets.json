@@ -5,7 +5,7 @@
 		"indexedType": 1,
 		"Data": {
 			"$type": "Player, Assembly-CSharp",
-			"prefabPath": "Prefabs/Players/Musungo.prefab",
+			"prefabPath": "Prefabs/Players/Musungo",
 			"level": 1,
 			"Data": {
 				"$type": "Creature, Assembly-CSharp",
@@ -58,7 +58,7 @@
 			"$type": "Baddies, Assembly-CSharp",
 			"id": 0,
 			"level": 1,
-			"prefabPath": "Prefabs/Enemies/Dragon.prefab",
+			"prefabPath": "Prefabs/Enemies/Dragon",
 			"Data": {
 				"$type": "Creature, Assembly-CSharp",
 				"isAlive": false,
@@ -110,7 +110,7 @@
 			"$type": "Baddies, Assembly-CSharp",
 			"id": 1,
 			"level": 1,
-			"prefabPath": "Prefabs/Enemies/Wolf.prefab",
+			"prefabPath": "Prefabs/Enemies/Wolf",
 			"Data": {
 				"$type": "Creature, Assembly-CSharp",
 				"isAlive": false,

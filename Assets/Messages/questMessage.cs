@@ -19,7 +19,6 @@ public class questMessage : ScriptableObject
     public int questID;
     public int currentObjective;
 
-
     public void construct(int qID, QuestState state)
     {
         mType = MessageType.QUEST;
