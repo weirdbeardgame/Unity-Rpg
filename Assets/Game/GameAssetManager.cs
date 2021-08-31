@@ -43,6 +43,19 @@ public sealed class GameAssetManager : MonoBehaviour
     string jsonData;
     int itemID;
     string key;
+    private static GameAssetManager instance;
+
+    public static GameAssetManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new GameAssetManager();
+            }
+            return instance;
+        }
+    }
 
     // Is this the best way to store this data? Each system will call for data from manager
     [SerializeField]
@@ -77,20 +90,34 @@ public sealed class GameAssetManager : MonoBehaviour
                 switch (item.Value.indexedType)
                 {
                     case AssetType.ENEMY:
-                        Asset temp = item.Value;
-                        Baddies bad = (Baddies)temp.Data;
-                        var bInst = Resources.Load(bad.prefabPath, typeof(GameObject)) as GameObject;
-                        bad.Prefab = Instantiate(bInst);
-                        temp.Data = bad;
-                        data.Add(item.Key, temp);
+                        if (!data.ContainsKey(item.Key))
+                        {
+                            Asset temp = item.Value;
+                            Baddies bad = (Baddies)temp.Data;
+                            var bInst = Resources.Load(bad.prefabPath, typeof(GameObject)) as GameObject;
+                            if (!bad.Prefab)
+                            {
+                                bad.Prefab = Instantiate(bInst);
+                                bad.Prefab.SetActive(false);
+                            }
+                            temp.Data = bad;
+                            data.Add(item.Key, temp);
+                        }
                         break;
                     case AssetType.PLAYER:
-                        Asset pTemp = item.Value;
-                        Player play = (Player)pTemp.Data;
-                        var pInst = Resources.Load(play.prefabPath) as GameObject;
-                        play.prefab = Instantiate(pInst);
-                        pTemp.Data = play;
-                        data.Add(item.Key, pTemp);
+                        if (!data.ContainsKey(item.Key))
+                        {
+                            Asset pTemp = item.Value;
+                            Player play = (Player)pTemp.Data;
+                            var pInst = Resources.Load(play.prefabPath) as GameObject;
+                            if (!play.prefab)
+                            {
+                                play.prefab = Instantiate(pInst);
+                                play.prefab.SetActive(false);
+                            }
+                            pTemp.Data = play;
+                            data.Add(item.Key, pTemp);
+                        }
                         break;
                 }
             }

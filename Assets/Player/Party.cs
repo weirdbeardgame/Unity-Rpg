@@ -19,7 +19,7 @@ public class Party : MonoBehaviour
     {
         DontDestroyOnLoad(this);
 
-        manager = GetComponent<GameAssetManager>();
+        manager = GameAssetManager.Instance;
         if (manager.isFilled() > 0)
         {
             foreach(var asset in manager.Data)

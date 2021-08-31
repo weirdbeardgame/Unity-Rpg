@@ -2,12 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using menu;
 
+#if UNITY_EDITOR
+using UnityEditor;
+
+[CustomEditor(typeof(Transition))]
+class EnemySelect : Editor
+{
+    List <Baddies> baddieList;
+    List<string> names;
+    List<int> index;
+    int count;
+    GameAssetManager manager;
+    Transition transition;
+    bool isInit;
+
+    public void Init()
+    {
+        baddieList = new List<Baddies>();
+        names = new List<string>();
+        index = new List<int>();
+        transition = FindObjectOfType<Transition>();
+        manager = FindObjectOfType<GameAssetManager>();
+        manager.Init();
+        if (manager.isFilled() > 0)
+        {
+            foreach(var asset in manager.Data)
+            {
+                if (asset.Value.indexedType == AssetType.ENEMY)
+                {
+                    Baddies bad = (Baddies)asset.Value.Data;
+                    bad.Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(bad.prefabPath);
+                    baddieList.Add(bad);
+                    names.Add(bad.Data.creatureName);
+                }
+            }
+        }
+        isInit = true;
+    }
+
+    public override void OnInspectorGUI()
+    {
+        base.DrawDefaultInspector();
+        if (!isInit)
+        {
+            Init();
+        }
+        GUILayout.Label("Add Enemies");
+        if (GUILayout.Button("Add Enemy"))
+        {
+            count += 1;
+        }
+        for (int i = 0; i < count; i++)
+        {
+            index.Add(new int());
+            index[i] = EditorGUILayout.Popup(index[i], names.ToArray());
+            transition.AddBaddies(count, i, baddieList[index[i]]);
+        }
+    }
+};
+#endif
 
 // The Initalizer of the Battle
 // Needs a way to select which spawned enemies can appear per map!
-using menu;
-
 public class Transition : MonoBehaviour
 {
     Scene CurrentScene;
@@ -33,8 +91,20 @@ public class Transition : MonoBehaviour
     int PreviousIndex;
     PlayerMovement move;
 
-    [SerializeField]
-    public List<Baddies> allowedEnemies;
+    List<Baddies> allowedEnemies;
+
+    public void AddBaddies(int count, int index, Baddies bad)
+    {
+        if (allowedEnemies == null)
+        {
+            allowedEnemies = new List<Baddies>();
+        }
+        else if (allowedEnemies.Count < count)
+        {
+            allowedEnemies.Add(new Baddies());
+        }
+        allowedEnemies[index] = bad;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -42,12 +112,13 @@ public class Transition : MonoBehaviour
         move = FindObjectOfType<PlayerMovement>();
     }
 
-    /************************************************************************************************
+    /***********************************************************************************************************************************
     * TODO:
     * I want to loop through a random range set between 1 and 3.
     * This way I can determine count of enemies that will spawn.
     * I want to loop through a random range of enemies set as allowed based on map and active flags
-    ************************************************************************************************/
+    * The allowed enemies should differ per change of maps and set flags. If the players farther along they should face harder enemies!
+    ***********************************************************************************************************************************/
     void selectEnemies()
     {
         var rand = new System.Random();
@@ -56,7 +127,7 @@ public class Transition : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             // Spawn and add into BattleEnemies from here
-            //BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(allowedEnemies[baddieIndex].BattlePrefab));
+            BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(allowedEnemies[baddieIndex].Prefab));
         }
     }
 
@@ -91,19 +162,20 @@ public class Transition : MonoBehaviour
 
                 Destroy(states.GetComponent<MenuManager>());
 
-                battle = BattleObject.AddComponent<Battle>();
                 Menus = FindObjectOfType<commandMenus>();
                 Menus.Initlaize();
 
                 message = FindObjectOfType<Messaging>(); // Grab Messaging from states
 
                 BattleObject.AddComponent<Skills>();
-                BattleObject.AddComponent<Enemies>();
+                battle = BattleObject.AddComponent<Battle>();
                 BattleObject.AddComponent<BattleSlots>();
                 BattleObject.AddComponent<CommandQueue>();
                 BattleObject.AddComponent<BattleEnemies>();
                 BattleObject.AddComponent<BattlePlayers>();
                 BattleObject.AddComponent<BattleItemMenu>();
+
+                selectEnemies();
 
                 batttleStartMessage = new gameStateMessage();
                 batttleStartMessage.construct(States.BATTLE, states.CurrrentFlag);

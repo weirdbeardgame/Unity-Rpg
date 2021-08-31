@@ -64,7 +64,7 @@ public class playerEditorWindow : EditorWindow
         {
             Names = new List<string>();
             Editable = new List<Player>();
-            manager = new GameAssetManager();
+            manager = GameAssetManager.Instance;
             manager.Init();
             init();
         }

@@ -17,7 +17,7 @@ public class Enemies : MonoBehaviour
     void Start()
     {
         enemyData = new Dictionary<int, Baddies>();
-        manager = GetComponent<GameAssetManager>();
+        manager = GameAssetManager.Instance;
         if (manager.isFilled() > 0)
         {
             foreach(var asset in manager.Data)
