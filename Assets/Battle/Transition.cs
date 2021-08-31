@@ -60,6 +60,8 @@ class EnemySelect : Editor
             index[i] = EditorGUILayout.Popup(index[i], names.ToArray());
             transition.AddBaddies(count, i, baddieList[index[i]]);
         }
+
+        EditorUtility.SetDirty(this);
     }
 };
 #endif
@@ -90,9 +92,10 @@ public class Transition : MonoBehaviour
     int Y = 0;
     int PreviousIndex;
     PlayerMovement move;
+    [SerializeField] List<Baddies> allowedEnemies;
 
-    List<Baddies> allowedEnemies;
 
+    // This doesn't seem wrong. GameAssetManager isn't always loaded and data disappears?
     public void AddBaddies(int count, int index, Baddies bad)
     {
         if (allowedEnemies == null)

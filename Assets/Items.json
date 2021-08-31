@@ -1,1 +1,1 @@
-{"0":{"ItemName":"Potion","ItemDescription":"Heals 50 HP","ItemID":0,"Cost":0,"Effect":{"Buff":{"Stat":50.0,"CurrentStat":0},"Type":0,"Effect":0},"name":"","hideFlags":0},"1":{"ItemName":"High Potion","ItemDescription":"Heals 100 HP","ItemID":0,"Cost":0,"Effect":{"Buff":{"Stat":100.0,"CurrentStat":0},"Type":0,"Effect":0},"name":"","hideFlags":0}}
+{"0":{"name":"Potion","description":null,"itemID":0,"cost":0,"effect":{"buff":{"currentStat":0,"stat":0.0},"type":0,"effect":0},"maxAmount":99,"amount":0,"hideFlags":0}}

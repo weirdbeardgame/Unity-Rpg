@@ -22,7 +22,7 @@ public class AddItem : MonoBehaviour
 
         Message.construct(ItemIndex.GetItem(ID), itemState.RECIEVED);
 
-        Debug.Log("An Item Added! " + ItemIndex.GetItem(ID).ItemName);
+        Debug.Log("An Item Added! " + ItemIndex.GetItem(ID).name);
         ItemIndex.AddToInventory(ID);
     }
 

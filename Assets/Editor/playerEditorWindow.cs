@@ -81,11 +81,8 @@ public class playerEditorWindow : EditorWindow
             }
 
             edit = new Player();
-
             edit.Data = new Creature();
-
             edit.Data.creatureName = PlayerName;
-
             edit.Data.Stats = new StatManager();
             edit.Data.Stats.Initalize();
 

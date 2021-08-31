@@ -33,7 +33,7 @@ public class InventoryMessage : ScriptableObject
 
     public int GetID()
     {
-        return CurrentItem.ItemID;
+        return CurrentItem.itemID;
     }
 
     public ItemData getItem()

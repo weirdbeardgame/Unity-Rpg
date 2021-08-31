@@ -99,7 +99,7 @@ public class NPCEditor : Editor
             ItemsToCollect = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(JsonData);
             for (int i = 0; i < ItemsToCollect.Count; i++)
             {
-                ItemNames.Add(ItemsToCollect[i].ItemName);
+                ItemNames.Add(ItemsToCollect[i].name);
             }
         }
 

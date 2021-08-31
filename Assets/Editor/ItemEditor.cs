@@ -9,14 +9,14 @@ using System.Collections.Generic;
 
 public class ItemEditor : EditorWindow
 {
-
     public ItemData CurrentItem;
     Creature creature;
     string JsonData;
     string ItemName;
     string FilePath = "Assets/Items.json";
-    public Dictionary<int, ItemData> Items;
+    public Dictionary<int, ItemData> items;
 
+    GameAssetManager manager;
 
     int SelectedIndex = 0;
     int ItemID;
@@ -27,9 +27,9 @@ public class ItemEditor : EditorWindow
 
     SerializedProperty currentProperty;
 
-    bool IsInitalized;
+    bool isInitalized;
 
-    int ItemIndex;
+    int itemIndex;
 
     [MenuItem("Window/Item")]
     public static void ShowWindow()
@@ -42,26 +42,44 @@ public class ItemEditor : EditorWindow
     };
 
 
+    public void Init()
+    {
+        manager = GameAssetManager.Instance;
+        items = new Dictionary<int, ItemData>();
+        if (manager.isFilled() > 0)
+        {
+            foreach(var asset in manager.Data)
+            {
+                if (asset.Value.indexedType == AssetType.ITEM)
+                {
+                    ItemData temp = (ItemData)asset.Value.Data;
+                    items.Add(temp.itemID, temp);
+                }
+            }
+        }
+        isInitalized = true;
+    }
+
     public void readJson()
     {
-        Items = new Dictionary<int, ItemData>();
+        items = new Dictionary<int, ItemData>();
 
         if (File.Exists(FilePath))
         {
             JsonData = File.ReadAllText(FilePath);
-            Items = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(JsonData);
-            ItemIndex = Items.Count;
+            items = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(JsonData);
+            itemIndex = items.Count;
 
-            IsInitalized = true;
+            isInitalized = true;
         }
     }
 
     void OnGUI()
     {
 
-        if (!IsInitalized)
+        if (!isInitalized)
         {
-            readJson();
+            Init();
         }
 
         ButtonList = new Rect(0, 0, 150, position.height);
@@ -77,38 +95,38 @@ public class ItemEditor : EditorWindow
         ItemName = EditorGUILayout.TextField(ItemName);
 
         GUILayout.Label("Item ID");
-        ItemIndex = EditorGUILayout.IntField(ItemIndex);
+        itemIndex = EditorGUILayout.IntField(itemIndex);
 
         if (GUILayout.Button("New Item"))
         {
 
-            if (Items == null)
+            if (items == null)
             {
-                Items = new Dictionary<int, ItemData>();
+                items = new Dictionary<int, ItemData>();
             }
 
             CurrentItem = ScriptableObject.CreateInstance<ItemData>();
-            CurrentItem.ItemName = ItemName;
-            CurrentItem.Effect = new ItemBuffer();
-            CurrentItem.Effect.Buff = new Stats();
-            Items.Add(ItemIndex, CurrentItem);
-            string Data = JsonConvert.SerializeObject(Items);
-            File.WriteAllText(FilePath, Data);
+            CurrentItem.name = ItemName;
+            CurrentItem.effect = new ItemBuffer();
+            CurrentItem.effect.buff = new Stats();
+            items.Add(itemIndex, CurrentItem);
+            string data = JsonConvert.SerializeObject(items);
+            File.WriteAllText(FilePath, data);
         }
         GUILayout.EndArea();
 
-        if (Items != null)
+        if (items != null)
         {
-            for (int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < items.Count; i++)
             {
 
                 GUILayout.BeginHorizontal();
                 GUILayout.BeginVertical("box", GUILayout.MaxWidth(150), GUILayout.ExpandHeight(true));
 
-                if (GUILayout.Button(Items[i].ItemName))
+                if (GUILayout.Button(items[i].name))
                 {
                     SelectedIndex = i;
-                    Debug.Log("User Clicked " + Items[i].ItemName);
+                    Debug.Log("User Clicked " + items[i].name);
                 }
                 GUILayout.EndVertical();
                 GUILayout.EndHorizontal();
@@ -118,17 +136,23 @@ public class ItemEditor : EditorWindow
             GUILayout.BeginVertical();
 
             EditorGUILayout.LabelField("Item ID");
-            Items[SelectedIndex].ItemID = EditorGUILayout.IntField(Items[SelectedIndex].ItemID);
+            items[SelectedIndex].itemID = EditorGUILayout.IntField(items[SelectedIndex].itemID);
+
             EditorGUILayout.LabelField("Item Name");
-            Items[SelectedIndex].ItemName = EditorGUILayout.TextField(Items[SelectedIndex].ItemName);
+            items[SelectedIndex].name = EditorGUILayout.TextField(items[SelectedIndex].name);
+
             EditorGUILayout.LabelField("Description");
-            Items[SelectedIndex].ItemDescription = EditorGUILayout.TextArea(Items[SelectedIndex].ItemDescription);
+            items[SelectedIndex].description = EditorGUILayout.TextArea(items[SelectedIndex].description);
+
             EditorGUILayout.LabelField("Buffer Type");
-            Items[SelectedIndex].Effect.Type = (ItemType)EditorGUILayout.EnumPopup(Items[SelectedIndex].Effect.Type);
+            items[SelectedIndex].effect.type = (ItemType)EditorGUILayout.EnumPopup(items[SelectedIndex].effect.type);
+
             EditorGUILayout.LabelField("Stat Affected");
-            Items[SelectedIndex].Effect.Effect = (AreaOfEffect)EditorGUILayout.EnumPopup(Items[SelectedIndex].Effect.Effect);
+            items[SelectedIndex].effect.effect = (AreaOfEffect)EditorGUILayout.EnumPopup(items[SelectedIndex].effect.effect);
+
             EditorGUILayout.LabelField("Buffer: ");
-            Items[SelectedIndex].Effect.Buff.stat = EditorGUILayout.FloatField(Items[SelectedIndex].Effect.Buff.stat);
+            items[SelectedIndex].effect.buff.stat = EditorGUILayout.FloatField(items[SelectedIndex].effect.buff.stat);
+
             GUILayout.EndVertical();
             GUILayout.EndArea();
         }
@@ -137,8 +161,8 @@ public class ItemEditor : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Save"))
         {
-            string Data = JsonConvert.SerializeObject(Items);
-            File.WriteAllText(FilePath, Data);
+            for (int i = 0; i < items.Count; i++)
+            manager.AddAsset(new Asset(items[i], AssetType.ITEM), items[i].name);
         }
         GUILayout.EndHorizontal();
     }

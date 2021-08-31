@@ -12,8 +12,6 @@ public class InvetoryWidget : Widget
     public void SetItem(ItemData data)
     {
         item = data;
-        Text.GetComponent<TextMeshProUGUI>().text = item.ItemName;
-        Icon.GetComponent<SpriteRenderer>().sprite = item.GetSprite();
     }
 
     public override void Execute()

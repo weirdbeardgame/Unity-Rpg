@@ -18,23 +18,19 @@
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 0,
 							"stat": 100.0
-						},
-						{
+						}, {
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 1,
 							"stat": 115.0
-						},
-						{
+						}, {
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 2,
 							"stat": 75.0
-						},
-						{
+						}, {
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 3,
 							"stat": 35.0
-						},
-						{
+						}, {
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 4,
 							"stat": 15.0
@@ -70,23 +66,19 @@
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 0,
 							"stat": 100.0
-						},
-						{
+						}, {
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 1,
 							"stat": 55.0
-						},
-						{
+						}, {
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 2,
 							"stat": 75.0
-						},
-						{
+						}, {
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 3,
 							"stat": 35.0
-						},
-						{
+						}, {
 							"$type": "Stats, Assembly-CSharp",
 							"currentStat": 4,
 							"stat": 25.0
@@ -148,6 +140,30 @@
 				"description": "A ferral wolf. Watch out for it's bite."
 			},
 			"name": "",
+			"hideFlags": 0
+		}
+	},
+	"Potion": {
+		"$type": "Asset, Assembly-CSharp",
+		"indexedType": 2,
+		"Data": {
+			"$type": "ItemData, Assembly-CSharp",
+			"name": "Potion",
+			"description": "A basic potion",
+			"itemID": 0,
+			"cost": 0,
+			"effect": {
+				"$type": "ItemBuffer, Assembly-CSharp",
+				"buff": {
+					"$type": "Stats, Assembly-CSharp",
+					"currentStat": 0,
+					"stat": 50.0
+				},
+				"type": 0,
+				"effect": 0
+			},
+			"maxAmount": 99,
+			"amount": 0,
 			"hideFlags": 0
 		}
 	}

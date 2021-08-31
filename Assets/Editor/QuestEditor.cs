@@ -50,7 +50,7 @@ public class QuestEditor : EditorWindow
             ItemsToCollect = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(JsonData);
             for (int i = 0; i < ItemsToCollect.Count; i++)
             {
-                TempItemNames.Add(ItemsToCollect[i].ItemName);
+                TempItemNames.Add(ItemsToCollect[i].name);
             }
         }
         if (File.Exists(FlagPath))

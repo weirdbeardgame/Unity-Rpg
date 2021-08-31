@@ -7,87 +7,56 @@ using System.IO;
 
 public class Item : MonoBehaviour
 {
-    private Dictionary<int, ItemData> _Items;
-    GameObject Items;
+    private Dictionary<int, ItemData> items;
     Creature creature;
-
-    Inventory _Inventory;
-
+    Inventory inventory;
     string filePath = "Assets/Items.json";
-    public Dictionary<int, ItemData> items;
+    public Dictionary<int, ItemData> Items;
     string jsonData;
-
 
     void Start()
     {
         if (File.Exists(filePath))
         {
             jsonData = File.ReadAllText(filePath);
-            _Items = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(jsonData);
+            items = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(jsonData);
         }
-        for (int i = 0; i < _Items.Count; i++)
+        for (int i = 0; i < items.Count; i++)
         {
-            Debug.Log("Item: " + _Items[i].ItemName);
-        }
-    }
-
-    public void Initalize()
-    {
-        if (File.Exists(filePath))
-        {
-            jsonData = File.ReadAllText(filePath);
-            _Items = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(jsonData);
-        }
-        for (int i = 0; i < _Items.Count; i++)
-        {
-            Debug.Log("Item: " + _Items[i].ItemName);
+            //Debug.Log("Item: " + items[i].itemName);
         }
     }
 
-
-    public string[] GetNames()
+    public void Use(Creature creature, int itemID)
     {
-        List<string> TempItemNames = new List<string>();
-        for (int i = 0; i < _Items.Count; i++)
+        if (items != null)
         {
-            TempItemNames.Add(_Items[i].ItemName);
-        }
-
-        return TempItemNames.ToArray();
-    }
-
-
-
-    public void Use(Creature creature, int ItemID)
-    {
-        if (_Items != null)
-        {
-            _Items[ItemID].Use(creature);
+            items[itemID].Use(creature);
 
             Debug.Log("Health" + creature.Stats.statList[(int)StatType.HEALTH].stat.ToString());
         }
     }
 
-    public void Use(Creature creature, ItemData Item)
+    public void Use(Creature creature, ItemData item)
     {
-            Item.Use(creature); // Then why ItemList
+            item.Use(creature); // Then why ItemList
             Debug.Log("Health" + creature.Stats.statList[(int)StatType.HEALTH].stat.ToString());
     }
 
 
-    public ItemData GetItem(int ItemID)
+    public ItemData GetItem(int itemID)
     {
-        return _Items[ItemID];
+        return items[itemID];
     }
 
-    public void AddToInventory(int ItemID)
+    public void AddToInventory(int itemID)
     {
-        _Inventory = FindObjectOfType<Inventory>();
+        inventory = FindObjectOfType<Inventory>();
 
-        if (_Items[ItemID].Amount < _Items[ItemID].MaxAmount)
+        if (items[itemID].amount < items[itemID].maxAmount)
         {
-            _Inventory.Add(_Items[ItemID]);
-            _Items[ItemID].Amount++;
+            inventory.Add(items[itemID]);
+            items[itemID].amount++;
         }
     }
 

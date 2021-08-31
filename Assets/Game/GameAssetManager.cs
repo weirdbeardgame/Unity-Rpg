@@ -52,6 +52,7 @@ public sealed class GameAssetManager : MonoBehaviour
             if (instance == null)
             {
                 instance = new GameAssetManager();
+                instance.Init();
             }
             return instance;
         }
@@ -118,6 +119,9 @@ public sealed class GameAssetManager : MonoBehaviour
                             pTemp.Data = play;
                             data.Add(item.Key, pTemp);
                         }
+                        break;
+                        default:
+                        data.Add(item.Key, item.Value);
                         break;
                 }
             }
