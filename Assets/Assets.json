@@ -149,7 +149,8 @@
 		"Data": {
 			"$type": "ItemData, Assembly-CSharp",
 			"name": "Potion",
-			"description": "A basic potion",
+			"description": "A healing potion that restores a minial amount of health",
+			"prefabPath": "Prefabs/Items/Potion",
 			"itemID": 0,
 			"cost": 0,
 			"effect": {
@@ -160,6 +161,56 @@
 					"stat": 50.0
 				},
 				"type": 0,
+				"effect": 0
+			},
+			"maxAmount": 99,
+			"amount": 0,
+			"hideFlags": 0
+		}
+	},
+	"High Potion": {
+		"$type": "Asset, Assembly-CSharp",
+		"indexedType": 2,
+		"Data": {
+			"$type": "ItemData, Assembly-CSharp",
+			"name": "High Potion",
+			"description": "A stronger healing potion",
+			"prefabPath": "Prefabs/Items/High Potion",
+			"itemID": 0,
+			"cost": 0,
+			"effect": {
+				"$type": "ItemBuffer, Assembly-CSharp",
+				"buff": {
+					"$type": "Stats, Assembly-CSharp",
+					"currentStat": 0,
+					"stat": 100.0
+				},
+				"type": 0,
+				"effect": 0
+			},
+			"maxAmount": 99,
+			"amount": 0,
+			"hideFlags": 0
+		}
+	},
+	"Fire Bottle": {
+		"$type": "Asset, Assembly-CSharp",
+		"indexedType": 2,
+		"Data": {
+			"$type": "ItemData, Assembly-CSharp",
+			"name": "Fire Bottle",
+			"description": "A damaging flask that contains the weak essence of fire",
+			"prefabPath": "Prefabs/Items/Fire Bottle",
+			"itemID": 0,
+			"cost": 0,
+			"effect": {
+				"$type": "ItemBuffer, Assembly-CSharp",
+				"buff": {
+					"$type": "Stats, Assembly-CSharp",
+					"currentStat": 0,
+					"stat": 50.0
+				},
+				"type": 1,
 				"effect": 0
 			},
 			"maxAmount": 99,

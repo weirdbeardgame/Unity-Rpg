@@ -10,20 +10,22 @@ public class Item : MonoBehaviour
     private Dictionary<int, ItemData> items;
     Creature creature;
     Inventory inventory;
-    string filePath = "Assets/Items.json";
+    GameAssetManager manager;
     public Dictionary<int, ItemData> Items;
-    string jsonData;
 
     void Start()
     {
-        if (File.Exists(filePath))
+        manager = GameAssetManager.Instance;
+        if (manager.isFilled() > 0)
         {
-            jsonData = File.ReadAllText(filePath);
-            items = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(jsonData);
-        }
-        for (int i = 0; i < items.Count; i++)
-        {
-            //Debug.Log("Item: " + items[i].itemName);
+            foreach(var asset in manager.Data)
+            {
+                if (asset.Value.indexedType == AssetType.ITEM)
+                {
+                    ItemData temp = (ItemData)asset.Value.Data;
+                    items.Add(temp.itemID, temp);
+                }
+            }
         }
     }
 
@@ -32,7 +34,6 @@ public class Item : MonoBehaviour
         if (items != null)
         {
             items[itemID].Use(creature);
-
             Debug.Log("Health" + creature.Stats.statList[(int)StatType.HEALTH].stat.ToString());
         }
     }

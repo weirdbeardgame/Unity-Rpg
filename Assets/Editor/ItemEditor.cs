@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -20,7 +21,6 @@ public class ItemEditor : EditorWindow
 
     int SelectedIndex = 0;
     int ItemID;
-
     Rect PropertyPage;
     Rect ButtonList;
     Rect TopProperties;
@@ -54,29 +54,34 @@ public class ItemEditor : EditorWindow
                 {
                     ItemData temp = (ItemData)asset.Value.Data;
                     items.Add(temp.itemID, temp);
+                    itemIndex += 1;
                 }
             }
         }
         isInitalized = true;
     }
 
-    public void readJson()
+    void createPrefab()
     {
-        items = new Dictionary<int, ItemData>();
+        CurrentItem.prefab = new GameObject();
+        CurrentItem.prefab.AddComponent<Button>();
+        CurrentItem.prefab.AddComponent<Image>(); // To set an icon on each item button
+        //CurrentItem.prefab.AddComponent<InvetoryWidget>(); // To actually execute and apply the currently selected item
+        //CurrentItem.prefab.GetComponent<Button>().onClick
+        CurrentItem.prefab.name = CurrentItem.name;
 
-        if (File.Exists(FilePath))
+        if (!Directory.Exists("Assets/Resources/Prefabs/Items/"))
         {
-            JsonData = File.ReadAllText(FilePath);
-            items = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(JsonData);
-            itemIndex = items.Count;
-
-            isInitalized = true;
+            Directory.CreateDirectory("Assets/Resources/Prefabs/Items/");
         }
+
+        PrefabUtility.SaveAsPrefabAsset(CurrentItem.prefab, ("Assets/Resources/Prefabs/Items/" + CurrentItem.name + ".prefab"));
+        CurrentItem.prefabPath = ("Prefabs/Items/" + CurrentItem.name);
+        CurrentItem.prefab.SetActive(false);
     }
 
     void OnGUI()
     {
-
         if (!isInitalized)
         {
             Init();
@@ -99,7 +104,6 @@ public class ItemEditor : EditorWindow
 
         if (GUILayout.Button("New Item"))
         {
-
             if (items == null)
             {
                 items = new Dictionary<int, ItemData>();
@@ -110,49 +114,50 @@ public class ItemEditor : EditorWindow
             CurrentItem.effect = new ItemBuffer();
             CurrentItem.effect.buff = new Stats();
             items.Add(itemIndex, CurrentItem);
-            string data = JsonConvert.SerializeObject(items);
-            File.WriteAllText(FilePath, data);
+            createPrefab();
+            itemIndex += 1;
         }
         GUILayout.EndArea();
 
-        if (items != null)
+        if (items != null && items.Count > 0)
         {
             for (int i = 0; i < items.Count; i++)
             {
-
                 GUILayout.BeginHorizontal();
                 GUILayout.BeginVertical("box", GUILayout.MaxWidth(150), GUILayout.ExpandHeight(true));
 
                 if (GUILayout.Button(items[i].name))
                 {
                     SelectedIndex = i;
+                    CurrentItem = items[SelectedIndex];
                     Debug.Log("User Clicked " + items[i].name);
                 }
                 GUILayout.EndVertical();
                 GUILayout.EndHorizontal();
-
             }
             GUILayout.BeginArea(PropertyPage);
             GUILayout.BeginVertical();
 
-            EditorGUILayout.LabelField("Item ID");
-            items[SelectedIndex].itemID = EditorGUILayout.IntField(items[SelectedIndex].itemID);
+            if (CurrentItem)
+            {
+                EditorGUILayout.LabelField("Item ID");
+                CurrentItem.itemID = EditorGUILayout.IntField(CurrentItem.itemID);
 
-            EditorGUILayout.LabelField("Item Name");
-            items[SelectedIndex].name = EditorGUILayout.TextField(items[SelectedIndex].name);
+                EditorGUILayout.LabelField("Item Name");
+                CurrentItem.name = EditorGUILayout.TextField(CurrentItem.name);
 
-            EditorGUILayout.LabelField("Description");
-            items[SelectedIndex].description = EditorGUILayout.TextArea(items[SelectedIndex].description);
+                EditorGUILayout.LabelField("Description");
+                CurrentItem.description = EditorGUILayout.TextArea(CurrentItem.description);
 
-            EditorGUILayout.LabelField("Buffer Type");
-            items[SelectedIndex].effect.type = (ItemType)EditorGUILayout.EnumPopup(items[SelectedIndex].effect.type);
+                EditorGUILayout.LabelField("Buffer Type");
+                CurrentItem.effect.type = (ItemType)EditorGUILayout.EnumPopup(CurrentItem.effect.type);
 
-            EditorGUILayout.LabelField("Stat Affected");
-            items[SelectedIndex].effect.effect = (AreaOfEffect)EditorGUILayout.EnumPopup(items[SelectedIndex].effect.effect);
+                EditorGUILayout.LabelField("Stat Affected");
+                CurrentItem.effect.effect = (AreaOfEffect)EditorGUILayout.EnumPopup(CurrentItem.effect.effect);
 
-            EditorGUILayout.LabelField("Buffer: ");
-            items[SelectedIndex].effect.buff.stat = EditorGUILayout.FloatField(items[SelectedIndex].effect.buff.stat);
-
+                EditorGUILayout.LabelField("Buffer: ");
+                CurrentItem.effect.buff.stat = EditorGUILayout.FloatField(CurrentItem.effect.buff.stat);
+            }
             GUILayout.EndVertical();
             GUILayout.EndArea();
         }

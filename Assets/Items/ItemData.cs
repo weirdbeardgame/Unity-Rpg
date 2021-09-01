@@ -15,7 +15,8 @@ public class ItemBuffer
 public class ItemData : ScriptableObject
 {
     // Meant for In UI use
-    GameObject prefab;
+    [System.NonSerialized]
+    public GameObject prefab;
     public string name;
     public string description;
     public string prefabPath;

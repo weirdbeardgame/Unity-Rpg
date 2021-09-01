@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-
-    private Dictionary<int, ItemData> _ItemList;
-    private Dictionary<int, WeaponData> _Equipables;
+    private Dictionary<int, ItemData> itemList;
+    private Dictionary<int, WeaponData> equipables;
 
     int maxSize = 99;
-    private int _CurrentSize = 0;
+    private int currentSize = 0;
 
     public int CurrentSize
     {
         get
         {
-            return _CurrentSize;
+            return currentSize;
         }
     }
 
@@ -23,7 +22,7 @@ public class Inventory : MonoBehaviour
     {
         get
         {
-            return _ItemList;
+            return itemList;
         }
     }
 
@@ -31,30 +30,28 @@ public class Inventory : MonoBehaviour
     {
         get
         {
-            return _Equipables;
+            return equipables;
         }
     }
 
     InventoryMessage currentMessage;
 
-
     // Start is called before the first frame update
     void Start()
     {
-        _ItemList = new Dictionary<int, ItemData>(); // to initalize the structure
-        _Equipables = new Dictionary<int, WeaponData>();
+        itemList = new Dictionary<int, ItemData>(); // to initalize the structure
+        equipables = new Dictionary<int, WeaponData>();
     }
 
     public void Add(ItemData I)
     {
         currentMessage = new InventoryMessage();
-
         currentMessage.construct(I, itemState.RECIEVED);
 
-        if (_CurrentSize < maxSize)
+        if (currentSize < maxSize)
         {
-            _ItemList.Add(_CurrentSize, I);
-            _CurrentSize++;
+            itemList.Add(currentSize, I);
+            currentSize++;
         }
 
         else
@@ -65,11 +62,11 @@ public class Inventory : MonoBehaviour
 
     public ItemData Remove(ItemData Item)
     {
-        for (int i = 0; i < _ItemList.Count; i++)
+        for (int i = 0; i < itemList.Count; i++)
         {
-            if (_ItemList[i] == Item)
+            if (itemList[i] == Item)
             {
-                _ItemList.Remove(i);
+                itemList.Remove(i);
             }
         }
         return Item;
@@ -78,15 +75,15 @@ public class Inventory : MonoBehaviour
     public void Add(WeaponData I)
     {
 
-        if (_Equipables == null)
+        if (equipables == null)
         {
-            _Equipables = new Dictionary<int, WeaponData>();
+            equipables = new Dictionary<int, WeaponData>();
         }
 
-        if (_CurrentSize < maxSize)
+        if (currentSize < maxSize)
         {
-            _Equipables.Add(_CurrentSize, I);
-            _CurrentSize++;
+            equipables.Add(currentSize, I);
+            currentSize++;
         }
 
         else
@@ -97,7 +94,7 @@ public class Inventory : MonoBehaviour
 
     public WeaponData getEquipables(int i)
     {
-        return _Equipables[i];
+        return equipables[i];
     }
 
     // Update is called once per frame

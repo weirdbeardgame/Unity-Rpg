@@ -7,8 +7,9 @@ public class GameManager : MonoBehaviour
     StateMachine state;
     List<Flags> flags;
 
-    private static GameManager instance;
+    GameAssetManager assetManager;
 
+    private static GameManager instance;
     public static GameManager Instance
     {
         get
@@ -24,7 +25,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        assetManager = GameAssetManager.Instance;
+        state = GetComponent<StateMachine>();
+        flags = new List<Flags>();
     }
 
     // Update is called once per frame
