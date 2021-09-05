@@ -1,13 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
+using Questing;
+using System.IO;
+using System;
+
 
 public class GameManager : MonoBehaviour
 {
     StateMachine state;
     List<Flags> flags;
-
+    private Flags currentSetFlag;
+    string flagJson;
+    string flagPath = "Assets/Flags.json";
     GameAssetManager assetManager;
+    AudioManager soundManager;
+    QuestManager questSystem;
+    NPCManager npcManager;
 
     private static GameManager instance;
     public static GameManager Instance
@@ -22,17 +32,46 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Flags CurrrentFlag
+    {
+        get
+        {
+            return currentSetFlag;
+        }
+
+        set
+        {
+            currentSetFlag = value;
+        }
+    }
+
+    void Init()
+    {
+        flags = new List<Flags>();
+        if (File.Exists(flagPath))
+        {
+            flagJson = File.ReadAllText(flagPath);
+            flags = JsonConvert.DeserializeObject<List<Flags>>(flagJson);
+        }
+
+        questSystem.Init();
+        state.SetState(States.MAIN);
+        assetManager = GameAssetManager.Instance;
+        npcManager.Initalize();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        assetManager = GameAssetManager.Instance;
         state = GetComponent<StateMachine>();
-        flags = new List<Flags>();
+        questSystem = GetComponent<QuestManager>();
+        soundManager = GetComponent<AudioManager>();
+        npcManager = GetComponent<NPCManager>();
+        Init();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

@@ -28,12 +28,6 @@ public class NPCManager : MonoBehaviour, IReceiver
     Messaging _Messenger;
 
     public Dictionary<int, NPCData> ConstructedNPC;
-  
-    void Start()
-    {
-        Initalize();
-        Subscribe();
-    }
 
     static JsonSerializerSettings settings = new JsonSerializerSettings
     {
@@ -41,7 +35,7 @@ public class NPCManager : MonoBehaviour, IReceiver
     };
 
     // This is runtime style NPC's
-    void Initalize()
+    public void Initalize()
     {
         if (File.Exists(FilePath))
         {

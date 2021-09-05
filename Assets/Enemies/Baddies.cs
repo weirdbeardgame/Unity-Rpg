@@ -11,7 +11,7 @@ using System.IO;
 using System;
 
 [System.Serializable]
-public class Baddies : ScriptableObject
+public class Baddies : ScriptableObject, IAsset
 {
     public int id;
     public int level;
@@ -21,7 +21,7 @@ public class Baddies : ScriptableObject
 
     // I only want the saved path not the object itself
     [System.NonSerialized]
-    public GameObject Prefab;
+    public GameObject prefab;
     private Creature data;
     public string prefabPath;
     public Creature Data
@@ -44,12 +44,23 @@ public class Baddies : ScriptableObject
         #endif
     }
 
+    public IAsset CreateAsset()
+    {
+        var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
+        if (!prefab)
+        {
+            prefab = Instantiate(bInst);
+            prefab.SetActive(false);
+        }
+        return this;
+    }
+
     public Baddies createBattler(BattleSlots slot)
     {
-        Prefab = MonoBehaviour.Instantiate(Prefab);
-        MonoBehaviour.DontDestroyOnLoad(Prefab);
-        gauge = Prefab.GetComponent<Gauge>();
-        Prefab.tag = "Enemy";
+        prefab = MonoBehaviour.Instantiate(prefab);
+        MonoBehaviour.DontDestroyOnLoad(prefab);
+        gauge = prefab.GetComponent<Gauge>();
+        prefab.tag = "Enemy";
         //tag = data.BattleTag.ENEMY;
         data.createWeaponSlots();
         return this;
@@ -67,45 +78,6 @@ public class Baddies : ScriptableObject
         {
             return true;
         }
-    }
-
-    public Baddies serialize()
-    {
-        #if UNITY_EDITOR
-        if (Prefab)
-        {
-            prefabPath = AssetDatabase.GetAssetPath(Prefab);
-        }
-        return this;
-        #endif
-        return null;
-    }
-}
-
-public class BaddiesConverter : JsonConverter
-{
-    const string ValuePropertyName = "Value";// nameof(LikeType<object>.Value); // in C#6+
-
-    private readonly Type[] types;
-
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    {
-        Baddies temp = (Baddies)value;
-        JToken t = JToken.FromObject(temp.serialize());
-        serializer.Serialize(writer, t);
-    }
-
-    public override bool CanConvert(Type objectType)
-    {
-        return objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Baddies);
-    }
-
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-    {
-        // var value = serializer.Deserialize(reader, valueType);
-        // I could instantiate gameObject in here
-
-        return null;
     }
 }
 

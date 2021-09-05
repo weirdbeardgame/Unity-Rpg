@@ -9,13 +9,12 @@ using System;
 
 // The collection of what an NPC is in the system
 
-using questing;
+using Questing;
 
 public enum QuestFlag { HAS_QUEST, QUEST_ACTIVE };
 
 public class NPCData : ScriptableObject
 {
-
     public int NpcID;
     public string NpcName;
     public string NpcEventPath;

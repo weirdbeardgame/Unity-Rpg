@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 
 // This holds objectives and events whilest tracking the overall state and progress of said quest.
-namespace questing
+namespace Questing
 {
     public enum GoalType { KILL, COLLECT, LOCATION, FIND}
     public enum QuestState { IS_ACTIVE, NOT_ACTIVE, COMPLETED };
 
-    struct Objective
+    public struct Objective
     {
         GoalType goal;
         bool isComplete;
@@ -95,21 +95,36 @@ namespace questing
             questProgress = data.questProgress;
             questID = data.questID;
             questName = data.questName;
-            description = data.description;
+            nonActiveDescription = data.nonActiveDescription;
             flag = data.flag;
             flagRequirement = data.flagRequirement;
             questState = data.questState;
         }
-        public float questProgress;
+
         public int questID;
+        public int questProgress;
         public string questName;
-        public string description;
+        public string activeDescription;
+        public string nonActiveDescription;
+
+        NPCData starter;
+        NPCData finisher;
+
+        // If there's any scripted events in the quest. IE. A story related quest that might activate a cutscene
+        public List<QuestEvent> events;
+
+        // List of quest objectives. Nothing special here... 
+        public List<Objective> objectives;
+
+        // Flags required and flags to set. Like an elder scrolls level of depth potentially
+        // Though i'm limiting it to make a linear game
         public List<Flags> flag; // Multiple flags set and requiured?
         public FlagReqSet flagRequirement;
         public QuestState questState;
+
         // Rewards
         public List<Item> reward;
-        public List<QuestEvent> events;
+        int xp;
     }
 }
 

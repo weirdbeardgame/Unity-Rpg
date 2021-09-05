@@ -12,7 +12,7 @@ public class ItemBuffer
     public AreaOfEffect effect;
 }
 
-public class ItemData : ScriptableObject
+public class ItemData : ScriptableObject, IAsset
 {
     // Meant for In UI use
     [System.NonSerialized]
@@ -26,8 +26,19 @@ public class ItemData : ScriptableObject
     public int maxAmount = 99;
     public int amount = 0;
 
-    public void Use(Creature Creature)
+    public IAsset CreateAsset()
     {
-        Creature.Stats.statList[(int)effect.effect].stat += effect.buff.stat;
+        var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
+        if (!prefab)
+        {
+            prefab = Instantiate(bInst);
+            prefab.SetActive(false);
+        }
+        return this;
+    }
+
+    public void Use(Creature creature)
+    {
+        creature.Stats.statList[(int)effect.effect].stat += effect.buff.stat;
     }
 }

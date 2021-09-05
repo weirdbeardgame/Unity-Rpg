@@ -7,16 +7,16 @@ public class NPC : MonoBehaviour
     NPCManager NpcM;
     NPCData NpcData;
     public int NpcID;
-    StateMachine states;    
+    GameManager manager;
     DialogueManager Dialogue;
     public GameObject SpeakerProfile;
     bool collided;
 
     private void Start()
     {
+        manager = GameManager.Instance;
         Dialogue = FindObjectOfType<DialogueManager>();
         NpcM = FindObjectOfType<NPCManager>();
-        states = FindObjectOfType<StateMachine>();
     }
 
     void ApplyNPC()
@@ -42,8 +42,8 @@ public class NPC : MonoBehaviour
 
     public void pollEvents()
     {
-        Debug.Log("Current FLAG : " + states.CurrrentFlag.Flag);
-        Debug.Log("Current FLAG ID : " + states.CurrrentFlag.ID);
+        Debug.Log("Current FLAG : " + manager.CurrrentFlag.Flag);
+        Debug.Log("Current FLAG ID : " + manager.CurrrentFlag.ID);
 
         NPCEventData ToExecute;
 
@@ -52,7 +52,7 @@ public class NPC : MonoBehaviour
             Debug.Log("FLAG : " + NpcData.EventData[i].RequiredFlag.Flag);
             Debug.Log("FLAG ID : " + NpcData.EventData[i].RequiredFlag.ID);
 
-            if (NpcData.EventData[i].RequiredFlag.ID == states.CurrrentFlag.ID)
+            if (NpcData.EventData[i].RequiredFlag.ID == manager.CurrrentFlag.ID)
             {
                 ToExecute = NpcData.EventData[i];
                 Debug.Log("Event Executed");

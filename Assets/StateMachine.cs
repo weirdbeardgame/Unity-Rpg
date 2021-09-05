@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -9,25 +8,20 @@ public enum FlagReqSet { REQUIRED, SET }
 
 public class Flags
 {
-    private int _ID;
-    private string _Flag;
-
-    private bool _SubFlag; // Digging into the issues. It doesn't list what quest it belongs too. There's no route to the next event flag though I suppose the quest could take care of that
-    // Perhaps the flags don't need to be aware they belong to an objective or quest. The quest / objective does
-
-    [System.NonSerialized]
-    private bool _IsActive;
+    private int id;
+    private string flag;
+    private bool isActive;
 
     public string Flag
     {
         get
         {
-            return _Flag;
+            return flag;
         }
 
         set
         {
-            _Flag = value;
+            flag = value;
         }
     }
 
@@ -35,136 +29,62 @@ public class Flags
     {
         get
         {
-            return _ID;
+            return id;
         }
         set
         {
-            _ID = value;
+            id = value;
         }
-    }
-
-    public bool SubFlag
-    {
-        get
-        {
-            return _SubFlag;
-        }
-
-        set
-        {
-            _SubFlag = value;
-        }
-
     }
 
     public bool Activate()
     {
-        return _IsActive = true;
+        return isActive = true;
     }
 
     public bool DeActivate()
     {
-        return _IsActive = false;
+        return isActive = false;
     }
 
     public bool IsActive()
     {
-        return _IsActive;
+        return isActive;
     }
 }
 
-class StateMachine : MonoBehaviour, IReceiver
+class StateMachine : MonoBehaviour
 {
-    private States _State;
-    Queue<object> Inbox;
-    Messaging Messenger;
-    List<Flags> FlagData;
-    gameStateMessage Message;
-
-    string FlagJson;
-    string FlagPath = "Assets/Flags.json";
-
-
-    private Flags _CurerntFlag;
+    private States state;
+    Messaging messenger;
+    gameStateMessage message;
 
     public States State
     {
         get
         {
-            return _State;
+            return state;
         }
 
         set
         {
-            _State = value;
+            state = value;
         }
     }
 
-    public Flags CurrrentFlag
+    public States SetState(States s)
     {
-        get
-        {
-            return _CurerntFlag;
-        }
-
-        set
-        {
-            _CurerntFlag = value;
-        }
-
-    }
-
-    void ReadJson()
-    {
-        FlagData = new List<Flags>();
-        if (File.Exists(FlagPath))
-        {
-            FlagJson = File.ReadAllText(FlagPath);
-            FlagData = JsonConvert.DeserializeObject<List<Flags>>(FlagJson);
-        }
+        return state = s;
     }
 
     // Start is called before the first frame update
     void Start()
-    {    
-        Messenger = FindObjectOfType<Messaging>(); 
-        Inbox = new Queue<object>();
-        ReadJson();
-        Subscribe();
-        CurrrentFlag = FlagData[0];
+    {
+        messenger = FindObjectOfType<Messaging>(); 
         DontDestroyOnLoad(this);
-    }
-
-    public void Subscribe()
-    {
-        Messenger.Subscribe(MessageType.GAME_STATE, this);
-    }
-
-    public void Unsubscribe()
-    {
-        Messenger.Unsubscribe(MessageType.GAME_STATE, this);
-    }
-
-    public void Receive(object Message)
-    {
-        Inbox.Enqueue(Message);
     }
 
     void Update()
     {
-
-        if (Inbox.Count > 0)
-        {
-            Message = (gameStateMessage)Inbox.Dequeue();
-            if (Message.GetState() != null)
-            {
-                _State = Message.GetState();
-            }
-                
-            _CurerntFlag = Message.GetFlag();
-            _CurerntFlag.Activate();
-        }
     }
-
-
 }

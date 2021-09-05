@@ -6,28 +6,10 @@ using UnityEngine;
 using System.IO;
 using System;
 
-public enum AssetType {ENEMY, PLAYER, ITEM, WEAPON, AUDIO, SPRITE}
-
-// Seems a bit overkill?
-public struct Asset
+public interface IAsset
 {
-    public AssetType indexedType;
-    public object Data;
-    int id;
-
-    public Asset(object asset, AssetType type)
-    {
-        id = 0;
-        Data = asset;
-        indexedType = type;
-    }
-
-    public void CreateAsset(object asset, AssetType type)
-    {
-        Data = asset;
-        indexedType = type;
-        id += 1;
-    }
+    IAsset CreateAsset();
+    //IAsset GetAsset();
 }
 
 /*********************************************************************************
@@ -60,10 +42,10 @@ public sealed class GameAssetManager : MonoBehaviour
 
     // Is this the best way to store this data? Each system will call for data from manager
     [SerializeField]
-    private Dictionary<string, Asset> data;
-    private Dictionary<string, Asset> tempContainer;
+    private Dictionary<string, IAsset> data;
+    private Dictionary<string, IAsset> tempContainer;
 
-    public Dictionary<string, Asset> Data
+    public Dictionary<string, IAsset> Data
     {
         get
         {
@@ -79,51 +61,16 @@ public sealed class GameAssetManager : MonoBehaviour
 
     public void Init()
     {
-        data = new Dictionary<string, Asset>();
-        tempContainer = new Dictionary<string, Asset>();
+        data = new Dictionary<string, IAsset>();
+        tempContainer = new Dictionary<string, IAsset>();
         // In here or a seperate initalize function to parse all data's!
         if (File.Exists(filePath))
         {
             jsonData = File.ReadAllText(filePath);
-            tempContainer = JsonConvert.DeserializeObject<Dictionary<string, Asset>>(jsonData, settings);
+            tempContainer = JsonConvert.DeserializeObject<Dictionary<string, IAsset>>(jsonData, settings);
             foreach(var item in tempContainer)
             {
-                switch (item.Value.indexedType)
-                {
-                    case AssetType.ENEMY:
-                        if (!data.ContainsKey(item.Key))
-                        {
-                            Asset temp = item.Value;
-                            Baddies bad = (Baddies)temp.Data;
-                            var bInst = Resources.Load(bad.prefabPath, typeof(GameObject)) as GameObject;
-                            if (!bad.Prefab)
-                            {
-                                bad.Prefab = Instantiate(bInst);
-                                bad.Prefab.SetActive(false);
-                            }
-                            temp.Data = bad;
-                            data.Add(item.Key, temp);
-                        }
-                        break;
-                    case AssetType.PLAYER:
-                        if (!data.ContainsKey(item.Key))
-                        {
-                            Asset pTemp = item.Value;
-                            Player play = (Player)pTemp.Data;
-                            var pInst = Resources.Load(play.prefabPath) as GameObject;
-                            if (!play.prefab)
-                            {
-                                play.prefab = Instantiate(pInst);
-                                play.prefab.SetActive(false);
-                            }
-                            pTemp.Data = play;
-                            data.Add(item.Key, pTemp);
-                        }
-                        break;
-                        default:
-                        data.Add(item.Key, item.Value);
-                        break;
-                }
+               data.Add(item.Key, item.Value.CreateAsset());
             }
             tempContainer.Clear();
         }
@@ -141,7 +88,7 @@ public sealed class GameAssetManager : MonoBehaviour
     * B. It needs to be able to extract data from assetData and serialize it.
     * C. It needs to be able to deserialize and store data listed in Json and be able to hand it to requesters
     ***************************************************************************************************************************/
-    public int AddAsset(Asset assetData, string key)
+    public int AddAsset(IAsset assetData, string key)
     {
         // Do this first to recreate the inital structure and save item position proper
         // Then save all items in their proper order
@@ -149,12 +96,12 @@ public sealed class GameAssetManager : MonoBehaviour
         if (File.Exists(filePath) && data == null)
         {
             jsonData = File.ReadAllText(filePath);
-            data = JsonConvert.DeserializeObject<Dictionary<string, Asset>>(jsonData, settings);
+            data = JsonConvert.DeserializeObject<Dictionary<string, IAsset>>(jsonData, settings);
         }
 
         else if (!File.Exists(filePath) && data == null)
         {
-            data = new Dictionary<string, Asset>();
+            data = new Dictionary<string, IAsset>();
             data.Add(key, assetData);
         }
         else if (!data.ContainsKey(key))
@@ -172,17 +119,17 @@ public sealed class GameAssetManager : MonoBehaviour
         data.Remove(key);
     }
 
-    public object Get(string key, AssetType type)
+    public IAsset Get(string key)
     {
         // Need a way to grab enmasse
         foreach (var asset in data)
         {
             if (asset.Equals(key))
             {
-                return asset;
+                return asset.Value;
             }
         }
-        return default(Asset);
+        return default(IAsset);
     }
 
     public int isFilled()

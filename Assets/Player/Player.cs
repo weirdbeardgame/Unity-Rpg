@@ -13,7 +13,7 @@ using Newtonsoft.Json.Serialization;
 [RequireComponent(typeof(PlayerMovement))]
 
 // Either this hold an instance of Creature data and GameObject. Or I use Creature as a common type and these hold specific functions?
-public class Player : ScriptableObject
+public class Player : ScriptableObject, IAsset
 {
     public string prefabPath;
     public int level;
@@ -26,7 +26,6 @@ public class Player : ScriptableObject
     ***********************************************************************************/
     [System.NonSerialized]
     public GameObject prefab;
-
     private Creature data;
 
     public Creature Data
@@ -47,6 +46,17 @@ public class Player : ScriptableObject
             data = value;
         }
         #endif
+    }
+
+    public IAsset CreateAsset()
+    {
+        var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
+        if (!prefab)
+        {
+            prefab = Instantiate(bInst);
+            prefab.SetActive(false);
+        }
+        return this;
     }
 
     public void Kill()
@@ -74,42 +84,4 @@ public class Player : ScriptableObject
         // Things like. Str +5 or Spd +2 or whatever.
     }
 
-    public Player serialize()
-    {
-        #if UNITY_EDITOR
-        if (prefab)
-        {
-            prefabPath = AssetDatabase.GetAssetPath(prefab);
-        }
-        return this;
-        #endif
-        return null;
-    }
 }
-
-public class PlayerConverter : JsonConverter
-{
-    const string ValuePropertyName = "Value";// nameof(LikeType<object>.Value); // in C#6+
-
-    private readonly Type[] types;
-
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    {
-        Player temp = (Player)value;
-        JToken t = JToken.FromObject(temp.serialize());
-        serializer.Serialize(writer, t);
-    }
-
-    public override bool CanConvert(Type objectType)
-    {
-        return objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Player);
-    }
-
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-    {
-        //var value = serializer.Deserialize(reader, valueType);
-
-        return null;
-    }
-}
-

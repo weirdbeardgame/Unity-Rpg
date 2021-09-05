@@ -2,38 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum QuestEventType { DIALOGUE, CUTSCENE }
-
-public class QuestEvent : MonoBehaviour
+namespace Questing
 {
-    StateMachine state;
-    QuestEventType events;
-    DialogueManager dialogue;
-    BinarySearchTree<DialogueMessage> dialogueTree;
-    Flags flagToSet;
-    private void Start()
+    public enum QuestEventType { DIALOGUE, CUTSCENE }
+    public class QuestEvent : MonoBehaviour
     {
-    }
-
-    public void Execute()
-    {
-        switch(events)
+        StateMachine state;
+        QuestEventType events;
+        DialogueManager dialogue;
+        BinarySearchTree<DialogueMessage> dialogueTree;
+        Flags flagToSet;
+        private void Start()
         {
-            case QuestEventType.DIALOGUE:
-                state = GetComponent<StateMachine>();
-                dialogue = GetComponent<DialogueManager>();
-                state.State = States.DIALOGUE;
-                dialogue.OpenDialogueBox(dialogueTree);
-                break;
-            case QuestEventType.CUTSCENE:
-                state = GetComponent<StateMachine>();
-                state.State = States.CUTSCENE;
-                break;
         }
-    }
 
-    private void Update()
-    {
+        public void Execute()
+        {
+            switch(events)
+            {
+                case QuestEventType.DIALOGUE:
+                    state = GetComponent<StateMachine>();
+                    dialogue = GetComponent<DialogueManager>();
+                    state.State = States.DIALOGUE;
+                    dialogue.OpenDialogueBox(dialogueTree);
+                    break;
+                case QuestEventType.CUTSCENE:
+                    state = GetComponent<StateMachine>();
+                    state.State = States.CUTSCENE;
+                    break;
+            }
+        }
 
+        private void Update()
+        {
+        }
     }
 }

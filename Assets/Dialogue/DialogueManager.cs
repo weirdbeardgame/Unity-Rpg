@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using UnityEngine.UI;
 using UnityEngine;
 using System.IO;
-using questing;
+using Questing;
 using TMPro;
 
 
@@ -123,17 +123,17 @@ public class DialogueManager : MonoBehaviour
                     switch (Node.Data.FlagType)
                     {
                         case FlagReqSet.REQUIRED:
-                            if (Node.Data.Flag == _Machine.CurrrentFlag)
+                            /*if (Node.Data.Flag == _Machine.currrentSetFlag)
                             {
                                 //Debug.Log("Correct FLAG");
                                 NextNode(Node.Right); // Assume all normal Dialouge will be to the right.
                             }
 
-                            if (Node.Data.Flag != _Machine.CurrrentFlag)
+                            if (Node.Data.Flag != _Machine.currrentSetFlag)
                             {
                                 //Debug.Log("Wrong FLAG);
                                 return; // Nothing
-                            }
+                            }*/
                             break;
                         case FlagReqSet.SET: 
                             StateMessage.construct(_Machine.State, Node.Data.Flag);
@@ -189,7 +189,7 @@ public class DialogueManager : MonoBehaviour
         canvas.enabled = false;
         Talking = false;
         Destroy(Speaker);
-        StateMessage.construct(States.MAIN, _Machine.CurrrentFlag);
+        //StateMessage.construct(States.MAIN, _Machine.CurrrentFlag);
         Messenger = FindObjectOfType<Messaging>();
         Messenger.Enqueue(StateMessage);
     }

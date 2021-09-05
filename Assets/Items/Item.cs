@@ -20,9 +20,9 @@ public class Item : MonoBehaviour
         {
             foreach(var asset in manager.Data)
             {
-                if (asset.Value.indexedType == AssetType.ITEM)
+                if (asset.Value is ItemData)
                 {
-                    ItemData temp = (ItemData)asset.Value.Data;
+                    ItemData temp = (ItemData)asset.Value;
                     items.Add(temp.itemID, temp);
                 }
             }

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using questing;
+using Questing;
 
 public class Messaging : MonoBehaviour
 {

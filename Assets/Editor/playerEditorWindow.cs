@@ -10,7 +10,7 @@ using System.Collections.Generic;
 public class playerEditorWindow : EditorWindow
 {
     List<Player> Editable;
-    List<Asset> serialize;
+    List<IAsset> serialize;
     Player edit;
     int Index;
     string PlayerName;
@@ -18,6 +18,7 @@ public class playerEditorWindow : EditorWindow
     List<string> Names;
     bool IsInit = false;
     Sprite sprite;
+    Player player;
 
     GameAssetManager manager;
 
@@ -35,13 +36,12 @@ public class playerEditorWindow : EditorWindow
         {
             foreach(var asset in manager.Data)
             {
-                if (asset.Value.indexedType == AssetType.PLAYER)
-                {
-                    Player player = (Player)asset.Value.Data;
-                    player.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(player.prefabPath);
-                    Editable.Add(player);
-                    Names.Add(player.Data.creatureName);
-                }
+                    if (asset.Value is Player && (player = (Player)asset.Value) != null)
+                    {
+                        player.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(player.prefabPath);
+                        Editable.Add(player);
+                        Names.Add(player.Data.creatureName);
+                    }
             }
         }
         IsInit = true;
@@ -147,7 +147,7 @@ public class playerEditorWindow : EditorWindow
         {
             for (int i = 0; i < Editable.Count; i++)
             {
-                manager.AddAsset(new Asset(Editable[i], AssetType.PLAYER), Editable[i].Data.creatureName);
+                manager.AddAsset(Editable[i], Editable[i].Data.creatureName);
             }
         }
         GUILayout.EndHorizontal();

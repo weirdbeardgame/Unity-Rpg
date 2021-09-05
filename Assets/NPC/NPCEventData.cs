@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEditor;
-using questing;
+using Questing;
 
 public enum NPCEventType {DIALOUGE, ADDITEM, FOLLOW, ADDQUEST};
 

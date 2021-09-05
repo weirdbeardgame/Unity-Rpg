@@ -30,10 +30,10 @@ class EnemySelect : Editor
         {
             foreach(var asset in manager.Data)
             {
-                if (asset.Value.indexedType == AssetType.ENEMY)
+                if (asset.Value is Baddies)
                 {
-                    Baddies bad = (Baddies)asset.Value.Data;
-                    bad.Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(bad.prefabPath);
+                    Baddies bad = (Baddies)asset.Value;
+                    bad.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(bad.prefabPath);
                     baddieList.Add(bad);
                     names.Add(bad.Data.creatureName);
                 }
@@ -71,7 +71,7 @@ class EnemySelect : Editor
 public class Transition : MonoBehaviour
 {
     Scene CurrentScene;
-    StateMachine states;
+    GameManager manager;
     Party playerParty;
     Battle battle;
     Messaging message;
@@ -113,6 +113,7 @@ public class Transition : MonoBehaviour
     void Start()
     {
         move = FindObjectOfType<PlayerMovement>();
+        manager = GameManager.Instance;
     }
 
     /***********************************************************************************************************************************
@@ -130,7 +131,7 @@ public class Transition : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             // Spawn and add into BattleEnemies from here
-            BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(allowedEnemies[baddieIndex].Prefab));
+            BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(allowedEnemies[baddieIndex].prefab));
         }
     }
 
@@ -161,9 +162,6 @@ public class Transition : MonoBehaviour
                 BattleObject = GameObject.Find("Battle");
                 scripts = GameObject.Find("Scripts");
                 mainCamera = GameObject.Find("Main Camera");
-                states = FindObjectOfType<StateMachine>();
-
-                Destroy(states.GetComponent<MenuManager>());
 
                 Menus = FindObjectOfType<commandMenus>();
                 Menus.Initlaize();
@@ -179,9 +177,6 @@ public class Transition : MonoBehaviour
                 BattleObject.AddComponent<BattleItemMenu>();
 
                 selectEnemies();
-
-                batttleStartMessage = new gameStateMessage();
-                batttleStartMessage.construct(States.BATTLE, states.CurrrentFlag);
 
                 message.Enqueue(batttleStartMessage);
                 message.Init();

@@ -11,16 +11,20 @@ using System.Collections.Generic;
 public class ItemEditor : EditorWindow
 {
     public ItemData CurrentItem;
+    ItemData temp;
     Creature creature;
+
     string JsonData;
     string ItemName;
     string FilePath = "Assets/Items.json";
+
     public Dictionary<int, ItemData> items;
 
     GameAssetManager manager;
 
     int SelectedIndex = 0;
     int ItemID;
+
     Rect PropertyPage;
     Rect ButtonList;
     Rect TopProperties;
@@ -50,9 +54,8 @@ public class ItemEditor : EditorWindow
         {
             foreach(var asset in manager.Data)
             {
-                if (asset.Value.indexedType == AssetType.ITEM)
+                if (asset.Value is ItemData && ((temp = (ItemData)asset.Value) != null))
                 {
-                    ItemData temp = (ItemData)asset.Value.Data;
                     items.Add(temp.itemID, temp);
                     itemIndex += 1;
                 }
@@ -167,7 +170,7 @@ public class ItemEditor : EditorWindow
         if (GUILayout.Button("Save"))
         {
             for (int i = 0; i < items.Count; i++)
-            manager.AddAsset(new Asset(items[i], AssetType.ITEM), items[i].name);
+            manager.AddAsset(items[i], items[i].name);
         }
         GUILayout.EndHorizontal();
     }

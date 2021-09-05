@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
-using questing;
+using Questing;
 
 [CustomEditor(typeof(NPCManager))]
 public class NPCEditor : Editor
@@ -23,7 +23,6 @@ public class NPCEditor : Editor
     string JsonData;
     string FlagPath = "Assets/Flags.json";
     string FilePath = "Assets/NPC/NPC.json";
-    string ItemFilePath = "Assets/Items.json";
     string QuestFilePath = "Assets/Quests/Quest.json";
 
     Dictionary<int, ItemData> ItemsToCollect;
@@ -88,18 +87,6 @@ public class NPCEditor : Editor
             for (int i = 0; i < FlagList.Count; i++)
             {
                 FlagString.Add(FlagList[i].Flag);
-            }
-        }
-        if (File.Exists(ItemFilePath))
-        {
-            JsonData = null;            
-            ItemsToCollect = new Dictionary<int, ItemData>();
-            ItemNames = new List<string>();
-            JsonData = File.ReadAllText(ItemFilePath);
-            ItemsToCollect = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(JsonData);
-            for (int i = 0; i < ItemsToCollect.Count; i++)
-            {
-                ItemNames.Add(ItemsToCollect[i].name);
             }
         }
 

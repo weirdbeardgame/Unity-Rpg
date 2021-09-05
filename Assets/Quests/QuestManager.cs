@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using System.IO;
 
-namespace questing
+namespace Questing
 {
     // Manager holds ALL quests
     public class QuestManager : MonoBehaviour
@@ -18,15 +18,8 @@ namespace questing
         int activeID;
         QuestData activeQuest;
 
-        // Start is called before the first frame update
-        void Start()
+        public void Init()
         {
-            Initialize();
-        }
-
-        void Initialize()
-        {
-            Messenger = FindObjectOfType<Messaging>();
             if (File.Exists(FilePath))
             {
                 quests = new List<QuestData>();

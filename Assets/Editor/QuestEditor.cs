@@ -4,23 +4,22 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using questing;
+using Questing;
 using UnityEngine.Assertions.Must;
 
 public class QuestEditor : EditorWindow
 {
-
     string JsonData;
-    string ItemFilePath = "Assets/Items.json";
     string FilePath = "Assets/Quests/Quest.json";
     string FlagPath = "Assets/Flags.json";
     string DialoguePath = "Assets/Dialogue/Dialogue.json";
 
     List<Flags> FlagList;
     List<QuestData> Quests;
+    GameAssetManager manager;
 
     // For item collect quests
-    public Dictionary<int, ItemData> ItemsToCollect;
+    public Dictionary<int, ItemData> itemsToCollect;
     List<string> TempItemNames;
     Item GetItem;
     int itemSelection = 0;
@@ -29,7 +28,6 @@ public class QuestEditor : EditorWindow
     Rect PropertyPage;
     Rect ButtonList;
     Rect TopProperties;
-
     bool IsInit = false;
     string[] array = {"Quest, Objectives, Events"}; 
     int tabIndex = 0;
@@ -42,17 +40,20 @@ public class QuestEditor : EditorWindow
 
     void ReadJson()
     {
-        if (File.Exists(ItemFilePath))
+        manager = GameAssetManager.Instance;
+
+        if (manager.isFilled() > 0)
         {
-            ItemsToCollect = new Dictionary<int, ItemData>();
-            TempItemNames = new List<string>();
-            JsonData = File.ReadAllText(ItemFilePath);
-            ItemsToCollect = JsonConvert.DeserializeObject<Dictionary<int, ItemData>>(JsonData);
-            for (int i = 0; i < ItemsToCollect.Count; i++)
+            foreach(var asset in manager.Data)
             {
-                TempItemNames.Add(ItemsToCollect[i].name);
+                if (asset.Value is ItemData)
+                {
+                    ItemData temp = (ItemData)asset.Value;
+                    itemsToCollect.Add(temp.itemID, temp);
+                }
             }
         }
+
         if (File.Exists(FlagPath))
         {
             FlagList = new List<Flags>();
@@ -75,8 +76,8 @@ public class QuestEditor : EditorWindow
             Quests = new List<QuestData>();
         }
 
-        ButtonList = new Rect(0, 0, 150, position.height);
         TopProperties = new Rect(500, 0, 1000, 200);
+        ButtonList = new Rect(0, 0, 150, position.height);
         PropertyPage = new Rect(500, 200, 1000, position.height);
 
         IsInit = true;
@@ -119,7 +120,9 @@ public class QuestEditor : EditorWindow
                     EditorGUILayout.LabelField("Name Of Quest");
                     questToCreate.questName = EditorGUILayout.TextField(questToCreate.questName);
                     EditorGUILayout.LabelField("Quest Description");
-                    questToCreate.description = EditorGUILayout.TextArea(questToCreate.description);
+                    questToCreate.nonActiveDescription = EditorGUILayout.TextField(questToCreate.nonActiveDescription);
+
+
                 }
 
                 for (int i = 0; i < Quests.Count; i++)

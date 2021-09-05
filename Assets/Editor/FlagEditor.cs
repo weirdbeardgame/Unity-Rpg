@@ -115,8 +115,6 @@ public class FlagEditor : EditorWindow
             Flags[ClickedIndex].ID = EditorGUILayout.IntField(Flags[ClickedIndex].ID);
             EditorGUILayout.LabelField("Flag");
             Flags[ClickedIndex].Flag = EditorGUILayout.TextField(Flags[ClickedIndex].Flag);
-            EditorGUILayout.LabelField("Is Sub Flag: ");
-            Flags[ClickedIndex].SubFlag = EditorGUILayout.Toggle(Flags[ClickedIndex].SubFlag);
             GUILayout.EndVertical();
             GUILayout.EndArea();
 

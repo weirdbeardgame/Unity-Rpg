@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace questing
+namespace Questing
 {
     public class QuestBook : MonoBehaviour
     {

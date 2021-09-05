@@ -10,8 +10,9 @@ using System.Collections.Generic;
 public class EnemyEditorWindow : EditorWindow
 {
     List<Baddies> Editable;
-    List<Asset> serialize;
+    List<IAsset> serialize;
     Baddies edit;
+    Baddies badInit;
     int Index = 0;
     string enemyName;
     static bool[] fold = new bool[10];
@@ -33,12 +34,11 @@ public class EnemyEditorWindow : EditorWindow
         {
             foreach(var asset in manager.Data)
             {
-                if (asset.Value.indexedType == AssetType.ENEMY)
+                if ((asset.Value is Baddies) && (badInit = (Baddies)asset.Value) != null)
                 {
-                    Baddies bad = (Baddies)asset.Value.Data;
-                    bad.Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(bad.prefabPath);
-                    Editable.Add(bad);
-                    Names.Add(bad.Data.creatureName);
+                    badInit.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(badInit.prefabPath);
+                    Editable.Add(badInit);
+                    Names.Add(badInit.Data.creatureName);
                     ID += 1;
                 }
             }
@@ -47,18 +47,18 @@ public class EnemyEditorWindow : EditorWindow
 
     void createPrefab()
     {
-        edit.Prefab = new GameObject();
-        edit.Prefab.AddComponent<Gauge>();
-        edit.Prefab.AddComponent<Animator>();
-        edit.Prefab.AddComponent<Rigidbody2D>();
-        edit.Prefab.AddComponent<BoxCollider2D>();
-        edit.Prefab.AddComponent<SpriteRenderer>();
-        edit.Prefab.name = edit.Data.creatureName;
+        edit.prefab = new GameObject();
+        edit.prefab.AddComponent<Gauge>();
+        edit.prefab.AddComponent<Animator>();
+        edit.prefab.AddComponent<Rigidbody2D>();
+        edit.prefab.AddComponent<BoxCollider2D>();
+        edit.prefab.AddComponent<SpriteRenderer>();
+        edit.prefab.name = edit.Data.creatureName;
         if (!Directory.Exists("Assets/Resources/Prefabs/Enemies/"))
         {
             Directory.CreateDirectory("Assets/Resources/Prefabs/Enemies/");
         }
-        PrefabUtility.SaveAsPrefabAsset(edit.Prefab, ("Assets/Resources/Prefabs/Enemies/" + edit.Data.creatureName + ".prefab"));
+        PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Assets/Resources/Prefabs/Enemies/" + edit.Data.creatureName + ".prefab"));
         edit.prefabPath = ("Prefabs/Enemies/" + edit.Data.creatureName);
     }
 
@@ -135,7 +135,7 @@ public class EnemyEditorWindow : EditorWindow
                 EditorGUILayout.LabelField("Job");
                 edit.Data.job = (JobSystem)EditorGUILayout.EnumPopup(edit.Data.job);
 
-                if (edit.Prefab)
+                if (edit.prefab)
                 {
                     if (GUILayout.Button("Edit Prefab"))
                     {
@@ -150,7 +150,7 @@ public class EnemyEditorWindow : EditorWindow
         {
             for (int i = 0; i < Editable.Count; i++)
             {
-                manager.AddAsset(new Asset(Editable[i], AssetType.ENEMY), Editable[i].Data.creatureName);
+                manager.AddAsset(Editable[i], Editable[i].Data.creatureName);
             }
         }
         GUILayout.EndHorizontal();

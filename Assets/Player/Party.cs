@@ -24,10 +24,9 @@ public class Party : MonoBehaviour
         {
             foreach(var asset in manager.Data)
             {
-                if (asset.Value.indexedType == AssetType.PLAYER)
+                if (asset.Value is Player)
                 {
-                    Player pTemp = (Player)asset.Value.Data;
-                    PartyMembers.Add(pTemp);
+                    PartyMembers.Add((Player)asset.Value);
                 }
             }
         }
