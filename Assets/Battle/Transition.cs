@@ -19,11 +19,19 @@ class EnemySelect : Editor
     GameAssetManager manager;
     bool isInit;
 
+<<<<<<< HEAD
     Transition transition;
+=======
+    SerializedProperty allowedEnemies;
+>>>>>>> 1a49f3bf (GameAssetManager.cs: Fixed path to be relative to device. Fixed Add Asset)
 
     private void OnEnable()
     {
         Init();
+<<<<<<< HEAD
+=======
+        allowedEnemies = serializedObject.FindProperty("allowedEnemies");
+>>>>>>> 1a49f3bf (GameAssetManager.cs: Fixed path to be relative to device. Fixed Add Asset)
     }
 
     public void Init()
@@ -31,9 +39,14 @@ class EnemySelect : Editor
         baddieList = new List<Baddies>();
         names = new List<string>();
         index = new List<int>();
+<<<<<<< HEAD
         transition = (Transition)target;
         manager = GameAssetManager.Instance;
         if (manager.isFilled())
+=======
+        manager = GameAssetManager.Instance;
+        if (manager.isFilled() > 0)
+>>>>>>> 1a49f3bf (GameAssetManager.cs: Fixed path to be relative to device. Fixed Add Asset)
         {
             foreach(var asset in manager.Data)
             {
@@ -63,7 +76,11 @@ class EnemySelect : Editor
             index[i] = EditorGUILayout.Popup(index[i], names.ToArray());
             if (GUI.changed)
             {
+<<<<<<< HEAD
                 transition.AllowedEnemies.Add(index[i]); // It really seems like it's serializing a light refrence to what exists in the asset manager rather then making a wholenother copy
+=======
+                //transition.AddBaddies(count, i, baddieList[index[i]]); // It really seems like it's serializing a light refrence to what exists in the asset manager rather then making a wholenother copy
+>>>>>>> 1a49f3bf (GameAssetManager.cs: Fixed path to be relative to device. Fixed Add Asset)
             }
         }
 
@@ -95,15 +112,21 @@ public class Transition : MonoBehaviour
     int index = 0;
     int PreviousIndex;
     PlayerMovement move;
+<<<<<<< HEAD
     private List<int> allowedEnemies;
     Enemies enemies;
 
     int maxEnemies = 4;
+=======
+    [SerializeField] List<int> allowedEnemies;
+    Enemies enemies;
+>>>>>>> 1a49f3bf (GameAssetManager.cs: Fixed path to be relative to device. Fixed Add Asset)
 
 
     // This doesn't seem wrong. GameAssetManager isn't always loaded and data disappears?
     public List<int> AllowedEnemies
     {
+<<<<<<< HEAD
         set
         {
             if (allowedEnemies.Count < maxEnemies)
@@ -119,6 +142,15 @@ public class Transition : MonoBehaviour
         get
         {
             return allowedEnemies;
+=======
+        if (allowedEnemies.Count < count)
+        {
+            allowedEnemies.Add(bad.id);
+        }
+        else
+        {
+            allowedEnemies[index] = bad.id;
+>>>>>>> 1a49f3bf (GameAssetManager.cs: Fixed path to be relative to device. Fixed Add Asset)
         }
     }
 

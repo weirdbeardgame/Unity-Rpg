@@ -44,7 +44,11 @@ public class QuestEditor : EditorWindow
 
         if (itemsToCollect == null || itemsToCollect.Count == 0)
         {
+<<<<<<< HEAD
         if (manager.isFilled())
+=======
+        if (manager.isFilled() > 0)
+>>>>>>> 1a49f3bf (GameAssetManager.cs: Fixed path to be relative to device. Fixed Add Asset)
         {
             foreach(var asset in manager.Data)
             {
