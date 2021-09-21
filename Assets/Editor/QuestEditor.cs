@@ -42,14 +42,24 @@ public class QuestEditor : EditorWindow
     {
         manager = GameAssetManager.Instance;
 
-        if (manager.isFilled() > 0)
+        if (itemsToCollect == null || itemsToCollect.Count == 0)
+        {
+        if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
             {
                 if (asset.Value is ItemData)
                 {
+                    if (itemsToCollect == null)
+                    {
+                        itemsToCollect = new Dictionary<int, ItemData>();
+                    }
                     ItemData temp = (ItemData)asset.Value;
-                    itemsToCollect.Add(temp.itemID, temp);
+                    if (!itemsToCollect.ContainsKey(temp.itemID) || !itemsToCollect.ContainsValue(temp))
+                    {
+                        itemsToCollect.Add(temp.itemID, temp);
+                    }
+                }
                 }
             }
         }
@@ -60,6 +70,7 @@ public class QuestEditor : EditorWindow
             JsonData = File.ReadAllText(FlagPath);
             FlagList = JsonConvert.DeserializeObject<List<Flags>>(JsonData);
         }
+
         if (File.Exists(FilePath))
         {
             Quests = new List<QuestData>();
@@ -96,7 +107,7 @@ public class QuestEditor : EditorWindow
             Init();
         }
 
-        tabIndex = GUILayout.Toolbar(tabIndex, array);
+        tabIndex = GUI.Toolbar(new Rect(25, 25, 250, 30), tabIndex, array);
 
         switch(tabIndex)
         {

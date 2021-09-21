@@ -37,6 +37,16 @@ public class ItemData : ScriptableObject, IAsset
         return this;
     }
 
+    public IAsset DestroyAsset()
+    {
+        Destroy(prefab);
+        name = "";
+        description = "";
+        itemID = -1;
+        amount = -1;
+        return null;
+    }
+
     public void Use(Creature creature)
     {
         creature.Stats.statList[(int)effect.effect].stat += effect.buff.stat;

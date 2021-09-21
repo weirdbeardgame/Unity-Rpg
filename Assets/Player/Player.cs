@@ -59,6 +59,13 @@ public class Player : ScriptableObject, IAsset
         return this;
     }
 
+    public IAsset DestroyAsset()
+    {
+        Destroy(prefab);
+        data = null;
+        return null;
+    }
+
     public void Kill()
     {
         // A later to be implemented death function. I'm still betting on an afterlife mechanic.

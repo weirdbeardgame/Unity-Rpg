@@ -16,7 +16,7 @@ public class Item : MonoBehaviour
     void Start()
     {
         manager = GameAssetManager.Instance;
-        if (manager.isFilled() > 0)
+        if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
             {

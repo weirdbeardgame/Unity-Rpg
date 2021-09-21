@@ -18,7 +18,7 @@ public class Enemies : MonoBehaviour
     {
         enemyData = new Dictionary<int, Baddies>();
         manager = GameAssetManager.Instance;
-        if (manager.isFilled() > 0)
+        if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
             {

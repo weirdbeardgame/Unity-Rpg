@@ -32,7 +32,7 @@ public class playerEditorWindow : EditorWindow
 
     void init()
     {
-        if (manager.isFilled() > 0)
+        if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
             {
@@ -161,6 +161,10 @@ public class playerEditorWindow : EditorWindow
     public static void ShowWindow()
     {
         GetWindow<playerEditorWindow>("Add Player");
+    }
+
+    private void OnDestroy() {
+        DestroyImmediate(manager);
     }
 
 }

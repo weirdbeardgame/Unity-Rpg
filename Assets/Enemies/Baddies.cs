@@ -55,6 +55,13 @@ public class Baddies : ScriptableObject, IAsset
         return this;
     }
 
+    public IAsset DestroyAsset()
+    {
+        data = null;
+        Destroy(prefab);
+        return null;
+    }
+
     public Baddies createBattler(BattleSlots slot)
     {
         prefab = MonoBehaviour.Instantiate(prefab);

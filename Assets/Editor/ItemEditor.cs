@@ -50,7 +50,7 @@ public class ItemEditor : EditorWindow
     {
         manager = GameAssetManager.Instance;
         items = new Dictionary<int, ItemData>();
-        if (manager.isFilled() > 0)
+        if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
             {

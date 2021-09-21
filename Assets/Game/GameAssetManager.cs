@@ -10,6 +10,7 @@ public interface IAsset
 {
     IAsset CreateAsset();
     //IAsset GetAsset();
+    IAsset DestroyAsset();
 }
 
 /*********************************************************************************
@@ -21,10 +22,21 @@ public interface IAsset
 public sealed class GameAssetManager : MonoBehaviour
 {
     // The overall path that EVERYTHING will serialize to
-    string filePath = "Assets/Assets.json";
+    string filePath = Application.dataPath + "/Assets.json";
     string jsonData;
     int itemID;
     string key;
+
+    bool isInit;
+
+    public GameAssetManager()
+    {
+        if (!isInit)
+        {
+            Init();
+        }
+    }
+
     private static GameAssetManager instance;
 
     public static GameAssetManager Instance
@@ -34,7 +46,6 @@ public sealed class GameAssetManager : MonoBehaviour
             if (instance == null)
             {
                 instance = new GameAssetManager();
-                instance.Init();
             }
             return instance;
         }
@@ -44,7 +55,6 @@ public sealed class GameAssetManager : MonoBehaviour
     [SerializeField]
     private Dictionary<string, IAsset> data;
     private Dictionary<string, IAsset> tempContainer;
-
     public Dictionary<string, IAsset> Data
     {
         get
@@ -97,6 +107,7 @@ public sealed class GameAssetManager : MonoBehaviour
         {
             jsonData = File.ReadAllText(filePath);
             data = JsonConvert.DeserializeObject<Dictionary<string, IAsset>>(jsonData, settings);
+            data.Add(key, assetData);
         }
 
         else if (!File.Exists(filePath) && data == null)
@@ -132,13 +143,13 @@ public sealed class GameAssetManager : MonoBehaviour
         return default(IAsset);
     }
 
-    public int isFilled()
+    public bool isFilled()
     {
-        if (data == null)
+        if (data == null || data.Count <= 0)
         {
-            Init();
+            return false;
         }
-        return data.Count;
+        return true;
     }
 
     // Update is called once per frame
@@ -146,4 +157,15 @@ public sealed class GameAssetManager : MonoBehaviour
     {
         
     }
+
+
+    ~GameAssetManager()
+    {
+        foreach(var asset in data)
+        {
+            asset.Value.DestroyAsset();
+            data.Remove(asset.Key);
+        }
+    }
+
 }

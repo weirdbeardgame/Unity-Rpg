@@ -103,6 +103,7 @@ namespace Questing
 
         public int questID;
         public int questProgress;
+
         public string questName;
         public string activeDescription;
         public string nonActiveDescription;

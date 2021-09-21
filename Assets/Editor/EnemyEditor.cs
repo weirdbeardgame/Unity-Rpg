@@ -30,7 +30,7 @@ public class EnemyEditorWindow : EditorWindow
 
     void init()
     {
-        if (manager.isFilled() > 0)
+        if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
             {

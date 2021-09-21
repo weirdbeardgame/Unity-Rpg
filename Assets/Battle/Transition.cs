@@ -7,6 +7,8 @@ using menu;
 #if UNITY_EDITOR
 using UnityEditor;
 
+// Transition is looking for a data that no longer exists when the asset manager no more exists. Why does it no more exist?
+
 [CustomEditor(typeof(Transition))]
 class EnemySelect : Editor
 {
@@ -15,18 +17,23 @@ class EnemySelect : Editor
     List<int> index;
     int count;
     GameAssetManager manager;
-    Transition transition;
     bool isInit;
+
+    Transition transition;
+
+    private void OnEnable()
+    {
+        Init();
+    }
 
     public void Init()
     {
         baddieList = new List<Baddies>();
         names = new List<string>();
         index = new List<int>();
-        transition = FindObjectOfType<Transition>();
-        manager = FindObjectOfType<GameAssetManager>();
-        manager.Init();
-        if (manager.isFilled() > 0)
+        transition = (Transition)target;
+        manager = GameAssetManager.Instance;
+        if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
             {
@@ -45,10 +52,6 @@ class EnemySelect : Editor
     public override void OnInspectorGUI()
     {
         base.DrawDefaultInspector();
-        if (!isInit)
-        {
-            Init();
-        }
         GUILayout.Label("Add Enemies");
         if (GUILayout.Button("Add Enemy"))
         {
@@ -58,7 +61,10 @@ class EnemySelect : Editor
         {
             index.Add(new int());
             index[i] = EditorGUILayout.Popup(index[i], names.ToArray());
-            transition.AddBaddies(count, i, baddieList[index[i]]);
+            if (GUI.changed)
+            {
+                transition.AllowedEnemies.Add(index[i]); // It really seems like it's serializing a light refrence to what exists in the asset manager rather then making a wholenother copy
+            }
         }
 
         EditorUtility.SetDirty(this);
@@ -68,6 +74,7 @@ class EnemySelect : Editor
 
 // The Initalizer of the Battle
 // Needs a way to select which spawned enemies can appear per map!
+[System.Serializable]
 public class Transition : MonoBehaviour
 {
     Scene CurrentScene;
@@ -85,34 +92,41 @@ public class Transition : MonoBehaviour
     [SerializeField]
     string mapLoad = "BattleScene";
     [SerializeField] 
-    int index = 1;
-    [SerializeField]
-    int X = 0;
-    [SerializeField]
-    int Y = 0;
+    int index = 0;
     int PreviousIndex;
     PlayerMovement move;
-    [SerializeField] List<Baddies> allowedEnemies;
+    private List<int> allowedEnemies;
+    Enemies enemies;
+
+    int maxEnemies = 4;
 
 
     // This doesn't seem wrong. GameAssetManager isn't always loaded and data disappears?
-    public void AddBaddies(int count, int index, Baddies bad)
+    public List<int> AllowedEnemies
     {
-        if (allowedEnemies == null)
+        set
         {
-            allowedEnemies = new List<Baddies>();
+            if (allowedEnemies.Count < maxEnemies)
+            {
+                allowedEnemies = value;
+                index += 1;
+            }
+            else
+            {
+                allowedEnemies[index] = value[index];
+            }
         }
-        else if (allowedEnemies.Count < count)
+        get
         {
-            allowedEnemies.Add(new Baddies());
+            return allowedEnemies;
         }
-        allowedEnemies[index] = bad;
     }
 
     // Start is called before the first frame update
     void Start()
     {
         move = FindObjectOfType<PlayerMovement>();
+        enemies = FindObjectOfType<Enemies>();
         manager = GameManager.Instance;
     }
 
@@ -127,11 +141,11 @@ public class Transition : MonoBehaviour
     {
         var rand = new System.Random();
         int amount = rand.Next(1, 3);
-        int baddieIndex = rand.Next(allowedEnemies[0].id, allowedEnemies[allowedEnemies.Count].id); // This seems a grave misuse of enemy ID
+        int baddieIndex = rand.Next(allowedEnemies[0], allowedEnemies[allowedEnemies.Count]); // This seems a grave misuse of enemy ID
         for (int i = 0; i < amount; i++)
         {
             // Spawn and add into BattleEnemies from here
-            BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(allowedEnemies[baddieIndex].prefab));
+            BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(enemies.enemyData[allowedEnemies[baddieIndex]].prefab));
         }
     }
 
