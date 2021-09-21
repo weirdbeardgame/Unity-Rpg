@@ -13,20 +13,23 @@ public interface IAsset
     IAsset DestroyAsset();
 }
 
-/*********************************************************************************
+/*****************************************************************************************
 * Store paths to prefabs as well as other data serialized in json.
 * Data such as player or enemy stat data. Loop times and length of clips for audio
 * This will also be used for TileMap and scene management?
-**********************************************************************************/
+* TODO: Need to add a hash or ID. Need to add a check for valid path and if asset exists
+*****************************************************************************************/
 //[CreateAssetMenu(menuName = "Assets")]
 public sealed class GameAssetManager : MonoBehaviour
 {
-    // The overall path that EVERYTHING will serialize to
+
+    string folderName = "Resources/";
+
+    // The Json file that EVERYTHING will serialize to
     string filePath = Application.dataPath + "/Assets.json";
     string jsonData;
     int itemID;
     string key;
-
     bool isInit;
 
     public GameAssetManager()
@@ -66,7 +69,10 @@ public sealed class GameAssetManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Init();
+        if (!isInit)
+        {
+            Init();
+        }
     }
 
     public void Init()
@@ -80,9 +86,11 @@ public sealed class GameAssetManager : MonoBehaviour
             tempContainer = JsonConvert.DeserializeObject<Dictionary<string, IAsset>>(jsonData, settings);
             foreach(var item in tempContainer)
             {
+                // Need to reconstruct proper paths in here
                data.Add(item.Key, item.Value.CreateAsset());
             }
             tempContainer.Clear();
+            isInit = true;
         }
     }
 
