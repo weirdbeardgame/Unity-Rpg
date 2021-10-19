@@ -10,6 +10,24 @@ public class Pause : MonoBehaviour
         
     }
 
+    // Open Item screen
+    public void Items()
+    {
+
+    }
+
+    // Open Quest log menu
+    public void Quests()
+    {
+
+    }
+
+    // Open Text Message menu
+    public void Messages()
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
