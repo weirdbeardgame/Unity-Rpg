@@ -203,7 +203,7 @@ public class NPCEditor : Editor
                 {
                     case NPCEventType.DIALOUGE:
                         if (GUILayout.Button("Open Dialogue Editor"))
-                        {                            
+                        {
                             // Open Dialogue Editor, ensuring it has the flag and Quest ID corresonded.
                             if (DEditor == null && Event.binarySearchTrees == null)
                             {

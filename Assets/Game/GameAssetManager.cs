@@ -22,7 +22,6 @@ public interface IAsset
 //[CreateAssetMenu(menuName = "Assets")]
 public sealed class GameAssetManager : MonoBehaviour
 {
-
     string folderName = "Resources/";
 
     // The Json file that EVERYTHING will serialize to

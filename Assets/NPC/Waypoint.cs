@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Might kinda be used with Tiled
 [CreateAssetMenu(menuName = "New Waypoint")]
 public class Waypoint : ScriptableObject
 {
