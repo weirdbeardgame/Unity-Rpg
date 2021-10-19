@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
+    UIManager screens;
     // Start is called before the first frame update
     void Start()
     {
-        
+        screens = GetComponent<UIManager>();
     }
 
     // Open Item screen
     public void Items()
     {
-
+        // Items must always be 1
+        screens.Open(1);
     }
 
     // Open Quest log menu

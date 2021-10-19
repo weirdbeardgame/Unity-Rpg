@@ -167,8 +167,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -32}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.00021362305, y: -32}
+  m_SizeDelta: {x: -0.00057983, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3439494418812493244
 CanvasRenderer:
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -0.5201664, z: 0, w: -3.6411867}
+  m_margin: {x: 0, y: -0.5201664, z: 0, w: 0.30405807}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -294,7 +294,7 @@ PrefabInstance:
     - target: {fileID: 1718184248101646267, guid: ed28caf9e20ada2f1a8b31d122bb3cd7,
         type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1718184248101646268, guid: ed28caf9e20ada2f1a8b31d122bb3cd7,
         type: 3}

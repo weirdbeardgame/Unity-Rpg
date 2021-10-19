@@ -17,22 +17,24 @@ public class ItemData : ScriptableObject, IAsset
     // Meant for In UI use
     [System.NonSerialized]
     public GameObject prefab;
+
     public string name;
     public string description;
     public string prefabPath;
+
     public int itemID;
     public int cost;
-    public ItemBuffer effect;
-    public int maxAmount = 99;
     public int amount = 0;
+    public int maxAmount = 99;
+
+    public ItemBuffer effect;
 
     public IAsset CreateAsset()
     {
         var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
         if (!prefab)
         {
-            prefab = Instantiate(bInst);
-            prefab.SetActive(false);
+            prefab = bInst;
         }
         return this;
     }
