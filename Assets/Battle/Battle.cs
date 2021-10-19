@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Newtonsoft.Json;
-using menu;
 
 public enum CommandType { SKILL, ITEM };
 

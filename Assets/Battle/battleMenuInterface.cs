@@ -10,12 +10,10 @@ public class BattleMIface : MonoBehaviour
     [SerializeField]
     protected JobSystem job;
     protected string appName;
-    public List<Widget> widgetsToAdd;
-    public static List<Widget> widgets;
 
     public virtual void Open()
     {
-
+        // Open prefab
     }
 
     public virtual void Close()

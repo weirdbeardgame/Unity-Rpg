@@ -21,11 +21,6 @@ public class SamuraiMenu : BattleMIface
         // Would involve looking for widgets?
         appID = ((int)job);
         appName = "SamuraiMenu";
-
-        for (int i = 0; i < widgetsToAdd.Count; i++)
-        {
-            widgets.Add(widgetsToAdd[i]);
-        }
     }
 
     public override void Close()

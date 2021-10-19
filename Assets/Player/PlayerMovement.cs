@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
-using menu;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
@@ -23,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     Vector2 position;
 
     StateMachine state;
-    MenuManager manager;
 
     Animator animator;
 
@@ -46,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
         state = FindObjectOfType<StateMachine>();
         tilemap = FindObjectOfType<Tilemap>();
         messenger = FindObjectOfType<Messaging>();
-        manager = FindObjectOfType<MenuManager>();
         animator = GetComponent<Animator>();
 
         DontDestroyOnLoad(this);
@@ -80,18 +77,6 @@ public class PlayerMovement : MonoBehaviour
         {
             v2 = new Vector2(0, 0);
             GetComponent<Rigidbody2D>().velocity = v2 * 0.0f;
-        }
-
-        if (Input.GetButtonDown("Cancel"))
-        {
-            if (!manager.isOpen)
-            {
-                manager.Open(0);
-            }
-            else
-            {
-                manager.Close();
-            }
         }
 
         animate.SetFloat("Horizontal", v2.x);

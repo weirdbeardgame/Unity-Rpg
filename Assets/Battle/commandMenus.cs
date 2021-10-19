@@ -111,10 +111,6 @@ public class commandMenus : MonoBehaviour
     {
         Debug.Log("POS: " + position);
         selectionArrow.transform.Translate(position);
-        widgetIndex += (int)Mathf.Sign(position.y);
-        // Grab each widget's position and go from there.
-        selectedWidget = widgets[widgetIndex];
-        Debug.Log("Widget Name: " + selectedWidget.GetComponent<Widget>().name);
     }
 
     public bool Open(Creature opener)
@@ -186,11 +182,6 @@ public class commandMenus : MonoBehaviour
 
             // Process input in here
             widgetIndex += controls.index();
-
-            if (controls.submit())
-            {
-                widgets[widgetIndex].GetComponent<Widget>().Execute();
-            }
 
             if (controls.back())
             {

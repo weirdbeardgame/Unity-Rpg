@@ -23,11 +23,6 @@ public class WarriorMenu : BattleMIface
     {
         appID = ((int)job);
         appName = "WarriorMenu";
-
-        for (int i = 0; i < widgetsToAdd.Count; i++)
-        {
-            widgets.Add(widgetsToAdd[i]);
-        }
     }
 
     public override void Close()

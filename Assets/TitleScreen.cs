@@ -5,10 +5,26 @@ using UnityEngine;
 public class TitleScreen : MonoBehaviour
 {
 
-    public List<Widget> Buttons;
-
     // Start is called before the first frame update
     void Start()
+    {
+
+    }
+
+    // Start a New Game
+    public void NewGame()
+    {
+        
+    }
+
+    // Open Options menu
+    public void Options()
+    {
+        
+    }
+
+    // Quit game
+    public void Quit()
     {
 
     }

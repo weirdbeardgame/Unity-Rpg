@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-using menu;
-
 [System.Serializable]
 public class CharacterInfo
 {
@@ -63,9 +61,9 @@ public class BattlePlayers : MonoBehaviour
                 //c.init(Players.PartyMembers[j], playerPrefab, j);
                 battleParty.Add(j, c);
 
-                // allCharacters[j].playerQueue = FindObjectOfType<CommandQueue>(); Incorrect! 
+                // allCharacters[j].playerQueue = FindObjectOfType<CommandQueue>(); // Incorrect! 
                 // Each player could have their own instance! Not look for the one in scene
-//                DontDestroyOnLoad(battleParty[j].Prefab);
+                // DontDestroyOnLoad(battleParty[j].Prefab);
             }
 
             BattleObject = BattleO;

@@ -9,10 +9,7 @@ using UnityEngine.Tilemaps;
 
 public class NPCMovement : MonoBehaviour
 {
-    public List<Vector3> waypoints; // A List of tagged waypoints
-
     Vector3 pointA, pointB;
-    //int currentWaypoint = 0;
 
     // G is the cost from origin to point B. H is the cost from the currently observed tile to the next one. 
     // That can change if there's an obstical or water or any kind of change between points on the ground.
@@ -21,8 +18,8 @@ public class NPCMovement : MonoBehaviour
 
     // Note at somepoint this will have to be changed to reflect the tiled type.
     // Cause I doubt the Tiled map parsers are going to use the same base as the unity types.
-    List<Tile> openSpace;
-    List<Tile> closedSpace;
+    List<Waypoint> openSpace;
+    List<Waypoint> closedSpace;
 
     public float speed = 3f;
 
