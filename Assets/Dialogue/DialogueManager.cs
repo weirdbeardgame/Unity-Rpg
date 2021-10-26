@@ -31,7 +31,7 @@ public class DialogueManager : MonoBehaviour
 
     gameStateMessage StateMessage;
     Messaging Messenger;
-    bool Talking = false;
+    bool talking = false;
 
     public TextMeshProUGUI rendering;
     public TextMeshProUGUI Name;
@@ -187,7 +187,7 @@ public class DialogueManager : MonoBehaviour
         rendering.text = null;
         Name.text = null;
         canvas.enabled = false;
-        Talking = false;
+        talking = false;
         Destroy(Speaker);
         //StateMessage.construct(States.MAIN, _Machine.CurrrentFlag);
         Messenger = FindObjectOfType<Messaging>();
@@ -202,7 +202,7 @@ public class DialogueManager : MonoBehaviour
         rendering.enabled = true;
         canvas.enabled = true;
         Name.enabled = true;
-        Talking = true;
+        talking = true;
         NextNode(ScratchPad.Tree);
     }
     public void OpenDialogueBox(BinarySearchTree<DialogueMessage> Tree)
@@ -210,7 +210,7 @@ public class DialogueManager : MonoBehaviour
         rendering.enabled = true;
         canvas.enabled = true;
         Name.enabled = true;
-        Talking = true;
+        talking = true;
         ScratchPad = Tree;
         NextNode(ScratchPad.Tree);
         return;
@@ -240,8 +240,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void Update() {
-        if (Input.GetButtonDown("Submit"))
+    private void Update()
+    {
+        if (talking && Input.GetButtonDown("Submit"))
         {
             OnSubmit();
         }

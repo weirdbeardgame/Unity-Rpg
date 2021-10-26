@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System;
 using UnityEngine;
 
 public enum States { MAIN, BATTLE, CUTSCENE, PAUSE, DIALOGUE };
@@ -53,12 +54,31 @@ public class Flags
     }
 }
 
+public class StateChangeEventArgs : EventArgs
+{
+    public Event onStateChange;
+    public StateChangeEventArgs(Flags flags, States s)
+    {
+        flag = flags;
+        state = s;
+    }
+    public Flags flag
+    {
+        get; private set;
+    }
+    public States state
+    {
+        get; private set;
+    }
+}
+
 class StateMachine : MonoBehaviour
 {
     private States state;
     Messaging messenger;
     gameStateMessage message;
 
+    StateChangeEventArgs del;
     public States State
     {
         get
@@ -77,11 +97,17 @@ class StateMachine : MonoBehaviour
         return state = s;
     }
 
+    public static void onStateChanged()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        messenger = FindObjectOfType<Messaging>(); 
+        //del.onStateChange += SetState(del.state);
         DontDestroyOnLoad(this);
+
     }
 
     void Update()

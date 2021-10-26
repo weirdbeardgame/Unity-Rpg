@@ -12,24 +12,13 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D body;
     public bool canMove = true;
 
-    Messaging messenger;
-
-    Queue<InputData> inbox;
-
-    float horizontal;
-    float vertical;
-
     Vector2 position;
 
     StateMachine state;
 
     Animator animator;
 
-    string mapLoad = null;
-    int index = 0;
-    int X = 0;
-    int Y = 0;
-    int i = 0;
+    UIManager ui;
 
     public float playerSpeed = 4f;
 
@@ -37,14 +26,12 @@ public class PlayerMovement : MonoBehaviour
 
     Tilemap tilemap;
 
-    input recievedInput;
-
     void Start()
     {
         state = FindObjectOfType<StateMachine>();
         tilemap = FindObjectOfType<Tilemap>();
-        messenger = FindObjectOfType<Messaging>();
         animator = GetComponent<Animator>();
+        ui = FindObjectOfType<UIManager>();
 
         DontDestroyOnLoad(this);
     }
@@ -79,6 +66,18 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = v2 * 0.0f;
         }
 
+        if (Input.GetButtonDown("Cancel"))
+        {
+            switch (state.State)
+            {
+            case States.MAIN:
+                ui.Open(0);
+                break;
+            case States.PAUSE:
+                ui.Close();
+                break;
+            }
+        }
         animate.SetFloat("Horizontal", v2.x);
         animate.SetFloat("Vertical", v2.y);
         animate.SetFloat("Speed", v2.sqrMagnitude);
