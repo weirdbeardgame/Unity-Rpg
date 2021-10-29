@@ -73,5 +73,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Idealy we're going to have an event and a delagate that holds IAsset data that's needed and sends or recieves it.
+        questSystem.Progress(null);
     }
 }

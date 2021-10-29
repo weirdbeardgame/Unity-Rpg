@@ -10,9 +10,42 @@ namespace Questing
     public enum GoalType { KILL, COLLECT, LOCATION, FIND}
     public enum QuestState { IS_ACTIVE, NOT_ACTIVE, COMPLETED };
 
+    /**********************************************************************************************************************
+    * I can look for a posted event. Or, I can have this directly called somehow from each class.
+    * When that quest type is active or some shit like that. But really... I want this called from
+    * The central game manager class somewhere and that carries the message through to here.
+    * Or, this is in the QuestManager proper and that's polling everything along the line
+    * This belongs on a linked list! Or rather this is a node in a list or tree or graph depending on linearity of game
+    *********************************************************************************************************************/
+    public interface ObjectiveInterface
+    {
+        bool Eval(IAsset asset);
+    }
 
-    // This belongs on a linked list! Or rather this is a node in a list or tree or graph depending on linearity of game
-    public struct Objective
+    public class CollectObjective : ObjectiveInterface
+    {
+        ItemData toCollect;
+        int amtCollected;
+        int needed;
+
+        public bool Eval(IAsset asset)
+        {
+            ItemData collected = (ItemData)asset;
+            if (toCollect == collected)
+            {
+                if (amtCollected < needed)
+                {
+                    amtCollected += 1;
+                    return false;
+                }
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    /*public struct Objective
     {
         GoalType goal;
         bool isComplete;
@@ -35,13 +68,7 @@ namespace Questing
         public Baddies killed;
         public Item collected;
 
-        /********************************************************************************************
-        * I can look for a posted event. Or, I can have this directly called somehow from each class.
-        * When that quest type is active or some shit like that. But really... I want this called from
-        * The central game manager class somewhere and that carries the message through to here.
-        * Or, this is in the QuestManager proper and that's polling everything along the line
-        **********************************************************************************************/
-        public void progress()
+        public bool progress()
         {
             switch(goal)
             {
@@ -52,10 +79,11 @@ namespace Questing
                         {
                             objectiveProgress += 1;
                         }
+                        return false;
                     }
                 else if (objectiveProgress >= requiredProgress)
                 {
-                    complete();
+                    return true;
                 }
                     break;
                 case GoalType.COLLECT:
@@ -65,21 +93,24 @@ namespace Questing
                         {
                             objectiveProgress += 1;
                         }
+                        return false;
                     }
+                    return true;
                     break;
                 case GoalType.FIND:
-                    /*if (toFind == isFound)
+                    if (toFind == isFound)
                     {
-                    }*/
+                    }
                     break;
             }
+            return false;
         }
 
         void complete()
         {
             isComplete = true;
         }
-    }
+    }*/
 
     public class QuestData
     {
@@ -121,7 +152,10 @@ namespace Questing
         public List<QuestEvent> events;
 
         // List of quest objectives. Think of these as nodes in a linked list or tree. List for the fact this is linear
-        public List<Objective> objectives;
+        List<ObjectiveInterface> nonCompletedObjectives;
+        List<ObjectiveInterface> completedObjectives;
+
+        public ObjectiveInterface activeObjective;
 
         // Flags required and flags to set. Like an elder scrolls level of depth potentially
         // Though i'm limiting it to make a linear game

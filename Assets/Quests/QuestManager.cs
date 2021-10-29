@@ -43,10 +43,10 @@ namespace Questing
 
         // Progresses through the list of objectives
         // Stepping throught the data structure whether that be tree, list, or graph depending on linearity
-        public void Progress()
+        public void Progress(IAsset asset)
         {
             // Step through to next node if condition is met
-            //activeQuest.objectives[activeObjective]
+            activeQuest.activeObjective.Eval(asset);
         }
 
         public void Complete()
