@@ -41,9 +41,12 @@ namespace Questing
             }
         }
 
-        public void Progress() // progresses through the list of objectives
+        // Progresses through the list of objectives
+        // Stepping throught the data structure whether that be tree, list, or graph depending on linearity
+        public void Progress()
         {
-
+            // Step through to next node if condition is met
+            //activeQuest.objectives[activeObjective]
         }
 
         public void Complete()

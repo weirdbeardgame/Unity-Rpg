@@ -10,6 +10,8 @@ namespace Questing
     public enum GoalType { KILL, COLLECT, LOCATION, FIND}
     public enum QuestState { IS_ACTIVE, NOT_ACTIVE, COMPLETED };
 
+
+    // This belongs on a linked list! Or rather this is a node in a list or tree or graph depending on linearity of game
     public struct Objective
     {
         GoalType goal;
@@ -86,18 +88,22 @@ namespace Questing
             flag = null;
             questID = 0;
             questName = " ";
-            questState = QuestState.NOT_ACTIVE;
             questProgress = 0;
+
             flagRequirement = FlagReqSet.SET;
+            questState = QuestState.NOT_ACTIVE;
         }
         public QuestData (QuestData data)
         {
-            questProgress = data.questProgress;
             questID = data.questID;
+            questProgress = data.questProgress;
+
             questName = data.questName;
             nonActiveDescription = data.nonActiveDescription;
+
             flag = data.flag;
             flagRequirement = data.flagRequirement;
+
             questState = data.questState;
         }
 
@@ -114,13 +120,14 @@ namespace Questing
         // If there's any scripted events in the quest. IE. A story related quest that might activate a cutscene
         public List<QuestEvent> events;
 
-        // List of quest objectives. Nothing special here... 
+        // List of quest objectives. Think of these as nodes in a linked list or tree. List for the fact this is linear
         public List<Objective> objectives;
 
         // Flags required and flags to set. Like an elder scrolls level of depth potentially
         // Though i'm limiting it to make a linear game
         public List<Flags> flag; // Multiple flags set and requiured?
         public FlagReqSet flagRequirement;
+
         public QuestState questState;
 
         // Rewards

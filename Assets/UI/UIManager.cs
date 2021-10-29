@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
             pScreen = Instantiate(menuPrefabs[0], pScreen.transform, false);
             pScreen.transform.localPosition = new Vector3(0, 0, 0);
             gameState.SetState(States.PAUSE);
+            stateEvent.Invoke(States.PAUSE); // Wip
             isOpen = true;
         }
         else
