@@ -12,7 +12,7 @@ public class ItemBuffer
     public AreaOfEffect effect;
 }
 
-public class ItemData : ScriptableObject, IAsset
+public class ItemData : IAsset
 {
     // Meant for In UI use
     [System.NonSerialized]
@@ -29,7 +29,7 @@ public class ItemData : ScriptableObject, IAsset
 
     public ItemBuffer effect;
 
-    public IAsset CreateAsset()
+    public override IAsset CreateAsset()
     {
         var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
         if (!prefab)
@@ -39,9 +39,9 @@ public class ItemData : ScriptableObject, IAsset
         return this;
     }
 
-    public IAsset DestroyAsset()
+    public override IAsset DestroyAsset()
     {
-        Destroy(prefab);
+        MonoBehaviour.Destroy(prefab);
         name = "";
         description = "";
         itemID = -1;

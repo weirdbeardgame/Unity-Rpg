@@ -45,73 +45,6 @@ namespace Questing
         }
     }
 
-    /*public struct Objective
-    {
-        GoalType goal;
-        bool isComplete;
-        int objectiveProgress;
-        int requiredProgress;
-
-        // Objectives to check against
-        [Header("Objectives")]
-        [SerializeField] private Item itemToCollect;
-        [SerializeField] private Baddies enemyToKill;
-        [SerializeField] private Scene locationToGo;
-
-        // Find feels more like a category rather then a set quest
-        [Header("Find Quest")]
-        [SerializeField] private NPC npcToFind;
-        [SerializeField] private Item itemToFind;
-        [SerializeField] private Weapon weaponToFind;
-
-        // Goals
-        public Baddies killed;
-        public Item collected;
-
-        public bool progress()
-        {
-            switch(goal)
-            {
-                case GoalType.KILL:
-                    if (objectiveProgress < requiredProgress)
-                    {
-                        if (enemyToKill == killed)
-                        {
-                            objectiveProgress += 1;
-                        }
-                        return false;
-                    }
-                else if (objectiveProgress >= requiredProgress)
-                {
-                    return true;
-                }
-                    break;
-                case GoalType.COLLECT:
-                    if (objectiveProgress < requiredProgress)
-                    {
-                        if (itemToCollect == collected)
-                        {
-                            objectiveProgress += 1;
-                        }
-                        return false;
-                    }
-                    return true;
-                    break;
-                case GoalType.FIND:
-                    if (toFind == isFound)
-                    {
-                    }
-                    break;
-            }
-            return false;
-        }
-
-        void complete()
-        {
-            isComplete = true;
-        }
-    }*/
-
     public class QuestData
     {
         public QuestData()
@@ -154,19 +87,35 @@ namespace Questing
         // List of quest objectives. Think of these as nodes in a linked list or tree. List for the fact this is linear
         List<ObjectiveInterface> nonCompletedObjectives;
         List<ObjectiveInterface> completedObjectives;
-
         public ObjectiveInterface activeObjective;
 
         // Flags required and flags to set. Like an elder scrolls level of depth potentially
         // Though i'm limiting it to make a linear game
         public List<Flags> flag; // Multiple flags set and requiured?
-        public FlagReqSet flagRequirement;
 
+        public FlagReqSet flagRequirement;
         public QuestState questState;
 
         // Rewards
         public List<Item> reward;
         int xp;
+
+        public bool Eval(IAsset asset)
+        {
+            if (activeObjective.Eval(asset))
+            {
+                if (nonCompletedObjectives.Count > 0)
+                {
+                    completedObjectives.Add(activeObjective);
+                    nonCompletedObjectives.Remove(activeObjective);
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
 

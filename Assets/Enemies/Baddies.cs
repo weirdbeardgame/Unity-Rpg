@@ -11,7 +11,7 @@ using System.IO;
 using System;
 
 [System.Serializable]
-public class Baddies : ScriptableObject, IAsset
+public class Baddies : IAsset
 {
     public int id;
     public int level;
@@ -44,21 +44,21 @@ public class Baddies : ScriptableObject, IAsset
         #endif
     }
 
-    public IAsset CreateAsset()
+    public override IAsset CreateAsset()
     {
         var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
         if (!prefab)
         {
-            prefab = Instantiate(bInst);
+            prefab = MonoBehaviour.Instantiate(bInst);
             prefab.SetActive(false);
         }
         return this;
     }
 
-    public IAsset DestroyAsset()
+    public override IAsset DestroyAsset()
     {
         data = null;
-        Destroy(prefab);
+        MonoBehaviour.Destroy(prefab);
         return null;
     }
 

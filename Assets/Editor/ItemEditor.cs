@@ -112,7 +112,7 @@ public class ItemEditor : EditorWindow
                 items = new Dictionary<int, ItemData>();
             }
 
-            CurrentItem = ScriptableObject.CreateInstance<ItemData>();
+            CurrentItem = new ItemData();
             CurrentItem.name = ItemName;
             CurrentItem.effect = new ItemBuffer();
             CurrentItem.effect.buff = new Stats();
@@ -141,7 +141,7 @@ public class ItemEditor : EditorWindow
             GUILayout.BeginArea(PropertyPage);
             GUILayout.BeginVertical();
 
-            if (CurrentItem)
+            if (CurrentItem != null)
             {
                 EditorGUILayout.LabelField("Item ID");
                 CurrentItem.itemID = EditorGUILayout.IntField(CurrentItem.itemID);

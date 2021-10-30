@@ -13,7 +13,7 @@ using Newtonsoft.Json.Serialization;
 [RequireComponent(typeof(PlayerMovement))]
 
 // Either this hold an instance of Creature data and GameObject. Or I use Creature as a common type and these hold specific functions?
-public class Player : ScriptableObject, IAsset
+public class Player : IAsset
 {
     public string prefabPath;
     public int level;
@@ -48,20 +48,20 @@ public class Player : ScriptableObject, IAsset
         #endif
     }
 
-    public IAsset CreateAsset()
+    public override IAsset CreateAsset()
     {
         var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
-        if (!prefab)
+       /* if (!prefab)
         {
-            prefab = Instantiate(bInst);
+            prefab = MonoBehaviour.Instantiate(bInst);
             prefab.SetActive(false);
-        }
+        }*/
         return this;
     }
 
-    public IAsset DestroyAsset()
+    public override IAsset DestroyAsset()
     {
-        Destroy(prefab);
+        MonoBehaviour.Destroy(prefab);
         data = null;
         return null;
     }

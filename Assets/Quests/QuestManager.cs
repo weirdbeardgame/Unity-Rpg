@@ -46,12 +46,15 @@ namespace Questing
         public void Progress(IAsset asset)
         {
             // Step through to next node if condition is met
-            activeQuest.activeObjective.Eval(asset);
+            if (activeQuest.Eval(asset))
+            {
+                Complete();
+            }
         }
 
         public void Complete()
         {
-
+            // Add XP and reward from here
         }
 
         void Update()

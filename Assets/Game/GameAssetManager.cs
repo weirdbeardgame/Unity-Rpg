@@ -6,11 +6,19 @@ using UnityEngine;
 using System.IO;
 using System;
 
-public interface IAsset
+
+[System.AttributeUsage(System.AttributeTargets.All, Inherited = true, AllowMultiple = true), Serializable]
+public class IAsset : PropertyAttribute
 {
-    IAsset CreateAsset();
+    public virtual IAsset CreateAsset()
+    {
+        return null;
+    }
     //IAsset GetAsset();
-    IAsset DestroyAsset();
+    public virtual IAsset DestroyAsset()
+    {
+        return null;
+    }
 }
 
 /*****************************************************************************************
