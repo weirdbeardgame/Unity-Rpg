@@ -10,7 +10,7 @@ using System.Collections.Generic;
 public class EnemyEditorWindow : EditorWindow
 {
     List<Baddies> Editable;
-    List<IAsset> serialize;
+    List<Asset> serialize;
     Baddies edit;
     Baddies badInit;
     int Index = 0;

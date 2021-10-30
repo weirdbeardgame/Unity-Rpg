@@ -19,7 +19,7 @@ namespace Questing
     *********************************************************************************************************************/
     public interface ObjectiveInterface
     {
-        bool Eval(IAsset asset);
+        bool Eval(Asset asset);
     }
 
     public class CollectObjective : ObjectiveInterface
@@ -28,7 +28,7 @@ namespace Questing
         int amtCollected;
         int needed;
 
-        public bool Eval(IAsset asset)
+        public bool Eval(Asset asset)
         {
             ItemData collected = (ItemData)asset;
             if (toCollect == collected)
@@ -100,7 +100,7 @@ namespace Questing
         public List<Item> reward;
         int xp;
 
-        public bool Eval(IAsset asset)
+        public bool Eval(Asset asset)
         {
             if (activeObjective.Eval(asset))
             {

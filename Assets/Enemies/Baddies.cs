@@ -11,7 +11,7 @@ using System.IO;
 using System;
 
 [System.Serializable]
-public class Baddies : IAsset
+public class Baddies : Asset
 {
     public int id;
     public int level;
@@ -44,7 +44,7 @@ public class Baddies : IAsset
         #endif
     }
 
-    public override IAsset CreateAsset()
+    public override Asset CreateAsset()
     {
         var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
         if (!prefab)
@@ -55,7 +55,7 @@ public class Baddies : IAsset
         return this;
     }
 
-    public override IAsset DestroyAsset()
+    public override Asset DestroyAsset()
     {
         data = null;
         MonoBehaviour.Destroy(prefab);

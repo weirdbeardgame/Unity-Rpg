@@ -10,7 +10,7 @@ using System.Collections.Generic;
 public class playerEditorWindow : EditorWindow
 {
     List<Player> Editable;
-    List<IAsset> serialize;
+    List<Asset> serialize;
     Player edit;
     int Index;
     string PlayerName;

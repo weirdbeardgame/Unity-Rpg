@@ -8,14 +8,14 @@ using System;
 
 
 [System.AttributeUsage(System.AttributeTargets.All, Inherited = true, AllowMultiple = true), Serializable]
-public class IAsset : PropertyAttribute
+public class Asset : PropertyAttribute
 {
-    public virtual IAsset CreateAsset()
+    public virtual Asset CreateAsset()
     {
         return null;
     }
-    //IAsset GetAsset();
-    public virtual IAsset DestroyAsset()
+    //Asset GetAsset();
+    public virtual Asset DestroyAsset()
     {
         return null;
     }
@@ -63,9 +63,9 @@ public sealed class GameAssetManager : MonoBehaviour
 
     // Is this the best way to store this data? Each system will call for data from manager
     [SerializeField]
-    private Dictionary<string, IAsset> data;
-    private Dictionary<string, IAsset> tempContainer;
-    public Dictionary<string, IAsset> Data
+    private Dictionary<string, Asset> data;
+    private Dictionary<string, Asset> tempContainer;
+    public Dictionary<string, Asset> Data
     {
         get
         {
@@ -84,13 +84,13 @@ public sealed class GameAssetManager : MonoBehaviour
 
     public void Init()
     {
-        data = new Dictionary<string, IAsset>();
-        tempContainer = new Dictionary<string, IAsset>();
+        data = new Dictionary<string, Asset>();
+        tempContainer = new Dictionary<string, Asset>();
         // In here or a seperate initalize function to parse all data's!
         if (File.Exists(filePath))
         {
             jsonData = File.ReadAllText(filePath);
-            tempContainer = JsonConvert.DeserializeObject<Dictionary<string, IAsset>>(jsonData, settings);
+            tempContainer = JsonConvert.DeserializeObject<Dictionary<string, Asset>>(jsonData, settings);
             foreach(var item in tempContainer)
             {
                 // Need to reconstruct proper paths in here
@@ -113,7 +113,7 @@ public sealed class GameAssetManager : MonoBehaviour
     * B. It needs to be able to extract data from assetData and serialize it.
     * C. It needs to be able to deserialize and store data listed in Json and be able to hand it to requesters
     ***************************************************************************************************************************/
-    public int AddAsset(IAsset assetData, string key)
+    public int AddAsset(Asset assetData, string key)
     {
         // Do this first to recreate the inital structure and save item position proper
         // Then save all items in their proper order
@@ -121,13 +121,13 @@ public sealed class GameAssetManager : MonoBehaviour
         if (File.Exists(filePath) && data == null)
         {
             jsonData = File.ReadAllText(filePath);
-            data = JsonConvert.DeserializeObject<Dictionary<string, IAsset>>(jsonData, settings);
+            data = JsonConvert.DeserializeObject<Dictionary<string, Asset>>(jsonData, settings);
             data.Add(key, assetData);
         }
 
         else if (!File.Exists(filePath) && data == null)
         {
-            data = new Dictionary<string, IAsset>();
+            data = new Dictionary<string, Asset>();
             data.Add(key, assetData);
         }
         else if (!data.ContainsKey(key))
@@ -145,7 +145,7 @@ public sealed class GameAssetManager : MonoBehaviour
         data.Remove(key);
     }
 
-    public IAsset Get(string key)
+    public Asset Get(string key)
     {
         // Need a way to grab enmasse
         foreach (var asset in data)
@@ -155,7 +155,7 @@ public sealed class GameAssetManager : MonoBehaviour
                 return asset.Value;
             }
         }
-        return default(IAsset);
+        return default(Asset);
     }
 
     public bool isFilled()
