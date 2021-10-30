@@ -18,6 +18,7 @@ public class Party : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
+        PartyMembers = new List<Player>();
 
         manager = GameAssetManager.Instance;
         if (manager.isFilled())

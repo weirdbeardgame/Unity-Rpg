@@ -46,7 +46,7 @@ public class SkillMessage : ScriptableObject
     public void send()
     {
         Debug.Log("Sent Message");
-        Messenger.Send();
+        //Messenger.Send();
     }
 
     public ActionIface Data

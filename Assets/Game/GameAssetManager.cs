@@ -173,7 +173,6 @@ public sealed class GameAssetManager : MonoBehaviour
         
     }
 
-
     ~GameAssetManager()
     {
         foreach(var asset in data)

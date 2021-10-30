@@ -74,6 +74,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Idealy we're going to have an event and a delagate that holds IAsset data that's needed and sends or recieves it. For now it's null
-        questSystem.Progress(null);
+        //questSystem.Progress(null);
     }
 }

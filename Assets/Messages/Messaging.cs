@@ -84,7 +84,7 @@ public class Messaging : MonoBehaviour
 
     private void Update()
     {
-        Send();
+        //Send();
     }
 
 }
