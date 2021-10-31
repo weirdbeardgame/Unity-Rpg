@@ -14,7 +14,6 @@ public class Asset : PropertyAttribute
     {
         return null;
     }
-    //Asset GetAsset();
     public virtual Asset DestroyAsset()
     {
         return null;
@@ -27,7 +26,6 @@ public class Asset : PropertyAttribute
 * This will also be used for TileMap and scene management?
 * TODO: Need to add a hash or ID. Need to add a check for valid path and if asset exists
 *****************************************************************************************/
-//[CreateAssetMenu(menuName = "Assets")]
 public sealed class GameAssetManager : MonoBehaviour
 {
     string folderName = "Resources/";

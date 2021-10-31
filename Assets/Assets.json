@@ -1,5 +1,5 @@
 {
-	"$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[IAsset, Assembly-CSharp]], mscorlib",
+	"$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Asset, Assembly-CSharp]], mscorlib",
 	"Musungo": {
 		"$type": "Player, Assembly-CSharp",
 		"prefabPath": "Prefabs/Players/Musungo",
@@ -40,8 +40,8 @@
 			"creatureName": "Musungo",
 			"description": "A young 12 year old boy. Blue eyes white and black hair. Musungo is a dragon cursed with soul eaterism at birth which lead to clashes with the gods of death. Musungo is stubborn and determined. If he has a goal he will see it through to death"
 		},
-		"name": "",
-		"hideFlags": 0
+		"order": 0,
+		"TypeId": "Player, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
 	},
 	"Dragon": {
 		"$type": "Baddies, Assembly-CSharp",
@@ -84,8 +84,8 @@
 			"creatureName": "Dragon",
 			"description": "A basic dragon that wants to eat you. They have turned their backs on the kingdom"
 		},
-		"name": "",
-		"hideFlags": 0
+		"order": 0,
+		"TypeId": "Baddies, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
 	},
 	"Wolf": {
 		"$type": "Baddies, Assembly-CSharp",
@@ -128,8 +128,8 @@
 			"creatureName": "Wolf",
 			"description": "A ferral wolf. Watch out for it's bite"
 		},
-		"name": "",
-		"hideFlags": 0
+		"order": 0,
+		"TypeId": "Baddies, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
 	},
 	"Potion": {
 		"$type": "ItemData, Assembly-CSharp",
@@ -138,6 +138,8 @@
 		"prefabPath": "Prefabs/Items/Potion",
 		"itemID": 0,
 		"cost": 0,
+		"amount": 0,
+		"maxAmount": 99,
 		"effect": {
 			"$type": "ItemBuffer, Assembly-CSharp",
 			"buff": {
@@ -148,9 +150,8 @@
 			"type": 0,
 			"effect": 0
 		},
-		"maxAmount": 99,
-		"amount": 0,
-		"hideFlags": 0
+		"order": 0,
+		"TypeId": "ItemData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
 	},
 	"High Potion": {
 		"$type": "ItemData, Assembly-CSharp",
@@ -159,6 +160,8 @@
 		"prefabPath": "Prefabs/Items/High Potion",
 		"itemID": 0,
 		"cost": 0,
+		"amount": 0,
+		"maxAmount": 99,
 		"effect": {
 			"$type": "ItemBuffer, Assembly-CSharp",
 			"buff": {
@@ -169,9 +172,8 @@
 			"type": 0,
 			"effect": 0
 		},
-		"maxAmount": 99,
-		"amount": 0,
-		"hideFlags": 0
+		"order": 0,
+		"TypeId": "ItemData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
 	},
 	"Fire Bottle": {
 		"$type": "ItemData, Assembly-CSharp",
@@ -180,6 +182,8 @@
 		"prefabPath": "Prefabs/Items/Fire Bottle",
 		"itemID": 0,
 		"cost": 0,
+		"amount": 0,
+		"maxAmount": 99,
 		"effect": {
 			"$type": "ItemBuffer, Assembly-CSharp",
 			"buff": {
@@ -190,8 +194,51 @@
 			"type": 1,
 			"effect": 0
 		},
-		"maxAmount": 99,
-		"amount": 0,
-		"hideFlags": 0
+		"order": 0,
+		"TypeId": "ItemData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+	},
+	"Red Dragon": {
+		"$type": "Baddies, Assembly-CSharp",
+		"id": 2,
+		"level": 1,
+		"prefabPath": "Prefabs/Enemies/Red Dragon",
+		"Data": {
+			"$type": "Creature, Assembly-CSharp",
+			"isAlive": false,
+			"Stats": {
+				"$type": "StatManager, Assembly-CSharp",
+				"statList": {
+					"$type": "System.Collections.Generic.List`1[[Stats, Assembly-CSharp]], mscorlib",
+					"$values": [{
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 0,
+						"stat": 135.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 1,
+						"stat": 45.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 2,
+						"stat": 115.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 3,
+						"stat": 60.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 4,
+						"stat": 75.0
+					}]
+				}
+			},
+			"slots": null,
+			"tag": 0,
+			"job": 1,
+			"creatureName": "Red Dragon",
+			"description": "A red dragon. Stronger then the standard dragon. Breaths fire"
+		},
+		"order": 0,
+		"TypeId": "Baddies, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
 	}
 }
