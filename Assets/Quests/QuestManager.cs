@@ -12,7 +12,6 @@ namespace Questing
     {
         public List<QuestData> quests;
         QuestData QuestD;
-        Messaging Messenger;
         string FilePath = "Assets/Quests/Quest.json";
         string data;
         int activeID;

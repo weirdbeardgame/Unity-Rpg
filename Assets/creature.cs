@@ -9,7 +9,7 @@ public enum BattleState { COMMAND, SELECTION, ACTION, WAIT };
 public enum Appendage { LLEG, RLEG, LHAND, RHAND, HEAD, BODY };
 public enum JobSystem { MAGE, WARRIOR, FIGHTER, DRAGOON, THIEF, SAMURAI }; // Does Musungo fit in the warrior box?
 
-public class Creature : senderInterface
+public class Creature
 {
     public bool isAlive;
     public StatManager Stats;

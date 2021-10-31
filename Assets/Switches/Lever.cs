@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Lever : MonoBehaviour
 {
+    private bool isActive;
 
-    private SwitchMessage _SwitchMessage;
-    private bool _IsActive;
+    public int leverID;
 
-    public int _LeverID;
-
-    bool Collided;
+    bool collided;
 
 
 
@@ -18,20 +16,20 @@ public class Lever : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Collided = true;
+            collided = true;
         }
 
         else
         {
-            Collided = false;
+            collided = false;
         }
 
     }
 
     public void Flip()
     {
-        _IsActive = true;
-        _SwitchMessage.Construct(_LeverID, _IsActive);
+        // Play Sound and animation in here
+        isActive = true;
     }
 
 

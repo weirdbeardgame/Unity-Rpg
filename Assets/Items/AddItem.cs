@@ -11,16 +11,11 @@ public class AddItem : MonoBehaviour
     bool IsTrigger = false;
     bool ItemGiven;
 
-    InventoryMessage Message;
-
     void GiveItem()
     {
 
-        Message = new InventoryMessage();
         ItemIndex = FindObjectOfType<Item>();
         ItemGiven = true;
-
-        Message.construct(ItemIndex.GetItem(ID), itemState.RECIEVED);
 
         Debug.Log("An Item Added! " + ItemIndex.GetItem(ID).name);
         ItemIndex.AddToInventory(ID);

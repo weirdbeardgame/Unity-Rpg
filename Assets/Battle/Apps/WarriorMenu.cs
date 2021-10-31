@@ -9,7 +9,6 @@ public class WarriorMenu : BattleMIface
 {
     Skills skills;
     commandMenus Menu;
-    SkillMessage message;
     TextMeshPro DamageDisplay;
     Inputs Input;
 

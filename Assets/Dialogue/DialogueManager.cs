@@ -29,8 +29,6 @@ public class DialogueManager : MonoBehaviour
 
     int TreeID = 0;
 
-    gameStateMessage StateMessage;
-    Messaging Messenger;
     bool talking = false;
 
     public TextMeshProUGUI rendering;
@@ -53,7 +51,6 @@ public class DialogueManager : MonoBehaviour
     {
         canvas.enabled = false;
         FilePath = "Assets/Dialogue/Dialogue.json";
-        StateMessage = new gameStateMessage();
         DialougeData = new List<BinarySearchTree<DialogueMessage>>();
         _Machine = FindObjectOfType<StateMachine>();
         Quests = FindObjectOfType<QuestManager>();
@@ -136,9 +133,7 @@ public class DialogueManager : MonoBehaviour
                             }*/
                             break;
                         case FlagReqSet.SET: 
-                            StateMessage.construct(_Machine.State, Node.Data.Flag);
-                            Messenger = FindObjectOfType<Messaging>();
-                            Messenger.Enqueue(StateMessage);
+
                             break;
                     }
                     break;
@@ -190,8 +185,6 @@ public class DialogueManager : MonoBehaviour
         talking = false;
         Destroy(Speaker);
         //StateMessage.construct(States.MAIN, _Machine.CurrrentFlag);
-        Messenger = FindObjectOfType<Messaging>();
-        Messenger.Enqueue(StateMessage);
     }
 
     public void OpenDialogueBox(int Location)

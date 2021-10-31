@@ -80,8 +80,6 @@ public class Transition : MonoBehaviour
     GameManager manager;
     Party playerParty;
     Battle battle;
-    Messaging message;
-    gameStateMessage batttleStartMessage;
     commandMenus Menus;
     Vector2 v2;
     GameObject scripts;
@@ -180,8 +178,6 @@ public class Transition : MonoBehaviour
                 Menus = FindObjectOfType<commandMenus>();
                 Menus.Initlaize();
 
-                message = FindObjectOfType<Messaging>(); // Grab Messaging from states
-
                 BattleObject.AddComponent<Skills>();
                 battle = BattleObject.AddComponent<Battle>();
                 BattleObject.AddComponent<BattleSlots>();
@@ -190,8 +186,6 @@ public class Transition : MonoBehaviour
                 BattleObject.AddComponent<BattlePlayers>();
                 BattleObject.AddComponent<BattleItemMenu>();
 
-                message.Enqueue(batttleStartMessage);
-                message.Init();
                 selectEnemies();
 
                 battle.StartBattle(CurrentScene, BattleObject, PreviousIndex);

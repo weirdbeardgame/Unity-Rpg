@@ -7,7 +7,6 @@ public class BattleItemMenu : BattleMIface
 
     commandMenus menu;
     Inventory inventory;
-    SkillMessage itemMessage;
 
     public GameObject Temp;
 
@@ -25,8 +24,7 @@ public class BattleItemMenu : BattleMIface
 
     void use()
     {
-        itemMessage = new SkillMessage();
-        itemMessage.construct(null, MessageType.BATTLE, CommandType.ITEM, 0);
+
     }
 
     public void Open(Creature Opener)

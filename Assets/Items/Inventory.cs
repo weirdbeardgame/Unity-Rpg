@@ -34,8 +34,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    InventoryMessage currentMessage;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -45,9 +43,6 @@ public class Inventory : MonoBehaviour
 
     public void Add(ItemData I)
     {
-        currentMessage = new InventoryMessage();
-        currentMessage.construct(I, itemState.RECIEVED);
-
         if (currentSize < maxSize)
         {
             itemList.Add(currentSize, I);

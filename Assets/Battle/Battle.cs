@@ -10,10 +10,8 @@ using Newtonsoft.Json;
 
 public enum CommandType { SKILL, ITEM };
 
-public class Battle : MonoBehaviour, IReceiver
+public class Battle : MonoBehaviour
 {
-    Queue<object> Inbox; // The Receiver
-    Messaging Messenger;
     BattlePlayers Players;
     BattleSlots slots;
     Enemies Enemy;
@@ -33,24 +31,6 @@ public class Battle : MonoBehaviour, IReceiver
     int PlayerKilled;
     int PreviousSceneIndex;
 
-    public void Receive(object Message) // Should Recieve be aware of what type of message it is and where to direct it perhaps?
-    {
-        if (Message != null)
-        {
-            Inbox.Enqueue(Message);
-        }
-    }
-
-    public void Subscribe()
-    {
-        Messenger.Subscribe(MessageType.BATTLE, this);
-    }
-
-    public void Unsubscribe()
-    {
-        Messenger.Unsubscribe(MessageType.BATTLE, this);
-    }
-
     public void StartBattle(Scene PreviousScene, GameObject BattleObject, int Scene)
     {
 
@@ -59,12 +39,7 @@ public class Battle : MonoBehaviour, IReceiver
 
         slots = BattleObject.GetComponent<BattleSlots>();
 
-        Messenger = FindObjectOfType<Messaging>();
-        Inbox = new Queue<object>();
-
         PreviousSceneIndex = Scene;
-
-        Subscribe();
 
         Skills = BattleObject.AddComponent<Skills>();
         Queue = BattleObject.GetComponent<CommandQueue>();
@@ -101,10 +76,6 @@ public class Battle : MonoBehaviour, IReceiver
         while (!unload.isDone)
         {
             Destroy(BattleObject);
-            gameStateMessage Message = new gameStateMessage();
-            Unsubscribe();
-            Message.construct(States.MAIN, null);
-            Messenger.Init();
             Destroy(Players);
             yield return null;
         }

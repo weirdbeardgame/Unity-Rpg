@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 //using UnityEngine.Experimental.Rendering.Universal;
 
-public class NPCManager : MonoBehaviour, IReceiver
+public class NPCManager : MonoBehaviour
 {
     public List<NPCData> ToInit;
     public NPCData Initalizer;
@@ -19,13 +19,10 @@ public class NPCManager : MonoBehaviour, IReceiver
 
     int NpcID;
 
-    CollisionMessage _Collided;
 
     Queue<object> Inbox; // The Receiver
 
     DialogueManager manager;
-
-    Messaging _Messenger;
 
     public Dictionary<int, NPCData> ConstructedNPC;
 
@@ -68,22 +65,4 @@ public class NPCManager : MonoBehaviour, IReceiver
             ConstructedNPC.Add(D.NpcID, D);
         }
     }
-
-    public void Subscribe()
-    {
-        _Messenger = FindObjectOfType<Messaging>();
-        //_Messenger.Subscribe(MessageType.QUEST, this);
-        //_Messenger.Subscribe(MessageType.COLLISION, this);
-    }
-
-    public void Receive(object message)
-    {
-        Inbox.Enqueue(message);
-    }
-
-    public void Unsubscribe()
-    {
-        //_Messenger.Unsubscribe(MessageType.QUEST, this);
-    }
-
 }

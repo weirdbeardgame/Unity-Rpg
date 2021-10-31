@@ -75,8 +75,6 @@ public class StateChangeEventArgs : EventArgs
 class StateMachine : MonoBehaviour
 {
     private States state;
-    Messaging messenger;
-    gameStateMessage message;
 
     StateChangeEventArgs del;
     public States State

@@ -8,7 +8,6 @@ public class SamuraiMenu : BattleMIface
 {
     Skills skills;
     commandMenus Menu;
-    SkillMessage message;
 
     private void Start()
     {

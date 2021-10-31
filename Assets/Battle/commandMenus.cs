@@ -39,8 +39,6 @@ public class commandMenus : MonoBehaviour
     bool isSubscribed;
     public bool CommandSelected;
 
-    Messaging message;
-
     JobSystem Jobs;
 
     SkillData SkillToTarget;
@@ -55,7 +53,6 @@ public class commandMenus : MonoBehaviour
         controls = GetComponent<BattleControls>();
 
         // Widgets = new List<Widget>();
-        message = FindObjectOfType<Messaging>();
         Menus = new SortedDictionary<JobSystem, BattleMIface>();
         SubMenus = new SortedDictionary<int, BattleMIface>();
     }
@@ -100,7 +97,6 @@ public class commandMenus : MonoBehaviour
     public void Initlaize()
     {
         PlayerStatus = GameObject.Find("menu");
-        message = FindObjectOfType<Messaging>();
 
         widgets = new List<GameObject>();
         Menus = new SortedDictionary<JobSystem, BattleMIface>();

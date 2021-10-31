@@ -20,10 +20,7 @@ public class NPCEventData : ScriptableObject
 
     QuestBook QuestBook;
     StateMachine CurrentState; 
-    InventoryMessage message;
-    gameStateMessage state;
     DialogueManager Dialogue;
-    Messaging Messenger;
 
     public List<BinarySearchTree<DialogueMessage>> binarySearchTrees;
     
@@ -42,10 +39,6 @@ public class NPCEventData : ScriptableObject
                 Dialogue = FindObjectOfType<DialogueManager>();
                 CurrentState = FindObjectOfType<StateMachine>();
                 Dialogue.OpenDialogueBox(binarySearchTrees[0]);
-                state = new gameStateMessage();
-                state.construct(CurrentState.State, FlagToSet);
-                Messenger = FindObjectOfType<Messaging>();
-                Messenger.Enqueue(state);
                 break;
 
             case NPCEventType.FOLLOW:
@@ -59,10 +52,6 @@ public class NPCEventData : ScriptableObject
                 
                 QuestBook.Give(Quests);
 
-                state = new gameStateMessage();
-                state.construct(CurrentState.State, FlagToSet);
-                Messenger = FindObjectOfType<Messaging>();
-                Messenger.Enqueue(state);
                 break;
 
         }

@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class InButton : MonoBehaviour
 {
-    private SwitchMessage _SwitchMessage;
-    private bool _IsActive;
-    private int _LeverID;
+    private bool isActive;
+    private int leverID;
 
     bool Collided;
 
@@ -14,12 +13,12 @@ public class InButton : MonoBehaviour
     {
         get
         {
-            return _LeverID;
+            return leverID;
         }
 
         set
         {
-            _LeverID = value;
+            leverID = value;
         }
     }
 
@@ -37,10 +36,10 @@ public class InButton : MonoBehaviour
 
     }
 
-    public void Press() // I can either have a Message play sound or the event itself
+    public void Press()
     {
-        _IsActive = true;
-        _SwitchMessage.Construct(_LeverID, _IsActive);
+        // Play sound and animation in here
+        isActive = true;
     }
 
 
