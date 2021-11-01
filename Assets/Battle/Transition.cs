@@ -18,6 +18,7 @@ class EnemySelect : Editor
     bool isInit;
     Transition transition;
     TransitionData transitionData;
+    Dictionary<Scene, TransitionData> allowedMapDataEdit;
     private void OnEnable()
     {
         Init();
@@ -29,6 +30,7 @@ class EnemySelect : Editor
         names = new List<string>();
         manager = GameAssetManager.Instance;
         transition = (Transition)target;
+        allowedMapDataEdit = new Dictionary<Scene, TransitionData>();
         if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
@@ -48,15 +50,18 @@ class EnemySelect : Editor
     public override void OnInspectorGUI()
     {
         base.DrawDefaultInspector();
-        GUILayout.Label("Add Enemies");
-        SerializedObject obj = new SerializedObject(transition);
-        SerializedProperty list = serializedObject.FindProperty("allowedMapData");
-        if (GUILayout.Button("Add Enemy"))
+        if (GUILayout.Button("Add Scene"))
         {
-            count += 1;
-            baddieList.Add(null);
+            transitionData = new TransitionData();
+            transitionData.Create();
+            allowedMapDataEdit.Add(SceneManager.GetActiveScene(), transitionData);
         }
-
+        if (transitionData)
+        {
+            SerializedObject obj = new SerializedObject(transitionData);
+            SerializedProperty list = serializedObject.FindProperty("allowedEnemies");
+            EditorGUILayout.PropertyField(list);
+        }
         EditorUtility.SetDirty(this);
     }
 };
@@ -99,8 +104,9 @@ public class Transition : MonoBehaviour
 
     [SerializeField]
     string mapLoad = "BattleScene";
- 
-    private Dictionary<Scene, TransitionData> allowedMapData;
+
+    [SerializeField]
+    public Dictionary<Scene, TransitionData> allowedMapData;
 
     Enemies enemies;
 
