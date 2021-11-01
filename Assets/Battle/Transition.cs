@@ -13,13 +13,11 @@ class EnemySelect : Editor
 {
     List <Baddies> baddieList;
     List<string> names;
-    List<int> index;
     int count;
     GameAssetManager manager;
     bool isInit;
-
     Transition transition;
-
+    TransitionData transitionData;
     private void OnEnable()
     {
         Init();
@@ -29,9 +27,8 @@ class EnemySelect : Editor
     {
         baddieList = new List<Baddies>();
         names = new List<string>();
-        index = new List<int>();
-        transition = (Transition)target;
         manager = GameAssetManager.Instance;
+        transition = (Transition)target;
         if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
@@ -52,18 +49,12 @@ class EnemySelect : Editor
     {
         base.DrawDefaultInspector();
         GUILayout.Label("Add Enemies");
+        SerializedObject obj = new SerializedObject(transition);
+        SerializedProperty list = serializedObject.FindProperty("allowedMapData");
         if (GUILayout.Button("Add Enemy"))
         {
             count += 1;
-        }
-        for (int i = 0; i < count; i++)
-        {
-            index.Add(new int());
-            index[i] = EditorGUILayout.Popup(index[i], names.ToArray());
-            if (GUI.changed)
-            {
-                transition.AllowedEnemies.Add(index[i]); // It really seems like it's serializing a light refrence to what exists in the asset manager rather then making a wholenother copy
-            }
+            baddieList.Add(null);
         }
 
         EditorUtility.SetDirty(this);
@@ -71,12 +62,31 @@ class EnemySelect : Editor
 };
 #endif
 
+public class TransitionData : ScriptableObject
+{
+    Scene currentScene;
+    // The Scene to transport to. I wonder if I should have a custom Scene class to handle Scene categories like Battle Scene or Main Scene
+    Scene battleScene;
+
+    public List<Asset> allowedEnemies;
+
+    // This should only happen once!
+    // I have this function instead of the constructor as ScriptableObject shouldn't call new.
+    // This is to ensure the data in the class is being properly initalized
+    public void Create()
+    {
+        // I can either have this or somekind of Dictionary design
+        currentScene = SceneManager.GetActiveScene();
+        allowedEnemies = new List<Asset>();
+    }
+}
+
 // The Initalizer of the Battle
 // Needs a way to select which spawned enemies can appear per map!
-[System.Serializable]
+// One issue is that i've been combining two things that need to be seperate...
+// This should be a global class that should handle current map screen.
 public class Transition : MonoBehaviour
 {
-    Scene CurrentScene;
     GameManager manager;
     Party playerParty;
     Battle battle;
@@ -86,44 +96,19 @@ public class Transition : MonoBehaviour
     GameObject mainCamera;
     GameObject BattleObject;
     Camera battleCamera;
+
     [SerializeField]
     string mapLoad = "BattleScene";
-    [SerializeField] 
-    int index = 0;
-    int PreviousIndex;
-    PlayerMovement move;
-
-    [SerializeField] private List<int> allowedEnemies;
+ 
+    private Dictionary<Scene, TransitionData> allowedMapData;
 
     Enemies enemies;
 
     int maxEnemies = 4;
 
-    // This doesn't seem wrong. GameAssetManager isn't always loaded and data disappears?
-    public List<int> AllowedEnemies
-    {
-        set
-        {
-            if (allowedEnemies.Count < maxEnemies)
-            {
-                allowedEnemies = value;
-                index += 1;
-            }
-            else
-            {
-                allowedEnemies[index] = value[index];
-            }
-        }
-        get
-        {
-            return allowedEnemies;
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
-        move = FindObjectOfType<PlayerMovement>();
         enemies = FindObjectOfType<Enemies>();
         manager = GameManager.Instance;
     }
@@ -139,11 +124,11 @@ public class Transition : MonoBehaviour
     {
         var rand = new System.Random();
         int amount = rand.Next(1, 3);
-        int baddieIndex = rand.Next(allowedEnemies[0], allowedEnemies[allowedEnemies.Count]); // This seems a grave misuse of enemy ID
+        //int baddieIndex = rand.Next(allowedEnemies[0], allowedEnemies[allowedEnemies.Count]); // This seems a grave misuse of enemy ID
         for (int i = 0; i < amount; i++)
         {
             // Spawn and add into BattleEnemies from here
-            BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(enemies.enemyData[allowedEnemies[baddieIndex]].prefab));
+            //BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(enemies.enemyData[allowedEnemies[baddieIndex]].prefab));
         }
     }
 
@@ -153,19 +138,17 @@ public class Transition : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
-            move.canMove = false;
-
-            PreviousIndex = SceneManager.GetActiveScene().buildIndex;
-            CurrentScene = SceneManager.GetActiveScene(); // The previous scene we were on.
+            //PreviousIndex = SceneManager.GetActiveScene().buildIndex;
+            //CurrentScene = SceneManager.GetActiveScene(); // The previous scene we were on.
 
             //other.gameObject.transform.position = v2;
 
-            AsyncOperation async = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
+            //AsyncOperation async = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
 
-            while (!async.isDone)
+            /*while (!async.isDone)
             {
                 yield return null;
-            }
+            }*/
 
             AsyncOperation unload = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 
@@ -188,7 +171,7 @@ public class Transition : MonoBehaviour
 
                 selectEnemies();
 
-                battle.StartBattle(CurrentScene, BattleObject, PreviousIndex);
+                //battle.StartBattle(CurrentScene, BattleObject, PreviousIndex);
 
                 yield return null;
             }

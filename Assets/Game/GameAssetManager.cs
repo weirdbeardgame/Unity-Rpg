@@ -10,8 +10,10 @@ using System;
 [System.AttributeUsage(System.AttributeTargets.All, Inherited = true, AllowMultiple = true), Serializable]
 public class Asset : PropertyAttribute
 {
+    string guid;
     public virtual Asset CreateAsset()
     {
+        guid = null;
         return null;
     }
     public virtual Asset DestroyAsset()
@@ -110,12 +112,10 @@ public sealed class GameAssetManager : MonoBehaviour
     * A. It needs to have a method to sort data into one of the lists and store it.
     * B. It needs to be able to extract data from assetData and serialize it.
     * C. It needs to be able to deserialize and store data listed in Json and be able to hand it to requesters
+    * Do this first to recreate the inital structure and save item position proper. Then save all items in their proper order
     ***************************************************************************************************************************/
     public int AddAsset(Asset assetData, string key)
     {
-        // Do this first to recreate the inital structure and save item position proper
-        // Then save all items in their proper order
-
         if (File.Exists(filePath) && data == null)
         {
             jsonData = File.ReadAllText(filePath);
