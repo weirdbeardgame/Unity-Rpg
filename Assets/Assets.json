@@ -4,7 +4,7 @@
 		"$type": "Player, Assembly-CSharp",
 		"prefabPath": "Prefabs/Players/Musungo",
 		"level": 1,
-		"guid": "0e5b7c38-2de0-47c1-950f-e3ab07050402",
+		"guid": "21bb5b49-5975-42ac-ac00-b5eab1982543",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -48,8 +48,8 @@
 		"$type": "Baddies, Assembly-CSharp",
 		"id": 0,
 		"level": 1,
+		"guid": "d761d233-59d5-4330-814a-e3819cddf9f5",
 		"prefabPath": "Prefabs/Enemies/Dragon",
-		"guid": "df526a41-7349-4e79-a68d-8a941c55d290",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -93,8 +93,8 @@
 		"$type": "Baddies, Assembly-CSharp",
 		"id": 1,
 		"level": 1,
+		"guid": "c3a6b2d6-45e2-4a4c-ade0-8b08fa938566",
 		"prefabPath": "Prefabs/Enemies/Wolf",
-		"guid": "e883ed10-e35d-426e-92b9-c3109c9fe8d0",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -153,7 +153,7 @@
 			"type": 0,
 			"effect": 0
 		},
-		"guid": "394ffe75-3c12-4d6e-b634-0302da5d0d44",
+		"guid": "676e6dd3-8d91-4623-ab26-8432b1c773dc",
 		"order": 0,
 		"TypeId": "ItemData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
 	},
@@ -176,7 +176,7 @@
 			"type": 0,
 			"effect": 0
 		},
-		"guid": "8bc1e383-b83d-4629-85f5-0f17f3358aae",
+		"guid": "75170cb2-6a3f-4be1-87a7-1366c7b44c62",
 		"order": 0,
 		"TypeId": "ItemData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
 	},
@@ -199,7 +199,7 @@
 			"type": 1,
 			"effect": 0
 		},
-		"guid": "ee96d3e5-4364-4801-bff7-e79e795ca595",
+		"guid": "bd03d18a-69c8-4522-9b71-d859e1cad6d7",
 		"order": 0,
 		"TypeId": "ItemData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
 	},
@@ -207,8 +207,8 @@
 		"$type": "Baddies, Assembly-CSharp",
 		"id": 2,
 		"level": 1,
+		"guid": "af13a236-3e5c-4c67-9ceb-0b2100669f6a",
 		"prefabPath": "Prefabs/Enemies/Red Dragon",
-		"guid": "43b44aa5-b006-4761-96b3-f2af1a9cdb44",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -252,7 +252,7 @@
 		"$type": "Player, Assembly-CSharp",
 		"prefabPath": "Prefabs/Players/Doku",
 		"level": 1,
-		"guid": "e6f4da59-3910-483a-8be6-d90a9f7f028b",
+		"guid": "1aa186ab-3e9b-4fb8-aaed-640edc1a085a",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,

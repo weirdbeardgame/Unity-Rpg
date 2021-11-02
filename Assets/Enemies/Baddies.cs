@@ -10,7 +10,6 @@ using Newtonsoft.Json.Serialization;
 using System.IO;
 using System;
 
-[System.Serializable]
 public class Baddies : Asset
 {
     public int id;
@@ -23,7 +22,6 @@ public class Baddies : Asset
     [System.NonSerialized]
     public GameObject prefab;
     private Creature data;
-    public string prefabPath;
     public Creature Data
     {
         get

@@ -10,11 +10,22 @@ using System;
 [System.AttributeUsage(System.AttributeTargets.All, Inherited = true, AllowMultiple = true), Serializable]
 public class Asset : PropertyAttribute
 {
-    public string guid;
+    //public string guidString;
+    public Guid guid;
+
+    public string prefabPath;
+
+    public Asset()
+    {
+        guid = new Guid();
+        guid = Guid.NewGuid();
+    }
+
     public virtual Asset CreateAsset()
     {
         return null;
     }
+
     public virtual Asset DestroyAsset()
     {
         return null;
@@ -34,8 +45,6 @@ public sealed class GameAssetManager : MonoBehaviour
     // The Json file that EVERYTHING will serialize to
     string filePath = Application.dataPath + "/Assets.json";
     string jsonData;
-    int itemID;
-    string key;
     bool isInit;
 
     public GameAssetManager()
@@ -85,21 +94,24 @@ public sealed class GameAssetManager : MonoBehaviour
     {
         data = new Dictionary<string, Asset>();
         tempContainer = new Dictionary<string, Asset>();
+
         // In here or a seperate initalize function to parse all data's!
         if (File.Exists(filePath))
         {
             jsonData = File.ReadAllText(filePath);
             tempContainer = JsonConvert.DeserializeObject<Dictionary<string, Asset>>(jsonData, settings);
+
             foreach(var item in tempContainer)
             {
                 if (item.Value.guid == null)
                 {
-                    item.Value.guid = System.Guid.NewGuid().ToString();
+                    item.Value.guid = System.Guid.NewGuid();
                 }
 
                 // Need to reconstruct proper paths in here
                data.Add(item.Key, item.Value.CreateAsset());
             }
+
             tempContainer.Clear();
             isInit = true;
         }
@@ -124,31 +136,36 @@ public sealed class GameAssetManager : MonoBehaviour
         {
             jsonData = File.ReadAllText(filePath);
             data = JsonConvert.DeserializeObject<Dictionary<string, Asset>>(jsonData, settings);
+
             // For future GameObject ref serialization as well as general asset database use.
             foreach (var asset in data)
             {
                 if (asset.Value.guid == null)
                 {
-                    asset.Value.guid = System.Guid.NewGuid().ToString();
+                    asset.Value.guid = System.Guid.NewGuid();
                 }
             }
-            assetData.guid = System.Guid.NewGuid().ToString();
+
+            assetData.guid = System.Guid.NewGuid();
             data.Add(key, assetData);
         }
 
         else if (!File.Exists(filePath) && data == null)
         {
             data = new Dictionary<string, Asset>();
-            assetData.guid = System.Guid.NewGuid().ToString();
+            assetData.guid = System.Guid.NewGuid();
             data.Add(key, assetData);
         }
+
         else if (!data.ContainsKey(key))
         {
             data.Add(key, assetData);
         }
+
         Debug.Log(data.ToString());
         string serialize = JsonConvert.SerializeObject(data, settings);
         File.WriteAllText(filePath, serialize);
+
         return 0;
     }
 
@@ -167,6 +184,7 @@ public sealed class GameAssetManager : MonoBehaviour
                 return asset.Value;
             }
         }
+
         return default(Asset);
     }
 
