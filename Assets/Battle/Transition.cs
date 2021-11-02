@@ -96,12 +96,16 @@ public class Transition : MonoBehaviour
     Party playerParty;
     Battle battle;
     commandMenus Menus;
-    Vector2 v2;
     GameObject scripts;
     GameObject mainCamera;
     GameObject BattleObject;
     Camera battleCamera;
 
+    // Should I use a shader or the animator componet for battle swirl animations?
+    //Shader battleSwirl;
+    //Animator battleSwirl;
+
+    // ToDo replace with Scene implementation.
     [SerializeField]
     string mapLoad = "BattleScene";
 

@@ -10,10 +10,9 @@ using System;
 [System.AttributeUsage(System.AttributeTargets.All, Inherited = true, AllowMultiple = true), Serializable]
 public class Asset : PropertyAttribute
 {
-    string guid;
+    public string guid;
     public virtual Asset CreateAsset()
     {
-        guid = null;
         return null;
     }
     public virtual Asset DestroyAsset()
@@ -93,6 +92,11 @@ public sealed class GameAssetManager : MonoBehaviour
             tempContainer = JsonConvert.DeserializeObject<Dictionary<string, Asset>>(jsonData, settings);
             foreach(var item in tempContainer)
             {
+                if (item.Value.guid == null)
+                {
+                    item.Value.guid = System.Guid.NewGuid().ToString();
+                }
+
                 // Need to reconstruct proper paths in here
                data.Add(item.Key, item.Value.CreateAsset());
             }
@@ -120,12 +124,22 @@ public sealed class GameAssetManager : MonoBehaviour
         {
             jsonData = File.ReadAllText(filePath);
             data = JsonConvert.DeserializeObject<Dictionary<string, Asset>>(jsonData, settings);
+            // For future GameObject ref serialization as well as general asset database use.
+            foreach (var asset in data)
+            {
+                if (asset.Value.guid == null)
+                {
+                    asset.Value.guid = System.Guid.NewGuid().ToString();
+                }
+            }
+            assetData.guid = System.Guid.NewGuid().ToString();
             data.Add(key, assetData);
         }
 
         else if (!File.Exists(filePath) && data == null)
         {
             data = new Dictionary<string, Asset>();
+            assetData.guid = System.Guid.NewGuid().ToString();
             data.Add(key, assetData);
         }
         else if (!data.ContainsKey(key))
