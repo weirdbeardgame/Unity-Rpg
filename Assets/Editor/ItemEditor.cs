@@ -54,9 +54,10 @@ public class ItemEditor : EditorWindow
         {
             foreach(var asset in manager.Data)
             {
-                if (asset.Value is ItemData && ((temp = (ItemData)asset.Value) != null))
+                if (asset.Value is ItemData)
                 {
-                    items.Add(temp.itemID, temp);
+                    ItemData temp = (ItemData)asset.Value;
+                    items.Add(itemIndex, temp);
                     itemIndex += 1;
                 }
             }
