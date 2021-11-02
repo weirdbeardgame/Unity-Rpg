@@ -6,6 +6,7 @@ public class Gauge : MonoBehaviour
 {
     public float gauge;
     bool isFilled;
+    // Depending on speed and level this should be dynamic
     float maxTicks = 150;
 
     public bool fill(float speed)

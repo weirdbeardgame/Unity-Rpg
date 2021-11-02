@@ -7,9 +7,11 @@ public class DamageRecieved : MonoBehaviour
     [SerializeField]
     GameObject Damage;
 
-    public DamageRecieved Create(Vector3 Pos, float DamageTaken)
+    // Pos was to place the text in the scene. Though in this case. I should just have it parent to prefab of the damage taker then have it do the thing
+    public DamageRecieved Create(GameObject prefab, float DamageTaken)
     {
-        Damage = Instantiate(Damage, Pos, Quaternion.identity);
+        // Currently will spawn ontop of damage taker...
+        Damage = Instantiate(Damage, prefab.transform.localPosition, Quaternion.identity);
         DamageRecieved Recieved = Damage.GetComponent<DamageRecieved>();
         Recieved.SetText(DamageTaken);
 

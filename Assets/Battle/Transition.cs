@@ -71,7 +71,7 @@ public class TransitionData : ScriptableObject
 {
     Scene currentScene;
     // The Scene to transport to. I wonder if I should have a custom Scene class to handle Scene categories like Battle Scene or Main Scene
-    Scene battleScene;
+    public Scene battleScene;
 
     public List<Asset> allowedEnemies;
 
@@ -153,12 +153,12 @@ public class Transition : MonoBehaviour
 
             //other.gameObject.transform.position = v2;
 
-            //AsyncOperation async = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
+            AsyncOperation async = SceneManager.LoadSceneAsync(allowedMapData[SceneManager.GetActiveScene()].battleScene.name);
 
-            /*while (!async.isDone)
+            while (!async.isDone)
             {
                 yield return null;
-            }*/
+            }
 
             AsyncOperation unload = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 
@@ -181,7 +181,7 @@ public class Transition : MonoBehaviour
 
                 selectEnemies();
 
-                //battle.StartBattle(CurrentScene, BattleObject, PreviousIndex);
+                battle.StartBattle(SceneManager.GetActiveScene(), BattleObject, -1);
 
                 yield return null;
             }

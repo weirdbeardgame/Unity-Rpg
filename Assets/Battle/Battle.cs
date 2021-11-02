@@ -13,13 +13,11 @@ public enum CommandType { SKILL, ITEM };
 public class Battle : MonoBehaviour
 {
     BattlePlayers Players;
+    BattleEnemies enemies;
     BattleSlots slots;
-    Enemies Enemy;
-    Skills Skills;
     CommandQueue Queue;
     GameObject BattleObject;
     GameObject SelectionArrow;
-    GameObject[] PlayerObjects = new GameObject[3];
     Scene SceneToReturnTo;
     Creature Caster;
     Creature Receiver;
@@ -29,54 +27,45 @@ public class Battle : MonoBehaviour
     int x, y = 3;
     int EnemyKilled;
     int PlayerKilled;
-    int PreviousSceneIndex;
 
     public void StartBattle(Scene PreviousScene, GameObject BattleObject, int Scene)
     {
-
         SceneToReturnTo = PreviousScene;
         this.BattleObject = BattleObject;
 
         slots = BattleObject.GetComponent<BattleSlots>();
 
-        PreviousSceneIndex = Scene;
-
-        Skills = BattleObject.AddComponent<Skills>();
         Queue = BattleObject.GetComponent<CommandQueue>();
         Players = BattleObject.GetComponent<BattlePlayers>();
+        enemies = BattleObject.GetComponent<BattleEnemies>();
         BattleAnimations = BattleObject.GetComponent<Animator>();
 
         for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().badParty.Count; i++)
         {
-            //BadParty.Add(Enemy.RandomSelectEnemy().createBattler(x, y));
-            //slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, BattleObject.GetComponent<BattleEnemies>().badParty[i].GetComponent<Baddies>(), i);
+            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, enemies.badParty[i].Data, i);
             x += 1;
         }
 
         for (int i = 0; i < 2; i++)
         {
-            PlayerObjects[i] = new GameObject();
-            //Players.Initialize(GameObject.Find(i.ToString()), BattleObject, BadParty, i);
-            //PlayerObjects[i] = Players.CreateCharacterById(i);
-            DontDestroyOnLoad(PlayerObjects[i]);
             slots.createSlots(SlotPosition.FRONT, BattleTag.PLAYER, Players.GetPlayer(i), i);
         }
     }
 
     IEnumerator ChangeScene()
     {
-        AsyncOperation async = SceneManager.LoadSceneAsync(PreviousSceneIndex, LoadSceneMode.Additive);
-
-        while (!async.isDone)
-        {
-            yield return null;
-        }
-
         AsyncOperation unload = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         while (!unload.isDone)
         {
             Destroy(BattleObject);
             Destroy(Players);
+            yield return null;
+        }
+
+        AsyncOperation async = SceneManager.LoadSceneAsync(SceneToReturnTo.name);
+
+        while (!async.isDone)
+        {
             yield return null;
         }
     }
@@ -92,7 +81,9 @@ public class Battle : MonoBehaviour
         for (int i = 0; i < Players.battleParty.Count; i++)
         {
             Players.Battle(i);
+            enemies.Battle(i);
             BattleObject.GetComponent<commandMenus>().DrawStats(Players.battleParty);
+            // Listen for death and action. Check for enemy or player death
         }
         EndBattle();
     }
@@ -100,9 +91,7 @@ public class Battle : MonoBehaviour
 
     public void EndBattle()
     {
-        // Add Exp, Items and Levels
-
-
+        // Add Exp, Items and Levels. Show screen to do so
     }
 
 }

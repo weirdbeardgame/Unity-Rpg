@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleEnemies : MonoBehaviour
 {
     // Just the enemies spawned in scene
-    public List<GameObject> badParty
+    public List<Baddies> badParty
     {
         get
         {
@@ -24,16 +24,16 @@ public class BattleEnemies : MonoBehaviour
         
     }
 
-    public void Insert(GameObject bad)
+    public void Insert(Baddies bad)
     {
         if (badParty == null)
         {
-            badParty = new List<GameObject>();
+            badParty = new List<Baddies>();
         }
         badParty.Add(bad);
     }
 
-    public void Remove(GameObject bad)
+    public void Remove(Baddies bad)
     {
         if (badParty == null)
         {
@@ -42,10 +42,32 @@ public class BattleEnemies : MonoBehaviour
         badParty.Remove(bad);
     }
 
+    public void Battle(int i)
+    {
+        switch (badParty[i].Data.state)
+        {
+            case BattleState.WAIT:
+            // Fill Guage
+            break;
+
+            case BattleState.COMMAND:
+            // Run AI and select a command
+            break;
+
+            case BattleState.SELECTION:
+            // Run AI and select a target
+            break;
+
+            case BattleState.ACTION:
+            // Take action against thine enemy the player!
+            break;
+        }
+    }
+
     void Kill(int id)
     {
         // Doesn't that mean this'll destroy itself?
-        //badParty[id].GetComponent<Baddies>().Die();
+        badParty[id].Data.Die();
     }
 
     // Update is called once per frame

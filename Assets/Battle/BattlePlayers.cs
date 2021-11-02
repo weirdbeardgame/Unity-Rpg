@@ -7,14 +7,15 @@ using UnityEngine.Animations;
 public class CharacterInfo
 {
     public int ID;
-    public GameObject Prefab;
+    public GameObject prefab;
     public Creature Player;
     public CommandQueue playerQueue;
 
     public void init(Creature c, GameObject pre, int i)
     {
         ID = i;
-        Prefab = pre;
+        prefab = pre;
+        prefab.SetActive(true);
         Player = c;
     }
 
@@ -37,7 +38,6 @@ public class BattlePlayers : MonoBehaviour
 
     public bool isInitalized = false;
 
-    int maxIndex = 0;
     int killCount = 0;
     int i = 0;
 
@@ -47,7 +47,7 @@ public class BattlePlayers : MonoBehaviour
 
     GameObject BattleObject;
 
-    public Dictionary<int, CharacterInfo> Initialize(GameObject playerPrefab, GameObject BattleO, List<Baddies> Bad, int i)
+    public Dictionary<int, CharacterInfo> Initialize(GameObject BattleO, List<Baddies> Bad, int i)
     {
         if (!isInitalized)
         {
@@ -58,11 +58,11 @@ public class BattlePlayers : MonoBehaviour
             {
                 CharacterInfo c = new CharacterInfo();
                 c.playerQueue = new CommandQueue();
-                //c.init(Players.PartyMembers[j], playerPrefab, j);
+                c.init(Players.PartyMembers[j].Data, Players.PartyMembers[j].prefab, j);
                 battleParty.Add(j, c);
 
                 // allCharacters[j].playerQueue = FindObjectOfType<CommandQueue>(); // Incorrect! 
-                // Each player could have their own instance! Not look for the one in scene
+                // Each player could have their own instance! Not look for the one in scene. The point is the players and baddies are each running their own logic.
                 // DontDestroyOnLoad(battleParty[j].Prefab);
             }
 
@@ -72,17 +72,15 @@ public class BattlePlayers : MonoBehaviour
         }
         return battleParty;
     }
-    // In here goes the logic for Battle! If God is love then you can call me cupid! ooh rah
-    // Calculate the magical equations for Attack any status effects etc here. 
 
     public GameObject CreateCharacterById(int ID)
     {
-        return (GameObject)Instantiate(battleParty[ID].Prefab);
+        return (GameObject)Instantiate(battleParty[ID].prefab);
     }
 
     public void OpenWindow(int i)
     {
-        if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled())
+        if (battleParty[i].prefab.GetComponent<Gauge>().getFilled())
         {
             if (battleParty[i].Player.state == BattleState.WAIT)
             {
@@ -96,16 +94,18 @@ public class BattlePlayers : MonoBehaviour
         }
     }
 
+    // In here goes the logic for Battle! If God is love then you can call me cupid! ooh rah
+    // Calculate the magical equations for Attack any status effects etc here. 
     public void Battle(int i)
     {
         switch (battleParty[i].Player.state)
         {
             case BattleState.WAIT:
-                battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
-                battleParty[i].Prefab.GetComponent<Gauge>().fill(battleParty[i].Player.Stats.statList[(int)StatType.SPEED].stat);
-                if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled())
+                battleParty[i].prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
+                battleParty[i].prefab.GetComponent<Gauge>().fill(battleParty[i].Player.Stats.statList[(int)StatType.SPEED].stat);
+                if (battleParty[i].prefab.GetComponent<Gauge>().getFilled())
                 {
-                    //battleParty[i].Player.state = BattleState.COMMAND;
+                    battleParty[i].Player.state = BattleState.COMMAND;
                 }
                 break;
             case BattleState.COMMAND:
@@ -121,7 +121,7 @@ public class BattlePlayers : MonoBehaviour
 
                 if (Menu.CommandSelected)
                 {
-                    //battleParty[i].Player.state = BattleState.SELECTION;
+                    battleParty[i].Player.state = BattleState.SELECTION;
                 }
                 break;
             case BattleState.SELECTION:
@@ -132,16 +132,16 @@ public class BattlePlayers : MonoBehaviour
                 Menu.Close();
                 if (battleParty[i].playerQueue.Peek() != null && battleParty[i].playerQueue.Peek().caster.tag == BattleTag.PLAYER)
                 {
-                    ActionIface Temp = battleParty[i].deque();
-                    battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Attack", true);
-                    Temp.Execute();
-                    //BattleObject.GetComponent<DamageRecieved>().Create(Temp.prefab.transform.localPosition, Temp.target.actualDamage);
+                    ActionIface action = battleParty[i].deque();
+                    battleParty[i].prefab.GetComponentInChildren<Animator>().SetBool("Is_Attack", true);
+                    action.Execute();
+                    BattleObject.GetComponent<DamageRecieved>().Create(battleParty[i].prefab, action.target.actualDamage);
                 }
 
                 if (battleParty[i].playerQueue.Peek() == null)
                 {
                     //battleParty[i].Player.state = BattleState.WAIT;
-                    battleParty[i].Prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
+                    battleParty[i].prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
                     Reset(i);
                 }
                 break;
@@ -151,7 +151,6 @@ public class BattlePlayers : MonoBehaviour
     Baddies Target(List<Baddies> targets)
     {
         // Assume we have an enqueued skill that needs to be constructed 
-        // This is suppoosed to cover negative clause. That's not what it does tho
         if ((i += ((int)Input.GetAxisRaw("Horizontal"))) < targets.Count || (i += ((int)Input.GetAxisRaw("Horizontal"))) > targets.Count)
         {
             return targets[i];
@@ -161,9 +160,9 @@ public class BattlePlayers : MonoBehaviour
 
     public void Reset(int i)
     {
-        if (battleParty[i].Prefab.GetComponent<Gauge>().getFilled() && battleParty[i].Player.state == BattleState.WAIT)
+        if (battleParty[i].prefab.GetComponent<Gauge>().getFilled() && battleParty[i].Player.state == BattleState.WAIT)
         {
-            battleParty[i].Prefab.GetComponent<Gauge>().Reset();
+            battleParty[i].prefab.GetComponent<Gauge>().Reset();
             Menu.CommandSelected = false;
         }
     }
@@ -185,7 +184,7 @@ public class BattlePlayers : MonoBehaviour
 
     public bool checkDeath()
     {
-        if (killCount == maxIndex)
+        if (killCount == battleParty.Count)
         {
             return true;
         }
