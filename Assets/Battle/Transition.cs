@@ -11,14 +11,20 @@ using UnityEditor;
 [CustomEditor(typeof(Transition))]
 class EnemySelect : Editor
 {
-    List <Baddies> baddieList;
-    List<string> names;
     int count;
+    int sceneIndex;
+
+    List<string> scenes;
+    List<string> names;
+    List<Baddies> baddieList;
+
     GameAssetManager manager;
-    bool isInit;
+
     Transition transition;
     TransitionData transitionData;
+
     Dictionary<Scene, TransitionData> allowedMapDataEdit;
+
     private void OnEnable()
     {
         Init();
@@ -26,11 +32,16 @@ class EnemySelect : Editor
 
     public void Init()
     {
-        baddieList = new List<Baddies>();
         names = new List<string>();
+        scenes = new List<string>();
+
+        baddieList = new List<Baddies>();
+
         manager = GameAssetManager.Instance;
         transition = (Transition)target;
+
         allowedMapDataEdit = new Dictionary<Scene, TransitionData>();
+
         if (manager.isFilled())
         {
             foreach(var asset in manager.Data)
@@ -39,29 +50,36 @@ class EnemySelect : Editor
                 {
                     Baddies bad = (Baddies)asset.Value;
                     bad.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(bad.prefabPath);
+
                     baddieList.Add(bad);
                     names.Add(bad.Data.creatureName);
                 }
             }
+
+            int maxScene = SceneManager.sceneCount;
+
+            for(int i = 0; i < maxScene; i++)
+            {
+                scenes.Add(SceneManager.GetSceneAt(i).name);
+            }
         }
-        isInit = true;
     }
 
     public override void OnInspectorGUI()
     {
         base.DrawDefaultInspector();
+
         if (GUILayout.Button("Add Scene"))
         {
             transitionData = new TransitionData();
-            transitionData.Create();
             allowedMapDataEdit.Add(SceneManager.GetActiveScene(), transitionData);
         }
+
         if (transitionData)
         {
-            SerializedObject obj = new SerializedObject(transitionData);
-            SerializedProperty list = serializedObject.FindProperty("allowedEnemies");
-            EditorGUILayout.PropertyField(list);
+           transitionData.battleScene = SceneManager.GetSceneAt(EditorGUILayout.Popup(sceneIndex, scenes.ToArray()));
         }
+
         EditorUtility.SetDirty(this);
     }
 };
@@ -69,20 +87,14 @@ class EnemySelect : Editor
 
 public class TransitionData : ScriptableObject
 {
-    Scene currentScene;
     // The Scene to transport to. I wonder if I should have a custom Scene class to handle Scene categories like Battle Scene or Main Scene
     public Scene battleScene;
+    public List<Baddies> allowedEnemies;
 
-    public List<Asset> allowedEnemies;
-
-    // This should only happen once!
-    // I have this function instead of the constructor as ScriptableObject shouldn't call new.
-    // This is to ensure the data in the class is being properly initalized
-    public void Create()
+    public TransitionData()
     {
-        // I can either have this or somekind of Dictionary design
-        currentScene = SceneManager.GetActiveScene();
-        allowedEnemies = new List<Asset>();
+        battleScene = new Scene();
+        allowedEnemies = new List<Baddies>();
     }
 }
 
@@ -92,16 +104,19 @@ public class TransitionData : ScriptableObject
 // This should be a global class that should handle current map screen.
 public class Transition : MonoBehaviour
 {
-    GameManager manager;
-    Party playerParty;
     Battle battle;
+    Party playerParty;
+    GameManager manager;
+
     commandMenus Menus;
+
     GameObject scripts;
     GameObject mainCamera;
     GameObject BattleObject;
+
     Camera battleCamera;
 
-    // Should I use a shader or the animator componet for battle swirl animations?
+    //Should I use a shader or the animator componet for battle swirl animations?
     //Shader battleSwirl;
     //Animator battleSwirl;
 
@@ -173,6 +188,7 @@ public class Transition : MonoBehaviour
 
                 BattleObject.AddComponent<Skills>();
                 battle = BattleObject.AddComponent<Battle>();
+
                 BattleObject.AddComponent<BattleSlots>();
                 BattleObject.AddComponent<CommandQueue>();
                 BattleObject.AddComponent<BattleEnemies>();
