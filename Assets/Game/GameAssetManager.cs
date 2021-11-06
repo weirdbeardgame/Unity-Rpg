@@ -43,14 +43,22 @@ public sealed class GameAssetManager : MonoBehaviour
     string folderName = "Resources/";
 
     // The Json file that EVERYTHING will serialize to
-    string filePath = Application.dataPath + "/Assets.json";
+    string filePath;
     string jsonData;
     bool isInit;
 
     public GameAssetManager()
     {
         if (!isInit)
-        {
+        {   if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this);
+            }
+            if (instance != null && instance != this)
+            {
+                Destroy(instance);
+            }
             Init();
         }
     }
@@ -94,6 +102,8 @@ public sealed class GameAssetManager : MonoBehaviour
     {
         data = new Dictionary<string, Asset>();
         tempContainer = new Dictionary<string, Asset>();
+
+        filePath = Application.dataPath + "/Assets.json";
 
         // In here or a seperate initalize function to parse all data's!
         if (File.Exists(filePath))

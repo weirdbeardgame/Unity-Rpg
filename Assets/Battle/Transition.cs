@@ -21,9 +21,9 @@ class EnemySelect : Editor
     GameAssetManager manager;
 
     Transition transition;
-    TransitionData transitionData;
+    BattleScene BattleScene;
 
-    Dictionary<Scene, TransitionData> allowedMapDataEdit;
+    Dictionary<Scene, BattleScene> allowedMapDataEdit;
 
     private void OnEnable()
     {
@@ -40,7 +40,7 @@ class EnemySelect : Editor
         manager = GameAssetManager.Instance;
         transition = (Transition)target;
 
-        allowedMapDataEdit = new Dictionary<Scene, TransitionData>();
+        allowedMapDataEdit = new Dictionary<Scene, BattleScene>();
 
         if (manager.isFilled())
         {
@@ -71,32 +71,19 @@ class EnemySelect : Editor
 
         if (GUILayout.Button("Add Scene"))
         {
-            transitionData = new TransitionData();
-            allowedMapDataEdit.Add(SceneManager.GetActiveScene(), transitionData);
+            //BattleScene = new BattleScene();
+            allowedMapDataEdit.Add(SceneManager.GetActiveScene(), BattleScene);
         }
 
-        if (transitionData)
+        /*if (BattleScene)
         {
-           transitionData.battleScene = SceneManager.GetSceneAt(EditorGUILayout.Popup(sceneIndex, scenes.ToArray()));
-        }
+           BattleScene.battleScene = SceneManager.GetSceneAt(EditorGUILayout.Popup(sceneIndex, scenes.ToArray()));
+        }*/
 
         EditorUtility.SetDirty(this);
     }
 };
 #endif
-
-public class TransitionData : ScriptableObject
-{
-    // The Scene to transport to. I wonder if I should have a custom Scene class to handle Scene categories like Battle Scene or Main Scene
-    public Scene battleScene;
-    public List<Baddies> allowedEnemies;
-
-    public TransitionData()
-    {
-        battleScene = new Scene();
-        allowedEnemies = new List<Baddies>();
-    }
-}
 
 // The Initalizer of the Battle
 // Needs a way to select which spawned enemies can appear per map!
@@ -125,7 +112,7 @@ public class Transition : MonoBehaviour
     string mapLoad = "BattleScene";
 
     [SerializeField]
-    public Dictionary<Scene, TransitionData> allowedMapData;
+    public Dictionary<Scene, BattleScene> allowedMapData;
 
     Enemies enemies;
 

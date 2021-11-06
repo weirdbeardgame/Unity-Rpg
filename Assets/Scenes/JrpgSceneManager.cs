@@ -12,6 +12,8 @@ using System;
 
 public enum SceneTypes { MAIN, BATTLE }
 
+// Realistically I need to add an editor for this shit since i'm serializing property data that's in the map
+
 #if UNITY_EDITOR
 class ContextSceneMenu : Editor
 {
@@ -19,6 +21,12 @@ class ContextSceneMenu : Editor
     static string filePath = Application.dataPath + "/SceneIndex.json";
 
     static int sceneID = 0;
+
+    static JsonSerializerSettings settings = new JsonSerializerSettings
+    {
+        TypeNameHandling = TypeNameHandling.All,
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    };
 
     [MenuItem("CONTEXT/unity/Add_Main_Scene", false, 0)]
     public static void MainScene(MenuCommand s)
@@ -38,12 +46,13 @@ class ContextSceneMenu : Editor
     {
         Scene s = new Scene();
         s = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Additive);
-        SceneData data = new SceneData(SceneTypes.MAIN, s);
+        MainScene data = new MainScene(s, s.name);
         Instance.scenes.Add(data);
         EditorSceneManager.SaveScene(s);
         //EditorSceneManager.MoveGameObjectToScene(Instance.selfRef, s);
-        string serialize = JsonConvert.SerializeObject(Instance.scenes);
+        string serialize = JsonConvert.SerializeObject(Instance.scenes, settings);
         File.WriteAllText(filePath, serialize);
+        sceneID += 1;
     }
 
     [MenuItem("Assets/New_Battle_Scene", false, 0)]
@@ -51,28 +60,62 @@ class ContextSceneMenu : Editor
     {
         Scene s = new Scene();
         s = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Additive);
-        SceneData data = new SceneData(SceneTypes.BATTLE, s);
+        BattleScene data = new BattleScene(s, s.name);
         Instance.scenes.Add(data);
         EditorSceneManager.SaveScene(s);
         //EditorSceneManager.MoveGameObjectToScene(Instance.selfRef, s);
-        string serialize = JsonConvert.SerializeObject(Instance.scenes);
+        string serialize = JsonConvert.SerializeObject(Instance.scenes, settings);
         File.WriteAllText(filePath, serialize);
+        sceneID += 1;
     }
 }
 #endif
 
-[Serializable]
-public struct SceneData
+// Below are SceneTypes. I like how the scenes all derive the same type but not sure about that being an interface...
+public class SceneInfo : PropertyAttribute
 {
-    public SceneData(SceneTypes sceneTypes, Scene s)
-    {
-        type = sceneTypes;
-        scene = s;
-    }
     public SceneTypes type;
-    public Scene scene;
+    public virtual SceneTypes GetSceneType()
+    {
+        return type;
+    }
 }
 
+[Serializable]
+public class MainScene : SceneInfo
+{
+    public Scene scene;
+    public string sceneName;
+    public MainScene(Scene s, string name)
+    {
+        sceneName = name;
+        scene = s;
+    }
+
+    public override SceneTypes GetSceneType()
+    {
+        return type = SceneTypes.MAIN;
+    }
+}
+
+public class BattleScene : SceneInfo
+{
+    string sceneName;
+    public Scene battleScene;
+    public List<Baddies> allowedEnemies;
+
+    public BattleScene(Scene s, string name)
+    {
+        sceneName = name;
+        battleScene = s;
+        allowedEnemies = new List<Baddies>();
+    }
+
+    public override SceneTypes GetSceneType()
+    {
+        return type = SceneTypes.BATTLE;
+    }
+}
 
 // This handles categories that may be applicable to only Jrpg types like having an explicit battle scene.
 // Some games may battle on the current map or be action style 3D fighters IE. KH or Elder Scrolls
@@ -80,28 +123,35 @@ public struct SceneData
 // This Scene manager is meant for upwards of FFX style of game where there is a specific map or scene that is laid out for battle scenarios
 public class JrpgSceneManager : MonoBehaviour
 {
-    public List<SceneData> scenes;
+    public List<SceneInfo> scenes;
     public GameObject selfRef;
 
     string filePath;
     string jsonData;
+
+    static JsonSerializerSettings settings = new JsonSerializerSettings
+    {
+        TypeNameHandling = TypeNameHandling.All,
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    };
+
     JrpgSceneManager()
     {
         if (instance == null)
         {
             instance = this;
-//            selfRef = gameObject;
         }
         if (instance != null && instance != this)
         {
             instance = null;
         }
-        scenes = new List<SceneData>();
+        scenes = new List<SceneInfo>();
         if (File.Exists(filePath))
         {
             jsonData = File.ReadAllText(filePath);
-            scenes = JsonConvert.DeserializeObject<List<SceneData>>(filePath);
+            scenes = JsonConvert.DeserializeObject<List<SceneInfo>>(filePath, settings);
         }
+        Debug.Log("Construct");
     }
 
     private void Awake() {
@@ -115,11 +165,12 @@ public class JrpgSceneManager : MonoBehaviour
             instance = null;
         }
         filePath = Application.dataPath + "/SceneIndex.json";
-        scenes = new List<SceneData>();
+        scenes = new List<SceneInfo>();
         if (File.Exists(filePath))
         {
             jsonData = File.ReadAllText(filePath);
-            scenes = JsonConvert.DeserializeObject<List<SceneData>>(filePath);
+            scenes = JsonConvert.DeserializeObject<List<SceneInfo>>(filePath, settings);
+            Debug.Log("Awake");
         }
     }
 
