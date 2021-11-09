@@ -15,7 +15,6 @@ using Newtonsoft.Json.Serialization;
 // Either this hold an instance of Creature data and GameObject. Or I use Creature as a common type and these hold specific functions?
 public class Player : Asset
 {
-    public string prefabPath;
     public int level;
 
     /*********************************************************************************

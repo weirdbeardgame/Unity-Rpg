@@ -65,8 +65,6 @@ public class playerEditorWindow : EditorWindow
             Names = new List<string>();
             Editable = new List<Player>();
             manager = GameAssetManager.Instance;
-            manager.Init();
-            init();
         }
 
         EditorGUILayout.LabelField("Name: ");

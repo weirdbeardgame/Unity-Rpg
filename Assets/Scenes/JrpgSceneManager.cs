@@ -15,15 +15,17 @@ public enum SceneTypes { MAIN, BATTLE }
 // Realistically I need to add an editor for this shit since i'm serializing property data that's in the map
 
 #if UNITY_EDITOR
+[CustomEditor(typeof(JrpgSceneManager))]
 class ContextSceneMenu : Editor
 {
-    static string filePath = Application.dataPath + "/SceneIndex.json";
+    static string filePath = "Assets/SceneIndex.json";
 
     static int sceneID = 0;
     // This seems to need a bit more... Elaboration to put it lightly. 
     // I need to find a way to make this specific instance the editor is grabbing appear in the Unity UI as a GameObject componet.
     // That, or I should use a scriptable object as the actual manager instance and let the editor fill in the rest where needed which seems more logical
-    static JrpgSceneManager Instance = JrpgSceneManager.Instance;
+    [SerializeField]
+    static JrpgSceneManager Instance;
 
     static GameAssetManager assets = GameAssetManager.Instance;
 
@@ -33,7 +35,6 @@ class ContextSceneMenu : Editor
         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
     };
 
-    [MenuItem("Assets/New_Scene", false, 0)]
     public static void NewMainScene()
     {
         Scene s = new Scene();
@@ -47,7 +48,6 @@ class ContextSceneMenu : Editor
         sceneID += 1;
     }
 
-    [MenuItem("Assets/New_Battle_Scene", false, 0)]
     public static void NewBattleScene()
     {
         Scene s = new Scene();
@@ -64,8 +64,18 @@ class ContextSceneMenu : Editor
     // What I need to do is A. Load data from Asset Manager
     // B. Check if Data is baddies and load from there.
     // Still on the fence as to whether I want scene data in the asset manager.
-    private void OnSceneGUI()
+    public override void OnInspectorGUI()
     {
+        Instance = (JrpgSceneManager)EditorGUILayout.ObjectField(Instance, typeof(JrpgSceneManager), true);
+        if (GUILayout.Button("New Scene"))
+        {
+            NewMainScene();
+        }
+        if (GUILayout.Button("New Battle Scene"))
+        {
+            NewBattleScene();
+        }
+        base.OnInspectorGUI();
         //if (activeSceneData.Type == SceneTypes.BATTLE)
         //{
             //EditorGUILayout.Popup()
@@ -75,6 +85,7 @@ class ContextSceneMenu : Editor
 #endif
 
 // Below are SceneTypes. I like how the scenes all derive the same type but not sure about that being an interface...
+[Serializable]
 public class SceneInfo : PropertyAttribute
 {
     public SceneTypes type;
@@ -84,7 +95,6 @@ public class SceneInfo : PropertyAttribute
     }
 }
 
-[Serializable]
 public class MainScene : SceneInfo
 {
     public Scene scene;
@@ -124,11 +134,11 @@ public class BattleScene : SceneInfo
 // Some games may battle on the current map or be action style 3D fighters IE. KH or Elder Scrolls
 // While at the crux this engine is more then capable of that type of game given the use of flag system for story quests and the Dialogue trees.
 // This Scene manager is meant for upwards of FFX style of game where there is a specific map or scene that is laid out for battle scenarios
-public class JrpgSceneManager : MonoBehaviour
+[CreateAssetMenu]
+public class JrpgSceneManager : ScriptableObject
 {
+    [SerializeField]
     public List<SceneInfo> scenes;
-    public GameObject selfRef;
-
     string filePath;
     string jsonData;
 
@@ -140,55 +150,14 @@ public class JrpgSceneManager : MonoBehaviour
 
     JrpgSceneManager()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        if (instance != null && instance != this)
-        {
-            instance = null;
-        }
         scenes = new List<SceneInfo>();
-        if (File.Exists(filePath))
-        {
-            jsonData = File.ReadAllText(filePath);
-            scenes = JsonConvert.DeserializeObject<List<SceneInfo>>(filePath, settings);
-        }
         Debug.Log("Construct");
     }
 
-    private void Awake() {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        if (instance != null && instance != this)
-        {
-            instance = null;
-        }
+    private void OnEnable()
+    {
         filePath = Application.dataPath + "/SceneIndex.json";
         scenes = new List<SceneInfo>();
-        if (File.Exists(filePath))
-        {
-            jsonData = File.ReadAllText(filePath);
-            scenes = JsonConvert.DeserializeObject<List<SceneInfo>>(filePath, settings);
-            Debug.Log("Awake");
-        }
-    }
-
-    private static JrpgSceneManager instance;
-
-    public static JrpgSceneManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new JrpgSceneManager();
-            }
-            return instance;
-        }
     }
 
     void Transition(Scene s)

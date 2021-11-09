@@ -53,13 +53,11 @@ public sealed class GameAssetManager : MonoBehaviour
         {   if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(this);
             }
             if (instance != null && instance != this)
             {
                 Destroy(instance);
             }
-            Init();
         }
     }
 
@@ -89,21 +87,13 @@ public sealed class GameAssetManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (!isInit)
-        {
-            Init();
-        }
-    }
-
-    public void Init()
+    private void Awake()
     {
         data = new Dictionary<string, Asset>();
         tempContainer = new Dictionary<string, Asset>();
 
-        filePath = Application.dataPath + "/Assets.json";
+        // ToDo. Add Path verify!
+        filePath = "Assets/Assets.json";
 
         // In here or a seperate initalize function to parse all data's!
         if (File.Exists(filePath))
