@@ -17,29 +17,21 @@ public enum SceneTypes { MAIN, BATTLE }
 #if UNITY_EDITOR
 class ContextSceneMenu : Editor
 {
-    static JrpgSceneManager Instance = JrpgSceneManager.Instance;
     static string filePath = Application.dataPath + "/SceneIndex.json";
 
     static int sceneID = 0;
+    // This seems to need a bit more... Elaboration to put it lightly. 
+    // I need to find a way to make this specific instance the editor is grabbing appear in the Unity UI as a GameObject componet.
+    // That, or I should use a scriptable object as the actual manager instance and let the editor fill in the rest where needed which seems more logical
+    static JrpgSceneManager Instance = JrpgSceneManager.Instance;
+
+    static GameAssetManager assets = GameAssetManager.Instance;
 
     static JsonSerializerSettings settings = new JsonSerializerSettings
     {
         TypeNameHandling = TypeNameHandling.All,
         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
     };
-
-    [MenuItem("CONTEXT/unity/Add_Main_Scene", false, 0)]
-    public static void MainScene(MenuCommand s)
-    {
-        //Instance.mainScenes.Add((Scene)s.context);
-    }
-
-    [MenuItem("CONTEXT/unity/Add_Battle_Scene", false, 0)]
-    public static void BattleScene(MenuCommand s)
-    {
-        //Scene temp = (Scene)s;
-        //Instance.battleScenes.Add(temp);
-    }
 
     [MenuItem("Assets/New_Scene", false, 0)]
     public static void NewMainScene()
@@ -67,6 +59,17 @@ class ContextSceneMenu : Editor
         string serialize = JsonConvert.SerializeObject(Instance.scenes, settings);
         File.WriteAllText(filePath, serialize);
         sceneID += 1;
+    }
+
+    // What I need to do is A. Load data from Asset Manager
+    // B. Check if Data is baddies and load from there.
+    // Still on the fence as to whether I want scene data in the asset manager.
+    private void OnSceneGUI()
+    {
+        //if (activeSceneData.Type == SceneTypes.BATTLE)
+        //{
+            //EditorGUILayout.Popup()
+        //}
     }
 }
 #endif
