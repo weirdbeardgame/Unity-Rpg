@@ -41,7 +41,7 @@ class EnemySelect : Editor
         transition = (Transition)target;
 
         battleScenes = new List<SceneInfo>();
-        transition.allowedMapData = new Dictionary<Scene, BattleScene>();
+        transition.allowedMapData = new Dictionary<Scene, SceneInfo>();
 
         if (manager.isFilled())
         {
@@ -56,21 +56,23 @@ class EnemySelect : Editor
                     names.Add(bad.Data.creatureName);
                 }
             }
+        }
+    }
 
-            int maxScene = SceneManager.sceneCount;
-            foreach(var scene in scenes.Scenes)
+    private void loadScenes()
+    {
+        foreach (var scene in scenes.Scenes)
+        {
+            if (scene.type == SceneTypes.BATTLE)
             {
-                if (scene.type == SceneTypes.BATTLE)
-                {
-                    battleScenes.Add(scene);
-                }
+                battleScenes.Add(scene);
             }
-            sceneNames = new List<string>();
+        }
+        sceneNames = new List<string>();
 
-            foreach(var scene in battleScenes)
-            {
-                sceneNames.Add(scene.sceneName);
-            }
+        foreach (var scene in battleScenes)
+        {
+            sceneNames.Add(scene.sceneName);
         }
     }
 
@@ -80,13 +82,13 @@ class EnemySelect : Editor
         scenes = (JrpgSceneManager)EditorGUILayout.ObjectField(scenes, typeof(JrpgSceneManager), true);
         if (scenes != null)
         {
-            if (sceneNames == null)
+            if (sceneNames == null || sceneNames.Count == 0)
             {
-                Init();
+                loadScenes();
             }
             if (transition.allowedMapData == null)
             {
-                transition.allowedMapData = new Dictionary<Scene, BattleScene>();
+                transition.allowedMapData = new Dictionary<Scene, SceneInfo>();
             }
             if (GUILayout.Button("Add Scene"))
             {
@@ -94,7 +96,7 @@ class EnemySelect : Editor
             }
             if (transition.allowedMapData.ContainsKey(scenes.ActiveScene.scene))
             {
-                transition.allowedMapData[scenes.ActiveScene.scene] = (BattleScene)scenes.Scenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())];
+                transition.allowedMapData[scenes.ActiveScene.scene] = scenes.Scenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())];
             }
             EditorUtility.SetDirty(this);
         }
@@ -131,7 +133,7 @@ public class Transition : MonoBehaviour
     string mapLoad = "BattleScene";
 
     [SerializeField]
-    public Dictionary<Scene, BattleScene> allowedMapData;
+    public Dictionary<Scene, SceneInfo> allowedMapData;
 
     Enemies enemies;
 

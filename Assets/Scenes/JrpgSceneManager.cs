@@ -25,8 +25,6 @@ class ContextSceneMenu : Editor
     [SerializeField]
     static JrpgSceneManager Instance;
 
-    static GameAssetManager assets = GameAssetManager.Instance;
-
     private void OnEnable() {
         Instance = (JrpgSceneManager)target;
         Instance.names = new List<string>();
@@ -125,6 +123,7 @@ public class MainScene : SceneInfo
     {
         scene = s;
         sceneName = name;
+        type = SceneTypes.MAIN;
         scenePath = scene.path;
     }
 
@@ -148,6 +147,7 @@ public class BattleScene : SceneInfo
         scene = s;
         sceneName = name;
         scenePath = scene.path;
+        type = SceneTypes.BATTLE;
         allowedEnemies = new List<Baddies>();
     }
 
