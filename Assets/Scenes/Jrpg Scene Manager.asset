@@ -12,4 +12,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105a3f7f131a32d42beb8b22d4cd6a3e, type: 3}
   m_Name: Jrpg Scene Manager
   m_EditorClassIdentifier: 
-  scenes: []

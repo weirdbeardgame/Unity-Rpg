@@ -14,16 +14,17 @@ class EnemySelect : Editor
     int count;
     int sceneIndex;
 
-    List<string> scenes;
     List<string> names;
     List<Baddies> baddieList;
 
     GameAssetManager manager;
-
     Transition transition;
-    BattleScene BattleScene;
 
-    Dictionary<Scene, BattleScene> allowedMapDataEdit;
+    [SerializeField]
+    JrpgSceneManager scenes;
+
+    Dictionary<string, SceneInfo> battleScenes;
+    List<string> sceneNames;
 
     private void OnEnable()
     {
@@ -33,14 +34,14 @@ class EnemySelect : Editor
     public void Init()
     {
         names = new List<string>();
-        scenes = new List<string>();
 
         baddieList = new List<Baddies>();
 
         manager = GameAssetManager.Instance;
         transition = (Transition)target;
 
-        allowedMapDataEdit = new Dictionary<Scene, BattleScene>();
+        battleScenes = new Dictionary<string, SceneInfo>();
+        transition.allowedMapData = new Dictionary<Scene, BattleScene>();
 
         if (manager.isFilled())
         {
@@ -57,10 +58,18 @@ class EnemySelect : Editor
             }
 
             int maxScene = SceneManager.sceneCount;
-
-            for(int i = 0; i < maxScene; i++)
+            foreach(var scene in scenes.Scenes)
             {
-                scenes.Add(SceneManager.GetSceneAt(i).name);
+                if (scene.Value.type == SceneTypes.BATTLE)
+                {
+                    battleScenes.Add(scene.Value.sceneName, scene.Value);
+                }
+            }
+            sceneNames = new List<string>();
+
+            foreach(var scene in battleScenes)
+            {
+                sceneNames.Add(scene.Value.sceneName);
             }
         }
     }
@@ -68,19 +77,23 @@ class EnemySelect : Editor
     public override void OnInspectorGUI()
     {
         base.DrawDefaultInspector();
-
-        if (GUILayout.Button("Add Scene"))
+        scenes = (JrpgSceneManager)EditorGUILayout.ObjectField(scenes, typeof(JrpgSceneManager), true);
+        if (scenes != null)
         {
-            //BattleScene = new BattleScene();
-            allowedMapDataEdit.Add(SceneManager.GetActiveScene(), BattleScene);
+            if (transition.allowedMapData == null)
+            {
+                transition.allowedMapData = new Dictionary<Scene, BattleScene>();
+            }
+            if (GUILayout.Button("Add Scene"))
+            {
+                transition.allowedMapData.Add(scenes.ActiveScene.scene, new BattleScene());
+            }
+            if (transition.allowedMapData.ContainsKey(scenes.ActiveScene.scene))
+            {
+                transition.allowedMapData[scenes.ActiveScene.scene] = (BattleScene)scenes.Scenes[sceneNames[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())]];
+            }
+            EditorUtility.SetDirty(this);
         }
-
-        /*if (BattleScene)
-        {
-           BattleScene.battleScene = SceneManager.GetSceneAt(EditorGUILayout.Popup(sceneIndex, scenes.ToArray()));
-        }*/
-
-        EditorUtility.SetDirty(this);
     }
 };
 #endif
@@ -93,9 +106,11 @@ public class Transition : MonoBehaviour
 {
     Battle battle;
     Party playerParty;
+    commandMenus Menus;
     GameManager manager;
 
-    commandMenus Menus;
+    [SerializeField]
+    JrpgSceneManager scenes;
 
     GameObject scripts;
     GameObject mainCamera;
@@ -155,7 +170,7 @@ public class Transition : MonoBehaviour
 
             //other.gameObject.transform.position = v2;
 
-            AsyncOperation async = SceneManager.LoadSceneAsync(allowedMapData[SceneManager.GetActiveScene()].battleScene.name);
+            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[SceneManager.GetActiveScene()]);
 
             while (!async.isDone)
             {
