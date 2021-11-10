@@ -27,15 +27,14 @@ class ContextSceneMenu : Editor
 
     static GameAssetManager assets = GameAssetManager.Instance;
 
-    static List<string> names;
     private void OnEnable() {
         Instance = (JrpgSceneManager)target;
-        names = new List<string>();
+        Instance.names = new List<string>();
         if (Instance.Scenes != null)
         {
             foreach(var scene in Instance.Scenes)
             {
-                names.Add(scene.Value.sceneName);
+                Instance.names.Add(scene.sceneName);
             }
         }
     }
@@ -46,8 +45,8 @@ class ContextSceneMenu : Editor
         s = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Additive);
         EditorSceneManager.SaveScene(s);
         MainScene data = new MainScene(s, s.name);
-        Instance.Scenes.Add(s.name, data);
-        names.Add(s.name);
+        Instance.Scenes.Add(data);
+        Instance.names.Add(s.name);
         //EditorSceneManager.MoveGameObjectToScene(Instance.selfRef, s);
     }
 
@@ -57,8 +56,8 @@ class ContextSceneMenu : Editor
         s = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Additive);
         EditorSceneManager.SaveScene(s);
         BattleScene data = new BattleScene(s, s.name);
-        Instance.Scenes.Add(s.name, data);
-        names.Add(s.name);
+        Instance.Scenes.Add(data);
+        Instance.names.Add(s.name);
         //EditorSceneManager.MoveGameObjectToScene(Instance.selfRef, s);
     }
 
@@ -77,28 +76,29 @@ class ContextSceneMenu : Editor
         }
         base.OnInspectorGUI();
         // Oops! names was cleared by accident. Hack Fix that shit!
-        if (names.Count <= 0 && Instance.Scenes.Count > 0)
+        if (Instance.names.Count <= 0)
         {
             foreach(var scene in Instance.Scenes)
             {
-                names.Add(scene.Value.sceneName);
+                Instance.names.Add(scene.sceneName);
             }
         }
-        if (names.Count > 0)
+        if (Instance.names.Count > 0)
         {
             EditorGUI.BeginChangeCheck();
-            int index = EditorGUILayout.Popup(sceneID, names.ToArray());
-            Instance.ActiveScene = Instance.Scenes[names[index]];
+            int index = EditorGUILayout.Popup(sceneID, Instance.names.ToArray());
+            Instance.ActiveScene = Instance.Scenes[index];
             if (EditorGUI.EndChangeCheck())
             {
                 EditorSceneManager.OpenScene(Instance.ActiveScene.scenePath);
             }
         }
+        EditorUtility.SetDirty(Instance);
     }
 }
 #endif
 
-// Below are SceneTypes. I like how the scenes all derive the same type but not sure about that being an interface...
+// Below are SceneTypes
 [Serializable]
 public class SceneInfo : PropertyAttribute
 {
@@ -113,6 +113,7 @@ public class SceneInfo : PropertyAttribute
     }
 }
 
+// Should this be serializable?
 public class MainScene : SceneInfo
 {
     public MainScene()
@@ -159,12 +160,14 @@ public class BattleScene : SceneInfo
 // This handles categories that may be applicable to only Jrpg types like having an explicit battle scene.
 // Some games may battle on the current map or be action style 3D fighters IE. KH or Elder Scrolls
 // While at the crux this engine is more then capable of that type of game given the use of flag system for story quests and the Dialogue trees.
-// This Scene manager is meant for upwards of FFX style of game where there is a specific map or scene that is laid out for battle scenarios
-[CreateAssetMenu]
+// This Scene manager is meant for upwards of FFX style of game where there is a specific map or scene that is laid out for battle scenarios.
+[CreateAssetMenu, Serializable]
 public class JrpgSceneManager : ScriptableObject
 {
     [SerializeField]
-    private Dictionary<string, SceneInfo> scenes;
+    private List<SceneInfo> scenes;
+    public List<string> names;
+
     string filePath;
     string jsonData;
     SceneInfo activeScene;
@@ -174,18 +177,6 @@ public class JrpgSceneManager : ScriptableObject
         TypeNameHandling = TypeNameHandling.All,
         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
     };
-
-    JrpgSceneManager()
-    {
-        scenes = new Dictionary<string, SceneInfo>();
-        Debug.Log("Construct");
-    }
-
-    private void OnEnable()
-    {
-        filePath = Application.dataPath + "/SceneIndex.json";
-        scenes = new Dictionary<string, SceneInfo>();
-    }
 
     public void LoadScene(SceneInfo scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
@@ -199,16 +190,29 @@ public class JrpgSceneManager : ScriptableObject
         return SceneManager.LoadSceneAsync(scene.scenePath, mode);
     }
 
-    public void LoadScene(string scene, LoadSceneMode mode = LoadSceneMode.Single)
+    public void LoadScene(string sceneID, LoadSceneMode mode = LoadSceneMode.Single)
     {
-        activeScene = scenes[scene];
-        SceneManager.LoadScene(scenes[scene].scenePath, mode);
+        foreach(var scene in scenes)
+        {
+            if (scene.sceneName == sceneID)
+            {
+                activeScene = scene;
+                SceneManager.LoadScene(scene.scenePath, mode);
+            }
+        }
     }
 
-    public AsyncOperation LoadSceneAsync(string scene, LoadSceneMode mode = LoadSceneMode.Single)
+    public AsyncOperation LoadSceneAsync(string sceneID, LoadSceneMode mode = LoadSceneMode.Single)
     {
-        activeScene = scenes[scene];
-        return SceneManager.LoadSceneAsync(scenes[scene].scenePath, mode);
+        foreach(var scene in scenes)
+        {
+            if (scene.sceneName == sceneID)
+            {
+                activeScene = scene;
+                return SceneManager.LoadSceneAsync(scene.scenePath, mode);
+            }
+        }
+        return null;
     }
 
     public SceneInfo ActiveScene
@@ -222,18 +226,23 @@ public class JrpgSceneManager : ScriptableObject
         {
             activeScene = value;
         }
+        #else
+        private set
+        {
+            activeScene = value;
+        }
         #endif
     }
 
     // I think about adding a get function and keeping the lists as private in here.
     // I need to consider any other methods needed. And, what's the best way to save this data?
-    public Dictionary<string, SceneInfo> Scenes
+    public List<SceneInfo> Scenes
     {
         get
         {
             if (scenes == null)
             {
-                scenes = new Dictionary<string, SceneInfo>();
+                scenes = new List<SceneInfo>();
             }
             return scenes;
         }

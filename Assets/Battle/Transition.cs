@@ -23,7 +23,7 @@ class EnemySelect : Editor
     [SerializeField]
     JrpgSceneManager scenes;
 
-    Dictionary<string, SceneInfo> battleScenes;
+    List<SceneInfo> battleScenes;
     List<string> sceneNames;
 
     private void OnEnable()
@@ -40,7 +40,7 @@ class EnemySelect : Editor
         manager = GameAssetManager.Instance;
         transition = (Transition)target;
 
-        battleScenes = new Dictionary<string, SceneInfo>();
+        battleScenes = new List<SceneInfo>();
         transition.allowedMapData = new Dictionary<Scene, BattleScene>();
 
         if (manager.isFilled())
@@ -60,16 +60,16 @@ class EnemySelect : Editor
             int maxScene = SceneManager.sceneCount;
             foreach(var scene in scenes.Scenes)
             {
-                if (scene.Value.type == SceneTypes.BATTLE)
+                if (scene.type == SceneTypes.BATTLE)
                 {
-                    battleScenes.Add(scene.Value.sceneName, scene.Value);
+                    battleScenes.Add(scene);
                 }
             }
             sceneNames = new List<string>();
 
             foreach(var scene in battleScenes)
             {
-                sceneNames.Add(scene.Value.sceneName);
+                sceneNames.Add(scene.sceneName);
             }
         }
     }
@@ -80,6 +80,10 @@ class EnemySelect : Editor
         scenes = (JrpgSceneManager)EditorGUILayout.ObjectField(scenes, typeof(JrpgSceneManager), true);
         if (scenes != null)
         {
+            if (sceneNames == null)
+            {
+                Init();
+            }
             if (transition.allowedMapData == null)
             {
                 transition.allowedMapData = new Dictionary<Scene, BattleScene>();
@@ -90,7 +94,7 @@ class EnemySelect : Editor
             }
             if (transition.allowedMapData.ContainsKey(scenes.ActiveScene.scene))
             {
-                transition.allowedMapData[scenes.ActiveScene.scene] = (BattleScene)scenes.Scenes[sceneNames[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())]];
+                transition.allowedMapData[scenes.ActiveScene.scene] = (BattleScene)scenes.Scenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())];
             }
             EditorUtility.SetDirty(this);
         }
@@ -98,7 +102,7 @@ class EnemySelect : Editor
 };
 #endif
 
-// The Initalizer of the Battle
+// The Initalizer of the Battle.
 // Needs a way to select which spawned enemies can appear per map!
 // One issue is that i've been combining two things that need to be seperate...
 // This should be a global class that should handle current map screen.
