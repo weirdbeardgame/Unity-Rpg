@@ -65,6 +65,7 @@ public class playerEditorWindow : EditorWindow
             Names = new List<string>();
             Editable = new List<Player>();
             manager = GameAssetManager.Instance;
+            init();
         }
 
         EditorGUILayout.LabelField("Name: ");
@@ -91,8 +92,11 @@ public class playerEditorWindow : EditorWindow
                 {
                     Directory.CreateDirectory("Assets/Resources/Prefabs/Players/");
                 }
-                PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Assets/Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab"));
-                edit.prefabPath = ("Prefabs/Players/" + edit.Data.creatureName);
+                if (edit != null && edit.Data.creatureName != null)
+                {
+                    PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Assets/Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab"));
+                    edit.prefabPath = ("Prefabs/Players/" + edit.Data.creatureName);
+                }
             }
 
             Editable.Add(edit);
@@ -162,7 +166,7 @@ public class playerEditorWindow : EditorWindow
     }
 
     private void OnDestroy() {
-        DestroyImmediate(manager);
+        DestroyImmediate(manager, true);
     }
 
 }

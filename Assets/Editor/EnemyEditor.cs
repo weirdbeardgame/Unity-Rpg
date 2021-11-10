@@ -69,6 +69,7 @@ public class EnemyEditorWindow : EditorWindow
             Names = new List<string>();
             Editable = new List<Baddies>();
             manager = GameAssetManager.Instance;
+            init();
             IsInit = true;
         }
 

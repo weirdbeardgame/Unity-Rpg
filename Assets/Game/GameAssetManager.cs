@@ -47,20 +47,6 @@ public sealed class GameAssetManager : MonoBehaviour
     string jsonData;
     bool isInit;
 
-    public GameAssetManager()
-    {
-        if (!isInit)
-        {   if (instance == null)
-            {
-                instance = this;
-            }
-            if (instance != null && instance != this)
-            {
-                Destroy(instance);
-            }
-        }
-    }
-
     private static GameAssetManager instance;
 
     public static GameAssetManager Instance
@@ -70,6 +56,7 @@ public sealed class GameAssetManager : MonoBehaviour
             if (instance == null)
             {
                 instance = new GameAssetManager();
+                instance.Init();
             }
             return instance;
         }
@@ -87,7 +74,7 @@ public sealed class GameAssetManager : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Init()
     {
         data = new Dictionary<string, Asset>();
         tempContainer = new Dictionary<string, Asset>();

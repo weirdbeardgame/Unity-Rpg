@@ -49,12 +49,12 @@ public class Player : Asset
 
     public override Asset CreateAsset()
     {
-        var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
-       /* if (!prefab)
-        {
+       var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
+       if (!prefab)
+       {
             prefab = MonoBehaviour.Instantiate(bInst);
             prefab.SetActive(false);
-        }*/
+       }
         return this;
     }
 
