@@ -26,7 +26,7 @@ class EnemySelect : Editor
     [SerializeField]
     JrpgSceneManager scenes;
 
-    List<SceneInfo> battleScenes;
+    List<BattleScene> battleScenes;
     List<string> sceneNames;
 
     private void OnEnable()
@@ -44,7 +44,7 @@ class EnemySelect : Editor
         transition = (Transition)target;
         index = new List<int>();
 
-        battleScenes = new List<SceneInfo>();
+        battleScenes = new List<BattleScene>();
         transition.allowedMapData = new Dictionary<Scene, BattleScene>();
 
         if (manager.isFilled())
@@ -67,9 +67,9 @@ class EnemySelect : Editor
     {
         foreach (var scene in scenes.Scenes)
         {
-            if (scene.type == SceneTypes.BATTLE)
+            if (scene.type == SceneTypes.BATTLE && scene is BattleScene)
             {
-                battleScenes.Add(scene);
+                battleScenes.Add((BattleScene)scene);
             }
         }
 
@@ -100,8 +100,7 @@ class EnemySelect : Editor
             }
             if (transition.allowedMapData.ContainsKey(scenes.ActiveScene.scene))
             {
-                // The biggest issue with this is the original scene doesn't come out of this. It has to construct it every time
-                BattleScene bScene = new BattleScene(scenes.Scenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())]);
+                BattleScene bScene = battleScenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())];
                 transition.allowedMapData[scenes.ActiveScene.scene] = bScene;
                 // Need to list enemy names to set which enemy can be fought on battle map.
                 EditorGUILayout.BeginHorizontal();
