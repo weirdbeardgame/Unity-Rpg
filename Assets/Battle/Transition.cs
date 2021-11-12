@@ -107,6 +107,10 @@ class EnemySelect : Editor
                 if (GUILayout.Button("Add Enemy"))
                 {
                     count += 1;
+                    if (transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies == null)
+                    {
+                        transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies = new List<Baddies>();
+                    }
                     // Need to add custom list editor. Right now i'd have a list of indexes...
                     if (transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Count < count)
                     {
