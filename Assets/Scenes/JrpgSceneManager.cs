@@ -98,7 +98,7 @@ class ContextSceneMenu : Editor
 
 // Below are SceneTypes
 [Serializable]
-public class SceneInfo : PropertyAttribute
+public abstract class SceneInfo
 {
     public SceneTypes type;
     public string sceneName;
@@ -118,6 +118,14 @@ public class MainScene : SceneInfo
     {
         scenePath = "Default";
         sceneName = "Default";
+    }
+
+    public MainScene(SceneInfo s)
+    {
+        scene = s.scene;
+        sceneName = s.sceneName;
+        scenePath = s.scenePath;
+        type = s.type;
     }
     public MainScene(Scene s, string name)
     {
@@ -142,6 +150,14 @@ public class BattleScene : SceneInfo
         scenePath = "Default";
         sceneName = "Default";
     }
+    public BattleScene(SceneInfo s)
+    {
+        scene = s.scene;
+        sceneName = s.sceneName;
+        scenePath = s.scenePath;
+        type = s.type;
+        allowedEnemies = new List<Baddies>();
+    }
     public BattleScene(Scene s, string name)
     {
         scene = s;
@@ -164,8 +180,9 @@ public class BattleScene : SceneInfo
 [CreateAssetMenu, Serializable]
 public class JrpgSceneManager : ScriptableObject
 {
-    [SerializeField]
+    [SerializeReference]
     private List<SceneInfo> scenes;
+
     public List<string> names;
 
     string filePath;

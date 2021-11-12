@@ -13,16 +13,26 @@ MonoBehaviour:
   m_Name: Jrpg Scene Manager
   m_EditorClassIdentifier: 
   scenes:
-  - type: 0
-    sceneName: Test01
-    scenePath: Assets/Scenes/Test01.unity
-    scene:
-      m_Handle: -65028
-  - type: 0
-    sceneName: BattleTest01
-    scenePath: Assets/Scenes/BattleTest01.unity
-    scene:
-      m_Handle: -65286
+  - id: 0
+  - id: 1
   names:
   - Test01
   - BattleTest01
+  references:
+    version: 1
+    00000000:
+      type: {class: MainScene, ns: , asm: Assembly-CSharp}
+      data:
+        type: 0
+        sceneName: Test01
+        scenePath: Assets/Scenes/Test01.unity
+        scene:
+          m_Handle: -4952
+    00000001:
+      type: {class: BattleScene, ns: , asm: Assembly-CSharp}
+      data:
+        type: 1
+        sceneName: BattleTest01
+        scenePath: Assets/Scenes/BattleTest01.unity
+        scene:
+          m_Handle: -5600

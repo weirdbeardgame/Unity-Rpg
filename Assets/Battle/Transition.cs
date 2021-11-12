@@ -13,9 +13,12 @@ class EnemySelect : Editor
 {
     int count;
     int sceneIndex;
+    int enemySelected;
 
     List<string> names;
     List<Baddies> baddieList;
+    List<Baddies> toSet;
+    List<int> index;
 
     GameAssetManager manager;
     Transition transition;
@@ -39,9 +42,10 @@ class EnemySelect : Editor
 
         manager = GameAssetManager.Instance;
         transition = (Transition)target;
+        index = new List<int>();
 
         battleScenes = new List<SceneInfo>();
-        transition.allowedMapData = new Dictionary<Scene, SceneInfo>();
+        transition.allowedMapData = new Dictionary<Scene, BattleScene>();
 
         if (manager.isFilled())
         {
@@ -68,8 +72,8 @@ class EnemySelect : Editor
                 battleScenes.Add(scene);
             }
         }
-        sceneNames = new List<string>();
 
+        sceneNames = new List<string>();
         foreach (var scene in battleScenes)
         {
             sceneNames.Add(scene.sceneName);
@@ -88,7 +92,7 @@ class EnemySelect : Editor
             }
             if (transition.allowedMapData == null)
             {
-                transition.allowedMapData = new Dictionary<Scene, SceneInfo>();
+                transition.allowedMapData = new Dictionary<Scene, BattleScene>();
             }
             if (GUILayout.Button("Add Scene"))
             {
@@ -96,7 +100,27 @@ class EnemySelect : Editor
             }
             if (transition.allowedMapData.ContainsKey(scenes.ActiveScene.scene))
             {
-                transition.allowedMapData[scenes.ActiveScene.scene] = scenes.Scenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())];
+                // The biggest issue with this is the original scene doesn't come out of this. It has to construct it every time
+                BattleScene bScene = new BattleScene(scenes.Scenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())]);
+                transition.allowedMapData[scenes.ActiveScene.scene] = bScene;
+                // Need to list enemy names to set which enemy can be fought on battle map.
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button("Add Enemy"))
+                {
+                    count += 1;
+                    // Need to add custom list editor. Right now i'd have a list of indexes...
+                    if (transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Count < count)
+                    {
+                        transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Add(new Baddies());
+                        index.Add(new int());
+                    }
+                    for (int i = 0; i < transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Count; i++)
+                    {
+                        index[i] = EditorGUILayout.Popup(enemySelected, names.ToArray());
+                        transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies[i] = baddieList[index[i]];
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
             }
             EditorUtility.SetDirty(this);
         }
@@ -133,7 +157,7 @@ public class Transition : MonoBehaviour
     string mapLoad = "BattleScene";
 
     [SerializeField]
-    public Dictionary<Scene, SceneInfo> allowedMapData;
+    public Dictionary<Scene, BattleScene> allowedMapData;
 
     Enemies enemies;
 

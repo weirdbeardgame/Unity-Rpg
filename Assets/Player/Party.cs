@@ -33,12 +33,9 @@ public class Party : MonoBehaviour
         }
     }
 
-
     void Update()
     {
 
     }
-
-
 }
 
