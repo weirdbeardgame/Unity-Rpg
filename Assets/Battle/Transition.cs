@@ -103,7 +103,6 @@ class EnemySelect : Editor
                 BattleScene bScene = battleScenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())];
                 transition.allowedMapData[scenes.ActiveScene.scene] = bScene;
                 // Need to list enemy names to set which enemy can be fought on battle map.
-                EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Add Enemy"))
                 {
                     count += 1;
@@ -117,13 +116,12 @@ class EnemySelect : Editor
                         transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Add(new Baddies());
                         index.Add(new int());
                     }
-                    for (int i = 0; i < transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Count; i++)
-                    {
-                        index[i] = EditorGUILayout.Popup(enemySelected, names.ToArray());
-                        transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies[i] = baddieList[index[i]];
-                    }
                 }
-                EditorGUILayout.EndHorizontal();
+                for (int i = 0; i < transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Count; i++)
+                {
+                    index[i] = EditorGUILayout.Popup(index[i], names.ToArray());
+                    transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies[i] = baddieList[index[i]];
+                }
             }
             EditorUtility.SetDirty(this);
         }

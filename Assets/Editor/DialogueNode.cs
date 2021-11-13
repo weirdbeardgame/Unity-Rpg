@@ -210,7 +210,6 @@ public class DialogueNode : IComparable<DialogueNode>
 
     public bool ProcessNodeEvents(Event e)
     {
-
         switch (e.type)
         {
             case EventType.MouseDown:

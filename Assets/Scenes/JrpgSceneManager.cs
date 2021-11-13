@@ -84,8 +84,8 @@ class ContextSceneMenu : Editor
         if (Instance.names.Count > 0)
         {
             EditorGUI.BeginChangeCheck();
-            int index = EditorGUILayout.Popup(sceneID, Instance.names.ToArray());
-            Instance.ActiveScene = Instance.Scenes[index];
+            sceneID = EditorGUILayout.Popup(sceneID, Instance.names.ToArray());
+            Instance.ActiveScene = Instance.Scenes[sceneID];
             if (EditorGUI.EndChangeCheck())
             {
                 EditorSceneManager.OpenScene(Instance.ActiveScene.scenePath);
