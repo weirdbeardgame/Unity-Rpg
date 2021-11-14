@@ -22,9 +22,28 @@ public class Player : Asset
     * We need to figure out a logic that either reads from folder or
     * We need to figure a different way to store this data. Perhaps a custom format?
     * Even better idea. LET THE ASSET MANAGER DO THIS!!!
+    * We're just returning a cast of the toSerialize object
     ***********************************************************************************/
-    [System.NonSerialized]
-    public GameObject prefab;
+    [JsonIgnore]
+    public GameObject prefab
+    {
+        get
+        {
+            return (GameObject)toSerialize;
+        }
+        #if UNITY_EDITOR
+        set
+        {
+            toSerialize = value;
+        }
+        #else
+        private set
+        {
+            toSerialize = value;
+        }
+        #endif
+
+    }
     private Creature data;
 
     public Creature Data
@@ -49,7 +68,7 @@ public class Player : Asset
 
     public override Asset CreateAsset()
     {
-       var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
+       var bInst = Resources.Load(path, typeof(GameObject)) as GameObject;
        if (!prefab)
        {
             prefab = MonoBehaviour.Instantiate(bInst);

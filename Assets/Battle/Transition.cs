@@ -45,7 +45,7 @@ class EnemySelect : Editor
         index = new List<int>();
 
         battleScenes = new List<BattleScene>();
-        transition.allowedMapData = new Dictionary<Scene, BattleScene>();
+        transition.allowedMapData = new Dictionary<SceneInfo, BattleScene>();
 
         if (manager.isFilled())
         {
@@ -54,7 +54,7 @@ class EnemySelect : Editor
                 if (asset.Value is Baddies)
                 {
                     Baddies bad = (Baddies)asset.Value;
-                    bad.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(bad.prefabPath);
+                    bad.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(bad.path);
 
                     baddieList.Add(bad);
                     names.Add(bad.Data.creatureName);
@@ -90,40 +90,45 @@ class EnemySelect : Editor
             {
                 loadScenes();
             }
-            if (transition.allowedMapData == null)
-            {
-                transition.allowedMapData = new Dictionary<Scene, BattleScene>();
-            }
             if (GUILayout.Button("Add Scene"))
             {
-                transition.allowedMapData.Add(scenes.ActiveScene.scene, new BattleScene());
+                if (transition.allowedMapData == null)
+                {
+                    transition.allowedMapData = new Dictionary<SceneInfo, BattleScene>();
+                }
+                else
+                {
+                    transition.allowedMapData.Add(scenes.ActiveScene, new BattleScene());
+                }
             }
-            if (transition.allowedMapData.ContainsKey(scenes.ActiveScene.scene))
+            if (transition.allowedMapData.ContainsKey(scenes.ActiveScene))
             {
                 BattleScene bScene = battleScenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())];
-                transition.allowedMapData[scenes.ActiveScene.scene] = bScene;
+                transition.allowedMapData[scenes.ActiveScene] = bScene;
                 // Need to list enemy names to set which enemy can be fought on battle map.
                 if (GUILayout.Button("Add Enemy"))
                 {
                     count += 1;
-                    if (transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies == null)
+                    if (transition.allowedMapData[scenes.ActiveScene].allowedEnemies == null)
                     {
-                        transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies = new List<Baddies>();
+                        transition.allowedMapData[scenes.ActiveScene].allowedEnemies = new List<Baddies>();
                     }
                     // Need to add custom list editor. Right now i'd have a list of indexes...
-                    if (transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Count < count)
+                    if (transition.allowedMapData[scenes.ActiveScene].allowedEnemies.Count < count)
                     {
-                        transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Add(new Baddies());
+                        transition.allowedMapData[scenes.ActiveScene].allowedEnemies.Add(new Baddies());
                         index.Add(new int());
                     }
                 }
-                for (int i = 0; i < transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies.Count; i++)
+                for (int i = 0; i < transition.allowedMapData[scenes.ActiveScene].allowedEnemies.Count; i++)
                 {
                     index[i] = EditorGUILayout.Popup(index[i], names.ToArray());
-                    transition.allowedMapData[scenes.ActiveScene.scene].allowedEnemies[i] = baddieList[index[i]];
+                    transition.allowedMapData[scenes.ActiveScene].allowedEnemies[i] = baddieList[index[i]];
                 }
             }
-            EditorUtility.SetDirty(this);
+            // Can I really serialize like this?
+            //EditorUtility.SetDirty(transition);
+            //EditorUtility.SetDirty(scenes);
         }
     }
 };
@@ -156,9 +161,9 @@ public class Transition : MonoBehaviour
     // ToDo replace with Scene implementation.
     [SerializeField]
     string mapLoad = "BattleScene";
+    string path = "Assets/Transition.json";
 
-    [SerializeField]
-    public Dictionary<Scene, BattleScene> allowedMapData;
+    public Dictionary<SceneInfo, BattleScene> allowedMapData;
 
     Enemies enemies;
 
@@ -201,7 +206,7 @@ public class Transition : MonoBehaviour
 
             //other.gameObject.transform.position = v2;
 
-            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[SceneManager.GetActiveScene()]);
+            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene]);
 
             while (!async.isDone)
             {

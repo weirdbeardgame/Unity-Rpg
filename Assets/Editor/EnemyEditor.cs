@@ -36,7 +36,7 @@ public class EnemyEditorWindow : EditorWindow
             {
                 if ((asset.Value is Baddies) && (badInit = (Baddies)asset.Value) != null)
                 {
-                    badInit.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(badInit.prefabPath);
+                    badInit.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(badInit.path);
                     Editable.Add(badInit);
                     Names.Add(badInit.Data.creatureName);
                     ID += 1;
@@ -59,7 +59,7 @@ public class EnemyEditorWindow : EditorWindow
             Directory.CreateDirectory("Assets/Resources/Prefabs/Enemies/");
         }
         PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Assets/Resources/Prefabs/Enemies/" + edit.Data.creatureName + ".prefab"));
-        edit.prefabPath = ("Prefabs/Enemies/" + edit.Data.creatureName);
+        edit.path = Asset.GetAssetPath(edit.prefab);
     }
 
     void OnGUI()

@@ -2,9 +2,9 @@
 	"$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Asset, Assembly-CSharp]], mscorlib",
 	"Musungo": {
 		"$type": "Player, Assembly-CSharp",
-		"prefabPath": "Prefabs/Players/Musungo",
 		"level": 1,
-		"guid": "21bb5b49-5975-42ac-ac00-b5eab1982543",
+		"assetGuid": "21bb5b49-5975-42ac-ac00-b5eab1982543",
+		"path": "Prefabs/Players/Musungo",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -40,16 +40,14 @@
 			"job": 5,
 			"creatureName": "Musungo",
 			"description": "A young 12 year old boy. Blue eyes white and black hair. Musungo is a dragon cursed with soul eaterism at birth which lead to clashes with the gods of death. Musungo is stubborn and determined. If he has a goal he will see it through to death"
-		},
-		"order": 0,
-		"TypeId": "Player, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+		}
 	},
 	"Dragon": {
 		"$type": "Baddies, Assembly-CSharp",
 		"id": 0,
 		"level": 1,
-		"guid": "d761d233-59d5-4330-814a-e3819cddf9f5",
-		"prefabPath": "Prefabs/Enemies/Dragon",
+		"assetGuid": "d761d233-59d5-4330-814a-e3819cddf9f5",
+		"path": "Prefabs/Enemies/Dragon",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -85,16 +83,14 @@
 			"job": 1,
 			"creatureName": "Dragon",
 			"description": "A basic dragon that wants to eat you. They have turned their backs on the kingdom"
-		},
-		"order": 0,
-		"TypeId": "Baddies, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+		}
 	},
 	"Wolf": {
 		"$type": "Baddies, Assembly-CSharp",
 		"id": 1,
 		"level": 1,
-		"guid": "c3a6b2d6-45e2-4a4c-ade0-8b08fa938566",
-		"prefabPath": "Prefabs/Enemies/Wolf",
+		"assetGuid": "c3a6b2d6-45e2-4a4c-ade0-8b08fa938566",
+		"path": "Prefabs/Enemies/Wolf",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -130,15 +126,12 @@
 			"job": 2,
 			"creatureName": "Wolf",
 			"description": "A ferral wolf. Watch out for it's bite"
-		},
-		"order": 0,
-		"TypeId": "Baddies, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+		}
 	},
 	"Potion": {
 		"$type": "ItemData, Assembly-CSharp",
 		"name": "Potion",
 		"description": "A basic healing potion",
-		"prefabPath": "Prefabs/Items/Potion",
 		"itemID": 0,
 		"cost": 0,
 		"amount": 0,
@@ -153,15 +146,13 @@
 			"type": 0,
 			"effect": 0
 		},
-		"guid": "676e6dd3-8d91-4623-ab26-8432b1c773dc",
-		"order": 0,
-		"TypeId": "ItemData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+		"assetGuid": "676e6dd3-8d91-4623-ab26-8432b1c773dc",
+		"path": "Prefabs/Items/Potion"
 	},
 	"High Potion": {
 		"$type": "ItemData, Assembly-CSharp",
 		"name": "High Potion",
 		"description": "A stronger healing potion",
-		"prefabPath": "Prefabs/Items/High Potion",
 		"itemID": 0,
 		"cost": 0,
 		"amount": 0,
@@ -176,15 +167,13 @@
 			"type": 0,
 			"effect": 0
 		},
-		"guid": "75170cb2-6a3f-4be1-87a7-1366c7b44c62",
-		"order": 0,
-		"TypeId": "ItemData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+		"assetGuid": "75170cb2-6a3f-4be1-87a7-1366c7b44c62",
+		"path": "Prefabs/Items/High Potion"
 	},
 	"Fire Bottle": {
 		"$type": "ItemData, Assembly-CSharp",
 		"name": "Fire Bottle",
 		"description": "A damaging flask filled with the essence of fire",
-		"prefabPath": "Prefabs/Items/Fire Bottle",
 		"itemID": 0,
 		"cost": 0,
 		"amount": 0,
@@ -199,16 +188,15 @@
 			"type": 1,
 			"effect": 0
 		},
-		"guid": "bd03d18a-69c8-4522-9b71-d859e1cad6d7",
-		"order": 0,
-		"TypeId": "ItemData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+		"assetGuid": "bd03d18a-69c8-4522-9b71-d859e1cad6d7",
+		"path": "Prefabs/Items/Fire Bottle"
 	},
 	"Red Dragon": {
 		"$type": "Baddies, Assembly-CSharp",
 		"id": 2,
 		"level": 1,
-		"guid": "af13a236-3e5c-4c67-9ceb-0b2100669f6a",
-		"prefabPath": "Prefabs/Enemies/Red Dragon",
+		"assetGuid": "af13a236-3e5c-4c67-9ceb-0b2100669f6a",
+		"path": "Prefabs/Enemies/Red Dragon",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -244,15 +232,13 @@
 			"job": 1,
 			"creatureName": "Red Dragon",
 			"description": "A red dragon. Stronger then the standard dragon. Breaths fire"
-		},
-		"order": 0,
-		"TypeId": "Baddies, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+		}
 	},
 	"Doku": {
 		"$type": "Player, Assembly-CSharp",
-		"prefabPath": "Prefabs/Players/Doku",
 		"level": 1,
-		"guid": "1aa186ab-3e9b-4fb8-aaed-640edc1a085a",
+		"assetGuid": "1aa186ab-3e9b-4fb8-aaed-640edc1a085a",
+		"path": "Prefabs/Players/Doku",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -288,8 +274,69 @@
 			"job": 2,
 			"creatureName": "Doku",
 			"description": "The high prince of dragon realm. "
+		}
+	},
+	"Water": {
+		"$type": "ItemData, Assembly-CSharp",
+		"name": "Water",
+		"description": "A bottle of water",
+		"itemID": 0,
+		"cost": 0,
+		"amount": 0,
+		"maxAmount": 99,
+		"effect": {
+			"$type": "ItemBuffer, Assembly-CSharp",
+			"buff": {
+				"$type": "Stats, Assembly-CSharp",
+				"currentStat": 0,
+				"stat": 15.0
+			},
+			"type": 0,
+			"effect": 0
 		},
-		"order": 0,
-		"TypeId": "Player, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+		"assetGuid": "54f6e832-6d82-435e-b342-f9108537cd25",
+		"path": "Prefabs/Items/Water"
+	},
+	"Sarah": {
+		"$type": "Player, Assembly-CSharp",
+		"level": 1,
+		"assetGuid": "5f314d63-bad3-43a4-956a-b1f70346c764",
+		"path": "",
+		"Data": {
+			"$type": "Creature, Assembly-CSharp",
+			"isAlive": false,
+			"Stats": {
+				"$type": "StatManager, Assembly-CSharp",
+				"statList": {
+					"$type": "System.Collections.Generic.List`1[[Stats, Assembly-CSharp]], mscorlib",
+					"$values": [{
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 0,
+						"stat": 100.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 1,
+						"stat": 35.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 2,
+						"stat": 45.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 3,
+						"stat": 150.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 4,
+						"stat": 65.0
+					}]
+				}
+			},
+			"slots": null,
+			"tag": 0,
+			"job": 0,
+			"creatureName": "Sarah",
+			"description": "A well endowed woman who appears to be in her twenties to thrities. Sarah is a master of the mystic arts and is extreamly gifted as such."
+		}
 	}
 }

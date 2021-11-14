@@ -80,7 +80,7 @@ public class ItemEditor : EditorWindow
         }
 
         PrefabUtility.SaveAsPrefabAsset(CurrentItem.prefab, ("Assets/Resources/Prefabs/Items/" + CurrentItem.name + ".prefab"));
-        CurrentItem.prefabPath = ("Prefabs/Items/" + CurrentItem.name);
+        CurrentItem.path = Asset.GetAssetPath(CurrentItem.prefab);
         CurrentItem.prefab.SetActive(false);
     }
 

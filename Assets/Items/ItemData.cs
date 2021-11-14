@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public enum ItemType { HEALING, DAMAGING } // For later if I have other types like Key Item 
 public enum AreaOfEffect { HEALTH, STRENGTH, MAGIC, SPEED }
@@ -15,12 +16,29 @@ public class ItemBuffer
 public class ItemData : Asset
 {
     // Meant for In UI use
-    [System.NonSerialized]
-    public GameObject prefab;
+    [JsonIgnore]
+    public GameObject prefab
+    {
+        get
+        {
+            return (GameObject)toSerialize;
+        }
+        #if UNITY_EDITOR
+        set
+        {
+            toSerialize = value;
+        }
+        #else
+        private set
+        {
+            toSerialize = value;
+        }
+        #endif
+
+    }
 
     public string name;
     public string description;
-    public string prefabPath;
 
     public int itemID;
     public int cost;
@@ -31,7 +49,7 @@ public class ItemData : Asset
 
     public override Asset CreateAsset()
     {
-        var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
+        var bInst = Resources.Load(path, typeof(GameObject)) as GameObject;
         if (!prefab)
         {
             prefab = bInst;

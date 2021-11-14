@@ -19,8 +19,26 @@ public class Baddies : Asset
     public Gauge gauge;
 
     // I only want the saved path not the object itself
-    [System.NonSerialized]
-    public GameObject prefab;
+    [JsonIgnore]
+    public GameObject prefab
+    {
+        get
+        {
+            return (GameObject)toSerialize;
+        }
+        #if UNITY_EDITOR
+        set
+        {
+            toSerialize = value;
+        }
+        #else
+        private set
+        {
+            toSerialize = value;
+        }
+        #endif
+
+    }
     private Creature data;
     public Creature Data
     {
@@ -44,7 +62,7 @@ public class Baddies : Asset
 
     public override Asset CreateAsset()
     {
-        var bInst = Resources.Load(prefabPath, typeof(GameObject)) as GameObject;
+        var bInst = Resources.Load(path, typeof(GameObject)) as GameObject;
         if (!prefab)
         {
             prefab = MonoBehaviour.Instantiate(bInst);

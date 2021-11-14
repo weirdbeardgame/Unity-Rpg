@@ -98,12 +98,12 @@ class ContextSceneMenu : Editor
 
 // Below are SceneTypes
 [Serializable]
-public abstract class SceneInfo
+public abstract class SceneInfo : Asset
 {
     public SceneTypes type;
     public string sceneName;
     public string scenePath;
-    public Scene scene;
+    public object scene;
 
     public virtual SceneTypes GetSceneType()
     {
@@ -120,19 +120,18 @@ public class MainScene : SceneInfo
         sceneName = "Default";
     }
 
-    public MainScene(SceneInfo s)
-    {
-        scene = s.scene;
-        sceneName = s.sceneName;
-        scenePath = s.scenePath;
-        type = s.type;
-    }
     public MainScene(Scene s, string name)
     {
         scene = s;
         sceneName = name;
         type = SceneTypes.MAIN;
-        scenePath = scene.path;
+    }
+
+    public override Asset CreateAsset()
+    {
+        // Assume we already have the path.
+
+        return this;
     }
 
     public override SceneTypes GetSceneType()
@@ -149,6 +148,8 @@ public class BattleScene : SceneInfo
     {
         scenePath = "Default";
         sceneName = "Default";
+        allowedEnemies = new List<Baddies>();
+        type = SceneTypes.BATTLE;
     }
     public BattleScene(SceneInfo s)
     {
@@ -162,7 +163,6 @@ public class BattleScene : SceneInfo
     {
         scene = s;
         sceneName = name;
-        scenePath = scene.path;
         type = SceneTypes.BATTLE;
         allowedEnemies = new List<Baddies>();
     }

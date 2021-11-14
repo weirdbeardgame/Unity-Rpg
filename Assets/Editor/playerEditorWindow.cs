@@ -38,7 +38,7 @@ public class playerEditorWindow : EditorWindow
             {
                     if (asset.Value is Player && (player = (Player)asset.Value) != null)
                     {
-                        player.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(player.prefabPath);
+                        player.prefab = AssetDatabase.LoadAssetAtPath<GameObject>(player.path);
                         Editable.Add(player);
                         Names.Add(player.Data.creatureName);
                     }
@@ -95,7 +95,7 @@ public class playerEditorWindow : EditorWindow
                 if (edit != null && edit.Data.creatureName != null)
                 {
                     PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Assets/Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab"));
-                    edit.prefabPath = ("Prefabs/Players/" + edit.Data.creatureName);
+                    edit.path = Asset.GetAssetPath(edit.prefab);
                 }
             }
 

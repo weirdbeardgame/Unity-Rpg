@@ -1,25 +1,75 @@
-using System.Collections;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using UnityEngine;
+using System.Linq;
 using System.IO;
 using System;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
-[System.AttributeUsage(System.AttributeTargets.All, Inherited = true, AllowMultiple = true), Serializable]
-public class Asset : PropertyAttribute
+
+public abstract class Asset : ISerializationCallbackReceiver
 {
-    //public string guidString;
-    public Guid guid;
+    // I don't know why this serializes correctly. But only sometimes?
+    // Like seriously. This is pure magic as far as Newtonsoft is concerned it seems
+    public Guid assetGuid;
+    public string path;
 
-    public string prefabPath;
+    // Though this will change depening on type.
+    [System.NonSerialized]
+    public UnityEngine.Object toSerialize;
 
+    long refID;
     public Asset()
     {
-        guid = new Guid();
-        guid = Guid.NewGuid();
+        assetGuid = new Guid();
+        assetGuid = Guid.NewGuid();
     }
+
+    // If it aint obvious. This shit should only happen when serializing in Editor my guy
+    #if UNITY_EDITOR
+    static public string GetAssetPath(UnityEngine.Object toSerialize)
+    {
+        string assetPath = string.Empty;
+        string finalString = string.Empty;
+        string [] pathToken;
+
+        assetPath = AssetDatabase.GetAssetPath(toSerialize);
+        if (assetPath != string.Empty)
+        {
+            // Check and tokenize string in here to make sure it's a valid path.
+            pathToken = assetPath.Split('/').Select(x => x.Trim()).ToArray();
+            finalString = string.Join("/", pathToken, 0, pathToken.Count() - 1);
+        }
+        return finalString;
+    }
+
+    // Similar to Create Asset but a different point to it.
+    public void OnBeforeSerialize()
+    {
+        if (assetGuid == null || assetGuid == Guid.Empty)
+        {
+            assetGuid = Guid.NewGuid();
+        }
+
+        // I wonder if I should assume this belongs in resources somehow
+        path = GetAssetPath(toSerialize);
+
+        if (assetGuid == Guid.Empty)
+        {
+            assetGuid = Guid.NewGuid();
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        // If it's an instantiated object in the scene. We don't want nonna that!
+        // MonoBehaviour.Destroy(toSerialize);
+    }
+    #endif
 
     public virtual Asset CreateAsset()
     {
@@ -63,7 +113,7 @@ public sealed class GameAssetManager : MonoBehaviour
     }
 
     // Is this the best way to store this data? Each system will call for data from manager
-    [SerializeField]
+    [SerializeReference]
     private Dictionary<string, Asset> data;
     private Dictionary<string, Asset> tempContainer;
     public Dictionary<string, Asset> Data
@@ -90,9 +140,9 @@ public sealed class GameAssetManager : MonoBehaviour
 
             foreach(var item in tempContainer)
             {
-                if (item.Value.guid == null)
+                if (item.Value.assetGuid == null)
                 {
-                    item.Value.guid = System.Guid.NewGuid();
+                    item.Value.assetGuid = System.Guid.NewGuid();
                 }
 
                 // Need to reconstruct proper paths in here
@@ -127,20 +177,24 @@ public sealed class GameAssetManager : MonoBehaviour
             // For future GameObject ref serialization as well as general asset database use.
             foreach (var asset in data)
             {
-                if (asset.Value.guid == null)
+                if (asset.Value.assetGuid == null)
                 {
-                    asset.Value.guid = System.Guid.NewGuid();
+                    asset.Value.assetGuid = System.Guid.NewGuid();
+                }
+                if (asset.Value.path == string.Empty)
+                {
+                    Asset.GetAssetPath(asset.Value.toSerialize);
                 }
             }
 
-            assetData.guid = System.Guid.NewGuid();
+            assetData.assetGuid = System.Guid.NewGuid();
             data.Add(key, assetData);
         }
 
         else if (!File.Exists(filePath) && data == null)
         {
             data = new Dictionary<string, Asset>();
-            assetData.guid = System.Guid.NewGuid();
+            assetData.assetGuid = System.Guid.NewGuid();
             data.Add(key, assetData);
         }
 
