@@ -297,46 +297,22 @@
 		"assetGuid": "54f6e832-6d82-435e-b342-f9108537cd25",
 		"path": "Prefabs/Items/Water"
 	},
-	"Sarah": {
-		"$type": "Player, Assembly-CSharp",
-		"level": 1,
-		"assetGuid": "5f314d63-bad3-43a4-956a-b1f70346c764",
-		"path": "",
-		"Data": {
-			"$type": "Creature, Assembly-CSharp",
-			"isAlive": false,
-			"Stats": {
-				"$type": "StatManager, Assembly-CSharp",
-				"statList": {
-					"$type": "System.Collections.Generic.List`1[[Stats, Assembly-CSharp]], mscorlib",
-					"$values": [{
-						"$type": "Stats, Assembly-CSharp",
-						"currentStat": 0,
-						"stat": 100.0
-					}, {
-						"$type": "Stats, Assembly-CSharp",
-						"currentStat": 1,
-						"stat": 35.0
-					}, {
-						"$type": "Stats, Assembly-CSharp",
-						"currentStat": 2,
-						"stat": 45.0
-					}, {
-						"$type": "Stats, Assembly-CSharp",
-						"currentStat": 3,
-						"stat": 150.0
-					}, {
-						"$type": "Stats, Assembly-CSharp",
-						"currentStat": 4,
-						"stat": 65.0
-					}]
-				}
-			},
-			"slots": null,
-			"tag": 0,
-			"job": 0,
-			"creatureName": "Sarah",
-			"description": "A well endowed woman who appears to be in her twenties to thrities. Sarah is a master of the mystic arts and is extreamly gifted as such."
-		}
+	"Test01": {
+		"$type": "MainScene, Assembly-CSharp",
+		"type": 0,
+		"sceneName": "Test01",
+		"assetGuid": "a1a3fa20-0253-4c68-9487-ba011eb92d2b",
+		"path": "Assets/Scenes/Test01.unity"
+	},
+	"BattleTest01": {
+		"$type": "BattleScene, Assembly-CSharp",
+		"allowedEnemies": {
+			"$type": "System.Collections.Generic.List`1[[Baddies, Assembly-CSharp]], mscorlib",
+			"$values": []
+		},
+		"type": 1,
+		"sceneName": "BattleTest01",
+		"assetGuid": "2120aca4-f4a5-4224-acf0-73714112dd8f",
+		"path": "Assets/Scenes/BattleTest01.unity"
 	}
 }

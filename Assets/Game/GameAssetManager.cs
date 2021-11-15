@@ -10,6 +10,7 @@ using System;
 using UnityEditor;
 #endif
 
+public enum ObjectType {SERIALIZED, NON_SERIALIZED}
 
 public abstract class Asset : ISerializationCallbackReceiver
 {
@@ -18,7 +19,6 @@ public abstract class Asset : ISerializationCallbackReceiver
     public Guid assetGuid;
     public string path;
 
-    // Though this will change depening on type.
     [System.NonSerialized]
     public UnityEngine.Object toSerialize;
 
@@ -50,13 +50,8 @@ public abstract class Asset : ISerializationCallbackReceiver
     // Similar to Create Asset but a different point to it.
     public void OnBeforeSerialize()
     {
-        if (assetGuid == null || assetGuid == Guid.Empty)
-        {
-            assetGuid = Guid.NewGuid();
-        }
-
         // I wonder if I should assume this belongs in resources somehow
-        path = GetAssetPath(toSerialize);
+        //path = GetAssetPath(toSerialize);
 
         if (assetGuid == Guid.Empty)
         {
@@ -144,8 +139,6 @@ public sealed class GameAssetManager : MonoBehaviour
                 {
                     item.Value.assetGuid = System.Guid.NewGuid();
                 }
-
-                // Need to reconstruct proper paths in here
                data.Add(item.Key, item.Value.CreateAsset());
             }
 
@@ -181,10 +174,10 @@ public sealed class GameAssetManager : MonoBehaviour
                 {
                     asset.Value.assetGuid = System.Guid.NewGuid();
                 }
-                if (asset.Value.path == string.Empty)
+                /*if (asset.Value.path == string.Empty)
                 {
                     Asset.GetAssetPath(asset.Value.toSerialize);
-                }
+                }*/
             }
 
             assetData.assetGuid = System.Guid.NewGuid();

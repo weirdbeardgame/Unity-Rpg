@@ -25,13 +25,38 @@ class ContextSceneMenu : Editor
     [SerializeField]
     static JrpgSceneManager Instance;
 
+    static GameAssetManager assets;
+
     private void OnEnable() {
         Instance = (JrpgSceneManager)target;
         Instance.names = new List<string>();
-        if (Instance.Scenes != null)
+        assets = GameAssetManager.Instance;
+        if (Instance.Scenes != null && Instance.Scenes.Count > 0)
         {
             foreach(var scene in Instance.Scenes)
             {
+                Instance.names.Add(scene.sceneName);
+            }
+        }
+        else
+        {
+            foreach(var asset in assets.Data)
+            {
+                // Need a way to dynamically check?
+                if (asset.Value is MainScene)
+                {
+                    Debug.Log("Scene Add");
+                    Instance.Scenes.Add((MainScene)asset.Value);
+                }
+                if (asset.Value is BattleScene)
+                {
+                    Debug.Log("Battle Scene Add");
+                    Instance.Scenes.Add((BattleScene)asset.Value);
+                }
+            }
+            foreach(var scene in Instance.Scenes)
+            {
+                Debug.Log("Name Add");
                 Instance.names.Add(scene.sceneName);
             }
         }
@@ -45,6 +70,7 @@ class ContextSceneMenu : Editor
         MainScene data = new MainScene(s, s.name);
         Instance.Scenes.Add(data);
         Instance.names.Add(s.name);
+        assets.AddAsset(data, s.name);
         //EditorSceneManager.MoveGameObjectToScene(Instance.selfRef, s);
     }
 
@@ -56,6 +82,7 @@ class ContextSceneMenu : Editor
         BattleScene data = new BattleScene(s, s.name);
         Instance.Scenes.Add(data);
         Instance.names.Add(s.name);
+        assets.AddAsset(data, s.name);
         //EditorSceneManager.MoveGameObjectToScene(Instance.selfRef, s);
     }
 
@@ -88,10 +115,9 @@ class ContextSceneMenu : Editor
             Instance.ActiveScene = Instance.Scenes[sceneID];
             if (EditorGUI.EndChangeCheck())
             {
-                EditorSceneManager.OpenScene(Instance.ActiveScene.scenePath);
+                EditorSceneManager.OpenScene(Instance.ActiveScene.path);
             }
         }
-        EditorUtility.SetDirty(Instance);
     }
 }
 #endif
@@ -102,8 +128,9 @@ public abstract class SceneInfo : Asset
 {
     public SceneTypes type;
     public string sceneName;
-    public string scenePath;
-    public object scene;
+
+    [System.NonSerialized]
+    public Scene scene;
 
     public virtual SceneTypes GetSceneType()
     {
@@ -116,13 +143,14 @@ public class MainScene : SceneInfo
 {
     public MainScene()
     {
-        scenePath = "Default";
+        path = "Default";
         sceneName = "Default";
     }
 
     public MainScene(Scene s, string name)
     {
         scene = s;
+        path = s.path;
         sceneName = name;
         type = SceneTypes.MAIN;
     }
@@ -140,31 +168,55 @@ public class MainScene : SceneInfo
     }
 }
 
+// Note for all scene types with special properties like Baddies or the future shop invetory.
+// CreateAsset must call a constructor that takes SceneInfo or Self's Type like BattleScene and initalizes the property and the name path data.
+// This will allow the scene to appear in the manager or it will fail to initalize and all will be null with that entry.
 public class BattleScene : SceneInfo
 {
     public List<Baddies> allowedEnemies;
 
     public BattleScene()
     {
-        scenePath = "Default";
+        path = "Default";
         sceneName = "Default";
         allowedEnemies = new List<Baddies>();
         type = SceneTypes.BATTLE;
     }
-    public BattleScene(SceneInfo s)
+    public BattleScene(BattleScene s)
     {
         scene = s.scene;
         sceneName = s.sceneName;
-        scenePath = s.scenePath;
+        path = s.path;
         type = s.type;
-        allowedEnemies = new List<Baddies>();
+        if (s.allowedEnemies.Count <= 0 || s.allowedEnemies == null)
+        {
+            allowedEnemies = new List<Baddies>();
+        }
+        else
+        {
+            allowedEnemies = s.allowedEnemies;
+        }
     }
     public BattleScene(Scene s, string name)
     {
         scene = s;
         sceneName = name;
+        path = s.path;
         type = SceneTypes.BATTLE;
         allowedEnemies = new List<Baddies>();
+    }
+
+    public override Asset CreateAsset()
+    {
+        BattleScene bScene = new BattleScene(this);
+        return bScene;
+    }
+
+    public override Asset DestroyAsset()
+    {
+        allowedEnemies.Clear();
+        allowedEnemies = null;
+        return this;
     }
 
     public override SceneTypes GetSceneType()
@@ -177,17 +229,48 @@ public class BattleScene : SceneInfo
 // Some games may battle on the current map or be action style 3D fighters IE. KH or Elder Scrolls
 // While at the crux this engine is more then capable of that type of game given the use of flag system for story quests and the Dialogue trees.
 // This Scene manager is meant for upwards of FFX style of game where there is a specific map or scene that is laid out for battle scenarios.
-[CreateAssetMenu, Serializable]
-public class JrpgSceneManager : ScriptableObject
+[Serializable]
+public class JrpgSceneManager : MonoBehaviour
 {
     [SerializeReference]
     private List<SceneInfo> scenes;
-
     public List<string> names;
 
     string filePath;
     string jsonData;
+
     SceneInfo activeScene;
+    GameAssetManager manager;
+
+    private void Start()
+    {
+        manager = GameAssetManager.Instance;
+        if (manager.isFilled())
+        {
+            if (scenes.Count <= 0)
+            {
+                foreach(var asset in manager.Data)
+                {
+                    // Need a way to dynamically check?
+                    if (asset.Value is MainScene)
+                    {
+                        Debug.Log("Scene Add");
+                        scenes.Add((MainScene)asset.Value);
+                    }
+                    else if (asset.Value is BattleScene)
+                    {
+                        Debug.Log("Battle Scene Add");
+                        scenes.Add((BattleScene)asset.Value);
+                    }
+                }
+            }
+            foreach(var scene in scenes)
+            {
+                Debug.Log("Name Add");
+                names.Add(scene.sceneName);
+            }
+        }
+    }
 
     static JsonSerializerSettings settings = new JsonSerializerSettings
     {
@@ -198,13 +281,13 @@ public class JrpgSceneManager : ScriptableObject
     public void LoadScene(SceneInfo scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
         activeScene = scene;
-        SceneManager.LoadScene(scene.scenePath, mode);
+        SceneManager.LoadScene(scene.path, mode);
     }
 
     public AsyncOperation LoadSceneAsync(SceneInfo scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
         activeScene = scene;
-        return SceneManager.LoadSceneAsync(scene.scenePath, mode);
+        return SceneManager.LoadSceneAsync(scene.path, mode);
     }
 
     public void LoadScene(string sceneID, LoadSceneMode mode = LoadSceneMode.Single)
@@ -214,7 +297,7 @@ public class JrpgSceneManager : ScriptableObject
             if (scene.sceneName == sceneID)
             {
                 activeScene = scene;
-                SceneManager.LoadScene(scene.scenePath, mode);
+                SceneManager.LoadScene(scene.path, mode);
             }
         }
     }
@@ -226,7 +309,7 @@ public class JrpgSceneManager : ScriptableObject
             if (scene.sceneName == sceneID)
             {
                 activeScene = scene;
-                return SceneManager.LoadSceneAsync(scene.scenePath, mode);
+                return SceneManager.LoadSceneAsync(scene.path, mode);
             }
         }
         return null;
