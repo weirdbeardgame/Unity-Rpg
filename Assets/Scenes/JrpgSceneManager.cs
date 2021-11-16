@@ -27,6 +27,9 @@ class ContextSceneMenu : Editor
 
     static GameAssetManager assets;
 
+    [SerializeField]
+    static public GameObject scripts;
+
     private void OnEnable() {
         Instance = (JrpgSceneManager)target;
         Instance.names = new List<string>();
@@ -71,7 +74,7 @@ class ContextSceneMenu : Editor
         Instance.Scenes.Add(data);
         Instance.names.Add(s.name);
         assets.AddAsset(data, s.name);
-        //EditorSceneManager.MoveGameObjectToScene(Instance.selfRef, s);
+        EditorSceneManager.MoveGameObjectToScene(scripts, s);
     }
 
     public static void NewBattleScene()
@@ -83,7 +86,7 @@ class ContextSceneMenu : Editor
         Instance.Scenes.Add(data);
         Instance.names.Add(s.name);
         assets.AddAsset(data, s.name);
-        //EditorSceneManager.MoveGameObjectToScene(Instance.selfRef, s);
+        EditorSceneManager.MoveGameObjectToScene(scripts, s);
     }
 
     // What I need to do is A. Load data from Asset Manager

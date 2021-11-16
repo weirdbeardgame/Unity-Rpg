@@ -22,8 +22,6 @@ class EnemySelect : Editor
 
     GameAssetManager manager;
     Transition transition;
-
-    [SerializeField]
     JrpgSceneManager scenes;
 
     List<BattleScene> battleScenes;
@@ -41,7 +39,9 @@ class EnemySelect : Editor
         baddieList = new List<Baddies>();
 
         manager = GameAssetManager.Instance;
+        scenes = FindObjectOfType<JrpgSceneManager>();
         transition = (Transition)target;
+
         index = new List<int>();
 
         battleScenes = new List<BattleScene>();
@@ -83,7 +83,6 @@ class EnemySelect : Editor
     public override void OnInspectorGUI()
     {
         base.DrawDefaultInspector();
-        scenes = (JrpgSceneManager)EditorGUILayout.ObjectField(scenes, typeof(JrpgSceneManager), true);
         if (scenes != null)
         {
             if (sceneNames == null || sceneNames.Count == 0)
@@ -120,15 +119,20 @@ class EnemySelect : Editor
                         index.Add(new int());
                     }
                 }
+
                 for (int i = 0; i < transition.allowedMapData[scenes.ActiveScene].allowedEnemies.Count; i++)
                 {
                     index[i] = EditorGUILayout.Popup(index[i], names.ToArray());
                     transition.allowedMapData[scenes.ActiveScene].allowedEnemies[i] = baddieList[index[i]];
                 }
+
+                // Write back to Battle Scene Asset. Write Dictionary index to file.
+                if (GUILayout.Button("Save"))
+                {
+                    manager.WriteBack(transition.allowedMapData[scenes.ActiveScene].sceneName, transition.allowedMapData[scenes.ActiveScene]);
+                    // Need to write the scenes that are associated here. Perhaps use a tree structure?
+                }
             }
-            // Can I really serialize like this?
-            //EditorUtility.SetDirty(transition);
-            //EditorUtility.SetDirty(scenes);
         }
     }
 };

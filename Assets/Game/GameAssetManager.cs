@@ -147,6 +147,17 @@ public sealed class GameAssetManager : MonoBehaviour
         }
     }
 
+    // Note this function is for replacing items that exist already. Use Add to add a new item
+    public bool WriteBack(string index, Asset asset)
+    {
+        if (data[index] != null)
+        {
+            data[index] = asset;
+            return true;
+        }
+        return false;
+    }
+
     static JsonSerializerSettings settings = new JsonSerializerSettings
     {
         TypeNameHandling = TypeNameHandling.All,
