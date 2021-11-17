@@ -27,7 +27,6 @@ class ContextSceneMenu : Editor
 
     static GameAssetManager assets;
 
-    [SerializeField]
     static public GameObject scripts;
 
     private void OnEnable() {
@@ -176,13 +175,13 @@ public class MainScene : SceneInfo
 // This will allow the scene to appear in the manager or it will fail to initalize and all will be null with that entry.
 public class BattleScene : SceneInfo
 {
-    public List<Baddies> allowedEnemies;
+    public List<int> allowedEnemies;
 
     public BattleScene()
     {
         path = "Default";
         sceneName = "Default";
-        allowedEnemies = new List<Baddies>();
+        allowedEnemies = new List<int>();
         type = SceneTypes.BATTLE;
     }
     public BattleScene(BattleScene s)
@@ -193,7 +192,7 @@ public class BattleScene : SceneInfo
         type = s.type;
         if (s.allowedEnemies.Count <= 0 || s.allowedEnemies == null)
         {
-            allowedEnemies = new List<Baddies>();
+            allowedEnemies = new List<int>();
         }
         else
         {
@@ -206,7 +205,7 @@ public class BattleScene : SceneInfo
         sceneName = name;
         path = s.path;
         type = SceneTypes.BATTLE;
-        allowedEnemies = new List<Baddies>();
+        allowedEnemies = new List<int>();
     }
 
     public override Asset CreateAsset()
@@ -281,6 +280,8 @@ public class JrpgSceneManager : MonoBehaviour
         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
     };
 
+    // SceneInfo overloads
+
     public void LoadScene(SceneInfo scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
         activeScene = scene;
@@ -292,6 +293,13 @@ public class JrpgSceneManager : MonoBehaviour
         activeScene = scene;
         return SceneManager.LoadSceneAsync(scene.path, mode);
     }
+
+    public AsyncOperation UnloadSceneAsync(SceneInfo scene)
+    {
+        return SceneManager.UnloadSceneAsync(scene.path);
+    }
+
+    // String Overloads
 
     public void LoadScene(string sceneID, LoadSceneMode mode = LoadSceneMode.Single)
     {
@@ -313,6 +321,18 @@ public class JrpgSceneManager : MonoBehaviour
             {
                 activeScene = scene;
                 return SceneManager.LoadSceneAsync(scene.path, mode);
+            }
+        }
+        return null;
+    }
+
+    public AsyncOperation UnloadSceneAsync(string sceneN)
+    {
+        foreach (var scene in scenes)
+        {
+            if (scene.sceneName == sceneN)
+            {
+                return SceneManager.UnloadSceneAsync(scene.path);
             }
         }
         return null;

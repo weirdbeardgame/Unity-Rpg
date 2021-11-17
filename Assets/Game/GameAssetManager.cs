@@ -153,6 +153,8 @@ public sealed class GameAssetManager : MonoBehaviour
         if (data[index] != null)
         {
             data[index] = asset;
+            string serialize = JsonConvert.SerializeObject(data, settings);
+            File.WriteAllText(filePath, serialize);
             return true;
         }
         return false;

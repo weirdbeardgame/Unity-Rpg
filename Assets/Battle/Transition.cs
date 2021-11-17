@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+using System.IO;
+using Newtonsoft.Json;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -26,11 +29,21 @@ class EnemySelect : Editor
 
     List<BattleScene> battleScenes;
     List<string> sceneNames;
+    string path = "Assets/Transition.json";
+    string jsonData;
+
+    bool isInit;
 
     private void OnEnable()
     {
         Init();
     }
+
+    static JsonSerializerSettings settings = new JsonSerializerSettings
+    {
+        TypeNameHandling = TypeNameHandling.All,
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    };
 
     public void Init()
     {
@@ -42,10 +55,8 @@ class EnemySelect : Editor
         scenes = FindObjectOfType<JrpgSceneManager>();
         transition = (Transition)target;
 
-        index = new List<int>();
-
         battleScenes = new List<BattleScene>();
-        transition.allowedMapData = new Dictionary<SceneInfo, BattleScene>();
+        transition.allowedMapData = new Dictionary<string, BattleScene>();
 
         if (manager.isFilled())
         {
@@ -61,6 +72,18 @@ class EnemySelect : Editor
                 }
             }
         }
+
+        if (File.Exists(path))
+        {
+            jsonData = File.ReadAllText(path);
+
+            // This is the partial result of Direct Cast causing issue. When abstracted through asset Manager. Shit works
+            transition.allowedMapData = JsonConvert.DeserializeObject<Dictionary<string, BattleScene>>(jsonData, settings);
+        }
+
+        index = new List<int>();
+
+        isInit = true;
     }
 
     private void loadScenes()
@@ -83,7 +106,11 @@ class EnemySelect : Editor
     public override void OnInspectorGUI()
     {
         base.DrawDefaultInspector();
-        if (scenes != null)
+        if (scenes == null || !isInit)
+        {
+            Init();
+        }
+        if (scenes != null && isInit)
         {
             if (sceneNames == null || sceneNames.Count == 0)
             {
@@ -93,44 +120,54 @@ class EnemySelect : Editor
             {
                 if (transition.allowedMapData == null)
                 {
-                    transition.allowedMapData = new Dictionary<SceneInfo, BattleScene>();
+                    transition.allowedMapData = new Dictionary<string, BattleScene>();
                 }
                 else
                 {
-                    transition.allowedMapData.Add(scenes.ActiveScene, new BattleScene());
+                    transition.allowedMapData.Add(scenes.ActiveScene.sceneName, new BattleScene());
                 }
             }
-            if (transition.allowedMapData.ContainsKey(scenes.ActiveScene))
+            if (transition.allowedMapData.ContainsKey(scenes.ActiveScene.sceneName))
             {
+                if (index.Count <= 0 && transition.allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies.Count > 0)
+                {
+                    for(int i = 0; i < transition.allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies.Count; i++)
+                    {
+                        index.Add(transition.allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies[i]);
+                    }
+                }
                 BattleScene bScene = battleScenes[EditorGUILayout.Popup(sceneIndex, sceneNames.ToArray())];
-                transition.allowedMapData[scenes.ActiveScene] = bScene;
+                transition.allowedMapData[scenes.ActiveScene.sceneName] = bScene;
                 // Need to list enemy names to set which enemy can be fought on battle map.
                 if (GUILayout.Button("Add Enemy"))
                 {
                     count += 1;
-                    if (transition.allowedMapData[scenes.ActiveScene].allowedEnemies == null)
+                    if (transition.allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies == null)
                     {
-                        transition.allowedMapData[scenes.ActiveScene].allowedEnemies = new List<Baddies>();
+                        transition.allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies = new List<int>();
                     }
                     // Need to add custom list editor. Right now i'd have a list of indexes...
-                    if (transition.allowedMapData[scenes.ActiveScene].allowedEnemies.Count < count)
+                    if (transition.allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies.Count < count)
                     {
-                        transition.allowedMapData[scenes.ActiveScene].allowedEnemies.Add(new Baddies());
+                        transition.allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies.Add(new int());
                         index.Add(new int());
                     }
                 }
 
-                for (int i = 0; i < transition.allowedMapData[scenes.ActiveScene].allowedEnemies.Count; i++)
+                for (int i = 0; i < transition.allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies.Count; i++)
                 {
+                    // I can print from names. It's valid and has data. Index is what's broken for some reason
                     index[i] = EditorGUILayout.Popup(index[i], names.ToArray());
-                    transition.allowedMapData[scenes.ActiveScene].allowedEnemies[i] = baddieList[index[i]];
+                    transition.allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies[i] = baddieList[index[i]].id;
                 }
 
                 // Write back to Battle Scene Asset. Write Dictionary index to file.
                 if (GUILayout.Button("Save"))
                 {
-                    manager.WriteBack(transition.allowedMapData[scenes.ActiveScene].sceneName, transition.allowedMapData[scenes.ActiveScene]);
+                    manager.WriteBack(transition.allowedMapData[scenes.ActiveScene.sceneName].sceneName, transition.allowedMapData[scenes.ActiveScene.sceneName]);
                     // Need to write the scenes that are associated here. Perhaps use a tree structure?
+                    string save = JsonConvert.SerializeObject(transition.allowedMapData, settings);
+                    File.WriteAllText(path, save);
                 }
             }
         }
@@ -149,13 +186,11 @@ public class Transition : MonoBehaviour
     commandMenus Menus;
     GameManager manager;
 
-    [SerializeField]
     JrpgSceneManager scenes;
 
     GameObject scripts;
     GameObject mainCamera;
     GameObject BattleObject;
-
     Camera battleCamera;
 
     //Should I use a shader or the animator componet for battle swirl animations?
@@ -164,10 +199,10 @@ public class Transition : MonoBehaviour
 
     // ToDo replace with Scene implementation.
     [SerializeField]
-    string mapLoad = "BattleScene";
     string path = "Assets/Transition.json";
+    string jsonData;
 
-    public Dictionary<SceneInfo, BattleScene> allowedMapData;
+    public Dictionary<string, BattleScene> allowedMapData;
 
     Enemies enemies;
 
@@ -178,6 +213,11 @@ public class Transition : MonoBehaviour
     {
         enemies = FindObjectOfType<Enemies>();
         manager = GameManager.Instance;
+        if (File.Exists(path))
+        {
+            jsonData = File.ReadAllText(path);
+            allowedMapData = JsonConvert.DeserializeObject<Dictionary<string, BattleScene>>(jsonData);
+        }
     }
 
     /***********************************************************************************************************************************
@@ -191,11 +231,14 @@ public class Transition : MonoBehaviour
     {
         var rand = new System.Random();
         int amount = rand.Next(1, 3);
-        //int baddieIndex = rand.Next(allowedEnemies[0], allowedEnemies[allowedEnemies.Count]); // This seems a grave misuse of enemy ID
+
+        // Grab Active SceneInfo and grab baddie indexes in the battleScene. Select from random baddie id's and load into battle scene.
+
         for (int i = 0; i < amount; i++)
         {
+            int index = rand.Next(allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies.Count);
             // Spawn and add into BattleEnemies from here
-            //BattleObject.GetComponent<BattleEnemies>().Insert(Instantiate<GameObject>(enemies.enemyData[allowedEnemies[baddieIndex]].prefab));
+            BattleObject.GetComponent<BattleEnemies>().Insert(enemies.enemyData[allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies[index]]);
         }
     }
 
@@ -205,19 +248,14 @@ public class Transition : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
-            //PreviousIndex = SceneManager.GetActiveScene().buildIndex;
-            //CurrentScene = SceneManager.GetActiveScene(); // The previous scene we were on.
-
-            //other.gameObject.transform.position = v2;
-
-            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene]);
+            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene.sceneName]);
 
             while (!async.isDone)
             {
                 yield return null;
             }
 
-            AsyncOperation unload = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+            AsyncOperation unload = scenes.UnloadSceneAsync(scenes.ActiveScene);
 
             while (!unload.isDone)
             {
@@ -243,9 +281,6 @@ public class Transition : MonoBehaviour
 
                 yield return null;
             }
-
-            Scene load = SceneManager.GetSceneByName(mapLoad);
-            SceneManager.MoveGameObjectToScene(other.gameObject, load);
         }
     }
 }

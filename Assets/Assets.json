@@ -301,18 +301,18 @@
 		"$type": "MainScene, Assembly-CSharp",
 		"type": 0,
 		"sceneName": "Test01",
-		"assetGuid": "a1a3fa20-0253-4c68-9487-ba011eb92d2b",
+		"assetGuid": "2a5f8864-685c-4539-bc54-2a9849bc7856",
 		"path": "Assets/Scenes/Test01.unity"
 	},
 	"BattleTest01": {
 		"$type": "BattleScene, Assembly-CSharp",
 		"allowedEnemies": {
-			"$type": "System.Collections.Generic.List`1[[Baddies, Assembly-CSharp]], mscorlib",
-			"$values": []
+			"$type": "System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib",
+			"$values": [0, 1]
 		},
 		"type": 1,
 		"sceneName": "BattleTest01",
-		"assetGuid": "2120aca4-f4a5-4224-acf0-73714112dd8f",
+		"assetGuid": "de3617f9-54fa-4ce7-b683-76379a323575",
 		"path": "Assets/Scenes/BattleTest01.unity"
 	}
 }
