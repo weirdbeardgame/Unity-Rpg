@@ -9,11 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Test Map.unity
     guid: 735dc37b4cc9dda0bb2056cdaaae21de
   - enabled: 1
-    path: Assets/Scenes/Battle Test.unity
-    guid: 5855007ef055c4b49884959f8af80609
-  - enabled: 1
     path: Assets/Scenes/DarkSceneTest.unity
     guid: 41089b4ac317d694d8ea271dfcdabf0c
+  - enabled: 1
+    path: Assets/Scenes/Test01.unity
+    guid: 330dd15d0115e93c2b6065773a64bbb1
+  - enabled: 1
+    path: Assets/Scenes/BattleTest01.unity
+    guid: 1fd08325a52064a448ac11621670c01c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 466cc2a15b44f9a4ab5627dc2639b1aa,
       type: 2}

@@ -249,7 +249,7 @@ public class Transition : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
-            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene.sceneName]);
+            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene.sceneName], LoadSceneMode.Additive);
 
             while (!async.isDone)
             {
@@ -262,7 +262,7 @@ public class Transition : MonoBehaviour
             {
                 BattleObject = GameObject.Find("Battle");
                 scripts = GameObject.Find("Scripts");
-                mainCamera = GameObject.Find("Main Camera");
+                //mainCamera = GameObject.Find("Main Camera");
 
                 Menus = FindObjectOfType<commandMenus>();
                 Menus.Initlaize();
