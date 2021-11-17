@@ -179,6 +179,7 @@ class EnemySelect : Editor
 // Needs a way to select which spawned enemies can appear per map!
 // One issue is that i've been combining two things that need to be seperate...
 // This should be a global class that should handle current map screen.
+
 public class Transition : MonoBehaviour
 {
     Battle battle;
@@ -193,6 +194,7 @@ public class Transition : MonoBehaviour
 
     [SerializeField]
     GameObject BattleObject;
+
     Camera battleCamera;
 
     SceneInfo previous;
@@ -253,16 +255,22 @@ public class Transition : MonoBehaviour
 
         enemies = scripts.GetComponent<Enemies>();
 
+        DontDestroyOnLoad(this);
+
         if (other.gameObject.tag == "Player")
         {
-            AsyncOperation unload = scenes.UnloadSceneAsync(scenes.ActiveScene);
+            // Something else is causing the scene to fail to load
+            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene.sceneName], LoadSceneMode.Additive);
+
+            while (!async.isDone)
+            {
+                yield return null;
+            }
+
+            AsyncOperation unload = scenes.UnloadSceneAsync(previous);
 
             while (!unload.isDone)
             {
-                BattleObject = GameObject.Find("Battle");
-                scripts = GameObject.Find("Scripts");
-                //mainCamera = GameObject.Find("Main Camera");
-
                 Menus = FindObjectOfType<commandMenus>();
                 Menus.Initlaize();
 
@@ -276,14 +284,15 @@ public class Transition : MonoBehaviour
 
                 yield return null;
             }
-
-            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene.sceneName]);
-
-            while (!async.isDone)
-            {
-                yield return null;
-            }
-
+            SceneManager.MoveGameObjectToScene(BattleObject, SceneManager.GetSceneByName(allowedMapData[previous.sceneName].sceneName));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(allowedMapData[previous.sceneName].sceneName));
+            gameObject.SetActive(false);
         }
+    }
+
+    // Should this be in Battle.CS?
+    void AddExp()
+    {
+        // After Battle. Add EXP. Load scene to show EXP and Levels. And send player back to the previous scene.
     }
 }
