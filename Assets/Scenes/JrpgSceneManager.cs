@@ -15,6 +15,7 @@ public enum SceneTypes { MAIN, BATTLE }
 // Realistically I need to add an editor for this shit since i'm serializing property data that's in the map
 
 #if UNITY_EDITOR
+
 [CustomEditor(typeof(JrpgSceneManager))]
 class ContextSceneMenu : Editor
 {
@@ -22,7 +23,6 @@ class ContextSceneMenu : Editor
     // This seems to need a bit more... Elaboration to put it lightly. 
     // I need to find a way to make this specific instance the editor is grabbing appear in the Unity UI as a GameObject componet.
     // That, or I should use a scriptable object as the actual manager instance and let the editor fill in the rest where needed which seems more logical
-    [SerializeField]
     static JrpgSceneManager Instance;
 
     static GameAssetManager assets;
@@ -251,7 +251,7 @@ public class JrpgSceneManager : MonoBehaviour
         {
             if (scenes.Count <= 0)
             {
-                foreach(var asset in manager.Data)
+                foreach (var asset in manager.Data)
                 {
                     // Need a way to dynamically check?
                     if (asset.Value is MainScene)
@@ -266,11 +266,16 @@ public class JrpgSceneManager : MonoBehaviour
                     }
                 }
             }
-            foreach(var scene in scenes)
+            foreach (var scene in scenes)
             {
                 Debug.Log("Name Add");
                 names.Add(scene.sceneName);
             }
+        }
+        // This feels... Hackish
+        if (activeScene == null)
+        {
+           activeScene = scenes[0];
         }
     }
 

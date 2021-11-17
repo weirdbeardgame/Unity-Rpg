@@ -213,6 +213,7 @@ public class Transition : MonoBehaviour
     {
         enemies = FindObjectOfType<Enemies>();
         manager = GameManager.Instance;
+        scenes = FindObjectOfType<JrpgSceneManager>();
         if (File.Exists(path))
         {
             jsonData = File.ReadAllText(path);

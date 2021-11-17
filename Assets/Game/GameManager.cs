@@ -19,8 +19,7 @@ public class GameManager : MonoBehaviour
     QuestManager questSystem;
     NPCManager npcManager;
 
-    [SerializeField]
-    JrpgSceneManager scenes;
+    //JrpgSceneManager scenes;
 
     private static GameManager instance;
     public static GameManager Instance
