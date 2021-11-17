@@ -188,10 +188,14 @@ public class Transition : MonoBehaviour
 
     JrpgSceneManager scenes;
 
+    [SerializeField]
     GameObject scripts;
-    GameObject mainCamera;
+
+    [SerializeField]
     GameObject BattleObject;
     Camera battleCamera;
+
+    SceneInfo previous;
 
     //Should I use a shader or the animator componet for battle swirl animations?
     //Shader battleSwirl;
@@ -211,7 +215,6 @@ public class Transition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemies = FindObjectOfType<Enemies>();
         manager = GameManager.Instance;
         scenes = FindObjectOfType<JrpgSceneManager>();
         if (File.Exists(path))
@@ -237,19 +240,22 @@ public class Transition : MonoBehaviour
 
         for (int i = 0; i < amount; i++)
         {
-            int index = rand.Next(allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies.Count);
+            int index = rand.Next(allowedMapData[previous.sceneName].allowedEnemies.Count);
             // Spawn and add into BattleEnemies from here
-            BattleObject.GetComponent<BattleEnemies>().Insert(enemies.enemyData[allowedMapData[scenes.ActiveScene.sceneName].allowedEnemies[index]]);
+            BattleObject.GetComponent<BattleEnemies>().Insert(enemies.enemyData[allowedMapData[previous.sceneName].allowedEnemies[index]]);
         }
     }
 
     IEnumerator OnTriggerEnter2D(Collider2D other)
     {
+        previous = scenes.ActiveScene;
         MonoBehaviour.Destroy(other.gameObject);
+
+        enemies = scripts.GetComponent<Enemies>();
 
         if (other.gameObject.tag == "Player")
         {
-            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene.sceneName], LoadSceneMode.Additive);
+            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene.sceneName]);
 
             while (!async.isDone)
             {
@@ -268,7 +274,7 @@ public class Transition : MonoBehaviour
                 Menus.Initlaize();
 
                 BattleObject.AddComponent<Skills>();
-                battle = BattleObject.AddComponent<Battle>();
+                battle = BattleObject.GetComponent<Battle>();
 
                 BattleObject.AddComponent<BattleSlots>();
                 BattleObject.AddComponent<CommandQueue>();
@@ -278,7 +284,9 @@ public class Transition : MonoBehaviour
 
                 selectEnemies();
 
-                battle.StartBattle(SceneManager.GetActiveScene(), BattleObject, -1);
+                BattleObject.GetComponent<BattlePlayers>().Initialize(BattleObject, BattleObject.GetComponent<BattleEnemies>().BadParty);
+
+                battle.StartBattle(previous, BattleObject);
 
                 yield return null;
             }

@@ -9,6 +9,7 @@ using TMPro;
 using Newtonsoft.Json;
 
 public enum CommandType { SKILL, ITEM };
+public enum BattleStateM { START, ACTIVE, END };
 
 public class Battle : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class Battle : MonoBehaviour
     CommandQueue Queue;
     GameObject BattleObject;
     GameObject SelectionArrow;
-    Scene SceneToReturnTo;
+    SceneInfo SceneToReturnTo;
     Creature Caster;
     Creature Receiver;
     Animator BattleAnimations;
@@ -27,28 +28,33 @@ public class Battle : MonoBehaviour
     int x, y = 3;
     int EnemyKilled;
     int PlayerKilled;
+    BattleStateM state = BattleStateM.START;
 
-    public void StartBattle(Scene PreviousScene, GameObject BattleObject, int Scene)
+    public void StartBattle(SceneInfo PreviousScene, GameObject bObject)
     {
-        SceneToReturnTo = PreviousScene;
-        this.BattleObject = BattleObject;
-
-        slots = BattleObject.GetComponent<BattleSlots>();
-
-        Queue = BattleObject.GetComponent<CommandQueue>();
-        Players = BattleObject.GetComponent<BattlePlayers>();
-        enemies = BattleObject.GetComponent<BattleEnemies>();
-        BattleAnimations = BattleObject.GetComponent<Animator>();
-
-        for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().badParty.Count; i++)
+        if (state == BattleStateM.START)
         {
-            slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, enemies.badParty[i].Data, i);
-            x += 1;
-        }
+            SceneToReturnTo = PreviousScene;
+            BattleObject = bObject;
 
-        for (int i = 0; i < 2; i++)
-        {
-            slots.createSlots(SlotPosition.FRONT, BattleTag.PLAYER, Players.GetPlayer(i), i);
+            slots = BattleObject.GetComponent<BattleSlots>();
+
+            Queue = BattleObject.GetComponent<CommandQueue>();
+            Players = BattleObject.GetComponent<BattlePlayers>();
+            enemies = BattleObject.GetComponent<BattleEnemies>();
+            BattleAnimations = BattleObject.GetComponent<Animator>();
+
+            for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().BadParty.Count; i++)
+            {
+                slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, enemies.BadParty[i].Data, i);
+                x += 1;
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                slots.createSlots(SlotPosition.FRONT, BattleTag.PLAYER, Players.GetPlayer(i), i);
+            }
+            state = BattleStateM.ACTIVE;
         }
     }
 
@@ -62,7 +68,7 @@ public class Battle : MonoBehaviour
             yield return null;
         }
 
-        AsyncOperation async = SceneManager.LoadSceneAsync(SceneToReturnTo.name);
+        AsyncOperation async = SceneManager.LoadSceneAsync(SceneToReturnTo.sceneName);
 
         while (!async.isDone)
         {
@@ -77,15 +83,24 @@ public class Battle : MonoBehaviour
 
     void Update()
     {
-        // Run Battle Logic in here
-        for (int i = 0; i < Players.battleParty.Count; i++)
+        switch (state)
         {
-            Players.Battle(i);
-            enemies.Battle(i);
-            BattleObject.GetComponent<commandMenus>().DrawStats(Players.battleParty);
-            // Listen for death and action. Check for enemy or player death
+            case BattleStateM.ACTIVE:
+                // Run Battle Logic in here
+                for (int i = 0; i < Players.battleParty.Count; i++)
+                {
+                    Players.Battle(i);
+                    enemies.Battle(i);
+                    BattleObject.GetComponent<commandMenus>().DrawStats(Players.battleParty);
+                    // Listen for death and action. Check for enemy or player death
+                }
+                break;
+
+            case BattleStateM.END:
+                EndBattle();
+                break;
         }
-        EndBattle();
+
     }
 
 

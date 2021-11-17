@@ -47,7 +47,7 @@ public class BattlePlayers : MonoBehaviour
 
     GameObject BattleObject;
 
-    public Dictionary<int, CharacterInfo> Initialize(GameObject BattleO, List<Baddies> Bad, int i)
+    public Dictionary<int, CharacterInfo> Initialize(GameObject BattleO, List<Baddies> Bad)
     {
         if (!isInitalized)
         {

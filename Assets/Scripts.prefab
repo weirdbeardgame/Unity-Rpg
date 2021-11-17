@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 1055217692028340075}
   - component: {fileID: 1055217692028340073}
   - component: {fileID: 1702661335822001156}
+  - component: {fileID: 1777358490415889429}
+  - component: {fileID: 3071644579479406102}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -49,7 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a563a5282208b4c8375ca99969ee96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenes: {fileID: 0}
 --- !u!114 &1055217692028340071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +129,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105a3f7f131a32d42beb8b22d4cd6a3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenes: []
-  names: []
+  scenes:
+  - id: 0
+  - id: 1
+  names:
+  - Test01
+  - BattleTest01
   references:
     version: 1
+    00000000:
+      type: {class: MainScene, ns: , asm: Assembly-CSharp}
+      data:
+        path: Assets/Scenes/Test01.unity
+        type: 0
+        sceneName: Test01
+    00000001:
+      type: {class: BattleScene, ns: , asm: Assembly-CSharp}
+      data:
+        path: Assets/Scenes/BattleTest01.unity
+        type: 1
+        sceneName: BattleTest01
+        allowedEnemies: 0000000001000000
+--- !u!114 &1777358490415889429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055217692028340065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1573b631b1de04709b5a801b0914511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3071644579479406102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055217692028340065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 207cee8199b8f8e4ab3d79c61236ac62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

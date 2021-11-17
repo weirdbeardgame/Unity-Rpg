@@ -134,8 +134,9 @@ GameObject:
   - component: {fileID: 271235096}
   - component: {fileID: 271235098}
   - component: {fileID: 271235097}
+  - component: {fileID: 271235099}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Command Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,6 +199,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271235095}
   m_CullTransparentMesh: 1
+--- !u!114 &271235099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271235095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b056da7587a510c94763242ed3f65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CommandSelected: 0
 --- !u!1 &588076878
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,27 +416,13 @@ GameObject:
   - component: {fileID: 1310237421}
   - component: {fileID: 1310237420}
   - component: {fileID: 1310237419}
-  - component: {fileID: 1310237418}
   m_Layer: 5
-  m_Name: CommandMenu
+  m_Name: CommandMenuCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1310237418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1310237417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90b056da7587a510c94763242ed3f65a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CommandSelected: 0
 --- !u!114 &1310237419
 MonoBehaviour:
   m_ObjectHideFlags: 0
