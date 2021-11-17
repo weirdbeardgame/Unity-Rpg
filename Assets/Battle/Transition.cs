@@ -255,13 +255,6 @@ public class Transition : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
-            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene.sceneName]);
-
-            while (!async.isDone)
-            {
-                yield return null;
-            }
-
             AsyncOperation unload = scenes.UnloadSceneAsync(scenes.ActiveScene);
 
             while (!unload.isDone)
@@ -273,14 +266,7 @@ public class Transition : MonoBehaviour
                 Menus = FindObjectOfType<commandMenus>();
                 Menus.Initlaize();
 
-                BattleObject.AddComponent<Skills>();
                 battle = BattleObject.GetComponent<Battle>();
-
-                BattleObject.AddComponent<BattleSlots>();
-                BattleObject.AddComponent<CommandQueue>();
-                BattleObject.AddComponent<BattleEnemies>();
-                BattleObject.AddComponent<BattlePlayers>();
-                BattleObject.AddComponent<BattleItemMenu>();
 
                 selectEnemies();
 
@@ -290,6 +276,14 @@ public class Transition : MonoBehaviour
 
                 yield return null;
             }
+
+            AsyncOperation async = scenes.LoadSceneAsync(allowedMapData[scenes.ActiveScene.sceneName]);
+
+            while (!async.isDone)
+            {
+                yield return null;
+            }
+
         }
     }
 }
