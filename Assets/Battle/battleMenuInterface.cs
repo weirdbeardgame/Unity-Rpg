@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleMIface : MonoBehaviour
+public abstract class BattleMIface : MonoBehaviour
 {
     protected int appID;
     protected bool open;

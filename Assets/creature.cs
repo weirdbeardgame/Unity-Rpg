@@ -18,6 +18,7 @@ public class Creature
 
     [SerializeField]
     private GameObject BattlePrefab;
+
     public JobSystem job;
 
     [System.NonSerialized]

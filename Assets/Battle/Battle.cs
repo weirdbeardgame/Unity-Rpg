@@ -32,6 +32,8 @@ public class Battle : MonoBehaviour
 
     public void StartBattle(SceneInfo PreviousScene, GameObject bObject)
     {
+        // HAX
+        state = BattleStateM.START;
         if (state == BattleStateM.START)
         {
             SceneToReturnTo = PreviousScene;
@@ -43,6 +45,8 @@ public class Battle : MonoBehaviour
             Players = BattleObject.GetComponent<BattlePlayers>();
             enemies = BattleObject.GetComponent<BattleEnemies>();
             BattleAnimations = BattleObject.GetComponent<Animator>();
+
+            //Players.Init(BattleObject, enemies.BadParty);
 
             for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().BadParty.Count; i++)
             {
