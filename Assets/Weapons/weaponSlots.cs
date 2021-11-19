@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Appendage { LLEG, RLEG, LHAND, RHAND, HEAD, BODY };
+
 public class weaponSlots : ScriptableObject
 {
     bool IsEquiped;

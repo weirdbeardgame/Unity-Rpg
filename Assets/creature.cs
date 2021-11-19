@@ -3,10 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// This is programed to be ABS style ala ff vi - ff ix
-public enum BattleTag { PLAYER, ENEMY }
-public enum BattleState { COMMAND, SELECTION, ACTION, WAIT };
-public enum Appendage { LLEG, RLEG, LHAND, RHAND, HEAD, BODY };
+// This is programed to be ATB style ala ff vi - ff ix
 public enum JobSystem { MAGE, WARRIOR, FIGHTER, DRAGOON, THIEF, SAMURAI }; // Does Musungo fit in the warrior box?
 
 public class Creature
@@ -72,11 +69,6 @@ public class Creature
     public weaponSlots GetSlot(Appendage app)
     {
         return slots[(int)app];
-    }
-
-    public void send(object message)
-    {
-        
     }
 
     public Creature getCreature()

@@ -12,7 +12,6 @@ public class commandMenus : MonoBehaviour
 
     // Action Menus (Item, Skills, Magic)
     SortedDictionary<int, BattleMIface> SubMenus;
-    BattleControls controls;
 
     Gauge gauge;
 
@@ -54,8 +53,6 @@ public class commandMenus : MonoBehaviour
         PlayerStatus = GameObject.Find("menu");
         Commands = GameObject.Find("Command Screen");
         Commands.GetComponent<Image>().enabled = false;
-
-        controls = GetComponent<BattleControls>();
 
         // Widgets = new List<Widget>();
         Menus = new SortedDictionary<JobSystem, BattleMIface>();
@@ -134,13 +131,7 @@ public class commandMenus : MonoBehaviour
         // Debug.Log("IsOpened: " + IsOpened);
         if (isOpened)
         {
-            // Process input in here
-            widgetIndex += controls.index();
-
-            if (controls.back())
-            {
-                // Back out of current selection or menu
-            }
+            // Let Unity process UI events in here
         }
     }
 }

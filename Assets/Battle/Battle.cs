@@ -8,8 +8,9 @@ using UnityEngine.UI;
 using TMPro;
 using Newtonsoft.Json;
 
-public enum CommandType { SKILL, ITEM };
 public enum BattleStateM { START, ACTIVE, END };
+
+public enum BattleState { COMMAND, SELECTION, ACTION, WAIT };
 
 public class Battle : MonoBehaviour
 {
@@ -45,8 +46,6 @@ public class Battle : MonoBehaviour
             Players = BattleObject.GetComponent<BattlePlayers>();
             enemies = BattleObject.GetComponent<BattleEnemies>();
             BattleAnimations = BattleObject.GetComponent<Animator>();
-
-            //Players.Init(BattleObject, enemies.BadParty);
 
             for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().BadParty.Count; i++)
             {
