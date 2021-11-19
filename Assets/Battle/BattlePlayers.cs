@@ -14,29 +14,22 @@ public class BattlePlayers : MonoBehaviour
     int killCount = 0;
     int i = 0;
 
-    List<Baddies> BadParty;
+    List<Creature> BadParty;
 
     commandMenus Menu;
 
     GameObject BattleObject;
 
-    public void Init(GameObject BattleO, List<Baddies> Bad)
+    public void Init(GameObject BattleO)
     {
         Players = FindObjectOfType<Party>();
         battleParty = new Dictionary<int, Player>();
         // Grab the top 3 members of the party
         for (int j = 0; j < 2; j++)
         {
-
-            //c.playerQueue = new CommandQueue();
-            //c.init(Players.PartyMembers[j].Data, Players.PartyMembers[j].prefab, j);
             DontDestroyOnLoad(Players.PartyMembers[j].prefab);
             Players.PartyMembers[j].prefab.SetActive(true);
             battleParty.Add(j, Players.PartyMembers[j]);
-
-            // allCharacters[j].playerQueue = FindObjectOfType<CommandQueue>(); // Incorrect! 
-            // Each player could have their own instance! Not look for the one in scene. The point is the players and baddies are each running their own logic.
-            // DontDestroyOnLoad(battleParty[j].Prefab);
         }
 
         BattleObject = BattleO;
@@ -55,7 +48,7 @@ public class BattlePlayers : MonoBehaviour
         {
             if (battleParty[i].Data.state == BattleState.WAIT)
             {
-                //battleParty[i].Player.state = BattleState.COMMAND;
+                battleParty[i].Data.state = BattleState.COMMAND;
             }
 
             else
@@ -67,8 +60,9 @@ public class BattlePlayers : MonoBehaviour
 
     // In here goes the logic for Battle! If God is love then you can call me cupid! ooh rah
     // Calculate the magical equations for Attack any status effects etc here. 
-    public void Battle(int i)
+    public ActionIface Battle(int i)
     {
+        ActionIface action = new ActionIface();
         switch (battleParty[i].Data.state)
         {
             case BattleState.WAIT:
@@ -85,10 +79,6 @@ public class BattlePlayers : MonoBehaviour
                 {
                     Menu.Open(battleParty[i].Data);
                 }
-                else
-                {
-                    return;
-                }
 
                 if (Menu.CommandSelected)
                 {
@@ -96,38 +86,24 @@ public class BattlePlayers : MonoBehaviour
                 }
                 break;
             case BattleState.SELECTION:
-                Target(BadParty);
+                Target(BadParty, action);
                 break;
             case BattleState.ACTION:
-
                 Menu.Close();
-                // Should this be handled by the player? Or the battle system itself? I'm working on an ABS system
-                /*if (battleParty[i].playerQueue.Peek() != null && battleParty[i].playerQueue.Peek().caster.tag == BattleTag.PLAYER)
-                {
-                    ActionIface action = battleParty[i].deque();
-                    battleParty[i].prefab.GetComponentInChildren<Animator>().SetBool("Is_Attack", true);
-                    action.Execute();
-                    BattleObject.GetComponent<DamageRecieved>().Create(battleParty[i].prefab, action.target.actualDamage);
-                }
-
-                if (battleParty[i].playerQueue.Peek() == null)
-                {
-                    //battleParty[i].Player.state = BattleState.WAIT;
-                    battleParty[i].prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
-                    Reset(i);
-                }*/
                 break;
         }
+        return action;
     }
 
-    Baddies Target(List<Baddies> targets)
+    // Just make it generic for now
+    void Target(List<Creature> targets, ActionIface action)
     {
         // Assume we have an enqueued skill that needs to be constructed 
         if ((i += ((int)Input.GetAxisRaw("Horizontal"))) < targets.Count || (i += ((int)Input.GetAxisRaw("Horizontal"))) > targets.Count)
         {
-            return targets[i];
+            action.target = targets[i];
         }
-        return null;
+        return;
     }
 
     public void Reset(int i)
@@ -141,10 +117,6 @@ public class BattlePlayers : MonoBehaviour
 
     public Creature GetPlayer(int i)
     {
-        if (battleParty == null)
-        {
-            Init(BattleObject, BadParty);
-        }
         return battleParty[i].Data;
     }
 

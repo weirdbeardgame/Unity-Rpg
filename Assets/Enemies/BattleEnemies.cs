@@ -43,8 +43,9 @@ public class BattleEnemies : MonoBehaviour
         badParty.Remove(bad);
     }
 
-    public void Battle(int i)
+    public ActionIface Battle(int i)
     {
+        ActionIface action = new ActionIface();
         switch (badParty[i].Data.state)
         {
             case BattleState.WAIT:
@@ -61,8 +62,10 @@ public class BattleEnemies : MonoBehaviour
 
             case BattleState.ACTION:
             // Take action against thine enemy the player!
+            // I'm going to try letting the battle system handle this for now.
             break;
         }
+        return action;
     }
 
     void Kill(int id)

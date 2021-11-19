@@ -17,18 +17,17 @@ public class Battle : MonoBehaviour
     BattlePlayers Players;
     BattleEnemies enemies;
     BattleSlots slots;
-    CommandQueue Queue;
+
+    CommandQueue queue;
+
     GameObject BattleObject;
     GameObject SelectionArrow;
+
     SceneInfo SceneToReturnTo;
+
     Creature Caster;
     Creature Receiver;
-    Animator BattleAnimations;
-    int Index = 0;
-    int PlayerIndex;
-    int x, y = 3;
-    int EnemyKilled;
-    int PlayerKilled;
+
     BattleStateM state = BattleStateM.START;
 
     public void StartBattle(SceneInfo PreviousScene, GameObject bObject)
@@ -42,20 +41,18 @@ public class Battle : MonoBehaviour
 
             slots = BattleObject.GetComponent<BattleSlots>();
 
-            Queue = BattleObject.GetComponent<CommandQueue>();
+            queue = BattleObject.GetComponent<CommandQueue>();
             Players = BattleObject.GetComponent<BattlePlayers>();
             enemies = BattleObject.GetComponent<BattleEnemies>();
-            BattleAnimations = BattleObject.GetComponent<Animator>();
 
             for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().BadParty.Count; i++)
             {
-                slots.createSlots(SlotPosition.FRONT, BattleTag.ENEMY, enemies.BadParty[i].Data, i);
-                x += 1;
+                slots.createSlots(enemies.BadParty[i].Data);
             }
 
             for (int i = 0; i < 2; i++)
             {
-                slots.createSlots(SlotPosition.FRONT, BattleTag.PLAYER, Players.GetPlayer(i), i);
+                slots.createSlots(Players.GetPlayer(i));
             }
             state = BattleStateM.ACTIVE;
         }
@@ -92,9 +89,16 @@ public class Battle : MonoBehaviour
                 // Run Battle Logic in here
                 for (int i = 0; i < Players.battleParty.Count; i++)
                 {
-                    Players.Battle(i);
-                    enemies.Battle(i);
+                    // Handles fill of Guage and enquement of commands into Global queue
+                    queue.enqueue(Players.Battle(i));
+                    queue.enqueue(enemies.Battle(i));
                     BattleObject.GetComponent<commandMenus>().DrawStats(Players.battleParty);
+
+                    // Run enqueued actions after a certain point. Need to add a time delimiter in here.
+                    // Something like actions wait for a few seconds before executing.
+                    queue.dequeue().Execute();
+
+
                     // Listen for death and action. Check for enemy or player death
                 }
                 break;

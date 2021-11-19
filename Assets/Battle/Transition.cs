@@ -278,8 +278,7 @@ public class Transition : MonoBehaviour
 
                 selectEnemies();
 
-                BattleObject.GetComponent<BattlePlayers>().Init(BattleObject, BattleObject.GetComponent<BattleEnemies>().BadParty);
-
+                BattleObject.GetComponent<BattlePlayers>().Init(BattleObject);
                 battle.StartBattle(previous, BattleObject);
 
                 yield return null;

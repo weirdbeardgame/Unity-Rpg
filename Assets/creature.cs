@@ -13,9 +13,6 @@ public class Creature
     public List<weaponSlots>slots;
     public BattleTag tag;
 
-    [SerializeField]
-    private GameObject BattlePrefab;
-
     public JobSystem job;
 
     [System.NonSerialized]

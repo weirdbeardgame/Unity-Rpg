@@ -14,21 +14,23 @@ struct Slot
     int id;
 
     // Also known as the battle player's prefab
-    public GameObject slotInstance;
+    public GameObject battler;
 
-    BattleTag type;
+    [SerializeField]
+    public BattleTag type;
 
     Creature fighter;
 
     // For combo attacks or when the slot breaks.
     Creature secondary;
 
-    public Slot createSlot(int slID, BattleTag sType, Creature c)
+    void Insert(Creature c, GameObject prefab)
     {
-        id = slID;
-        type = sType;
-        fighter = c;
-        return this;
+        if (c.tag == type && fighter != c)
+        {
+            battler = prefab;
+            fighter = c;
+        }
     }
 
     // This function is to allow players to move on the scene if needed. IE, if their footing or ground breaks
@@ -38,16 +40,14 @@ struct Slot
         fighter = c;
     }
 
+    // The idea would be to include logic that removes the Slot from the list and moves the player on it from the slot to another one
     public void destroySlot()
     {
-        id = 0;
-        slotInstance = null;
-        type = 0;
+
     }
 }
 public class BattleSlots : MonoBehaviour
 {
-
     List<Slot> slots;
 
     Slot newSlot;
@@ -58,14 +58,17 @@ public class BattleSlots : MonoBehaviour
 
     }
 
-    public void createSlots(SlotPosition pos, BattleTag type, Creature c, int requestedSlotCount)
+    public void createSlots(Creature c)
     {
-        slots = new List<Slot>();
-        for (int i = 0; i < requestedSlotCount; i++)
+        if (slots != null && slots.Count > 0)
         {
-            newSlot = new Slot();
-            newSlot = newSlot.createSlot(i, type, c);
-            slots.Add(newSlot);
+            foreach (var slot in slots)
+            {
+                if (slot.type == c.tag)
+                {
+
+                }
+            }
         }
     }
 
