@@ -16,7 +16,7 @@ public class Battle : MonoBehaviour
 {
     BattlePlayers Players;
     BattleEnemies enemies;
-    BattleSlots slots;
+    BattlerFloors slots;
 
     CommandQueue queue;
 
@@ -34,26 +34,28 @@ public class Battle : MonoBehaviour
     {
         // HAX
         state = BattleStateM.START;
+
         if (state == BattleStateM.START)
         {
             SceneToReturnTo = PreviousScene;
             BattleObject = bObject;
 
-            slots = BattleObject.GetComponent<BattleSlots>();
-
             queue = BattleObject.GetComponent<CommandQueue>();
+            slots = BattleObject.GetComponent<BattlerFloors>();
+
             Players = BattleObject.GetComponent<BattlePlayers>();
             enemies = BattleObject.GetComponent<BattleEnemies>();
 
             for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().BadParty.Count; i++)
             {
-                slots.createSlots(enemies.BadParty[i].Data);
+                slots.createSlots(enemies.BadParty[i].Data, enemies.BadParty[i].prefab);
             }
 
             for (int i = 0; i < 2; i++)
             {
-                slots.createSlots(Players.GetPlayer(i));
+                slots.createSlots(Players.GetPlayer(i), Players.battleParty[i].prefab);
             }
+
             state = BattleStateM.ACTIVE;
         }
     }

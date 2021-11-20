@@ -9,9 +9,12 @@ using UnityEngine;
 public enum SlotPosition { FRONT, BACK };
 public enum BattleTag { PLAYER, ENEMY }
 
-struct Slot
+public class BattlerFloor : MonoBehaviour 
 {
     int id;
+
+    // If is false. Slot is broken
+    bool isAlive;
 
     // Also known as the battle player's prefab
     public GameObject battler;
@@ -24,67 +27,28 @@ struct Slot
     // For combo attacks or when the slot breaks.
     Creature secondary;
 
-    void Insert(Creature c, GameObject prefab)
+    public void Insert(Creature c, GameObject prefab)
     {
         if (c.tag == type && fighter != c)
         {
             battler = prefab;
             fighter = c;
+            battler.transform.SetParent(this.transform);
         }
     }
 
     // This function is to allow players to move on the scene if needed. IE, if their footing or ground breaks
-    public void moveSlot(BattleTag tag, Creature c)
+    public void moveSlot(BattlerFloor slot, Creature c, GameObject prefab)
     {
-        type = tag;
-        fighter = c;
+        // Need to clear the slot we're moving from.
+        slot.Insert(c, prefab);
     }
 
     // The idea would be to include logic that removes the Slot from the list and moves the player on it from the slot to another one
-    public void destroySlot()
+    public void destroySlot(BattlerFloor toMoveTo)
     {
-
-    }
-}
-public class BattleSlots : MonoBehaviour
-{
-    List<Slot> slots;
-
-    Slot newSlot;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    public void createSlots(Creature c)
-    {
-        if (slots != null && slots.Count > 0)
-        {
-            foreach (var slot in slots)
-            {
-                if (slot.type == c.tag)
-                {
-
-                }
-            }
-        }
-    }
-
-    public void move(SlotPosition pos, Creature c, BattleTag t)
-    {
-        //slots[pos].moveSlot(t, c);
-    }
-
-    public void destroySlot(SlotPosition pos)
-    {
-        //slots[pos].destroySlot();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        isAlive = false;
+        // ToDo: Decide logic for A. Checking if slots avalible. B. Moving player from there.
+        moveSlot(toMoveTo, fighter, battler);
     }
 }

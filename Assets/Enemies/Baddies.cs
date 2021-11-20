@@ -78,7 +78,7 @@ public class Baddies : Asset
         return null;
     }
 
-    public Baddies createBattler(BattleSlots slot)
+    public Baddies createBattler(BattlerFloor slot)
     {
         prefab = MonoBehaviour.Instantiate(prefab);
         MonoBehaviour.DontDestroyOnLoad(prefab);
