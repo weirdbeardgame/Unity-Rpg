@@ -56,27 +56,52 @@ public class Flags
 
 public class StateChangeEventArgs : EventArgs
 {
-    public Event onStateChange;
+    States state;
+    Flags flag;
     public StateChangeEventArgs(Flags flags, States s)
     {
         flag = flags;
         state = s;
     }
-    public Flags flag
+    public Flags Flag
     {
-        get; private set;
+        get
+        {
+            return flag;
+        }
+        private set
+        {
+            flag = value;
+        }
     }
-    public States state
+    public States State
     {
-        get; private set;
+        get
+        {
+            return state;
+        } 
+        private set
+        {
+            state = value;
+        }
     }
+
+    public delegate void ChangeStateDel(States s);
+    public event ChangeStateDel stateChangedEvent;
+
+    public void ChangeSate(States s)
+    {
+        state = s;
+        stateChangedEvent.Invoke(state);
+    }
+
 }
 
 class StateMachine : MonoBehaviour
 {
     private States state;
 
-    StateChangeEventArgs del;
+    StateChangeEventArgs events;
     public States State
     {
         get
@@ -90,12 +115,7 @@ class StateMachine : MonoBehaviour
         }
     }
 
-    public States SetState(States s)
-    {
-        return state = s;
-    }
-
-    public static void onStateChanged()
+    public void OnStateChanged(States s)
     {
         
     }
@@ -103,7 +123,7 @@ class StateMachine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //del.onStateChange += SetState(del.state);
+        //events.stateChangedEvent += OnStateChanged(events.state);
         DontDestroyOnLoad(this);
 
     }

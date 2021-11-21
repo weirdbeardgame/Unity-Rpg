@@ -13,11 +13,9 @@ public class commandMenus : MonoBehaviour
     // Action Menus (Item, Skills, Magic)
     SortedDictionary<int, BattleMIface> SubMenus;
 
-    Gauge gauge;
-
-    int widgetIndex = 0;
     int index = 0;
-    Creature opened;
+
+    Player opener;
 
     [SerializeField]
     GameObject Commands;
@@ -26,10 +24,6 @@ public class commandMenus : MonoBehaviour
     GameObject PlayerStatus;
 
     GameObject Panel;
-
-    GameObject PlayerStatSlot1;
-    GameObject PlayerStatSlot2;
-    GameObject PlayerStatSlot3;
 
     GameObject selectionArrow;
     GameObject arrow;
@@ -47,12 +41,17 @@ public class commandMenus : MonoBehaviour
 
     SkillData SkillToTarget;
 
+    PlayerTurn turn;
+
     // Start is called before the first frame update
     void Start()
     {
         PlayerStatus = GameObject.Find("menu");
         Commands = GameObject.Find("Command Screen");
         Commands.GetComponent<Image>().enabled = false;
+
+        //turn.playerTurnEvent += (opener) => { return Open(); };
+        turn.playerTurnEvent += Open;
 
         // Widgets = new List<Widget>();
         Menus = new SortedDictionary<JobSystem, BattleMIface>();
@@ -69,25 +68,13 @@ public class commandMenus : MonoBehaviour
         arrow.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 10);
     }
 
-    public void Initlaize()
-    {
-        Menus = new SortedDictionary<JobSystem, BattleMIface>();
-        SubMenus = new SortedDictionary<int, BattleMIface>();
-    }
-
-    public void Move(Vector2 position)
-    {
-        Debug.Log("POS: " + position);
-        selectionArrow.transform.Translate(position);
-    }
-
-    public bool Open(Creature opener)
+    public bool Open(Player opener)
     {
         if (!isOpened)
         {
             Commands = Instantiate(Commands);
             Commands.GetComponentInChildren<Image>().enabled = true;
-            cMenu = Menus[opener.job];
+            cMenu = Menus[opener.Data.job];
             if (!cMenu)
             {
                 return isOpened = false;
@@ -99,16 +86,11 @@ public class commandMenus : MonoBehaviour
         return false;
     }
 
-    public void Open(int index)
-    {
-        SubMenus[index].Open();
-    }
-
     public void DrawStats(Dictionary<int, Player> Battlers)
     {
         // ToDo. ReWrite with Depenency injection more in mind. Rather then grabbing the stat from the character. I should be handing it the stat
-        PlayerStatSlot1.GetComponent<TextMeshProUGUI>().SetText(Battlers[0].Data.creatureName + ':' + " Health: " + Battlers[0].Data.Stats.statList[(int)StatType.HEALTH].stat.ToString());
-        PlayerStatSlot2.GetComponent<TextMeshProUGUI>().SetText(Battlers[1].Data.creatureName + ':' + " Health: " + Battlers[1].Data.Stats.statList[(int)StatType.HEALTH].stat.ToString());
+        //PlayerStatSlot1.GetComponent<TextMeshProUGUI>().SetText(Battlers[0].Data.creatureName + ':' + " Health: " + Battlers[0].Data.Stats.statList[(int)StatType.HEALTH].stat.ToString());
+        //PlayerStatSlot2.GetComponent<TextMeshProUGUI>().SetText(Battlers[1].Data.creatureName + ':' + " Health: " + Battlers[1].Data.Stats.statList[(int)StatType.HEALTH].stat.ToString());
         //PlayerStatSlot3.GetComponent<TextMeshProUGUI>().SetText(Battlers[2].creatureName + ':' + " Health: " + Battlers[2].Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
     }
 

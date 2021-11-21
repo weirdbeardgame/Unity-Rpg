@@ -9,9 +9,7 @@ public class UIManager : MonoBehaviour
     public List<GameObject> menuPrefabs;
     StateMachine gameState; // Need to pass as events rather than direct call
 
-    // Publish a state change as an event
-    public delegate StateChangeEventArgs stateDelagate(States s);
-    public event stateDelagate stateEvent;
+    StateChangeEventArgs stateMachine;
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +24,7 @@ public class UIManager : MonoBehaviour
             pScreen.SetActive(true);
             pScreen = Instantiate(menuPrefabs[0], pScreen.transform, false);
             pScreen.transform.localPosition = new Vector3(0, 0, 0);
-            gameState.SetState(States.PAUSE);
-            stateEvent.Invoke(States.PAUSE); // Wip
+            stateMachine.ChangeSate(States.PAUSE); // Wip
             isOpen = true;
         }
         else
@@ -44,7 +41,7 @@ public class UIManager : MonoBehaviour
             pScreen.SetActive(false);
             //Destroy(pScreen);
             isOpen = false;
-            gameState.SetState(States.MAIN);
+            stateMachine.ChangeSate(States.MAIN); // Wip
         }
     }
 

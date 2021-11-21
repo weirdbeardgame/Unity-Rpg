@@ -3,11 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
+public class PlayerTurn
+{
+    Player playerID;
+
+    // Selected Player data to grab stats
+    public delegate bool Turn(Player p);
+    public event Turn playerTurnEvent;
+
+    public void ThrowTurn(Player playerID)
+    {
+        playerTurnEvent.Invoke(playerID);
+    }
+}
+
 public class BattlePlayers : MonoBehaviour
 {
     Party Players;
     public Dictionary<int, Player> battleParty;
     CharacterInfo Temp;
+
+    PlayerTurn turn;
 
     bool isInitalized = false;
 
@@ -15,8 +31,6 @@ public class BattlePlayers : MonoBehaviour
     int i = 0;
 
     List<Creature> BadParty;
-
-    commandMenus Menu;
 
     GameObject BattleObject;
 
@@ -35,28 +49,11 @@ public class BattlePlayers : MonoBehaviour
 
         BattleObject = BattleO;
         isInitalized = true;
-        Menu = FindObjectOfType<commandMenus>();
     }
 
     public GameObject CreateCharacterById(int ID)
     {
         return (GameObject)Instantiate(battleParty[ID].prefab);
-    }
-
-    public void OpenWindow(int i)
-    {
-        if (battleParty[i].prefab.GetComponent<Gauge>().getFilled())
-        {
-            if (battleParty[i].Data.state == BattleState.WAIT)
-            {
-                battleParty[i].Data.state = BattleState.COMMAND;
-            }
-
-            else
-            {
-                return;
-            }
-        }
     }
 
     // In here goes the logic for Battle! If God is love then you can call me cupid! ooh rah
@@ -78,24 +75,12 @@ public class BattlePlayers : MonoBehaviour
                 break;
             case BattleState.COMMAND:
                 // Use a delegate in here! Send event out that player is ready to act and menu should open from there
-
-                /*****************************************************
-                * if (!Menu && BadParty != null)
-                * {
-                *    Menu.Open(battleParty[i].Data);
-                * }
-
-                * if (Menu.CommandSelected)
-                * {
-                *     battleParty[i].Data.state = BattleState.SELECTION;
-                * }
-                *******************************************************/
+                turn.ThrowTurn(battleParty[i]);
                 break;
             case BattleState.SELECTION:
                 Target(BadParty, action);
                 break;
             case BattleState.ACTION:
-                Menu.Close();
                 break;
         }
         return action;
@@ -117,7 +102,6 @@ public class BattlePlayers : MonoBehaviour
         if (battleParty[i].prefab.GetComponent<Gauge>().getFilled() && battleParty[i].Data.state == BattleState.WAIT)
         {
             battleParty[i].prefab.GetComponent<Gauge>().Reset();
-            Menu.CommandSelected = false;
         }
     }
 

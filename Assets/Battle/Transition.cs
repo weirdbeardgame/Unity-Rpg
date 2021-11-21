@@ -272,7 +272,6 @@ public class Transition : MonoBehaviour
             while (!unload.isDone)
             {
                 Menus = FindObjectOfType<commandMenus>();
-                Menus.Initlaize();
 
                 battle = BattleObject.GetComponent<Battle>();
 

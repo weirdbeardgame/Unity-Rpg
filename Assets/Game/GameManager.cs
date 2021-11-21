@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         }
 
         questSystem.Init();
-        state.SetState(States.MAIN);
+        //state.SetState(States.MAIN);
         assetManager = GameAssetManager.Instance;
         npcManager.Initalize();
     }
