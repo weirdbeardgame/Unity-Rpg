@@ -7,7 +7,10 @@ using UnityEngine;
 // They can be in the front of the line or the back which will offer them more defense but less ability to act.
 // Using this as a Dictionary as it was prior was and is wrong
 public enum SlotPosition { FRONT, BACK };
-public enum BattleTag { PLAYER, ENEMY }
+public enum BattleTag { PLAYER, ENEMY };
+
+// If elemental effect is appiled.
+public enum FloorElement { FIRE, ICE, HOLE, NORMAL, HEAL };
 
 public class BattlerFloor : MonoBehaviour 
 {

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 108677940}
   - component: {fileID: 108677941}
   m_Layer: 0
-  m_Name: PSlot1
+  m_Name: PlayerFloor1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108677939}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.085533, y: -0.24755642, z: -111.784805}
+  m_LocalPosition: {x: 4.379, y: 1.256, z: -111.784805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 142663661}
   - component: {fileID: 142663662}
   m_Layer: 0
-  m_Name: PSlot3
+  m_Name: PlayerFloor3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,7 +193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142663660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.085533, y: -2.45, z: -111.784805}
+  m_LocalPosition: {x: 4.398, y: -2.614, z: -111.784805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 213010520}
   - component: {fileID: 213010521}
   m_Layer: 0
-  m_Name: PSlot2
+  m_Name: PlayerFloor2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,7 +238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213010519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.019, y: -1.45, z: -111.784805}
+  m_LocalPosition: {x: 4.332, y: -0.544, z: -111.784805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

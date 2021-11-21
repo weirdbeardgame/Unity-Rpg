@@ -78,11 +78,6 @@ public class Battle : MonoBehaviour
         }
     }
 
-    void Target()
-    {
-        // Run skill targeter in here? Or should that belong to battle players given this is ABS styled
-    }
-
     void Update()
     {
         switch (state)

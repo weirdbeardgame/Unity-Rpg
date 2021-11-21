@@ -24,6 +24,7 @@ public class BattlePlayers : MonoBehaviour
     {
         Players = FindObjectOfType<Party>();
         battleParty = new Dictionary<int, Player>();
+
         // Grab the top 3 members of the party
         for (int j = 0; j < 2; j++)
         {
@@ -66,24 +67,29 @@ public class BattlePlayers : MonoBehaviour
         switch (battleParty[i].Data.state)
         {
             case BattleState.WAIT:
+
                 battleParty[i].prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
                 battleParty[i].prefab.GetComponent<Gauge>().fill(battleParty[i].Data.Stats.statList[(int)StatType.SPEED].stat);
+
                 if (battleParty[i].prefab.GetComponent<Gauge>().getFilled())
                 {
                     battleParty[i].Data.state = BattleState.COMMAND;
                 }
                 break;
             case BattleState.COMMAND:
+                // Use a delegate in here! Send event out that player is ready to act and menu should open from there
 
-                if (!Menu && BadParty != null)
-                {
-                    Menu.Open(battleParty[i].Data);
-                }
+                /*****************************************************
+                * if (!Menu && BadParty != null)
+                * {
+                *    Menu.Open(battleParty[i].Data);
+                * }
 
-                if (Menu.CommandSelected)
-                {
-                    battleParty[i].Data.state = BattleState.SELECTION;
-                }
+                * if (Menu.CommandSelected)
+                * {
+                *     battleParty[i].Data.state = BattleState.SELECTION;
+                * }
+                *******************************************************/
                 break;
             case BattleState.SELECTION:
                 Target(BadParty, action);

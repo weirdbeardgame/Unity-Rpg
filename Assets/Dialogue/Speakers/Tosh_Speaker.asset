@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 258c8caa2a5f81d5d94dbebcc8ad38dc, type: 3}
-  m_Name: Doku
+  m_Name: Tosh_Speaker
   m_EditorClassIdentifier: 
-  SpeakerID: 0
-  SpeakerName: Doku
-  Prefab: {fileID: 7149917242164883704, guid: 46f451548eaf0db9f918cd3e36985c01, type: 3}
+  SpeakerID: 2
+  SpeakerName: Tosh
+  Prefab: {fileID: 7149917242164883704, guid: 669c6308d29dbc76287ee31e3ba87836, type: 3}
