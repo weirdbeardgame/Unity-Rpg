@@ -94,7 +94,7 @@ public class playerEditorWindow : EditorWindow
                 }
                 if (edit != null && edit.Data.creatureName != null)
                 {
-                    PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Assets/Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab"));
+                    PrefabUtility.SaveAsPrefabAsset(edit.prefab, ("Assets/Resources/Prefabs/Players/" + "Battle_" + edit.Data.creatureName + ".prefab"));
                     edit.path = Asset.GetAssetPath(edit.prefab);
                 }
             }
@@ -137,9 +137,9 @@ public class playerEditorWindow : EditorWindow
             }
             if (edit.prefab)
             {
-                if (GUILayout.Button("Edit Prefab"))
+                if (GUILayout.Button("Edit Battler Prefab"))
                 {
-                    AssetDatabase.OpenAsset(PrefabUtility.LoadPrefabContents(("Resources/Prefabs/Players/" + edit.Data.creatureName + ".prefab")));
+                    AssetDatabase.OpenAsset(PrefabUtility.LoadPrefabContents(("Resources/Prefabs/Players/" + "Battle_" + edit.Data.creatureName + ".prefab")));
                 }
             }
         }

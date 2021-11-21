@@ -58,21 +58,14 @@ public class StateChangeEventArgs : EventArgs
 {
     States state;
     Flags flag;
-    public StateChangeEventArgs(Flags flags, States s)
+    public StateChangeEventArgs()
     {
-        flag = flags;
-        state = s;
+        flag = null;
+        state = States.MAIN;
     }
-    public Flags Flag
+    public StateChangeEventArgs(States s)
     {
-        get
-        {
-            return flag;
-        }
-        private set
-        {
-            flag = value;
-        }
+        state = s;
     }
     public States State
     {
@@ -85,23 +78,16 @@ public class StateChangeEventArgs : EventArgs
             state = value;
         }
     }
-
-    public delegate void ChangeStateDel(States s);
-    public event ChangeStateDel stateChangedEvent;
-
-    public void ChangeSate(States s)
-    {
-        state = s;
-        stateChangedEvent.Invoke(state);
-    }
-
 }
 
 class StateMachine : MonoBehaviour
 {
     private States state;
 
-    StateChangeEventArgs events;
+    // This here be wrong! I'm effctively ignoring the overloaded Event Args type above but for now :shrug:
+    public delegate void StateChange(States s);
+    public event StateChange StateChangeEvent;
+
     public States State
     {
         get
@@ -115,17 +101,25 @@ class StateMachine : MonoBehaviour
         }
     }
 
+    public void InvokeStateChange(States s)
+    {
+        StateChangeEvent.Invoke(s);
+    }
+
     public void OnStateChanged(States s)
     {
-        
+        if (state != s)
+        {
+            Debug.Log("State: " + s.ToString());
+            state = s;
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //events.stateChangedEvent += OnStateChanged(events.state);
+        StateChangeEvent += (s) => { OnStateChanged(s); };
         DontDestroyOnLoad(this);
-
     }
 
     void Update()

@@ -29,11 +29,26 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         state = FindObjectOfType<StateMachine>();
+        state.StateChangeEvent += CanMove;
         tilemap = FindObjectOfType<Tilemap>();
         animator = GetComponent<Animator>();
         ui = FindObjectOfType<UIManager>();
 
         DontDestroyOnLoad(this);
+    }
+
+    public void CanMove(States s)
+    {
+        switch(state.State)
+        {
+            case States.MAIN:
+            canMove = true;
+            break;
+
+            default:
+            canMove = false;
+            break;
+        }
     }
 
     void Update()

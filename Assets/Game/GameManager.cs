@@ -11,13 +11,17 @@ public class GameManager : MonoBehaviour
 {
     StateMachine state;
     List<Flags> flags;
+
     private Flags currentSetFlag;
     string flagJson;
     string flagPath = "Assets/Flags.json";
+
     GameAssetManager assetManager;
     AudioManager soundManager;
     QuestManager questSystem;
     NPCManager npcManager;
+
+    StateChangeEventArgs stateMachine;
 
     //JrpgSceneManager scenes;
 
@@ -57,7 +61,7 @@ public class GameManager : MonoBehaviour
         }
 
         questSystem.Init();
-        //state.SetState(States.MAIN);
+        state.InvokeStateChange(States.MAIN);
         assetManager = GameAssetManager.Instance;
         npcManager.Initalize();
     }
@@ -66,6 +70,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         state = GetComponent<StateMachine>();
+        stateMachine = new StateChangeEventArgs();
         questSystem = GetComponent<QuestManager>();
         soundManager = GetComponent<AudioManager>();
         npcManager = GetComponent<NPCManager>();

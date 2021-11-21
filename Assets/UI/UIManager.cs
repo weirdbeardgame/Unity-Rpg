@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
             pScreen.SetActive(true);
             pScreen = Instantiate(menuPrefabs[0], pScreen.transform, false);
             pScreen.transform.localPosition = new Vector3(0, 0, 0);
-            stateMachine.ChangeSate(States.PAUSE); // Wip
+            gameState.InvokeStateChange(States.PAUSE);
             isOpen = true;
         }
         else
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
             pScreen.SetActive(false);
             //Destroy(pScreen);
             isOpen = false;
-            stateMachine.ChangeSate(States.MAIN); // Wip
+            gameState.InvokeStateChange(States.MAIN);
         }
     }
 

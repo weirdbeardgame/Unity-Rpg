@@ -4,7 +4,7 @@
 		"$type": "Player, Assembly-CSharp",
 		"level": 1,
 		"assetGuid": "21bb5b49-5975-42ac-ac00-b5eab1982543",
-		"path": "Prefabs/Players/Musungo",
+		"path": "Prefabs/Player_Battlers/Battle_Musungo",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -238,7 +238,7 @@
 		"$type": "Player, Assembly-CSharp",
 		"level": 1,
 		"assetGuid": "1aa186ab-3e9b-4fb8-aaed-640edc1a085a",
-		"path": "Prefabs/Players/Doku",
+		"path": "Prefabs/Player_Battlers/Battle_Doku",
 		"Data": {
 			"$type": "Creature, Assembly-CSharp",
 			"isAlive": false,
@@ -312,7 +312,49 @@
 		},
 		"type": 1,
 		"sceneName": "BattleTest01",
-		"assetGuid": "de3617f9-54fa-4ce7-b683-76379a323575",
+		"assetGuid": "e43c04e3-6169-4b2c-9b00-ca121e26c164",
 		"path": "Assets/Scenes/BattleTest01.unity"
+	},
+	"Sarah": {
+		"$type": "Player, Assembly-CSharp",
+		"level": 1,
+		"assetGuid": "264bb272-5a1b-43db-a36d-0deda77c1eb5",
+		"path": "Prefabs/Player_Battlers/Battle_Sarah",
+		"Data": {
+			"$type": "Creature, Assembly-CSharp",
+			"isAlive": false,
+			"Stats": {
+				"$type": "StatManager, Assembly-CSharp",
+				"statList": {
+					"$type": "System.Collections.Generic.List`1[[Stats, Assembly-CSharp]], mscorlib",
+					"$values": [{
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 0,
+						"stat": 100.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 1,
+						"stat": 35.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 2,
+						"stat": 45.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 3,
+						"stat": 150.0
+					}, {
+						"$type": "Stats, Assembly-CSharp",
+						"currentStat": 4,
+						"stat": 65.0
+					}]
+				}
+			},
+			"slots": null,
+			"tag": 0,
+			"job": 0,
+			"creatureName": "Sarah",
+			"description": "A well endowed woman in her twenties to thirties. Sarah has an uncanny gift for the mystic arts. She's typically gentle and kind towards others but will not hesitate to protect those she cares about should the need arise"
+		}
 	}
 }

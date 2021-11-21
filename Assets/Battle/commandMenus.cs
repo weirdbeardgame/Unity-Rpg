@@ -50,8 +50,8 @@ public class commandMenus : MonoBehaviour
         Commands = GameObject.Find("Command Screen");
         Commands.GetComponent<Image>().enabled = false;
 
-        //turn.playerTurnEvent += (opener) => { return Open(); };
-        turn.playerTurnEvent += Open;
+        turn.playerTurnEvent += (opener) => { return Open(opener); };
+        //turn.playerTurnEvent += Open;
 
         // Widgets = new List<Widget>();
         Menus = new SortedDictionary<JobSystem, BattleMIface>();
