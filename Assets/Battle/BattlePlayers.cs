@@ -39,6 +39,7 @@ public class BattlePlayers : MonoBehaviour
     {
         Players = FindObjectOfType<Party>();
         battleParty = new Dictionary<int, Player>();
+        turn = new PlayerTurn();
 
         // Grab the top 3 members of the party
         for (int j = 0; j < 2; j++)

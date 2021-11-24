@@ -83,7 +83,7 @@ public abstract class Asset : ISerializationCallbackReceiver
 * This will also be used for TileMap and scene management?
 * TODO: Need to add a hash or ID. Need to add a check for valid path and if asset exists
 *****************************************************************************************/
-public sealed class GameAssetManager : MonoBehaviour
+public sealed class GameAssetManager
 {
     string folderName = "Resources/";
 

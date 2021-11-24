@@ -11,6 +11,8 @@ public class Gauge : MonoBehaviour
 
     public bool fill(float speed)
     {
+        Debug.Log("Gauge: " + gauge);
+
         // Consider an algorithm that calculates speed to Gauge fill, we have ticks in milliseconds  
         if (gauge < maxTicks && isFilled == false)
         {

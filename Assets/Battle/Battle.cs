@@ -92,8 +92,8 @@ public class Battle : MonoBehaviour
                 {
                     // Handles fill of Guage and enquement of commands into Global queue
                     queue.enqueue(Players.Battle(i));
-                    queue.enqueue(enemies.Battle(i));
-                    BattleObject.GetComponent<commandMenus>().DrawStats(Players.battleParty);
+                    //queue.enqueue(enemies.Battle(i));
+                    //BattleObject.GetComponent<commandMenus>().DrawStats(Players.battleParty);
 
                     // Run enqueued actions after a certain point. Need to add a time delimiter in here.
                     // Something like actions wait for a few seconds before executing.

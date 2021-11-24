@@ -166,7 +166,7 @@ public class playerEditorWindow : EditorWindow
     }
 
     private void OnDestroy() {
-        DestroyImmediate(manager, true);
+        //DestroyImmediate(manager, true);
     }
 
 }
