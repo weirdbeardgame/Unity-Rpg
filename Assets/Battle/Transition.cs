@@ -282,8 +282,10 @@ public class Transition : MonoBehaviour
 
                 yield return null;
             }
+
             SceneManager.MoveGameObjectToScene(BattleObject, SceneManager.GetSceneByName(allowedMapData[previous.sceneName].sceneName));
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(allowedMapData[previous.sceneName].sceneName));
+
             gameObject.SetActive(false);
         }
     }
