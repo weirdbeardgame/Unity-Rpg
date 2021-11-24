@@ -7,13 +7,9 @@ public class PlayerTurn
 {
     Player playerID;
 
-    // Selected Player data to grab stats
-    public delegate bool Turn(Player p);
-    public event Turn playerTurnEvent;
-
     public void ThrowTurn(Player playerID)
     {
-        playerTurnEvent.Invoke(playerID);
+        //playerTurnEvent.Invoke(playerID);
     }
 }
 
@@ -22,6 +18,11 @@ public class BattlePlayers : MonoBehaviour
     Party Players;
     public Dictionary<int, Player> battleParty;
     CharacterInfo Temp;
+
+    // Selected Player data to grab stats
+    public delegate bool Turn(Player p);
+    public event Turn playerTurnEvent;
+
 
     PlayerTurn turn;
 

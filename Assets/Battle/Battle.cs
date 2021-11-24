@@ -17,8 +17,8 @@ public class Battle : MonoBehaviour
     BattlePlayers Players;
     BattleEnemies enemies;
     BattlerFloors slots;
-
     CommandQueue queue;
+    commandMenus menus;
 
     GameObject BattleObject;
     GameObject SelectionArrow;
@@ -32,8 +32,9 @@ public class Battle : MonoBehaviour
 
     public void StartBattle(SceneInfo PreviousScene, GameObject bObject)
     {
-        // HAX
+        // HAX Section
         state = BattleStateM.START;
+        menus = FindObjectOfType<commandMenus>();
 
         if (state == BattleStateM.START)
         {
@@ -41,7 +42,7 @@ public class Battle : MonoBehaviour
             BattleObject = bObject;
 
             queue = BattleObject.GetComponent<CommandQueue>();
-            slots = BattleObject.GetComponent<BattlerFloors>();
+            slots = FindObjectOfType<BattlerFloors>();
 
             Players = BattleObject.GetComponent<BattlePlayers>();
             enemies = BattleObject.GetComponent<BattleEnemies>();
@@ -55,6 +56,8 @@ public class Battle : MonoBehaviour
             {
                 slots.createSlots(Players.GetPlayer(i), Players.battleParty[i].prefab);
             }
+
+            menus.Init();
 
             state = BattleStateM.ACTIVE;
         }

@@ -20,15 +20,24 @@ public class commandMenus : MonoBehaviour
     GameObject commandMenu;
     List<GameObject> playerStats;
 
-    PlayerTurn turn;
+    [SerializeField]
+    BattlePlayers turn;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Dis happen too fast bitch!
+    }
+
+    // Hax
+    public void Init()
+    {
+        turn = FindObjectOfType<BattlePlayers>();
         turn.playerTurnEvent += (opener) => { return Open(opener); };
         Menus = new SortedDictionary<JobSystem, BattleMIface>();
         SubMenus = new SortedDictionary<int, BattleMIface>();
     }
+
 
     public bool Open(Player opener)
     {
