@@ -37,6 +37,7 @@ public class BattlerFloor : MonoBehaviour
             battler = prefab;
             fighter = c;
             battler.transform.SetParent(this.transform);
+            battler.transform.localPosition = Vector2.zero;
         }
     }
 

@@ -15,15 +15,28 @@ public class BattlerFloors : MonoBehaviour
 
     }
 
-    public void createSlots(Creature c, GameObject prefab)
+    public void createSlots(Dictionary<int, Player> c, GameObject prefab)
     {
         if (slots != null && slots.Count > 0)
         {
-            foreach (var slot in slots)
+            for (int i = 0; i < c.Count; i++)
             {
-                if (slot.type == c.tag)
+                if (slots[i].type == c[i].Data.tag && slots[i].battler == null)
                 {
-                    slot.Insert(c, prefab);
+                    slots[i].Insert(c[i].Data, c[i].prefab);
+                }
+            }
+        }
+    }
+    public void createSlots(Dictionary<int, Baddies> c, GameObject prefab)
+    {
+        if (slots != null && slots.Count > 0)
+        {
+            for (int i = 0; i < c.Count; i++)
+            {
+                if (slots[i].type == c[i].Data.tag && slots[i].battler == null)
+                {
+                    slots[i].Insert(c[i].Data, prefab);
                 }
             }
         }

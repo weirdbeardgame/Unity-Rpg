@@ -89,7 +89,7 @@ public class SkillEditor : EditorWindow
                 Skills = new Dictionary<int, SkillData>();
             }
 
-            CurrentSkill = ScriptableObject.CreateInstance<SkillData>();
+            CurrentSkill = new SkillData();
             CurrentSkill.SkillName = SkillName;
             Skills.Add(SkillIndex, CurrentSkill);
         }

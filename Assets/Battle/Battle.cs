@@ -53,10 +53,7 @@ public class Battle : MonoBehaviour
                 slots.createSlots(enemies.BadParty[i].Data, enemies.BadParty[i].prefab);
             }*/
 
-            for (int i = 0; i < 2; i++)
-            {
-                slots.createSlots(Players.GetPlayer(i), Players.battleParty[i].prefab);
-            }
+                slots.createSlots(Players.battleParty, null);
 
             menus.Init();
 
