@@ -6,11 +6,6 @@ using UnityEngine.Animations;
 public class PlayerTurn
 {
     Player playerID;
-
-    public void ThrowTurn(Player playerID)
-    {
-        //playerTurnEvent.Invoke(playerID);
-    }
 }
 
 public class BattlePlayers : MonoBehaviour
@@ -46,6 +41,7 @@ public class BattlePlayers : MonoBehaviour
         {
             DontDestroyOnLoad(Players.PartyMembers[j].prefab);
             Players.PartyMembers[j].prefab.SetActive(true);
+            Players.PartyMembers[j].Data.state = BattleState.WAIT;
             battleParty.Add(j, Players.PartyMembers[j]);
         }
 
@@ -66,8 +62,7 @@ public class BattlePlayers : MonoBehaviour
         switch (battleParty[i].Data.state)
         {
             case BattleState.WAIT:
-
-                battleParty[i].prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
+                //battleParty[i].prefab.GetComponentInChildren<Animator>().SetBool("Is_Idle", true);
                 battleParty[i].prefab.GetComponent<Gauge>().fill(battleParty[i].Data.Stats.statList[(int)StatType.SPEED].stat);
 
                 if (battleParty[i].prefab.GetComponent<Gauge>().getFilled())
@@ -77,7 +72,7 @@ public class BattlePlayers : MonoBehaviour
                 break;
             case BattleState.COMMAND:
                 // Use a delegate in here! Send event out that player is ready to act and menu should open from there
-                turn.ThrowTurn(battleParty[i]);
+                playerTurnEvent.Invoke(battleParty[i]);
                 break;
             case BattleState.SELECTION:
                 Target(BadParty, action);

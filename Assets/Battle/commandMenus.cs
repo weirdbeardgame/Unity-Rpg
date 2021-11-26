@@ -17,7 +17,10 @@ public class commandMenus : MonoBehaviour
     SortedDictionary<JobSystem, BattleMIface> Menus;
 
     GameObject prefab;
+
+    [SerializeField]
     GameObject commandMenu;
+
     List<GameObject> playerStats;
 
     [SerializeField]
@@ -43,7 +46,10 @@ public class commandMenus : MonoBehaviour
     {
         if (!isOpened)
         {
-            commandMenu = Instantiate(commandMenu);
+            // This is Null on Open because there's not an assigned GameObject in the scene!
+            // For now I stick with a list of prefab?
+            // Think about, https://www.youtube.com/watch?v=4fkTbbxktpc
+            commandMenu = Instantiate(prefab);
             commandMenu.GetComponentInChildren<Image>().enabled = true;
             cMenu = Menus[opener.Data.job];
             if (!cMenu)

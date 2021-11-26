@@ -27,29 +27,19 @@ public class SamuraiMenu : BattleMIface
         
     }
 
-    /*void Attack()
+    void Attack()
     {
         Debug.Log("Skill Added");
-
-        StopAllCoroutines();
-        Menu.ResetInput();
-
-        StartCoroutine(Menu.Target(skills.GetSkill(0)));
+        //StartCoroutine(Menu.Target(skills.GetSkill(0)));
     }
 
     void Item()
     {
-        Menu.Open(0);
+        //Menu.Open(0);
     }
 
     void Skills()
     {
 
     }
-
-    public void Add()
-    {
-        Menu = FindObjectOfType<commandMenus>();
-        Menu.AddMenu(JobSystem.SAMURAI, this);
-    }*/
 }
