@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SamuraiMenu : BattleMIface
+public class SamuraiMenu : BattleMenu
 {
     Skills skills;
     commandMenus Menu;
@@ -15,27 +15,18 @@ public class SamuraiMenu : BattleMIface
         Menu = FindObjectOfType<commandMenus>();
     }
 
-    public override void Open()
+    public void Open()
     {
-        // Would involve looking for widgets?
-        appID = ((int)job);
-        appName = "SamuraiMenu";
     }
 
-    public override void Close()
+    public void Close()
     {
         
     }
 
-    void Attack()
+    void SwordArts()
     {
-        Debug.Log("Skill Added");
-        //StartCoroutine(Menu.Target(skills.GetSkill(0)));
-    }
-
-    void Item()
-    {
-        //Menu.Open(0);
+        
     }
 
     void Skills()

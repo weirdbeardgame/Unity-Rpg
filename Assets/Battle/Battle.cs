@@ -30,6 +30,8 @@ public class Battle : MonoBehaviour
 
     BattleStateM state = BattleStateM.START;
 
+    Target skillTargeting;
+
     public void StartBattle(SceneInfo PreviousScene, GameObject bObject)
     {
         // HAX Section
@@ -48,12 +50,12 @@ public class Battle : MonoBehaviour
             enemies = BattleObject.GetComponent<BattleEnemies>();
 
             // Enimies disabled until we get a few things... Figured out. The prefabs are null! Need to write a proper instantiating logic for enemies
-            /*for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().BadParty.Count; i++)
+            for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().BadParty.Count; i++)
             {
-                slots.createSlots(enemies.BadParty[i].Data, enemies.BadParty[i].prefab);
-            }*/
+                slots.createSlots(enemies.BadParty, enemies.BadParty[i].prefab);
+            }
 
-                slots.createSlots(Players.battleParty, null);
+            slots.createSlots(Players.battleParty, null);
 
             menus.Init();
 
@@ -88,14 +90,13 @@ public class Battle : MonoBehaviour
                 for (int i = 0; i < Players.battleParty.Count; i++)
                 {
                     // Handles fill of Guage and enquement of commands into Global queue
-                    queue.enqueue(Players.Battle(i));
+                    queue.enqueue(skillTargeting.TargetIndex());
                     //queue.enqueue(enemies.Battle(i));
                     //BattleObject.GetComponent<commandMenus>().DrawStats(Players.battleParty);
 
                     // Run enqueued actions after a certain point. Need to add a time delimiter in here.
                     // Something like actions wait for a few seconds before executing.
                     queue.dequeue().Execute();
-
 
                     // Listen for death and action. Check for enemy or player death
                 }

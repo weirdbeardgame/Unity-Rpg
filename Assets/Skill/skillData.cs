@@ -9,31 +9,21 @@ public enum SkillTypes { HEALING, DAMAGING };
 
 public class SkillData : ActionIface
 {
+
     public SkillTypes skillType;
     public AttributeType attribute;
-    private string skillName;
-    private int skillID = 0;
-    private float effect;
     public StatType affectedStat;
+
+    private string skillName;
+
+    private float effect;
+    private float actionWeight;
+
+    private int skillID = 0;
     public int TargetAmount;
 
     [System.NonSerialized]
     public int timer;
-
-    [System.NonSerialized]
-    CommandQueue Queue;
-
-    private float actionWeight;
-
-    public float GetWeight()
-    {
-        return actionWeight;
-    }
-
-    public float GetBuff()
-    {
-        return effect;
-    }
 
     public float Effect
     {
@@ -72,39 +62,6 @@ public class SkillData : ActionIface
         set
         {
             skillName = value;
-        }
-    }
-
-    public override void Enqueue(Creature c, Creature t)
-    {
-        Queue = ScriptableObject.FindObjectOfType<CommandQueue>();
-
-        caster = c;
-        target = t;
-
-        //This is to determine location of Action in queue not the time to action but I guess it could be that?
-        //ActionWeight = C.Stats.Speed * C.Stats.Agility / MaxTicks;
-
-        if (Queue.Commands.Count > 0)
-        {
-            for (int i = 1; i < Queue.Commands.Count; i++)
-            {
-                if (actionWeight > Queue.Commands[i].weight)
-                {
-                    ActionIface temp = Queue.Commands[i];
-                    Queue.enqueue(this, false);
-                    Queue.enqueue(temp, true);
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-        }
-        else
-        {
-            Queue.enqueue(this);
         }
     }
 

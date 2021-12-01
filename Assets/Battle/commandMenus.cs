@@ -10,11 +10,11 @@ public class commandMenus : MonoBehaviour
     Player opener;
     bool isOpened;
 
-    BattleMIface cMenu;
+    BattleMenu cMenu;
 
     // Action Menus (Item, Skills, Magic)
-    SortedDictionary<int, BattleMIface> SubMenus;
-    SortedDictionary<JobSystem, BattleMIface> Menus;
+    SortedDictionary<int, BattleMenu> SubMenus;
+    SortedDictionary<JobSystem, BattleMenu> Menus;
 
     GameObject prefab;
 
@@ -37,8 +37,8 @@ public class commandMenus : MonoBehaviour
     {
         turn = FindObjectOfType<BattlePlayers>();
         turn.playerTurnEvent += (opener) => { return Open(opener); };
-        Menus = new SortedDictionary<JobSystem, BattleMIface>();
-        SubMenus = new SortedDictionary<int, BattleMIface>();
+        Menus = new SortedDictionary<JobSystem, BattleMenu>();
+        SubMenus = new SortedDictionary<int, BattleMenu>();
     }
 
 

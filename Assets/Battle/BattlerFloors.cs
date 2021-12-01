@@ -28,7 +28,7 @@ public class BattlerFloors : MonoBehaviour
             }
         }
     }
-    public void createSlots(Dictionary<int, Baddies> c, GameObject prefab)
+    public void createSlots(List<Baddies> c, GameObject prefab)
     {
         if (slots != null && slots.Count > 0)
         {

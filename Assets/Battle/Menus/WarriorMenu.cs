@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class WarriorMenu : BattleMIface
+public class WarriorMenu : BattleMenu
 {
     Skills skills;
     commandMenus Menu;
@@ -16,17 +16,6 @@ public class WarriorMenu : BattleMIface
     {
         skills = FindObjectOfType<Skills>();
         Menu = FindObjectOfType<commandMenus>();
-    }
-
-    public override void Open()
-    {
-        appID = ((int)job);
-        appName = "WarriorMenu";
-    }
-
-    public override void Close()
-    {
-        Menu.Close();
     }
 
   /*void Attack()

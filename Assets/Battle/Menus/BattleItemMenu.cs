@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleItemMenu : BattleMIface
+public class BattleItemMenu : BattleMenu
 {
 
     commandMenus menu;
@@ -26,25 +26,4 @@ public class BattleItemMenu : BattleMIface
     {
 
     }
-
-    public void Open(Creature Opener)
-    {
-
-    }
-
-    public override void Open()
-    {
-        //menu.Close();
-
-        for (int i = 0; i < inventory.ItemList.Count; i++)
-        {
-            Instantiate(Temp);
-        }
-    }
-
-    public override void Close()
-    {
-
-    }
-
 }

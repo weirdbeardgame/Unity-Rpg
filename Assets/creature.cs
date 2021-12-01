@@ -28,6 +28,8 @@ public class Creature
     public string creatureName;
     public string description;
 
+    public GameObject prefab;
+
     public void createWeaponSlots()
     {
         slots = new List<weaponSlots>();
