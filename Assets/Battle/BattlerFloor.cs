@@ -25,7 +25,7 @@ public class BattlerFloor : MonoBehaviour
     [SerializeField]
     public BattleTag type;
 
-    Creature fighter;
+    public Creature fighter;
 
     // For combo attacks or when the slot breaks.
     Creature secondary;

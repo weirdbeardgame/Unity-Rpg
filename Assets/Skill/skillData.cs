@@ -65,25 +65,26 @@ public class SkillData : ActionIface
         }
     }
 
-    /*public override void Execute() // Because Caster will be important for the absorption system
+    public override void Execute()
     {
-        Debug.Log(this.target.CreatureName + " BEFORE: ");
-        Debug.Log("Bad Health: " + this.target.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
-        Debug.Log("Bad Magic: " + this.target.Stats.StatList[(int)StatType.MAGIC].Stat.ToString());
+        Debug.Log(target.creatureName + " BEFORE: ");
+        Debug.Log("Bad Health: " + target.Stats.statList[(int)StatType.HEALTH].stat.ToString());
+        Debug.Log("Bad Magic: " + target.Stats.statList[(int)StatType.MAGIC].stat.ToString());
 
+        // Need to apply use of Buffer system
         switch (skillType)
         {
             case SkillTypes.HEALING:
-                this.target.Stats.StatList[(int)affectedStat].Stat += effect;
+                target.Stats.statList[(int)affectedStat].stat += effect;
                 break;
 
             case SkillTypes.DAMAGING:
-                this.target.TakeDamage(this.caster, effect, 0);
+                target.TakeDamage(this.caster, effect, 0);
                 break;
         }
 
-        Debug.Log(this.target.CreatureName + " AFTER: ");
-        Debug.Log("Bad Health: " + this.target.Stats.StatList[(int)StatType.HEALTH].Stat.ToString());
-        Debug.Log("Bad Magic: " + this.target.Stats.StatList[(int)StatType.MAGIC].Stat.ToString());
-    }*/ // The Menu's should never preform an action in the battle system itself! Let the skill system or the battle system itself handle these interactions!
+        Debug.Log(target.creatureName + " AFTER: ");
+        Debug.Log("Bad Health: " + target.Stats.statList[(int)StatType.HEALTH].stat.ToString());
+        Debug.Log("Bad Magic: " + target.Stats.statList[(int)StatType.MAGIC].stat.ToString());
+    }
 }

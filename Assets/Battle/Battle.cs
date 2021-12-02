@@ -49,6 +49,8 @@ public class Battle : MonoBehaviour
             Players = BattleObject.GetComponent<BattlePlayers>();
             enemies = BattleObject.GetComponent<BattleEnemies>();
 
+            skillTargeting = Target.targetInstance;
+
             // Enimies disabled until we get a few things... Figured out. The prefabs are null! Need to write a proper instantiating logic for enemies
             for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().BadParty.Count; i++)
             {
