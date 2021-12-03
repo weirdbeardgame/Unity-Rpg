@@ -18,6 +18,8 @@ public class Target : MonoBehaviour
 {
     [SerializeField]
     GameObject selectionArrow;
+
+    [SerializeField]
     Dictionary<TargetRow, List<BattlerFloor>> targets;
 
     TargetRow row;
@@ -34,20 +36,19 @@ public class Target : MonoBehaviour
         }
     }
 
-    public void Init(List<BattlerFloor> player, List<BattlerFloor> enemy, ActionIface action, TargetRow t)
+    public void Init(List<BattlerFloor> player, List<BattlerFloor> enemy)
     {
-        skill = action;
-        row = t;
-
         targets = new Dictionary<TargetRow, List<BattlerFloor>>();
         targets.Add(TargetRow.PLAYERS, player);
         targets.Add(TargetRow.ENEMIES, enemy);
 
-        Instantiate(selectionArrow, Vector3.zero, Quaternion.identity, targets[row][0].transform);
+        //Instantiate(selectionArrow, Vector3.zero, Quaternion.identity, targets[row][0].transform);
     }
 
-    public ActionIface TargetIndex()
+    public ActionIface TargetIndex(ActionIface action, TargetRow t)
     {
+        row = t;
+        skill = action;
         int index = 0;
         if (Input.GetButtonDown("Right"))
         {

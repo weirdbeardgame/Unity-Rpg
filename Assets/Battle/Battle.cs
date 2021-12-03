@@ -59,6 +59,8 @@ public class Battle : MonoBehaviour
 
             slots.createSlots(Players.battleParty, null);
 
+            skillTargeting.Init(slots.PlayerSlots, slots.EnemySlots);
+
             menus.Init();
 
             state = BattleStateM.ACTIVE;
@@ -92,13 +94,13 @@ public class Battle : MonoBehaviour
                 for (int i = 0; i < Players.battleParty.Count; i++)
                 {
                     // Handles fill of Guage and enquement of commands into Global queue
-                    queue.enqueue(skillTargeting.TargetIndex());
+                    //queue.enqueue(skillTargeting.TargetIndex());
                     //queue.enqueue(enemies.Battle(i));
                     //BattleObject.GetComponent<commandMenus>().DrawStats(Players.battleParty);
 
                     // Run enqueued actions after a certain point. Need to add a time delimiter in here.
                     // Something like actions wait for a few seconds before executing.
-                    queue.dequeue().Execute();
+                    //queue.dequeue().Execute();
 
                     // Listen for death and action. Check for enemy or player death
                 }

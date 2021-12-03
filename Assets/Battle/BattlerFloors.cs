@@ -5,38 +5,57 @@ using UnityEngine;
 public class BattlerFloors : MonoBehaviour
 {
     [SerializeField]
-    List<BattlerFloor> slots;
+    List<BattlerFloor> playerSlots;
+    [SerializeField]
+    List<BattlerFloor> enemySlots;
+
+    public List<BattlerFloor> PlayerSlots
+    {
+        get
+        {
+            return playerSlots;
+        }
+    }
+
+    public List<BattlerFloor> EnemySlots
+    {
+        get
+        {
+            return enemySlots;
+        }
+    }
 
     BattlerFloor newSlot;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        playerSlots = new List<BattlerFloor>();
+        enemySlots = new List<BattlerFloor>();
     }
 
-    public void createSlots(Dictionary<int, Player> c, GameObject prefab)
+    public void createSlots(List<Player> c, GameObject prefab)
     {
-        if (slots != null && slots.Count > 0)
+        if (playerSlots != null && playerSlots.Count > 0)
         {
             for (int i = 0; i < c.Count; i++)
             {
-                if (slots[i].type == c[i].Data.tag && slots[i].battler == null)
+                if (playerSlots[i].type == c[i].Data.tag && playerSlots[i].battler == null)
                 {
-                    slots[i].Insert(c[i].Data, c[i].prefab);
+                    playerSlots[i].Insert(c[i].Data, c[i].prefab);
                 }
             }
         }
     }
     public void createSlots(List<Baddies> c, GameObject prefab)
     {
-        if (slots != null && slots.Count > 0)
+        if (enemySlots != null && enemySlots.Count > 0)
         {
             for (int i = 0; i < c.Count; i++)
             {
-                if (slots[i].type == c[i].Data.tag && slots[i].battler == null)
+                if (enemySlots[i].type == c[i].Data.tag && enemySlots[i].battler == null)
                 {
-                    slots[i].Insert(c[i].Data, prefab);
+                    enemySlots[i].Insert(c[i].Data, prefab);
                 }
             }
         }

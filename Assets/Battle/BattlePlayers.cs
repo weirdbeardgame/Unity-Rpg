@@ -11,13 +11,15 @@ public class PlayerTurn
 public class BattlePlayers : MonoBehaviour
 {
     Party Players;
-    public Dictionary<int, Player> battleParty;
+    public List<Player> battleParty;
     CharacterInfo Temp;
 
     // Selected Player data to grab stats
     public delegate bool Turn(Player p);
     public event Turn playerTurnEvent;
 
+    public delegate ActionIface Action(Player p, ActionIface a);
+    public event Action actionSelected;
 
     PlayerTurn turn;
 
@@ -33,7 +35,7 @@ public class BattlePlayers : MonoBehaviour
     public void Init(GameObject BattleO)
     {
         Players = FindObjectOfType<Party>();
-        battleParty = new Dictionary<int, Player>();
+        battleParty = new List<Player>();
         turn = new PlayerTurn();
 
         // Grab the top 3 members of the party
@@ -42,7 +44,7 @@ public class BattlePlayers : MonoBehaviour
             DontDestroyOnLoad(Players.PartyMembers[j].prefab);
             Players.PartyMembers[j].prefab.SetActive(true);
             Players.PartyMembers[j].Data.state = BattleState.WAIT;
-            battleParty.Add(j, Players.PartyMembers[j]);
+            battleParty.Add(Players.PartyMembers[j]);
         }
 
         BattleObject = BattleO;
@@ -75,25 +77,14 @@ public class BattlePlayers : MonoBehaviour
                 playerTurnEvent.Invoke(battleParty[i]);
                 break;
             case BattleState.SELECTION:
-                Target(BadParty, action);
+                // This just don't go here
+                //actionSelected.Invoke(battleParty[i], action);
                 break;
             case BattleState.ACTION:
                 break;
         }
         return action;
     }
-
-    // Just make it generic for now
-    void Target(List<Creature> targets, ActionIface action)
-    {
-        // Assume we have an enqueued skill that needs to be constructed 
-        if ((i += ((int)Input.GetAxisRaw("Horizontal"))) < targets.Count || (i += ((int)Input.GetAxisRaw("Horizontal"))) > targets.Count)
-        {
-            action.target = targets[i];
-        }
-        return;
-    }
-
     public void Reset(int i)
     {
         if (battleParty[i].prefab.GetComponent<Gauge>().getFilled() && battleParty[i].Data.state == BattleState.WAIT)
