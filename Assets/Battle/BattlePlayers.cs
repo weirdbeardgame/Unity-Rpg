@@ -44,6 +44,7 @@ public class BattlePlayers : MonoBehaviour
             DontDestroyOnLoad(Players.PartyMembers[j].prefab);
             Players.PartyMembers[j].prefab.SetActive(true);
             Players.PartyMembers[j].Data.state = BattleState.WAIT;
+            Players.PartyMembers[j].targeter = new Target();
             battleParty.Add(Players.PartyMembers[j]);
         }
 

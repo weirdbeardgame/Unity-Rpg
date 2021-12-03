@@ -11,9 +11,9 @@ public enum TargetRow
     ENEMIES = 1
 }
 
-// Use Dependancy Injection !!
+// Use Dependancy Injection!!
+// Think of a Query for active units.
 
-// How does this stuff get activated I wonder.
 public class Target : MonoBehaviour
 {
     [SerializeField]

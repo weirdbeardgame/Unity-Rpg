@@ -30,7 +30,7 @@ public class Battle : MonoBehaviour
 
     BattleStateM state = BattleStateM.START;
 
-    Target skillTargeting;
+    //Target skillTargeting;
 
     public void StartBattle(SceneInfo PreviousScene, GameObject bObject)
     {
@@ -49,7 +49,7 @@ public class Battle : MonoBehaviour
             Players = BattleObject.GetComponent<BattlePlayers>();
             enemies = BattleObject.GetComponent<BattleEnemies>();
 
-            skillTargeting = Target.targetInstance;
+            //skillTargeting = Target.targetInstance;
 
             // Enimies disabled until we get a few things... Figured out. The prefabs are null! Need to write a proper instantiating logic for enemies
             for (int i = 0; i < BattleObject.GetComponent<BattleEnemies>().BadParty.Count; i++)
@@ -59,7 +59,7 @@ public class Battle : MonoBehaviour
 
             slots.createSlots(Players.battleParty, null);
 
-            skillTargeting.Init(slots.PlayerSlots, slots.EnemySlots);
+            //skillTargeting.Init(slots.PlayerSlots, slots.EnemySlots);
 
             menus.Init();
 

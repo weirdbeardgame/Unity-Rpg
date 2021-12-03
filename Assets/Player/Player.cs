@@ -42,8 +42,10 @@ public class Player : Asset
             toSerialize = value;
         }
         #endif
-
     }
+
+    [JsonIgnore]
+    public Target targeter;
 
     // Note that we don't inherit from Creature because the above Asset is a class. This breaks composition!
     // Because player and Baddie ARE creatures. They don't contain them. There's not a better option right now though...
