@@ -7,7 +7,7 @@ using UnityEngine;
 // This can change if player or enemy is confused
 public enum TargetRow
 {
-    PLAYERS = 0, 
+    PLAYERS = 0,
     ENEMIES = 1
 }
 
@@ -24,16 +24,17 @@ public class Target : MonoBehaviour
 
     TargetRow row;
 
-    public static Target targetInstance;
+    // This would make Target a global in the scene. One targeter for everyone etc.
+    // public static Target targetInstance;
 
     ActionIface skill;
     // Start is called before the first frame update
     private void Awake() 
     {
-        if (targetInstance == null)
+        /*if (targetInstance == null)
         {
             targetInstance = this;
-        }
+        }*/
     }
 
     public void Init(List<BattlerFloor> player, List<BattlerFloor> enemy)
@@ -43,6 +44,15 @@ public class Target : MonoBehaviour
         targets.Add(TargetRow.ENEMIES, enemy);
 
         //Instantiate(selectionArrow, Vector3.zero, Quaternion.identity, targets[row][0].transform);
+    }
+
+    // To make a targerter per player my guy
+    public ActionIface TargetIndex(ActionIface action, TargetRow t, List<BattlerFloor> enemy = default, List<BattlerFloor> player= default)
+    {
+        skill = action;
+
+
+        return skill;
     }
 
     public ActionIface TargetIndex(ActionIface action, TargetRow t)
@@ -58,7 +68,6 @@ public class Target : MonoBehaviour
         {
             index -= 1;
         }
-
         // Changing Row to target
         if (Input.GetButtonDown("Up"))
         {
@@ -74,12 +83,10 @@ public class Target : MonoBehaviour
                 row = TargetRow.PLAYERS;
             }
         }
-
         if (Input.GetButtonDown("Submit"))
         {
             skill.target = targets[row][index].fighter;
         }
-
         return skill;
     }
 
