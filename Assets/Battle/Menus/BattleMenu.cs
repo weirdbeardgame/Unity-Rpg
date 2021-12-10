@@ -5,13 +5,13 @@ using UnityEngine;
 public abstract class BattleMenu : MonoBehaviour
 {
     protected Skills skills;
-    delegate SkillData s(SkillData s);
+    delegate void s(SkillData s);
     event s skillMessage;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        skills = FindObjectOfType<Skills>();
     }
 
     public void Attack()

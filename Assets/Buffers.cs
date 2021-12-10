@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public enum TimeAmount { TIMED, ONCE, PERMA }
 public enum BufferEffect { NORMAL, BURN, POISON, ABSORB, FROST } // Not sure if ABSORB should be a buffer or it's own thing
 public enum BuffType { FLAT, PERCENTAGE }
@@ -23,10 +22,8 @@ public class Buffers : ScriptableObject
     {
         timeRemaining = new float();
         timeRemaining = effectTimer;
-        //Target.Stats.
-        //AddBuffer(this);
+        //Target.Stats.AddBuffer(this);
     }
-
 
     public Buffers CreateBuffer(float Buffer, TimeAmount Time, BufferEffect Eff, BuffType T)
     {

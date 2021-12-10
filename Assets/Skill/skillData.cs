@@ -22,6 +22,8 @@ public class SkillData : ActionIface
     private int skillID = 0;
     public int TargetAmount;
 
+    Buffers buff;
+
     [System.NonSerialized]
     public int timer;
 
@@ -75,11 +77,15 @@ public class SkillData : ActionIface
         switch (skillType)
         {
             case SkillTypes.HEALING:
-                target.Stats.statList[(int)affectedStat].stat += effect;
+                //target.Stats.statList[(int)affectedStat].stat += effect;
+                buff = new Buffers();
+                buff.CreateBuffer(effect, TimeAmount.ONCE, BufferEffect.NORMAL, BuffType.FLAT);
                 break;
 
             case SkillTypes.DAMAGING:
-                target.TakeDamage(this.caster, effect, 0);
+                //target.TakeDamage(this.caster, effect, 0);
+                buff = new Buffers();
+                buff.CreateBuffer(effect, TimeAmount.ONCE, BufferEffect.NORMAL, BuffType.FLAT);
                 break;
         }
 

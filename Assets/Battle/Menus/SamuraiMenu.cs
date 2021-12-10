@@ -8,14 +8,15 @@ public class SamuraiMenu : BattleMenu
 {
     private void Start()
     {
-        skills = FindObjectOfType<Skills>();
     }
 
-    void SwordArts()
+    // Open SamuraiArts
+    void SamuraiArts()
     {
         
     }
 
+    // Open Skills Menu
     void Skills()
     {
 

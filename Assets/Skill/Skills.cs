@@ -8,10 +8,10 @@ using System.IO;
 
 public class Skills : MonoBehaviour
 {
-    Dictionary<int, SkillData> _Skills;
+    Dictionary<int, SkillData> skills;
 
-    string FilePath = "Assets/Skill/skills.json";
-    string JsonData;
+    string filePath = "Assets/Skill/skills.json";
+    string jsonData;
 
     // So, What I need is a method of determining time to learning.
     // I need a method of tracking of who Skill can be applied to.
@@ -22,24 +22,23 @@ public class Skills : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _Skills = new Dictionary<int, SkillData>();
+        skills = new Dictionary<int, SkillData>();
         instantiate();
     }
 
     void instantiate()
     {
-        if (File.Exists(FilePath))
+        if (File.Exists(filePath))
         {
-            JsonData = File.ReadAllText(FilePath);
-            _Skills = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, SkillData>>(JsonData);
+            jsonData = File.ReadAllText(filePath);
+            skills = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, SkillData>>(jsonData);
         }
     }
 
     public SkillData GetSkill(int i)
     {
-        return _Skills[i];
+        return skills[i];
     }
-
 
     // Update is called once per frame
     void Update()
