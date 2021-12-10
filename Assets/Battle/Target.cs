@@ -47,11 +47,43 @@ public class Target : MonoBehaviour
     }
 
     // To make a targerter per player my guy
-    public ActionIface TargetIndex(ActionIface action, TargetRow t, List<BattlerFloor> enemy = default, List<BattlerFloor> player= default)
+    public ActionIface TargetIndex(ActionIface action, TargetRow t, List<BattlerFloor> enemy = default, List<BattlerFloor> player = default)
     {
+        row = t;
         skill = action;
-
-
+        if (targets == null)
+        {
+            targets.Add(TargetRow.PLAYERS, player);
+            targets.Add(TargetRow.ENEMIES, enemy);
+        }
+        int index = 0;
+        if (Input.GetButtonDown("Right"))
+        {
+            index += 1;
+        }
+        else if (Input.GetButtonDown("Left"))
+        {
+            index -= 1;
+        }
+        // Changing Row to target
+        if (Input.GetButtonDown("Up"))
+        {
+            if (row < TargetRow.ENEMIES)
+            {
+                row = TargetRow.ENEMIES;
+            }
+        }
+        if (Input.GetButtonDown("Down"))
+        {
+            if (row > TargetRow.PLAYERS)
+            {
+                row = TargetRow.PLAYERS;
+            }
+        }
+        if (Input.GetButtonDown("Submit"))
+        {
+            skill.target = targets[row][index].fighter;
+        }
         return skill;
     }
 
