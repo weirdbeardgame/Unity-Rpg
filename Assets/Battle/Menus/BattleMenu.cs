@@ -14,7 +14,7 @@ public abstract class BattleMenu : MonoBehaviour
         skills = FindObjectOfType<Skills>();
     }
 
-    public void Attack()
+    public virtual void Attack()
     {
         Debug.Log("Skill Added");
         skillMessage.Invoke(skills.GetSkill(0));

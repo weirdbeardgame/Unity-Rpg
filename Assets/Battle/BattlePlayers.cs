@@ -76,6 +76,7 @@ public class BattlePlayers : MonoBehaviour
             case BattleState.COMMAND:
                 // Use a delegate in here! Send event out that player is ready to act and menu should open from there
                 playerTurnEvent.Invoke(battleParty[i]);
+                
                 break;
             case BattleState.SELECTION:
                 // This just don't go here
@@ -92,6 +93,11 @@ public class BattlePlayers : MonoBehaviour
         {
             battleParty[i].prefab.GetComponent<Gauge>().Reset();
         }
+    }
+
+    void TargetSkill(SkillData s)
+    {
+        
     }
 
     public Creature GetPlayer(int i)

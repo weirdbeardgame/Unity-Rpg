@@ -10,6 +10,11 @@ public class SamuraiMenu : BattleMenu
     {
     }
 
+    public override void Attack()
+    {
+        base.Attack();
+    }
+
     // Open SamuraiArts
     void SamuraiArts()
     {

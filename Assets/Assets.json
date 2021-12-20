@@ -39,7 +39,8 @@
 			"tag": 0,
 			"job": 5,
 			"creatureName": "Musungo",
-			"description": "A young 12 year old boy. Blue eyes white and black hair. Musungo is a dragon cursed with soul eaterism at birth which lead to clashes with the gods of death. Musungo is stubborn and determined. If he has a goal he will see it through to death"
+			"description": "A young 12 year old boy. Blue eyes white and black hair. Musungo is a dragon cursed with soul eaterism at birth which lead to clashes with the gods of death. Musungo is stubborn and determined. If he has a goal he will see it through to death",
+			"prefab": null
 		}
 	},
 	"Dragon": {
@@ -82,7 +83,8 @@
 			"tag": 0,
 			"job": 1,
 			"creatureName": "Dragon",
-			"description": "A basic dragon that wants to eat you. They have turned their backs on the kingdom"
+			"description": "A basic dragon that wants to eat you. They have turned their backs on the kingdom",
+			"prefab": null
 		}
 	},
 	"Wolf": {
@@ -125,7 +127,8 @@
 			"tag": 0,
 			"job": 2,
 			"creatureName": "Wolf",
-			"description": "A ferral wolf. Watch out for it's bite"
+			"description": "A ferral wolf. Watch out for it's bite",
+			"prefab": null
 		}
 	},
 	"Potion": {
@@ -231,7 +234,8 @@
 			"tag": 0,
 			"job": 1,
 			"creatureName": "Red Dragon",
-			"description": "A red dragon. Stronger then the standard dragon. Breaths fire"
+			"description": "A red dragon. Stronger then the standard dragon. Breaths fire",
+			"prefab": null
 		}
 	},
 	"Doku": {
@@ -271,9 +275,10 @@
 			},
 			"slots": null,
 			"tag": 0,
-			"job": 2,
+			"job": 1,
 			"creatureName": "Doku",
-			"description": "The high prince of dragon realm. "
+			"description": "The high prince of dragon realm. ",
+			"prefab": null
 		}
 	},
 	"Water": {
@@ -312,7 +317,7 @@
 		},
 		"type": 1,
 		"sceneName": "BattleTest01",
-		"assetGuid": "e43c04e3-6169-4b2c-9b00-ca121e26c164",
+		"assetGuid": "53f2969d-9cf9-4688-ab5a-7d38b53acd9b",
 		"path": "Assets/Scenes/BattleTest01.unity"
 	},
 	"Sarah": {
@@ -354,7 +359,8 @@
 			"tag": 0,
 			"job": 0,
 			"creatureName": "Sarah",
-			"description": "A well endowed woman in her twenties to thirties. Sarah has an uncanny gift for the mystic arts. She's typically gentle and kind towards others but will not hesitate to protect those she cares about should the need arise"
+			"description": "A well endowed woman in her twenties to thirties. Sarah has an uncanny gift for the mystic arts. She's typically gentle and kind towards others but will not hesitate to protect those she cares about should the need arise",
+			"prefab": null
 		}
 	}
 }

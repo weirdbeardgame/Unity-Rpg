@@ -24,10 +24,6 @@ public class Battle : MonoBehaviour
     GameObject SelectionArrow;
 
     SceneInfo SceneToReturnTo;
-
-    Creature Caster;
-    Creature Receiver;
-
     BattleStateM state = BattleStateM.START;
 
     //Target skillTargeting;

@@ -14,11 +14,12 @@ public class commandMenus : MonoBehaviour
 
     // Action Menus (Item, Skills, Magic)
     SortedDictionary<int, BattleMenu> SubMenus;
-    SortedDictionary<JobSystem, BattleMenu> Menus;
+    [SerializeReference]
+    Dictionary<JobSystem, GameObject> Menus;
 
     GameObject prefab;
 
-    [SerializeField]
+    [SerializeField, Header("The object the prefabs instantiate onto")]
     GameObject commandMenu;
 
     List<GameObject> playerStats;
@@ -37,7 +38,7 @@ public class commandMenus : MonoBehaviour
     {
         turn = FindObjectOfType<BattlePlayers>();
         turn.playerTurnEvent += (opener) => { return Open(opener); };
-        Menus = new SortedDictionary<JobSystem, BattleMenu>();
+        Menus = new Dictionary<JobSystem, GameObject>();
         SubMenus = new SortedDictionary<int, BattleMenu>();
     }
 
@@ -49,9 +50,9 @@ public class commandMenus : MonoBehaviour
             // This is Null on Open because there's not an assigned GameObject in the scene!
             // For now I stick with a list of prefab?
             // Think about, https://www.youtube.com/watch?v=4fkTbbxktpc
-            commandMenu = Instantiate(prefab);
+            commandMenu = Instantiate(Menus[opener.Data.job]);
             commandMenu.GetComponentInChildren<Image>().enabled = true;
-            cMenu = Menus[opener.Data.job];
+            cMenu = Menus[opener.Data.job].GetComponent<BattleMenu>();
             if (!cMenu)
             {
                 return isOpened = false;

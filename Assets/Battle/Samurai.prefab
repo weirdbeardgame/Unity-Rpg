@@ -121,18 +121,31 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 489f05beb0cac4faeb96b09bb110413d, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 215806907381011338, guid: ea5d8cd0eae5ffaea85b77fae174efce,
+          type: 3}
+        m_TargetAssemblyTypeName: SamuraiMenu, Assembly-CSharp
+        m_MethodName: Attack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &215806907381011338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5985908202637295949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489f05beb0cac4faeb96b09bb110413d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5720660470292264279
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +325,7 @@ PrefabInstance:
     - target: {fileID: 7533535411606511570, guid: fd93da01f0046dc498cca22844790db8,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1693.6157
+      value: -3762
       objectReference: {fileID: 0}
     - target: {fileID: 7533535411606511570, guid: fd93da01f0046dc498cca22844790db8,
         type: 3}
@@ -362,7 +375,7 @@ PrefabInstance:
     - target: {fileID: 7533535411606511570, guid: fd93da01f0046dc498cca22844790db8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 994
+      value: -40.19214
       objectReference: {fileID: 0}
     - target: {fileID: 7533535411606511570, guid: fd93da01f0046dc498cca22844790db8,
         type: 3}
@@ -391,6 +404,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd93da01f0046dc498cca22844790db8, type: 3}
+--- !u!1 &5985908202637295949 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7533535411606511581, guid: fd93da01f0046dc498cca22844790db8,
+    type: 3}
+  m_PrefabInstance: {fileID: 4295951640024506000}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5985908202637295938 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7533535411606511570, guid: fd93da01f0046dc498cca22844790db8,

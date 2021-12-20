@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 586403462748829076}
   - component: {fileID: 5343174276552829318}
   - component: {fileID: 8724420162015302180}
+  - component: {fileID: 5189684055280487872}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -157,7 +158,22 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
+--- !u!114 &5189684055280487872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718184248101646265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
 --- !u!1 &1718184248407844906
 GameObject:
   m_ObjectHideFlags: 0

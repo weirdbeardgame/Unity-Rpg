@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2481390218672685684}
   - component: {fileID: 5878081362362649234}
   - component: {fileID: 440667375592246307}
+  - component: {fileID: 495799714384805851}
   m_Layer: 0
   m_Name: Battle
   m_TagString: Untagged
@@ -97,3 +98,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a666e1006b4c1a1c9cb011a88e1eb1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &495799714384805851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647742073440501769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b056da7587a510c94763242ed3f65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commandMenu: {fileID: 0}
+  turn: {fileID: 0}
